@@ -1,0 +1,144 @@
+.sr-page .op-btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border: 1px solid #ececec;
+    border-radius: 8px;
+    background: #fff;
+    color: #334155;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.sr-page-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.sr-page-sub {
+    margin: 6px 0 0;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.sr-document .op-panel-body {
+    padding: 22px;
+}
+
+.sr-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #eef2f7;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.sr-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.sr-rich {
+    font-size: 16px;
+    line-height: 1.75;
+    color: #111;
+}
+
+.sr-rich h1, .sr-rich h2, .sr-rich h3 {
+    margin: 1.2em 0 0.6em;
+    font-weight: 600;
+}
+
+.sr-rich ul, .sr-rich ol {
+    padding-left: 1.3em;
+    margin: 0.7em 0;
+}
+
+.sr-rich p { margin: 0.7em 0; }
+
+.sr-empty {
+    padding: 36px 12px;
+    text-align: center;
+    color: #64748b;
+}
+
+.sr-empty i {
+    font-size: 28px;
+    color: #94a3b8;
+}
+
+.sr-empty h2 {
+    margin: 12px 0 6px;
+    font-size: 18px;
+    color: #0f172a;
+}
+
+.sr-edit-grid {
+    display: grid;
+    gap: 16px;
+}
+
+@media (min-width: 960px) {
+    .sr-edit-grid {
+        grid-template-columns: 280px minmax(0, 1fr);
+        align-items: start;
+    }
+}
+
+.sr-tips, .sr-aside-meta {
+    margin: 0;
+    color: #475569;
+    font-size: 14px;
+}
+
+.sr-tips {
+    padding-left: 1.1em;
+    display: grid;
+    gap: 8px;
+}
+
+.sr-aside-meta {
+    margin-bottom: 12px;
+}
+
+.sr-form {
+    display: grid;
+    gap: 8px;
+}
+
+.sr-label {
+    margin-top: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #334155;
+}
+
+.sr-label span { color: #dc2626; }
+
+.sr-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.sr-errors {
+    margin-bottom: 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #fef2f2;
+    color: #b91c1c;
+    font-size: 13px;
+}
+
+.sr-page .tox-tinymce {
+    border-radius: 8px;
+    border-color: #d4d4d4;
+}

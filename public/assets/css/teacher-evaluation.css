@@ -1,0 +1,330 @@
+/* Đánh giá học viên — /giao-vien/danh-gia */
+
+.te-page {
+    display: grid;
+    gap: 16px;
+}
+
+.te-page-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.te-page-sub {
+    margin: 6px 0 0;
+    max-width: 760px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: #64748b;
+}
+
+.te-page .te-side-meta {
+    margin-left: auto;
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+}
+
+.te-page .teacher-eval-workspace {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 6fr) minmax(0, 3fr);
+    gap: 16px;
+    align-items: start;
+}
+
+.te-page .teacher-eval-workspace-students,
+.te-page .teacher-eval-workspace-main,
+.te-page .teacher-eval-workspace-courses {
+    min-width: 0;
+}
+
+.te-page .teacher-eval-workspace-students,
+.te-page .teacher-eval-workspace-courses {
+    position: sticky;
+    top: 16px;
+    align-self: start;
+}
+
+.te-page .teacher-eval-student-card,
+.te-page .teacher-eval-course-card {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 120px);
+}
+
+.te-page .teacher-eval-student-summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 10px;
+    padding: 12px 14px;
+    border-bottom: 1px solid #e8edf4;
+    background: #f8fafc;
+}
+
+.te-page .teacher-eval-student-summary-stat span {
+    display: block;
+    font-size: 12px;
+    color: #64748b;
+}
+
+.te-page .teacher-eval-student-summary-stat strong {
+    font-size: 15px;
+    color: #0f172a;
+}
+
+.te-page .teacher-eval-student-summary-progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    background: conic-gradient(#0ea5e9 calc(var(--pct, 0) * 1%), #e2e8f0 0);
+    font-size: 11px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.te-page .teacher-eval-student-summary-progress span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    background: #fff;
+}
+
+.te-page .teacher-eval-student-list,
+.te-page .teacher-eval-course-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+    overflow: auto;
+}
+
+.te-page .teacher-eval-student-item,
+.te-page .teacher-eval-course-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px solid #e8edf4;
+    background: #fff;
+    color: #1e293b;
+    text-decoration: none;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.te-page .teacher-eval-student-item:hover,
+.te-page .teacher-eval-course-item:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+}
+
+.te-page .teacher-eval-student-item.is-active,
+.te-page .teacher-eval-course-item.is-active {
+    border-color: #0ea5e9;
+    background: linear-gradient(180deg, #f0f9ff 0%, #fff 100%);
+    box-shadow: 0 10px 24px rgba(14, 165, 233, 0.12);
+}
+
+.te-page .teacher-eval-student-item.is-evaluated:not(.is-active) {
+    border-color: #bbf7d0;
+}
+
+.te-page .teacher-course-member-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    background: #fff4ea;
+    color: #f26b21;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.te-page .teacher-course-member-body {
+    min-width: 0;
+    flex: 1;
+}
+
+.te-page .teacher-course-member-body strong,
+.te-page .teacher-eval-course-item-main strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.te-page .teacher-course-member-body span,
+.te-page .teacher-course-member-body small,
+.te-page .teacher-eval-course-item-main span,
+.te-page .teacher-eval-course-item-main small {
+    display: block;
+    font-size: 12px;
+    color: #64748b;
+}
+
+.te-page .teacher-eval-student-item .teacher-course-member-body small {
+    margin-top: 2px;
+}
+
+.te-page .teacher-eval-student-item-status {
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.te-page .teacher-eval-status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+}
+
+.te-page .teacher-eval-status-badge--done {
+    color: #16a34a;
+    background: #dcfce7;
+}
+
+.te-page .teacher-eval-status-badge--pending {
+    color: #d97706;
+    background: #fef3c7;
+}
+
+.te-page .teacher-eval-course-item {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.te-page .teacher-eval-course-item-progress {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    font-size: 12px;
+    color: #475569;
+}
+
+.te-page .teacher-eval-course-item-progress-bar {
+    flex: 1;
+    height: 6px;
+    border-radius: 999px;
+    background: #e2e8f0;
+    overflow: hidden;
+}
+
+.te-page .teacher-eval-course-item-progress-bar span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #0ea5e9, #38bdf8);
+}
+
+.te-page .teacher-eval-week-picker {
+    margin-bottom: 14px;
+}
+
+.te-page .teacher-eval-week-form {
+    display: grid;
+    gap: 8px;
+    padding: 14px;
+}
+
+.te-page .teacher-eval-week-form label,
+.te-page .te-field label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.te-page .teacher-eval-week-form select,
+.te-page .te-field select,
+.te-page .te-field textarea {
+    width: 100%;
+}
+
+.te-page .te-score-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.te-page .te-field {
+    display: grid;
+    gap: 6px;
+}
+
+.te-page .te-field-full {
+    margin-bottom: 16px;
+}
+
+.te-page .te-form-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.te-page .course-eval-scores-readonly {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    margin-bottom: 12px;
+    font-size: 14px;
+}
+
+.te-page .course-eval-comment-readonly {
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: #f8fafc;
+    border: 1px solid #e8edf4;
+    line-height: 1.6;
+}
+
+.te-page .teacher-eval-empty-panel {
+    min-height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.te-page .teacher-eval-empty-note {
+    padding: 24px 16px;
+    text-align: center;
+    color: #64748b;
+}
+
+.te-page .muted {
+    color: #64748b;
+}
+
+@media (max-width: 1100px) {
+    .te-page .teacher-eval-workspace {
+        grid-template-columns: 1fr;
+    }
+
+    .te-page .teacher-eval-workspace-students,
+    .te-page .teacher-eval-workspace-courses {
+        position: static;
+        max-height: none;
+    }
+
+    .te-page .teacher-eval-student-card,
+    .te-page .teacher-eval-course-card {
+        max-height: none;
+    }
+
+    .te-page .te-score-grid {
+        grid-template-columns: 1fr;
+    }
+}

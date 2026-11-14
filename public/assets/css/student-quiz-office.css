@@ -1,0 +1,390 @@
+/* Bridge old session-quiz.css into the office student shell */
+.visually-hidden {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.sw-main,
+.sw-main .op-panel,
+.sw-main .op-panel-body,
+.sw-detail,
+.sw-quiz-sunny,
+.sw-quiz-sunny .session-post-embedded,
+.sw-quiz-sunny .session-post-stack,
+.sw-quiz-sunny .session-post-card,
+.sw-quiz-sunny .session-quiz-form,
+.sw-quiz-sunny .session-quiz-list,
+.sw-quiz-sunny .session-quiz-results,
+.sw-quiz-sunny .session-quiz-item,
+.sw-quiz-sunny .session-quiz-result-item {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+}
+
+.sw-quiz-sunny,
+.sw-quiz-sunny .session-post-card,
+.sw-quiz-sunny .session-quiz-form,
+.sw-quiz-sunny .session-quiz-list,
+.sw-quiz-sunny .sw-quiz-frame {
+    width: 100%;
+    contain: inline-size;
+}
+
+.sw-quiz-sunny {
+    overflow-x: clip;
+}
+
+.os-main .sw-quiz-sunny:has(.session-category-sort-board),
+.os-main .sw-quiz-sunny:has(.session-word-link-board),
+.os-main .sw-quiz-sunny:has(.session-word-order-board),
+.os-main .sw-quiz-sunny:has(.session-image-label-drop-board),
+.os-main .sw-quiz-sunny:has(.session-word-select-board),
+.os-main .sw-quiz-sunny:has(.tox-tinymce) {
+    overflow-x: visible;
+    contain: none;
+}
+
+.os-main .sw-quiz-sunny.sunny-app.page-session-show .session-post-card,
+.os-main .sw-quiz-sunny .session-post-card {
+    width: 100%;
+    overflow-x: clip;
+}
+
+.os-main .sw-quiz-sunny .session-post-card:has(.session-category-sort-board),
+.os-main .sw-quiz-sunny .session-post-card:has(.session-word-link-board),
+.os-main .sw-quiz-sunny .session-post-card:has(.session-word-order-board),
+.os-main .sw-quiz-sunny .session-post-card:has(.session-image-label-drop-board),
+.os-main .sw-quiz-sunny .session-post-card:has(.session-word-select-board),
+.os-main .sw-quiz-sunny .session-post-card:has(.tox-tinymce) {
+    overflow-x: visible;
+}
+
+.os-main .sw-quiz-sunny.sunny-app.page-session-show .session-quiz-list,
+.os-main .sw-quiz-sunny.sunny-app.page-session-show .session-quiz-results,
+.os-main .sw-quiz-sunny .session-quiz-list,
+.os-main .sw-quiz-sunny .session-quiz-results {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    width: 100% !important;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.os-main .sw-quiz-sunny fieldset.session-quiz-item,
+.os-main .sw-quiz-sunny .session-quiz-item {
+    display: block;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    min-inline-size: 0 !important;
+    overflow: visible;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 14px !important;
+    background: #fff !important;
+    padding: 16px !important;
+}
+
+.os-main .sw-quiz-sunny .session-quiz-legend {
+    display: block !important;
+    float: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+}
+
+.os-main .sw-quiz-sunny .session-quiz-item-title,
+.os-main .sw-quiz-sunny .session-quiz-legend-rich,
+.os-main .sw-quiz-sunny .session-quiz-option,
+.os-main .sw-quiz-sunny .session-quiz-option-text,
+.os-main .sw-quiz-sunny .course-rich-content {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.os-main .sw-quiz-sunny .session-quiz-legend-rich :is(p, div, strong, span) {
+    max-width: 100%;
+}
+
+.os-main .sw-quiz-sunny :is(img, video, iframe, table, pre, .tox-tinymce) {
+    max-width: 100% !important;
+}
+
+.os-main .sw-quiz-sunny :is(img, video) {
+    display: block !important;
+    width: auto !important;
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+.os-main .sw-quiz-sunny table {
+    width: 100% !important;
+    table-layout: fixed;
+}
+
+.os-main .sw-quiz-sunny.sunny-app.page-session-show .session-quiz-options,
+.os-main .sw-quiz-sunny .session-quiz-options {
+    display: grid !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+}
+
+@media (min-width: 900px) {
+    .os-main .sw-quiz-sunny.sunny-app.page-session-show .session-quiz-options,
+    .os-main .sw-quiz-sunny .session-quiz-options {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+.sw-quiz-sunny .session-post-stack {
+    margin-top: 0;
+}
+
+.sw-quiz-sunny .session-post-card {
+    margin-top: 0;
+}
+
+.sw-detail > .sw-quiz-sunny .session-post-card,
+.sw-detail .sw-quiz-sunny + .sw-quiz-sunny .session-post-card {
+    margin-top: 16px;
+}
+
+.sw-quiz-sunny .session-quiz-list,
+.sw-quiz-sunny .session-quiz-results {
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.sw-quiz-sunny .session-post-card-foot {
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 18px;
+}
+
+.sw-quiz-sunny .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 18px;
+    border: 0;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    line-height: 1.2;
+}
+
+.sw-quiz-sunny .btn-primary,
+.sw-quiz-sunny .session-post-submit {
+    background: #f26b21;
+    color: #fff;
+    box-shadow: 0 10px 22px rgba(244, 81, 30, 0.22);
+}
+
+.sw-quiz-sunny .btn-primary:hover,
+.sw-quiz-sunny .session-post-submit:hover {
+    background: #e05f18;
+    color: #fff;
+}
+
+.sw-quiz-sunny .btn-with-icon i {
+    font-size: 16px;
+}
+
+.sw-quiz-sunny fieldset.session-quiz-item {
+    min-inline-size: 0;
+}
+
+.sw-quiz-sunny .session-quiz-practice-banner {
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.sw-quiz-sunny .sw-timer,
+.sw-quiz-sunny .session-knowledge-review-timer-bar {
+    margin: 0 16px 16px;
+}
+
+.sw-quiz-start {
+    margin: 0 16px 16px;
+    padding: 16px 18px;
+    border-radius: 14px;
+    background: #fff8f1;
+    border: 1px solid #ffe4cc;
+    color: #9a3412;
+}
+
+.sw-quiz-start p {
+    margin: 0 0 12px;
+}
+
+.sw-quiz-sunny .session-quiz-scoreboard {
+    margin: 8px 16px 8px;
+}
+
+.sw-quiz-sunny .session-quiz-scoreboard-note {
+    margin: 8px 0 0;
+    font-size: 13px;
+    color: #64748b;
+}
+
+.sw-quiz-sunny .session-quiz-scoreboard-note--practice {
+    color: #92400e;
+}
+
+.sw-quiz-sunny .session-post-card-head .sw-phase {
+    margin-left: auto;
+}
+
+.os-main .sw-quiz-sunny button.session-word-select-chip,
+.os-main .sw-quiz-sunny button.session-word-order-reset,
+.os-main .sw-quiz-sunny button.session-category-sort-reset,
+.os-main .sw-quiz-sunny button.session-image-hotspot-reset,
+.os-main .sw-quiz-sunny button.session-image-label-drop-reset,
+.os-main .sw-quiz-sunny button.session-listening-bar-play,
+.os-main .sw-quiz-sunny button.session-listening-bar-replay,
+.os-main .sw-quiz-sunny [data-word-order-bank] button,
+.os-main .sw-quiz-sunny [data-word-order-sentence] button,
+.os-main .sw-quiz-sunny [data-session-memory-grid] button,
+.os-main .sw-quiz-sunny [data-word-link-left] button,
+.os-main .sw-quiz-sunny [data-word-link-right] button,
+.os-main .sw-quiz-sunny button.session-category-sort-chip {
+    background: revert-layer;
+    color: inherit;
+    box-shadow: none;
+}
+
+.os-main .sw-quiz-sunny .session-category-sort-board,
+.os-main .sw-quiz-sunny .session-category-sort-columns,
+.os-main .sw-quiz-sunny .session-category-sort-dropzone,
+.os-main .sw-quiz-sunny .session-category-sort-bank,
+.os-main .sw-quiz-sunny .session-word-link-board,
+.os-main .sw-quiz-sunny .session-word-link-columns,
+.os-main .sw-quiz-sunny .session-word-order-board,
+.os-main .sw-quiz-sunny .session-image-label-drop-board,
+.os-main .sw-quiz-sunny .session-word-select-board,
+.os-main .sw-quiz-sunny .session-quiz-essay {
+    overflow: visible;
+}
+
+.os-main .sw-quiz-sunny button.session-category-sort-chip {
+    cursor: grab;
+}
+
+.os-main .sw-quiz-sunny button.session-category-sort-chip.is-dragging {
+    opacity: 0.35;
+    cursor: grabbing;
+}
+
+.session-category-sort-chip.is-ghost {
+    cursor: grabbing;
+    box-shadow: 0 12px 28px rgba(4, 120, 87, 0.22);
+}
+
+@media (max-width: 767px) {
+    .sw-quiz-sunny .session-post-card-foot {
+        justify-content: stretch;
+    }
+
+    .sw-quiz-sunny .session-post-submit,
+    .sw-quiz-sunny .btn-primary {
+        width: 100%;
+    }
+}
+
+.sw-quiz-sunny .form-control,
+.sw-quiz-sunny .session-reflection-textarea,
+.sw-quiz-sunny .session-quiz-essay-input {
+    width: 100%;
+}
+
+.sw-quiz-sunny .session-post-reflection-saved {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: #ecfdf5;
+    color: #047857;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.session-quiz-autosave-badge.is-local {
+    color: #9a3412;
+    background: #ffedd5;
+}
+
+.network-offline-banner {
+    position: fixed;
+    left: 24px;
+    bottom: 24px;
+    z-index: 10870;
+    display: none;
+    align-items: center;
+    gap: 10px;
+    max-width: min(420px, calc(100vw - 48px));
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: #7c2d12;
+    color: #fff;
+    box-shadow: 0 18px 42px rgba(124, 45, 18, 0.32);
+    pointer-events: none;
+}
+
+.network-offline-banner.is-visible {
+    display: flex;
+}
+
+.network-offline-banner-icon {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
+    font-size: 14px;
+}
+
+.network-offline-banner-text {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.45;
+}
+
+.network-offline-banner-loading i {
+    display: block;
+    animation: network-offline-banner-spin 0.9s linear infinite;
+}
+
+@keyframes network-offline-banner-spin {
+    to { transform: rotate(360deg); }
+}
+
+@media (max-width: 767px) {
+    .network-offline-banner {
+        left: 12px;
+        right: 12px;
+        bottom: 16px;
+        max-width: none;
+    }
+}
+
+.pwa-body .network-offline-banner {
+    bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+}

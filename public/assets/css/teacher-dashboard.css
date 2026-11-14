@@ -1,0 +1,10 @@
+.td-page-head, .td-session-actions, .td-course-item { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: center; }
+.td-split { display: grid; gap: 16px; grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr); }
+.td-session-card { padding: 20px; display: grid; gap: 8px; }
+.td-session-card h2 { margin: 0; font-size: 20px; }
+.td-kicker { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: #94a3b8; }
+.td-other-list, .td-course-list { display: grid; }
+.td-other-list a, .td-course-item { display: flex; justify-content: space-between; gap: 12px; padding: 14px 16px; border-top: 1px solid #f1f5f9; }
+.td-other-list a, .td-course-item span { color: #64748b; font-size: 13px; }
+.td-other-list a { flex-direction: column; }
+@media (max-width: 900px) { .td-split { grid-template-columns: 1fr; } }

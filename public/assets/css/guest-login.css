@@ -1,0 +1,299 @@
+/* Original login layout, restyled with the new SUNNY guest UI. */
+
+.ga-page.is-login {
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+}
+
+.ga-hero.is-login {
+    padding: 48px 52px 40px;
+    justify-content: space-between;
+}
+
+.ga-hero.is-login .ga-hero-inner {
+    min-height: auto;
+    flex: 1;
+    justify-content: space-between;
+    gap: 36px;
+}
+
+.ga-login-lead {
+    display: block;
+    margin: 0;
+    font-size: clamp(1.15rem, 2.1vw, 1.45rem);
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--ga-muted);
+}
+
+.ga-login-brandline {
+    display: block;
+    margin: 8px 0 0;
+    font-size: clamp(1.7rem, 3.1vw, 2.35rem);
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    color: var(--ga-ink);
+}
+
+.ga-login-brandline em {
+    font-family: inherit;
+    font-style: normal;
+    font-weight: inherit;
+    font-size: inherit;
+    color: #f26b21;
+}
+
+.ga-features {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    gap: 12px;
+    max-width: 440px;
+}
+
+.ga-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    box-shadow: 0 8px 22px rgba(47, 43, 61, 0.05);
+    backdrop-filter: blur(10px);
+}
+
+.ga-feature-ico {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    font-size: 16px;
+}
+
+.ga-feature-ico.is-orange {
+    background: #fff4ea;
+    color: #f26b21;
+}
+
+.ga-feature-ico.is-blue {
+    background: #eef2ff;
+    color: var(--ga-primary);
+}
+
+.ga-feature-ico.is-teal {
+    background: #ecfdf5;
+    color: #059669;
+}
+
+.ga-feature strong {
+    display: block;
+    margin-bottom: 3px;
+    font-size: 14px;
+    font-weight: 750;
+    color: var(--ga-ink);
+}
+
+.ga-feature small {
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--ga-muted);
+}
+
+.ga-scene {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 220px;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.88;
+}
+
+.ga-scene .mountain {
+    position: absolute;
+    bottom: 52px;
+    width: 180px;
+    height: 90px;
+    clip-path: polygon(0 100%, 50% 18%, 100% 100%);
+}
+
+.ga-scene .m1 {
+    left: -20px;
+    background: linear-gradient(180deg, #f3e0c6, #e8cba0);
+}
+
+.ga-scene .m2 {
+    left: 70px;
+    width: 210px;
+    height: 108px;
+    background: linear-gradient(180deg, #f8ead4, #efd4ae);
+}
+
+.ga-scene .lake {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 72px;
+    background: linear-gradient(180deg, #f7d7b0 0%, #ffe7c8 42%, #fff6ec 100%);
+}
+
+.ga-scene .pagoda {
+    position: absolute;
+    right: 72px;
+    bottom: 48px;
+    width: 72px;
+    height: 58px;
+}
+
+.ga-scene .pagoda::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    right: 2px;
+    top: 12px;
+    height: 10px;
+    background: #f26b21;
+    border-radius: 8px 8px 1px 1px;
+    box-shadow: 0 15px 0 #ffb36a;
+}
+
+.ga-scene .pagoda::after {
+    content: "";
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    bottom: 0;
+    height: 34px;
+    border-left: 5px solid #8a6a4a;
+    border-right: 5px solid #8a6a4a;
+}
+
+.ga-scene .tower {
+    position: absolute;
+    right: 52px;
+    bottom: 48px;
+    width: 2px;
+    height: 108px;
+    background: linear-gradient(180deg, #958b84, #7a726c);
+}
+
+.ga-scene .tower::before {
+    content: "";
+    position: absolute;
+    left: -7px;
+    top: 18px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 14px solid #77736e;
+}
+
+.ga-scene .flower {
+    position: absolute;
+    border-radius: 50%;
+    background: #f9b4c4;
+    box-shadow: 8px 3px 0 #ffc4d0, -5px 7px 0 #f5a2b6;
+}
+
+.ga-scene .f1 { right: 28px; bottom: 158px; width: 10px; height: 10px; }
+.ga-scene .f2 { right: 52px; bottom: 128px; width: 9px; height: 9px; }
+.ga-scene .f3 { right: 34px; bottom: 98px; width: 8px; height: 8px; }
+
+.ga-page.is-login .ga-blob {
+    display: none;
+}
+
+.ga-panel.is-login {
+    padding: 40px 36px;
+    background: #fff;
+}
+
+.ga-card.is-login {
+    width: min(440px, 100%);
+    padding: 36px 34px 28px;
+}
+
+.ga-login-logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 22px;
+}
+
+.ga-login-logo img {
+    width: auto;
+    height: auto;
+    max-width: 150px;
+    max-height: 72px;
+    border-radius: 12px;
+    object-fit: contain;
+}
+
+.ga-card.is-login .ga-card-head {
+    display: block;
+    margin-bottom: 18px;
+}
+
+.ga-card.is-login .ga-card-title {
+    font-size: 1.85rem;
+}
+
+.ga-login-help {
+    margin: 8px 0 0;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ga-muted);
+}
+
+.ga-label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 650;
+    color: #4b4860;
+}
+
+.ga-field-box {
+    position: relative;
+}
+
+.ga-card.is-login .ga-field {
+    position: static;
+}
+
+.ga-card.is-login .ga-field-icon,
+.ga-card.is-login .ga-field-toggle {
+    top: 0;
+    bottom: 0;
+}
+
+.ga-card.is-login .ga-submit {
+    text-transform: none;
+    letter-spacing: 0;
+    gap: 8px;
+}
+
+.ga-card.is-login .ga-submit i {
+    font-size: 14px;
+}
+
+.ga-login-foot {
+    margin: 22px 0 0;
+    text-align: center;
+    font-size: 12.5px;
+    color: #a8a5b5;
+    line-height: 1.5;
+}
+
+@media (max-width: 980px) {
+    .ga-page.is-login {
+        grid-template-columns: 1fr;
+    }
+
+    .ga-hero.is-login {
+        display: none;
+    }
+}

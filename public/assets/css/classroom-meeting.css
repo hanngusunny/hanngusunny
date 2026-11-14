@@ -1,0 +1,2880 @@
+/* Meeting room — ported from old classroom */
+html:has(body.cr-body.page-classroom-room),
+body.cr-body.page-classroom-room {
+    height: 100%;
+}
+body.cr-body.page-classroom-room,
+body.cr-body.page-classroom-room * {
+    box-sizing: border-box;
+}
+body.cr-body.page-classroom-room [hidden] {
+    display: none !important;
+}
+body.cr-body.page-classroom-room {
+    margin: 0;
+    background: #0b1220;
+    color: #fff;
+    font-family: "Inter Tight", sans-serif;
+}
+body.cr-body.page-classroom-room .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+    font: inherit;
+}
+body.cr-body.page-classroom-room .btn-ghost { background: rgba(255,255,255,.08); color: #e2e8f0; padding: 6px 10px; }
+body.cr-body.page-classroom-room .btn-sm { font-size: 12px; }
+body.cr-body.page-classroom-room .btn-danger { background: #dc2626; color: #fff; padding: 8px 14px; }
+body.cr-body.page-classroom-room .btn-warning { background: #d97706; color: #fff; padding: 8px 12px; }
+body.cr-body.page-classroom-room .btn-success { background: #16a34a; color: #fff; padding: 8px 12px; }
+body.cr-body.page-classroom-room .btn-primary,
+body.cr-body.page-classroom-room .btn-sunny { background: #f26b21; color: #fff; padding: 8px 14px; }
+body.cr-body.page-classroom-room .btn-with-icon { gap: 8px; }
+body.cr-body.page-classroom-room .form-label { display: block; margin: 0 0 6px; font-size: 13px; color: #cbd5e1; }
+body.cr-body.page-classroom-room .form-control {
+    width: 100%;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 8px;
+    background: #111827;
+    color: #fff;
+    padding: 8px 10px;
+    box-sizing: border-box;
+}
+body.cr-body.page-classroom-room .text-danger { color: #fca5a5; }
+body.cr-body.page-classroom-room .mt-3 { margin-top: 12px; }
+body.cr-body.page-classroom-room .mb-2 { margin-bottom: 8px; }
+body.cr-body.page-classroom-room a { color: #fdba74; }
+body.cr-body.page-classroom-room {
+  margin: 0;
+  overflow: hidden;
+  background: #0f172a;
+  --orange: #f97316;
+  --orange-deep: #ea580c;
+}
+
+body.cr-body.page-classroom-room .meeting-shell {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100vh;
+  color: #fff;
+}
+
+body.cr-body.page-classroom-room .meeting-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 18px;
+  background: rgba(15, 23, 42, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+body.cr-body.page-classroom-room .meeting-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+body.cr-body.page-classroom-room .meeting-back {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  text-decoration: none;
+}
+
+body.cr-body.page-classroom-room .meeting-title {
+  display: block;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+body.cr-body.page-classroom-room .meeting-subtitle {
+  font-size: 0.76rem;
+  color: #94a3b8;
+}
+
+body.cr-body.page-classroom-room .meeting-room-meta {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.72rem;
+  color: #cbd5e1;
+}
+
+body.cr-body.page-classroom-room .meeting-room-meta code {
+  color: #fde68a;
+}
+
+body.cr-body.page-classroom-room .meeting-room-meta-copy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  margin-left: 4px;
+  border: 0;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #e2e8f0;
+  cursor: pointer;
+}
+
+body.cr-body.page-classroom-room .meeting-join-requests {
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+body.cr-body.page-classroom-room .meeting-join-request-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 12px 12px;
+  display: grid;
+  gap: 8px;
+}
+
+body.cr-body.page-classroom-room .meeting-join-request-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(251, 191, 36, 0.12);
+  border: 1px solid rgba(251, 191, 36, 0.28);
+}
+
+body.cr-body.page-classroom-room .meeting-join-request-guest {
+  display: inline-block;
+  margin-left: 4px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: rgba(59, 130, 246, 0.2);
+  color: #bfdbfe;
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
+body.cr-body.page-classroom-room .meeting-join-request-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.classroom-guest-link-box {
+  margin: 0 0 14px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+}
+
+.classroom-guest-link {
+  display: block;
+  margin: 6px 0;
+  word-break: break-all;
+}
+
+.classroom-jitsi-link-box {
+  margin: 0 0 14px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+}
+
+.classroom-jitsi-link,
+.classroom-jitsi-link-inline {
+  word-break: break-all;
+}
+
+.classroom-jitsi-link {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+}
+
+.classroom-link-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 8px 0;
+}
+
+.classroom-join-waiting {
+  padding: 16px;
+  border-radius: 12px;
+  background: #fffbeb;
+  border: 1px solid #fcd34d;
+  text-align: center;
+}
+
+.classroom-join-waiting i {
+  font-size: 1.4rem;
+  color: #d97706;
+}
+
+.guest-lobby-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: #f8fafc;
+}
+
+.guest-lobby-card {
+  width: min(100%, 460px);
+  padding: 24px;
+}
+
+.guest-lobby-head h1 {
+  margin: 8px 0;
+  font-size: 1.35rem;
+}
+
+.guest-lobby-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #dbeafe;
+  color: #1d4ed8;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.teacher-course-room-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  margin: 0 0 14px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  font-size: 0.86rem;
+  color: #475569;
+}
+
+.teacher-course-room-meta code {
+  color: #0f766e;
+}
+
+body.cr-body.page-classroom-room .meeting-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+body.cr-body.page-classroom-room .meeting-pip-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 38px;
+  padding: 0 14px 0 10px;
+  border: 1px solid rgba(125, 211, 252, 0.35);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 45%),
+    linear-gradient(135deg, rgba(14, 165, 233, 0.35) 0%, rgba(2, 132, 199, 0.28) 100%);
+  color: #e0f2fe;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.14) inset,
+    0 8px 18px rgba(2, 132, 199, 0.22);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease,
+    filter 0.2s ease;
+}
+
+body.cr-body.page-classroom-room .meeting-pip-btn__icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+body.cr-body.page-classroom-room .meeting-pip-btn__icon i {
+  font-size: 0.82rem;
+  color: #e0f2fe;
+}
+
+body.cr-body.page-classroom-room .meeting-pip-btn__text {
+  white-space: nowrap;
+}
+
+body.cr-body.page-classroom-room .meeting-pip-btn:hover {
+  border-color: rgba(125, 211, 252, 0.55);
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+}
+
+body.cr-body.page-classroom-room .meeting-pip-btn.is-on {
+  border-color: rgba(52, 211, 153, 0.55);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 45%),
+    linear-gradient(135deg, rgba(16, 185, 129, 0.4) 0%, rgba(5, 150, 105, 0.32) 100%);
+  color: #d1fae5;
+}
+
+body.cr-body.page-classroom-room .meeting-pip-btn.is-unsupported {
+  opacity: 0.55;
+}
+
+body.cr-body.page-classroom-room .meeting-pip-prompt {
+  position: fixed;
+  right: 24px;
+  bottom: 88px;
+  z-index: 80;
+  max-width: min(360px, calc(100vw - 32px));
+  pointer-events: none;
+}
+
+body.cr-body.page-classroom-room .meeting-pip-prompt__card {
+  pointer-events: auto;
+  display: grid;
+  gap: 8px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(125, 211, 252, 0.35);
+  background: rgba(15, 23, 42, 0.94);
+  box-shadow: 0 16px 40px rgba(2, 6, 23, 0.45);
+  color: #e2e8f0;
+}
+
+body.cr-body.page-classroom-room .meeting-pip-prompt__card strong {
+  font-size: 0.92rem;
+  color: #f8fafc;
+}
+
+body.cr-body.page-classroom-room .meeting-pip-prompt__card p {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: #cbd5e1;
+}
+
+body.cr-body.page-classroom-room .meeting-pip-prompt__card .btn {
+  justify-self: start;
+  margin-top: 4px;
+}
+
+body.cr-body.page-classroom-room .meeting-sidebar-pip-placeholder {
+  display: flex;
+  align-items: stretch;
+  min-height: 0;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(15, 23, 42, 0.55);
+}
+
+body.cr-body.page-classroom-room .meeting-sidebar-pip-placeholder__card {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  margin: 16px;
+  padding: 16px;
+  border-radius: 14px;
+  border: 1px dashed rgba(125, 211, 252, 0.35);
+  background: rgba(2, 132, 199, 0.08);
+  color: #e0f2fe;
+}
+
+body.cr-body.page-classroom-room .meeting-sidebar-pip-placeholder__card i {
+  font-size: 1.25rem;
+  color: #7dd3fc;
+}
+
+body.cr-body.page-classroom-room .meeting-sidebar-pip-placeholder__card strong {
+  font-size: 0.9rem;
+}
+
+body.cr-body.page-classroom-room .meeting-sidebar-pip-placeholder__card p {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: #cbd5e1;
+}
+
+body.cr-body.page-classroom-room .meeting-shell.is-pip-active .meeting-sidebar-pip-placeholder {
+  min-height: 160px;
+}
+
+body.cr-body.page-classroom-room.meeting-pip-body {
+  height: 100%;
+  overflow: hidden;
+  color: #fff;
+}
+
+body.cr-body.page-classroom-room.meeting-pip-body--sidebar .meeting-sidebar {
+  display: flex !important;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  border-left: 0;
+  background: #0f172a;
+}
+
+body.cr-body.page-classroom-room.meeting-pip-body--sidebar .meeting-sidebar-panel.is-active {
+  display: flex !important;
+  flex: 1;
+  min-height: 0;
+}
+
+body.cr-body.page-classroom-room.meeting-pip-body--sidebar .meeting-participant-list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+body.cr-body.page-classroom-room .meeting-create-poll-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 38px;
+  padding: 0 16px 0 10px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0) 42%),
+    linear-gradient(135deg, #fb923c 0%, #f97316 48%, #ea580c 100%);
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.22) inset,
+    0 10px 22px rgba(249, 115, 22, 0.34),
+    0 2px 8px rgba(15, 23, 42, 0.28);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease,
+    filter 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body.cr-body.page-classroom-room .meeting-create-poll-btn__icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.16) inset;
+}
+
+body.cr-body.page-classroom-room .meeting-create-poll-btn__icon i {
+  font-size: 0.82rem;
+  color: #fff;
+  filter: drop-shadow(0 1px 1px rgba(15, 23, 42, 0.2));
+}
+
+body.cr-body.page-classroom-room .meeting-create-poll-btn__text {
+  color: #fff;
+  white-space: nowrap;
+}
+
+body.cr-body.page-classroom-room .meeting-create-poll-btn:hover {
+  border-color: rgba(255, 255, 255, 0.34);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 46%),
+    linear-gradient(135deg, #fdba74 0%, #fb923c 42%, #f97316 100%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.28) inset,
+    0 14px 28px rgba(249, 115, 22, 0.42),
+    0 4px 12px rgba(15, 23, 42, 0.32);
+  transform: translateY(-1px);
+}
+
+body.cr-body.page-classroom-room .meeting-create-poll-btn:focus {
+  outline: none;
+}
+
+body.cr-body.page-classroom-room .meeting-create-poll-btn:focus-visible {
+  outline: none;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.28) inset,
+    0 14px 28px rgba(249, 115, 22, 0.42),
+    0 0 0 3px rgba(251, 146, 60, 0.35);
+}
+
+body.cr-body.page-classroom-room .meeting-create-poll-btn:active {
+  transform: translateY(0);
+  filter: brightness(0.96);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.14) inset,
+    0 6px 14px rgba(249, 115, 22, 0.28);
+}
+
+body.cr-body.page-classroom-room .meeting-ios-share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid rgba(96, 165, 250, 0.55);
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.28) 0%, rgba(37, 99, 235, 0.18) 100%);
+  color: #eff6ff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+body.cr-body.page-classroom-room .meeting-ios-share-btn:hover {
+  filter: brightness(1.05);
+}
+
+body.cr-body.page-classroom-room .meeting-ios-share-btn--large {
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+body.cr-body.page-classroom-room .meeting-ios-share-btn--ghost {
+  border-color: rgba(148, 163, 184, 0.45);
+  background: rgba(30, 41, 59, 0.72);
+  color: #e2e8f0;
+}
+
+html.is-ios-device body.cr-body.page-classroom-room #iosScreenShareBtn,
+html.is-ios-device body.cr-body.page-classroom-room #iosVideoHint,
+html.is-ios-device body.cr-body.page-classroom-room #iosScreenShareFooterBtn {
+  display: inline-flex !important;
+}
+
+html.is-ios-device body.cr-body.page-classroom-room #iosVideoHint {
+  display: block !important;
+}
+
+body.cr-body.page-classroom-room .meeting-ios-video-hint__list {
+  margin: 0 0 12px 18px;
+  padding: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #cbd5e1;
+}
+
+body.cr-body.page-classroom-room .meeting-ios-video-hint__list li + li {
+  margin-top: 6px;
+}
+
+body.cr-body.page-classroom-room .meeting-ios-video-hint__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+body.cr-body.page-classroom-room .meeting-ios-footer-share-btn {
+  border-color: rgba(96, 165, 250, 0.55);
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+}
+
+body.cr-body.page-classroom-room .meeting-ios-video-hint {
+  position: absolute;
+  inset: auto 16px 72px 16px;
+  z-index: 30;
+  pointer-events: none;
+}
+
+body.cr-body.page-classroom-room .meeting-ios-video-hint__card {
+  pointer-events: auto;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(96, 165, 250, 0.45);
+  background: rgba(15, 23, 42, 0.88);
+  color: #e2e8f0;
+  box-shadow: 0 12px 30px rgba(2, 6, 23, 0.35);
+}
+
+body.cr-body.page-classroom-room .meeting-ios-video-hint__icon {
+  font-size: 18px;
+  color: #fbbf24;
+  margin-right: 6px;
+}
+
+body.cr-body.page-classroom-room .meeting-ios-video-hint__card p {
+  margin: 8px 0 12px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #cbd5e1;
+}
+
+body.cr-body.page-classroom-room .meeting-video-wrap {
+  position: relative;
+  min-height: 0;
+  background: #0f172a;
+}
+
+body.cr-body.page-classroom-room .meeting-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  padding: 0 12px 0 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(248, 113, 113, 0.45);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 48%),
+    linear-gradient(135deg, rgba(220, 38, 38, 0.92) 0%, rgba(185, 28, 28, 0.96) 100%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.16) inset,
+    0 8px 20px rgba(220, 38, 38, 0.28),
+    0 0 0 1px rgba(15, 23, 42, 0.2);
+}
+
+body.cr-body.page-classroom-room .meeting-live-badge__signal {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+}
+
+body.cr-body.page-classroom-room .meeting-live-badge__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.75);
+  z-index: 2;
+}
+
+body.cr-body.page-classroom-room .meeting-live-badge__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  animation: meeting-live-pulse 1.8s ease-out infinite;
+}
+
+body.cr-body.page-classroom-room .meeting-live-badge__text {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fff;
+  line-height: 1;
+  text-shadow: 0 1px 2px rgba(15, 23, 42, 0.28);
+}
+
+@keyframes meeting-live-pulse {
+  0% {
+    transform: scale(0.55);
+    opacity: 0.85;
+  }
+  70% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+body.cr-body.page-classroom-room .meeting-user {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 38px;
+  max-width: min(240px, 34vw);
+  padding: 0 14px 0 6px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 44%),
+    linear-gradient(135deg, rgba(51, 65, 85, 0.92) 0%, rgba(15, 23, 42, 0.98) 100%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.14) inset,
+    0 8px 20px rgba(15, 23, 42, 0.42),
+    0 0 0 1px rgba(15, 23, 42, 0.24);
+}
+
+body.cr-body.page-classroom-room .meeting-user__avatar {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.16) inset,
+    0 2px 6px rgba(15, 23, 42, 0.28);
+}
+
+body.cr-body.page-classroom-room .meeting-user__avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+body.cr-body.page-classroom-room .meeting-user__info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-width: 0;
+  line-height: 1.15;
+}
+
+body.cr-body.page-classroom-room .meeting-user__name {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  text-shadow: 0 1px 2px rgba(15, 23, 42, 0.22);
+}
+
+body.cr-body.page-classroom-room .meeting-user__role {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+body.cr-body.page-classroom-room .meeting-user--teacher .meeting-user__role {
+  color: #fdba74;
+}
+
+body.cr-body.page-classroom-room .meeting-user--admin .meeting-user__role {
+  color: #7dd3fc;
+}
+
+body.cr-body.page-classroom-room .meeting-user--student .meeting-user__role {
+  color: #86efac;
+}
+
+body.cr-body.page-classroom-room .meeting-body {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  min-height: 0;
+}
+
+body.cr-body.page-classroom-room .meeting-jitsi {
+  width: 100%;
+  height: 100%;
+}
+
+body.cr-body.page-classroom-room .meeting-jitsi iframe {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+body.cr-body.page-classroom-room .meeting-sidebar {
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+body.cr-body.page-classroom-room .meeting-sidebar-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+body.cr-body.page-classroom-room .meeting-sidebar-head h2 {
+  margin: 0;
+  font-size: 0.88rem;
+}
+
+body.cr-body.page-classroom-room .meeting-participant-list {
+  list-style: none;
+  margin: 0;
+  padding: 8px 12px 12px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  flex: 1;
+  min-height: 0;
+}
+
+body.cr-body.page-classroom-room .meeting-participant-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 4px;
+  border-radius: 0;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+body.cr-body.page-classroom-room .meeting-participant-avatar {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #5b8c94, #3f6970);
+  font-weight: 800;
+  font-size: 0.82rem;
+}
+
+body.cr-body.page-classroom-room .meeting-participant-item strong {
+  display: block;
+  font-size: 0.82rem;
+}
+
+body.cr-body.page-classroom-room .meeting-participant-item small {
+  color: #94a3b8;
+  font-size: 0.72rem;
+}
+
+body.cr-body.page-classroom-room .meeting-participant-meta {
+  min-width: 0;
+  flex: 1;
+}
+
+body.cr-body.page-classroom-room .meeting-participant-item.is-self {
+  background: transparent;
+  border-bottom-color: rgba(245, 179, 1, 0.25);
+}
+
+body.cr-body.page-classroom-room .meeting-participant-you {
+  font-style: normal;
+  font-weight: 600;
+  color: #fcd34d;
+  font-size: 0.72rem;
+}
+
+body.cr-body.page-classroom-room .meeting-participant-empty {
+  padding: 12px 4px;
+  text-align: left;
+  color: #94a3b8;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  list-style: none;
+  border: none;
+}
+
+body.cr-body.page-classroom-room .meeting-participant-item.is-on-break {
+  background: transparent;
+  border-bottom-color: rgba(251, 191, 36, 0.35);
+}
+
+body.cr-body.page-classroom-room .meeting-participant-item.is-on-break strong {
+  color: #fcd34d;
+}
+
+body.cr-body.page-classroom-room .meeting-shell.is-screen-sharing .meeting-body {
+  grid-template-columns: minmax(0, 1fr) 220px;
+}
+
+body.cr-body.page-classroom-room .meeting-shell.is-screen-sharing .meeting-sidebar {
+  background: transparent;
+}
+
+body.cr-body.page-classroom-room .meeting-shell.is-screen-sharing .meeting-sidebar-head {
+  padding: 10px 12px;
+}
+
+body.cr-body.page-classroom-room .meeting-shell.is-screen-sharing .meeting-sidebar-head h2 {
+  font-size: 0.78rem;
+}
+
+body.cr-body.page-classroom-room .meeting-shell.is-screen-sharing .meeting-participant-item {
+  padding: 6px 8px;
+}
+
+body.cr-body.page-classroom-room .meeting-shell.is-screen-sharing .meeting-participant-avatar {
+  width: 28px;
+  height: 28px;
+  font-size: 0.72rem;
+}
+
+body.cr-body.page-classroom-room .meeting-shell.is-screen-sharing .meeting-participant-item strong {
+  font-size: 0.75rem;
+}
+
+body.cr-body.page-classroom-room .meeting-shell.is-screen-sharing .meeting-participant-item small {
+  font-size: 0.66rem;
+}
+
+body.cr-body.page-classroom-room .meeting-shell.is-screen-sharing .meeting-break-panel {
+  margin: 8px 8px 0;
+  padding: 8px;
+}
+
+body.cr-body.page-classroom-room .meeting-participant-break-tag {
+  display: inline-block;
+  margin-left: 4px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: rgba(251, 191, 36, 0.2);
+  color: #fcd34d;
+  font-size: 0.65rem;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
+body.cr-body.page-classroom-room .meeting-break-panel {
+  margin: 12px 12px 0;
+  padding: 10px;
+  border-radius: 12px;
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.28);
+}
+
+body.cr-body.page-classroom-room .meeting-break-panel-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 0.82rem;
+  color: #fcd34d;
+}
+
+body.cr-body.page-classroom-room .meeting-break-count {
+  margin-left: auto;
+  min-width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(251, 191, 36, 0.25);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+body.cr-body.page-classroom-room .meeting-break-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+body.cr-body.page-classroom-room .meeting-break-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 8px;
+  background: rgba(15, 23, 42, 0.45);
+}
+
+body.cr-body.page-classroom-room .meeting-break-avatar {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  font-weight: 800;
+  font-size: 0.72rem;
+  color: #fff;
+}
+
+body.cr-body.page-classroom-room .meeting-break-meta strong {
+  display: block;
+  font-size: 0.78rem;
+}
+
+body.cr-body.page-classroom-room .meeting-break-duration {
+  color: #fbbf24;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+body.cr-body.page-classroom-room .meeting-break-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(251, 191, 36, 0.15);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  color: #fcd34d;
+  font-size: 0.82rem;
+}
+
+body.cr-body.page-classroom-room .meeting-footer-student {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+body.cr-body.page-classroom-room .meeting-footer-leave-form {
+  margin-left: auto;
+}
+
+body.cr-body.page-classroom-room .meeting-footer-leave {
+  margin-left: 0;
+}
+
+body.cr-body.page-classroom-room .meeting-break-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 88px;
+  transform: translateX(-50%);
+  z-index: 1200;
+  max-width: min(92vw, 420px);
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  background: rgba(15, 23, 42, 0.95);
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+body.cr-body.page-classroom-room .meeting-break-toast[data-type="success"] {
+  border-color: rgba(34, 197, 94, 0.45);
+  color: #bbf7d0;
+}
+
+body.cr-body.page-classroom-room .meeting-break-toast[data-type="error"] {
+  border-color: rgba(239, 68, 68, 0.45);
+  color: #fecaca;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(96, 165, 250, 0.35);
+  background: rgba(59, 130, 246, 0.15);
+  color: #bfdbfe;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-btn:hover {
+  background: rgba(59, 130, 246, 0.28);
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-active-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 12px 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(96, 165, 250, 0.28);
+  color: #bfdbfe;
+  font-size: 0.82rem;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-panel {
+  margin: 12px 12px 0;
+  padding: 10px;
+  border-radius: 12px;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(96, 165, 250, 0.28);
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-panel-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 0.82rem;
+  color: #bfdbfe;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-end-btn {
+  margin-left: auto;
+  color: #fecaca !important;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-note {
+  margin: 0 0 8px;
+  font-size: 0.75rem;
+  color: #93c5fd;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-room-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-room-item {
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.45);
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-room-item.is-current {
+  border: 1px solid rgba(96, 165, 250, 0.45);
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-room-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-room-head strong {
+  font-size: 0.82rem;
+  color: #e2e8f0;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-room-members {
+  margin: 0;
+  padding-left: 16px;
+  font-size: 0.72rem;
+  color: #94a3b8;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-student-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(96, 165, 250, 0.3);
+  color: #bfdbfe;
+  font-size: 0.82rem;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-modal-desc {
+  margin: 0 0 14px;
+  color: #64748b;
+  font-size: 0.88rem;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-mode {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-mode-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(96, 165, 250, 0.28);
+  background: rgba(15, 23, 42, 0.35);
+  color: #dbeafe;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-mode-option:has(input:checked) {
+  border-color: rgba(96, 165, 250, 0.55);
+  background: rgba(59, 130, 246, 0.22);
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-manual-panel {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(96, 165, 250, 0.18);
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-manual-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+  color: #bfdbfe;
+  font-size: 0.84rem;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-manual-count {
+  color: #93c5fd;
+  font-size: 0.75rem;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-manual-note {
+  margin: 0 0 10px;
+  font-size: 0.75rem;
+  color: #93c5fd;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-manual-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+  max-height: 280px;
+  overflow: auto;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-manual-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 140px;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.45);
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-manual-item strong {
+  display: block;
+  color: #eff6ff;
+  font-size: 0.82rem;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-manual-item select {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(96, 165, 250, 0.28);
+  background: rgba(15, 23, 42, 0.8);
+  color: #eff6ff;
+  font-size: 0.8rem;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-manual-empty {
+  padding: 14px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.35);
+  color: #93c5fd;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-field {
+  display: grid;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: #334155;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-field input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-teacher-bar {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.88);
+  border: 1px solid rgba(96, 165, 250, 0.35);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-teacher-bar__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #bfdbfe;
+  white-space: nowrap;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-teacher-bar__rooms {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex: 1;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-teacher-bar__room {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: rgba(30, 41, 59, 0.85);
+  color: #e2e8f0;
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-teacher-bar__room:hover {
+  border-color: rgba(96, 165, 250, 0.55);
+  background: rgba(59, 130, 246, 0.2);
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-teacher-bar__room.is-active {
+  border-color: rgba(96, 165, 250, 0.75);
+  background: rgba(59, 130, 246, 0.35);
+  color: #fff;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-teacher-bar__room small {
+  font-weight: 600;
+  color: #93c5fd;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-teacher-bar__end {
+  margin-left: auto;
+  color: #fecaca !important;
+  white-space: nowrap;
+}
+
+body.cr-body.page-classroom-room .meeting-participant-breakout-tag {
+  display: inline-block;
+  margin-left: 4px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: rgba(59, 130, 246, 0.2);
+  color: #93c5fd;
+  font-size: 0.65rem;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
+body.cr-body.page-classroom-room .meeting-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 14px;
+  background: rgba(15, 23, 42, 0.95);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Live Q&A / Polls in meeting room */
+body.cr-body.page-classroom-room .meeting-sidebar-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  padding: 10px 10px 0;
+}
+
+body.cr-body.page-classroom-room .meeting-sidebar-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #94a3b8;
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+body.cr-body.page-classroom-room .meeting-sidebar-tab.is-active {
+  background: rgba(245, 179, 1, 0.15);
+  border-color: rgba(245, 179, 1, 0.35);
+  color: #fcd34d;
+}
+
+body.cr-body.page-classroom-room .meeting-sidebar-panel {
+  display: none;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+}
+
+body.cr-body.page-classroom-room .meeting-sidebar-panel.is-active {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+body.cr-body.page-classroom-room .meeting-preset-list {
+  max-height: 220px;
+  overflow-y: auto;
+  padding: 8px 12px 12px;
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+
+body.cr-body.page-classroom-room .meeting-preset-block {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+body.cr-body.page-classroom-room .meeting-review-quiz-block {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+body.cr-body.page-classroom-room .meeting-review-quiz-card {
+  padding: 0 12px 14px;
+}
+
+body.cr-body.page-classroom-room .meeting-review-quiz-desc {
+  margin: 0 0 10px;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: #94a3b8;
+}
+
+body.cr-body.page-classroom-room .meeting-review-quiz-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+body.cr-body.page-classroom-room .meeting-review-quiz-launch-btn {
+  width: 100%;
+  justify-content: center;
+}
+
+body.cr-body.page-classroom-room .meeting-review-quiz-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #86efac;
+  background: rgba(34, 197, 94, 0.12);
+}
+
+body.cr-body.page-classroom-room .meeting-review-quiz-stats {
+  padding: 0 12px 14px;
+}
+
+body.cr-body.page-classroom-room .meeting-review-quiz-stats-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 0.78rem;
+  color: #cbd5e1;
+}
+
+body.cr-body.page-classroom-room .meeting-review-quiz-stats-body {
+  display: grid;
+  gap: 8px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+body.cr-body.page-classroom-room .meeting-review-quiz-score {
+  font-size: 0.78rem;
+  color: #cbd5e1;
+}
+
+body.cr-body.page-classroom-room .meeting-review-quiz-overlay .meeting-poll-modal {
+  max-width: 720px;
+  width: min(720px, calc(100vw - 24px));
+}
+
+body.cr-body.page-classroom-room .meeting-review-quiz-overlay.is-active-quiz .meeting-poll-close {
+  display: none;
+}
+
+body.cr-body.page-classroom-room .meeting-review-quiz-note {
+  margin: 6px 0 0;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+body.cr-body.page-classroom-room .meeting-review-quiz-body {
+  max-height: min(58vh, 520px);
+  overflow-y: auto;
+  display: grid;
+  gap: 14px;
+}
+
+body.cr-body.page-classroom-room .meeting-review-quiz-item {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+body.cr-body.page-classroom-room .meeting-review-quiz-item-head {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: start;
+  margin-bottom: 10px;
+}
+
+body.cr-body.page-classroom-room .meeting-review-quiz-no {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: rgba(245, 179, 1, 0.18);
+  color: #fcd34d;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+body.cr-body.page-classroom-room .meeting-review-quiz-question {
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: #f8fafc;
+}
+
+body.cr-body.page-classroom-room .meeting-review-quiz-success-note {
+  margin-top: 8px;
+  font-size: 0.82rem;
+  color: #64748b;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-block .meeting-poll-list {
+  max-height: 240px;
+}
+
+body.cr-body.page-classroom-room .meeting-preset-card {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(245, 179, 1, 0.25);
+  border-radius: 10px;
+  background: rgba(245, 179, 1, 0.08);
+  color: #e2e8f0;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+}
+
+body.cr-body.page-classroom-room .meeting-preset-card:hover {
+  border-color: rgba(245, 179, 1, 0.55);
+  background: rgba(245, 179, 1, 0.14);
+  transform: translateY(-1px);
+}
+
+body.cr-body.page-classroom-room .meeting-preset-card strong {
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+body.cr-body.page-classroom-room .meeting-preset-no {
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #fcd34d;
+}
+
+body.cr-body.page-classroom-room .meeting-preset-action {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #fcd34d;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 12px 14px;
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-empty {
+  margin: 0;
+  padding: 20px 8px;
+  text-align: center;
+  color: #64748b;
+  font-size: 0.8rem;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-card {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #e2e8f0;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-card:hover {
+  border-color: rgba(245, 179, 1, 0.4);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+body.cr-body.page-classroom-room .meeting-poll-card strong {
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-card-meta {
+  font-size: 0.72rem;
+  color: #94a3b8;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-card-status {
+  display: inline-flex;
+  align-self: flex-start;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-card-type {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #fcd34d;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-card.is-open .meeting-poll-card-status {
+  background: rgba(52, 196, 124, 0.15);
+  color: #68d391;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-card.is-closed .meeting-poll-card-status {
+  background: rgba(148, 163, 184, 0.15);
+  color: #94a3b8;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px 12px;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-head {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 8px;
+  align-items: start;
+  padding: 8px 0 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-head strong {
+  display: block;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  margin-bottom: 4px;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-head span {
+  font-size: 0.72rem;
+  color: #94a3b8;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-table-wrap {
+  flex: 1;
+  overflow: auto;
+  margin-top: 8px;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.76rem;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-table th,
+body.cr-body.page-classroom-room .meeting-poll-stats-table td {
+  padding: 8px 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  text-align: left;
+  vertical-align: top;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-table th {
+  color: #94a3b8;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-answer-yes {
+  color: #68d391;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-answer-no {
+  color: #94a3b8;
+  font-style: italic;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-all-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-all-head h3 {
+  margin: 0;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #cbd5e1;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-group-list--all {
+  gap: 6px;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-item-title {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-item-title strong {
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-online-tag {
+  font-size: 0.64rem;
+  font-weight: 700;
+  color: #68d391;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-online-tag--away {
+  color: #94a3b8;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-group-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-group-head h3 {
+  margin: 0;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-group--answered .meeting-poll-stats-group-head h3 {
+  color: #68d391;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-group--pending .meeting-poll-stats-group-head h3 {
+  color: #fbbf24;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-group-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #e2e8f0;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-group-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-item {
+  padding: 10px 11px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-item--answered {
+  border-color: rgba(104, 211, 145, 0.22);
+  background: rgba(104, 211, 145, 0.08);
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-item--pending {
+  border-color: rgba(251, 191, 36, 0.18);
+  background: rgba(251, 191, 36, 0.06);
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-item-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-item-head strong {
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-badge {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.64rem;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-badge--done {
+  background: rgba(104, 211, 145, 0.16);
+  color: #68d391;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-badge--pending {
+  background: rgba(251, 191, 36, 0.16);
+  color: #fbbf24;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-item-answer {
+  margin-top: 6px;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: #e2e8f0;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-item-time {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.68rem;
+  color: #94a3b8;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-item-hint {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.7rem;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-stats-empty {
+  margin: 0;
+  padding: 8px 2px;
+  font-size: 0.74rem;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+body.cr-body.page-classroom-room .meeting-tab-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 20px;
+  background: rgba(245, 179, 1, 0.25);
+  color: #fcd34d;
+  font-size: 0.65rem;
+  font-weight: 800;
+}
+
+body.cr-body.page-classroom-room .meeting-tab-badge[hidden] {
+  display: none !important;
+}
+
+body.cr-body.page-classroom-room .meeting-student-answers {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 12px 14px;
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+
+body.cr-body.page-classroom-room .meeting-student-answer-card {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(52, 196, 124, 0.22);
+  border-radius: 10px;
+  background: rgba(52, 196, 124, 0.08);
+  color: #e2e8f0;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.15s;
+}
+
+body.cr-body.page-classroom-room .meeting-student-answer-card:hover {
+  border-color: rgba(52, 196, 124, 0.45);
+  transform: translateY(-1px);
+}
+
+body.cr-body.page-classroom-room .meeting-student-answer-card strong {
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+body.cr-body.page-classroom-room .meeting-student-answer-type {
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #68d391;
+}
+
+body.cr-body.page-classroom-room .meeting-student-answer-value {
+  font-size: 0.78rem;
+  color: #cbd5e1;
+}
+
+body.cr-body.page-classroom-room .meeting-student-answer-value i {
+  color: #68d391;
+  margin-right: 4px;
+}
+
+body.cr-body.page-classroom-room .meeting-student-answer-time {
+  font-size: 0.68rem;
+  color: #94a3b8;
+}
+
+body.cr-body.page-classroom-room .meeting-mobile-answers-btn {
+  display: none;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(8, 15, 30, 0.78);
+  backdrop-filter: blur(8px);
+  animation: meetingPollFadeIn 0.22s ease;
+}
+
+@keyframes meetingPollFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes meetingPollSlideUp {
+  from { opacity: 0; transform: translateY(18px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+body.cr-body.page-classroom-room .meeting-poll-overlay[hidden] {
+  display: none !important;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal {
+  width: min(480px, 100%);
+  max-height: min(90vh, 680px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  background: #fff;
+  color: #0f172a;
+  box-shadow: 0 28px 80px rgba(15, 23, 42, 0.42);
+  animation: meetingPollSlideUp 0.28s ease;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal-student {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal-hero {
+  position: relative;
+  padding: 24px 22px 18px;
+  background: linear-gradient(135deg, #1f6f78 0%, #145961 55%, #0f172a 100%);
+  color: #fff;
+  text-align: center;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-overlay.is-success .meeting-poll-modal-hero {
+  background: linear-gradient(135deg, #34c47c 0%, #1f6f78 100%);
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal-icon {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.16);
+  font-size: 1.35rem;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-type-tag {
+  display: inline-flex;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.14);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal-hero h2 {
+  margin: 12px 0 0;
+  font-size: 1.08rem;
+  line-height: 1.5;
+  font-weight: 700;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal-head {
+  padding: 18px 20px 12px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal-head h2 {
+  margin: 8px 0 0;
+  font-size: 1.05rem;
+  line-height: 1.45;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: #eef6f8;
+  color: #1f6f78;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+  z-index: 2;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-close:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+body.cr-body.page-classroom-room .meeting-poll-overlay.is-active-poll .meeting-poll-close {
+  display: none;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-countdown {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0 0;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-countdown strong {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-overlay.is-active-poll.is-countdown-urgent .meeting-poll-countdown {
+  background: rgba(251, 191, 36, 0.28);
+  color: #fef3c7;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal-create {
+  position: relative;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal-create .meeting-poll-close {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal-body {
+  padding: 20px 22px;
+  overflow-y: auto;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal-body .form-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal-body .form-control {
+  border-radius: 10px;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-hint,
+body.cr-body.page-classroom-room .meeting-poll-fill-note {
+  margin: 8px 0 0;
+  font-size: 0.76rem;
+  color: #64748b;
+  line-height: 1.45;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-fill-wrap {
+  display: grid;
+  gap: 10px;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-fill-prompt {
+  margin-bottom: 4px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #0f172a;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  text-align: left;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-fill-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-fill-input {
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 16px;
+  border: 2px solid #dbe3ee;
+  border-radius: 12px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-fill-input:focus {
+  border-color: #1f6f78;
+  box-shadow: 0 0 0 4px rgba(31, 111, 120, 0.12);
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal-foot {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 14px 22px 20px;
+  border-top: 1px solid #eef2f7;
+  background: #fafbfd;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-submit-btn {
+  min-width: 180px;
+  justify-content: center;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 700;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-type-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-duration-toggle {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-duration-option {
+  display: block;
+  margin: 0;
+  cursor: pointer;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-duration-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-duration-option span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 8px 6px;
+  border: 1.5px solid #dbe3ee;
+  border-radius: 12px;
+  background: #f8fafc;
+  color: #334155;
+  font-size: 0.82rem;
+  font-weight: 750;
+  transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-duration-option:hover span {
+  border-color: #cbd5e1;
+  background: #fff;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-duration-option input:checked + span {
+  border-color: var(--modal-orange, #f26b21);
+  background: #fff7f1;
+  color: var(--modal-orange-deep, #dc5a14);
+  box-shadow: 0 0 0 4px var(--modal-focus, rgba(242, 107, 33, 0.16));
+}
+
+body.cr-body.page-classroom-room .meeting-poll-type-option {
+  display: block;
+  margin: 0;
+  cursor: pointer;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-type-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-type-option span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid #dbe3ee;
+  border-radius: 10px;
+  background: #f8fafc;
+  font-size: 0.84rem;
+  font-weight: 650;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-type-option input:checked + span {
+  border-color: #1f6f78;
+  background: #eef6f8;
+  color: #1f6f78;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-choices {
+  display: grid;
+  gap: 10px;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-choice {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding: 14px 16px;
+  border: 2px solid #e8edf4;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-choice:hover {
+  border-color: #b8d4d8;
+  transform: translateY(-1px);
+}
+
+body.cr-body.page-classroom-room .meeting-poll-choice:has(input:checked),
+body.cr-body.page-classroom-room .meeting-poll-choice.is-selected {
+  border-color: #1f6f78;
+  background: linear-gradient(135deg, #eef6f8 0%, #f8fffe 100%);
+}
+
+body.cr-body.page-classroom-room .meeting-poll-choice-readonly {
+  cursor: default;
+  grid-template-columns: auto 1fr auto;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-choice-readonly:hover {
+  transform: none;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-choice input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-choice-letter {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: #f1f5f9;
+  color: #1f6f78;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-choice:has(input:checked) .meeting-poll-choice-letter,
+body.cr-body.page-classroom-room .meeting-poll-choice.is-selected .meeting-poll-choice-letter {
+  background: #1f6f78;
+  color: #fff;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-choice span:last-child,
+body.cr-body.page-classroom-room .meeting-poll-choice > span:not(.meeting-poll-choice-letter) {
+  font-size: 0.92rem;
+  line-height: 1.45;
+  font-weight: 600;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-choice-check {
+  color: #34c47c;
+  font-size: 1rem;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-answer-result {
+  display: grid;
+  gap: 8px;
+  padding: 18px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #eef6f8 0%, #f8fafc 100%);
+  border: 1px solid #dbe3ee;
+  text-align: center;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-answer-result-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #64748b;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-answer-result-value {
+  font-size: 1.2rem;
+  color: #1f6f78;
+  word-break: break-word;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-success {
+  text-align: center;
+  padding: 10px 0 4px;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-success-ring {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background: rgba(52, 196, 124, 0.12);
+  color: #34c47c;
+  font-size: 1.8rem;
+  animation: meetingPollPop 0.45s ease;
+}
+
+@keyframes meetingPollPop {
+  0% { transform: scale(0.5); opacity: 0; }
+  70% { transform: scale(1.08); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+body.cr-body.page-classroom-room .meeting-poll-success h3 {
+  margin: 0 0 6px;
+  font-size: 1.15rem;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-success p {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.88rem;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-success-answer {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1f6f78;
+  word-break: break-word;
+}
+
+@media (max-width: 900px) {
+  body.page-classrooms .classroom-lobby-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body.cr-body.page-classroom-room .meeting-body {
+    grid-template-columns: 1fr;
+  }
+
+  body.cr-body.page-classroom-room .meeting-sidebar {
+    display: none;
+  }
+
+  body.cr-body.page-classroom-room.meeting-pip-body--sidebar .meeting-sidebar {
+    display: flex !important;
+  }
+
+  body.cr-body.page-classroom-room .meeting-shell.is-screen-sharing .meeting-body {
+    grid-template-columns: minmax(0, 1fr) 132px;
+  }
+
+  body.cr-body.page-classroom-room .meeting-shell.is-screen-sharing .meeting-sidebar {
+    display: flex;
+    position: static;
+    width: auto;
+    min-width: 0;
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0;
+    box-shadow: none;
+    overflow: hidden;
+  }
+
+  body.cr-body.page-classroom-room .meeting-shell.is-screen-sharing .meeting-sidebar-tabs {
+    grid-template-columns: 1fr;
+  }
+
+  body.cr-body.page-classroom-room .meeting-shell.is-screen-sharing .meeting-sidebar-tab {
+    padding: 8px 6px;
+    font-size: 0.68rem;
+    justify-content: center;
+  }
+
+  body.cr-body.page-classroom-room .meeting-shell.is-screen-sharing .meeting-sidebar-tab span,
+  body.cr-body.page-classroom-room .meeting-shell.is-screen-sharing .meeting-tab-badge {
+    display: none;
+  }
+
+  body.cr-body.page-classroom-room .meeting-mobile-answers-btn {
+    display: inline-flex;
+  }
+
+  body.cr-body.page-classroom-room .meeting-footer {
+    gap: 10px;
+  }
+
+  body.cr-body.page-classroom-room .meeting-footer-leave {
+    margin-left: 0;
+    width: 100%;
+    justify-content: center;
+  }
+
+  body.cr-body.page-classroom-room .meeting-footer-student {
+    width: 100%;
+    justify-content: center;
+  }
+
+  body.cr-body.page-classroom-room .meeting-poll-overlay {
+    padding: 12px;
+  }
+
+  body.cr-body.page-classroom-room .meeting-poll-modal {
+    width: 100%;
+  }
+
+  html.is-ios-device body.cr-body.page-classroom-room .meeting-user__info {
+    display: none;
+  }
+
+  html.is-ios-device body.cr-body.page-classroom-room .meeting-topbar-right {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px;
+    max-width: 62vw;
+  }
+
+  html.is-ios-device body.cr-body.page-classroom-room .meeting-ios-footer-share-btn {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+}
+
+/* ===== Admin Classroom Form ===== */
+
+body.page-classroom-admin .classroom-preset-type-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+body.page-classroom-admin .classroom-preset-type-option {
+  margin: 0;
+  cursor: pointer;
+}
+
+body.page-classroom-admin .classroom-preset-type-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+body.page-classroom-admin .classroom-preset-type-option span {
+  display: block;
+  padding: 10px 12px;
+  border: 1px solid #dbe3ee;
+  border-radius: 8px;
+  background: #f8fafc;
+  text-align: center;
+  font-size: 0.84rem;
+  font-weight: 650;
+}
+
+body.page-classroom-admin .classroom-preset-type-option input:checked + span {
+  border-color: #1f6f78;
+  background: #eef6f8;
+  color: #1f6f78;
+}
+
+/* —— Modal buttons & inputs —— */
+body.cr-body.page-classroom-room .meeting-poll-modal {
+  --modal-ink: #0f172a;
+  --modal-muted: #64748b;
+  --modal-line: #e2e8f0;
+  --modal-soft: #f8fafc;
+  --modal-orange: #f26b21;
+  --modal-orange-deep: #dc5a14;
+  --modal-focus: rgba(242, 107, 33, 0.16);
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal-create,
+body.cr-body.page-classroom-room .meeting-breakout-modal {
+  position: relative;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal-create .meeting-poll-close,
+body.cr-body.page-classroom-room .meeting-breakout-modal .meeting-poll-close {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal-create .meeting-poll-close:hover,
+body.cr-body.page-classroom-room .meeting-breakout-modal .meeting-poll-close:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal .form-label,
+body.cr-body.page-classroom-room .meeting-poll-modal .meeting-breakout-field > span,
+body.cr-body.page-classroom-room .meeting-poll-modal .meeting-poll-fill-label {
+  display: block;
+  margin: 0 0 8px;
+  color: #334155;
+  font-size: 0.78rem;
+  font-weight: 750;
+  letter-spacing: 0.02em;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal .form-control,
+body.cr-body.page-classroom-room .meeting-poll-modal input[type="text"],
+body.cr-body.page-classroom-room .meeting-poll-modal input[type="number"],
+body.cr-body.page-classroom-room .meeting-poll-modal textarea,
+body.cr-body.page-classroom-room .meeting-poll-modal select {
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1.5px solid #dbe3ee;
+  border-radius: 12px;
+  background: #f8fafc;
+  color: #0f172a;
+  padding: 12px 14px;
+  font: inherit;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  outline: none;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal .form-control::placeholder,
+body.cr-body.page-classroom-room .meeting-poll-modal input::placeholder,
+body.cr-body.page-classroom-room .meeting-poll-modal textarea::placeholder {
+  color: #94a3b8;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal .form-control:hover,
+body.cr-body.page-classroom-room .meeting-poll-modal input[type="text"]:hover,
+body.cr-body.page-classroom-room .meeting-poll-modal input[type="number"]:hover,
+body.cr-body.page-classroom-room .meeting-poll-modal textarea:hover,
+body.cr-body.page-classroom-room .meeting-poll-modal select:hover {
+  border-color: #cbd5e1;
+  background: #fff;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal .form-control:focus,
+body.cr-body.page-classroom-room .meeting-poll-modal input[type="text"]:focus,
+body.cr-body.page-classroom-room .meeting-poll-modal input[type="number"]:focus,
+body.cr-body.page-classroom-room .meeting-poll-modal textarea:focus,
+body.cr-body.page-classroom-room .meeting-poll-modal select:focus {
+  border-color: var(--modal-orange);
+  background: #fff;
+  box-shadow: 0 0 0 4px var(--modal-focus);
+}
+
+body.cr-body.page-classroom-room .meeting-poll-fill-input {
+  font-size: 1.2rem;
+  font-weight: 750;
+  text-align: center;
+  padding: 16px 18px;
+  border-width: 2px;
+  background: #fff;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal .btn {
+  min-height: 44px;
+  padding: 11px 18px;
+  border: 1.5px solid transparent;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 750;
+  letter-spacing: 0.01em;
+  transition: transform 0.15s ease, background 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal .btn:hover {
+  transform: translateY(-1px);
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal .btn:active {
+  transform: translateY(0);
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal .btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px var(--modal-focus);
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal .btn-sunny,
+body.cr-body.page-classroom-room .meeting-poll-modal .btn-primary,
+body.cr-body.page-classroom-room .meeting-poll-modal .meeting-poll-submit-btn {
+  background: linear-gradient(180deg, #ff7a2e 0%, var(--modal-orange) 100%);
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(242, 107, 33, 0.28);
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal .btn-sunny:hover,
+body.cr-body.page-classroom-room .meeting-poll-modal .btn-primary:hover,
+body.cr-body.page-classroom-room .meeting-poll-modal .meeting-poll-submit-btn:hover {
+  background: linear-gradient(180deg, #ff8a45 0%, var(--modal-orange-deep) 100%);
+  box-shadow: 0 10px 22px rgba(242, 107, 33, 0.34);
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal .btn-ghost {
+  background: #fff;
+  border-color: #dbe3ee;
+  color: #334155;
+  padding: 11px 18px;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal .btn-ghost:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal .btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal-foot {
+  align-items: center;
+  justify-content: flex-end;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-modal-student .meeting-poll-modal-foot,
+body.cr-body.page-classroom-room .meeting-review-quiz-modal .meeting-poll-modal-foot {
+  justify-content: center;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-type-option span,
+body.cr-body.page-classroom-room .meeting-breakout-mode-option {
+  border: 1.5px solid #dbe3ee;
+  border-radius: 12px;
+  background: #f8fafc;
+  color: #334155;
+  font-weight: 700;
+  box-shadow: none;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-mode-option {
+  flex: 1;
+  justify-content: center;
+  padding: 12px 14px;
+  font-size: 0.86rem;
+  transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-mode-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-type-option:hover span,
+body.cr-body.page-classroom-room .meeting-breakout-mode-option:hover {
+  border-color: #cbd5e1;
+  background: #fff;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-type-option input:checked + span,
+body.cr-body.page-classroom-room .meeting-breakout-mode-option:has(input:checked) {
+  border-color: var(--modal-orange);
+  background: #fff7f1;
+  color: var(--modal-orange-deep);
+  box-shadow: 0 0 0 4px var(--modal-focus);
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-field {
+  color: #334155;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-field input {
+  background: #f8fafc;
+  color: #0f172a;
+  border: 1.5px solid #dbe3ee;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-manual-item {
+  background: #f8fafc;
+  border: 1px solid #e8edf4;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-manual-item strong {
+  color: #0f172a;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-manual-item select {
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%2364748b' d='M1.2 1.4 6 6.2l4.8-4.8'/%3E%3C/svg%3E") no-repeat right 12px center;
+  padding-right: 34px;
+  color: #0f172a;
+  border: 1.5px solid #dbe3ee;
+  border-radius: 10px;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-modal-desc,
+body.cr-body.page-classroom-room .meeting-breakout-manual-note,
+body.cr-body.page-classroom-room .meeting-breakout-manual-count {
+  color: #64748b;
+}
+
+body.cr-body.page-classroom-room .meeting-breakout-manual-head {
+  color: #0f172a;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-choice {
+  background: #fff;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-choice:has(input:checked),
+body.cr-body.page-classroom-room .meeting-poll-choice.is-selected {
+  border-color: var(--modal-orange);
+  background: #fff7f1;
+}
+
+body.cr-body.page-classroom-room .meeting-poll-choice:has(input:checked) .meeting-poll-choice-letter,
+body.cr-body.page-classroom-room .meeting-poll-choice.is-selected .meeting-poll-choice-letter {
+  background: var(--modal-orange);
+  color: #fff;
+}

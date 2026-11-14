@@ -1,0 +1,242 @@
+.cr-page .op-btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border: 1px solid #ececec;
+    border-radius: 8px;
+    background: #fff;
+    color: #334155;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.cr-page-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.cr-page-sub {
+    margin: 6px 0 0;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.cr-room {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cr-room-ico {
+    display: inline-flex;
+    width: 34px;
+    height: 34px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.cr-room small {
+    display: block;
+    color: #64748b;
+}
+
+.cr-pill {
+    display: inline-flex;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.cr-pill.is-online, .cr-pill.is-live { background: #ecfdf5; color: #047857; }
+.cr-pill.is-ended { background: #fff7ed; color: #c2410c; }
+.cr-pill.is-cancelled { background: #fef2f2; color: #b91c1c; }
+.cr-pill.is-draft { background: #f1f5f9; color: #475569; }
+.cr-pill.is-scheduled { background: #f5f3ff; color: #6d28d9; }
+
+.cr-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+.cr-ico {
+    display: inline-flex;
+    width: 32px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #fff;
+    color: #475569;
+}
+
+.cr-ico.is-danger { color: #dc2626; border-color: #fecaca; }
+
+.cr-form-grid {
+    display: grid;
+    gap: 16px;
+}
+
+@media (min-width: 1100px) {
+    .cr-form-grid {
+        grid-template-columns: minmax(0, 1fr) 300px;
+        align-items: start;
+    }
+}
+
+.cr-form-main, .cr-aside {
+    display: grid;
+    gap: 16px;
+}
+
+.cr-fields {
+    display: grid;
+    gap: 14px;
+}
+
+@media (min-width: 720px) {
+    .cr-fields { grid-template-columns: 1fr 1fr; }
+}
+
+.cr-field {
+    display: grid;
+    gap: 6px;
+    font-size: 13px;
+    color: #334155;
+}
+
+.cr-field.is-full { grid-column: 1 / -1; }
+.cr-field em { color: #dc2626; font-style: normal; }
+.cr-field small, .cr-hint { color: #64748b; font-size: 12px; }
+
+.cr-toggle {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    background: #f8fafc;
+}
+
+.cr-toggle strong, .cr-toggle small { display: block; }
+.cr-toggle small { color: #64748b; margin-top: 2px; }
+
+.cr-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0 0 10px;
+    font-size: 13px;
+}
+
+.cr-meta span { color: #64748b; }
+
+.cr-tips {
+    margin: 0;
+    padding-left: 1.1em;
+    display: grid;
+    gap: 8px;
+    color: #475569;
+    font-size: 14px;
+}
+
+.cr-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.cr-savebar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.cr-errors {
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #fef2f2;
+    color: #b91c1c;
+    font-size: 13px;
+}
+
+.cr-preset {
+    margin-bottom: 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.cr-preset-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    background: #f8fafc;
+}
+
+.cr-preset-toggle {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: 0;
+    text-align: left;
+    cursor: pointer;
+}
+
+.cr-preset-toggle span {
+    color: #64748b;
+    font-size: 13px;
+}
+
+.cr-preset-remove {
+    width: 30px;
+    height: 30px;
+    border: 0;
+    background: none;
+    color: #dc2626;
+    cursor: pointer;
+}
+
+.cr-preset-body { padding: 12px; }
+.cr-preset.is-collapsed .cr-preset-body { display: none; }
+.cr-preset.is-collapsed .cr-preset-toggle i { transform: rotate(-90deg); }
+
+.cr-type {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.cr-type label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.cr-preset-options {
+    display: grid;
+    gap: 8px;
+}
+
+.cr-label {
+    font-size: 13px;
+    color: #334155;
+}

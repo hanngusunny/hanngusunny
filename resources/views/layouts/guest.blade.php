@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>@yield('title', 'Đăng nhập') · {{ config('app.name') }}</title>
+    <link rel="icon" type="image/png" href="{{ asset('assets/images/favicon.png') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/guest-auth.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/guest-login.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ephesis&family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+        :root { --app-font: "Inter Tight", ui-sans-serif, system-ui, sans-serif; --app-font-display: "Ephesis", cursive; }
+        html, body, button, input, select, textarea { font-family: var(--app-font); }
+        .ga-alert { margin: 0 0 14px; padding: 10px 12px; border-radius: 10px; font-size: 13px; line-height: 1.45; }
+        .ga-alert.is-error { background: #fdecec; color: #b42318; }
+        .ga-alert.is-success { background: #e8f8ef; color: #027a48; }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body class="ga-body">
+    @yield('content')
+    <script src="{{ asset('assets/js/form-validation-vi.js') }}"></script>
+    <script src="{{ asset('assets/js/guest-auth.js') }}"></script>
+</body>
+</html>

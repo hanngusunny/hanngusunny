@@ -1,0 +1,532 @@
+/* Dashboard layout — keep in <head> so main content is not painted unstyled */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    .dash-board,
+    .dash-board :where(h1, h2, h3, h4, strong, b) { font-weight: 500; }
+    .dash-board {
+        display: grid;
+        grid-template-columns: minmax(0, 1.55fr) minmax(280px, .7fr);
+        gap: 20px;
+        align-items: start;
+    }
+    .dash-board-main,
+    .dash-board-side { display: grid; gap: 16px; }
+    .dash-contract-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+    .dash-contract {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        min-width: 0;
+        padding: 16px;
+        background: #fff;
+        border: 1px solid #eee;
+        border-radius: 12px;
+        text-decoration: none;
+        color: inherit;
+        box-shadow: 0 1px 0 #f4f4f4;
+    }
+    .dash-contract:hover { border-color: #e4e4e4; box-shadow: 0 8px 18px -16px rgba(15, 23, 42, .35); }
+    .dash-contract-top {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+        width: 100%;
+    }
+    .dash-contract-top .dash-stat-ico { width: 36px; height: 36px; }
+    .dash-contract-top p {
+        margin: 0;
+        min-width: 0;
+        font-size: 15px;
+        font-weight: 500;
+        color: #444;
+        line-height: 1.3;
+    }
+    .dash-board .dash-contract strong {
+        display: block;
+        font-size: 32px;
+        font-weight: 800;
+        color: #111;
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+    }
+    .dash-month { display: inline-flex; align-items: center; }
+    .dash-month select {
+        height: 30px;
+        min-width: 148px;
+        max-width: 180px;
+        padding: 0 8px;
+        border: 1px solid #eee;
+        border-radius: 6px;
+        background: #f6f6f6;
+        color: #444;
+        font: inherit;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+    }
+    .dash-contract-grid.is-loading {
+        opacity: .5;
+        pointer-events: none;
+    }
+    .dash-month select:focus {
+        outline: none;
+        border-color: #f26b21;
+        background: #fff;
+    }
+    .dash-panel {
+        background: #fff;
+        border: 1px solid #ececec;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    .dash-panel-head {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-height: 48px;
+        padding: 0 14px;
+        list-style: none;
+        cursor: pointer;
+        border-bottom: 1px solid #f0f0f0;
+        background: #fff;
+    }
+    .dash-panel-head::-webkit-details-marker { display: none; }
+    .dash-panel:not([open]) .dash-panel-head { border-bottom: 0; }
+    .dash-panel-ico {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        background: #fff4ea;
+        color: #f26b21;
+        flex-shrink: 0;
+    }
+    .dash-panel-ico i { font-size: 13px; }
+    .dash-panel-title { font-size: 18px; font-weight: 500; color: #222; }
+    .dash-panel-tools { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+    .dash-panel-meta,
+    .dash-panel-all { font-size: 15.5px; font-weight: 400; color: #888; text-decoration: none; }
+    .dash-panel-all:hover { color: #f26b21; }
+    .dash-panel-min { color: #999; font-size: 14px; }
+    .dash-panel:not([open]) .dash-panel-min { transform: rotate(90deg); }
+    .dash-panel-body { padding: 14px; }
+    .dash-panel-sub { margin: 0 0 12px; font-size: 15.5px; font-weight: 400; color: #8a8a8a; }
+    .dash-filter { position: relative; }
+    .dash-filter > summary {
+        list-style: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 8px;
+        border-radius: 6px;
+        background: #f6f6f6;
+        color: #555;
+        font-size: 15.5px;
+        font-weight: 400;
+        cursor: pointer;
+    }
+    .dash-filter > summary::-webkit-details-marker { display: none; }
+    .dash-filter > summary i { font-size: 9px; }
+    .dash-filter-menu {
+        position: absolute;
+        right: 0;
+        top: calc(100% + 6px);
+        z-index: 20;
+        min-width: 180px;
+        padding: 6px;
+        border-radius: 10px;
+        background: #fff;
+        box-shadow: 0 12px 30px -16px rgba(15, 23, 42, .4), 0 0 0 1px #eee;
+    }
+    .dash-filter-menu a {
+        display: block;
+        padding: 8px 10px;
+        border-radius: 8px;
+        color: #333;
+        font-size: 15.5px;
+        font-weight: 400;
+        text-decoration: none;
+    }
+    .dash-filter-menu a:hover,
+    .dash-filter-menu a.is-on { background: #fff4ea; color: #f26b21; }
+    .dash-stat {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 16px;
+        background: #fff;
+        border: 1px solid #ececec;
+        border-radius: 10px;
+        text-decoration: none;
+        color: inherit;
+    }
+    a.dash-stat:hover { border-color: #ddd; box-shadow: 0 8px 18px -16px rgba(15, 23, 42, .35); }
+    .dash-stat-ico {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 999px;
+        flex-shrink: 0;
+    }
+    .dash-stat-ico.is-blue { background: #eff6ff; color: #2563eb; }
+    .dash-stat-ico.is-violet { background: #f5f3ff; color: #7c3aed; }
+    .dash-stat-ico.is-sky { background: #f0f9ff; color: #0284c7; }
+    .dash-stat-ico.is-amber { background: #fffbeb; color: #d97706; }
+    .dash-stat-ico.is-emerald { background: #ecfdf5; color: #059669; }
+    .dash-stat-ico.is-rose { background: #fef2f2; color: #e11d48; }
+    .dash-checkin { padding: 4px 2px 2px; text-align: center; }
+    .dash-checkin-times {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        margin: 0 0 14px;
+        text-align: left;
+    }
+    .dash-checkin-times > div {
+        min-width: 0;
+        padding: 12px 12px 10px;
+        border: 1px solid #eee;
+        border-radius: 10px;
+        background: #fff;
+    }
+    .dash-checkin-times p {
+        margin: 0 0 6px;
+        font-size: 13px;
+        font-weight: 500;
+        color: #666;
+        line-height: 1.3;
+    }
+    .dash-board .dash-checkin-times strong {
+        display: block;
+        font-size: 26px;
+        font-weight: 800;
+        color: #111;
+        line-height: 1.1;
+        letter-spacing: -0.03em;
+    }
+    .dash-checkin-status { margin: 0 0 12px; font-size: 15px; font-weight: 400; color: #666; line-height: 1.45; }
+    .dash-checkin-btn {
+        display: inline-flex;
+        min-height: 42px;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 10px 18px;
+        border: 0;
+        border-radius: 8px;
+        color: #fff;
+        font: inherit;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+    .dash-board-side .dash-contract-top p { font-size: 14px; }
+    .dash-stat div { min-width: 0; flex: 1; }
+    .dash-stat p { margin: 0; font-size: 18px; font-weight: 500; color: #222; }
+    .dash-stat small { display: block; margin-top: 2px; font-size: 15px; font-weight: 400; color: #8a8a8a; }
+    .dash-stat strong { font-size: 24px; font-weight: 500; color: #111; }
+    .dash-review {
+        padding: 14px;
+        background: #fff;
+        border: 1px solid #ececec;
+        border-radius: 10px;
+    }
+    .dash-review-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 10px;
+    }
+    .dash-review-kicker { margin: 0; font-size: 14.5px; font-weight: 400; color: #c4843a; }
+    .dash-review-head h2 { margin: 2px 0 0; font-size: 18px; font-weight: 500; color: #222; }
+    .dash-review-sub { margin: 4px 0 0; font-size: 15.5px; font-weight: 400; color: #666; }
+    .dash-side-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 2px;
+    }
+    .dash-side-head h2 { margin: 0; font-size: 18px; font-weight: 500; color: #222; }
+    .dash-side-head a { font-size: 15.5px; color: #2563eb; text-decoration: none; font-weight: 400; }
+    @media (max-width: 1100px) {
+        .dash-board { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+        .dash-contract-grid { grid-template-columns: 1fr; }
+    }
+    .task-content-html p { margin: 0 0 .75rem; }
+    .task-content-html p:last-child { margin-bottom: 0; }
+    .task-content-html ul { list-style: disc; padding-left: 1.25rem; margin: 0 0 .75rem; }
+    .task-content-html ol { list-style: decimal; padding-left: 1.25rem; margin: 0 0 .75rem; }
+    .task-content-html a { color: #2563eb; text-decoration: underline; }
+    .tox-tinymce { border-radius: .75rem !important; border-color: #e2e8f0 !important; }
+    #task-view-side-content .tox-tinymce { height: 100% !important; }
+    .dash-work { display: grid; gap: 10px; }
+    .dash-tag {
+        display: inline-flex;
+        align-items: center;
+        padding: 2px 8px;
+        border-radius: 999px;
+        background: #f6f6f6;
+        color: #555;
+        font-size: 14px;
+        font-weight: 500;
+        white-space: nowrap;
+    }
+    .dash-tag.is-pri { background: #fff4ea; color: #f26b21; }
+    .dash-tag.is-late { background: #fde8e8; color: #9b1c1c; }
+    .ov-task {
+        border: 1px solid #eee;
+        border-radius: 12px;
+        background: #fff;
+        overflow: hidden;
+    }
+    .ov-task.is-late { border-color: #f3d6d6; }
+    .ov-task.is-apt.is-invite_center { border-color: #f3e0c8; }
+    .ov-task.is-apt.is-schedule_consult { border-color: #ddd7f5; }
+    .ov-apt-ico {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        background: #fff4ea;
+        color: #f26b21;
+        flex-shrink: 0;
+        font-size: 12px;
+    }
+    .ov-task.is-schedule_consult .ov-apt-ico {
+        background: #eef2ff;
+        color: #4f46e5;
+    }
+    a.ov-item { text-decoration: none; }
+    .ov-check-apt {
+        border-color: #e8c48a;
+        color: #c2410c;
+        font-size: 8px;
+    }
+    .ov-task.is-schedule_consult .ov-check-apt {
+        border-color: #c7d2fe;
+        color: #4338ca;
+    }
+    .ov-item-phone {
+        display: block;
+        margin-top: 2px;
+        font-size: 14px;
+        color: #888;
+    }
+    .ov-apt-row {
+        border-top: 1px solid #f5f5f5;
+        padding: 2px 0 8px;
+    }
+    .ov-apt-row .ov-item {
+        border-top: 0;
+        padding-bottom: 4px;
+    }
+    .ov-apt-confirm {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px 10px;
+        padding: 0 2px 0 28px;
+    }
+    .ov-apt-q {
+        margin: 0;
+        flex: 1 1 160px;
+        font-size: 14px;
+        color: #666;
+    }
+    .ov-apt-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+    .ov-apt-btn {
+        border-radius: 999px;
+        padding: 5px 12px;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.2;
+        cursor: pointer;
+    }
+    .ov-apt-btn.is-yes {
+        border: 0;
+        background: #f26b21;
+        color: #fff;
+    }
+    .ov-task.is-schedule_consult .ov-apt-btn.is-yes {
+        background: #4f46e5;
+    }
+    .ov-apt-btn.is-no {
+        border: 1px solid #e5e5e5;
+        background: #fff;
+        color: #555;
+    }
+    .ov-apt-btn:hover { filter: brightness(0.97); }
+    .ov-apt-btn:disabled { opacity: 0.55; cursor: wait; }
+    a.ov-link { text-decoration: none; }
+    .ov-task-sum {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        padding: 14px 16px;
+        list-style: none;
+        cursor: pointer;
+        text-align: left;
+    }
+    .ov-task-sum::-webkit-details-marker { display: none; }
+    .ov-task-sum:hover { background: #fafafa; }
+    .ov-chev {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 18px;
+        height: 18px;
+        color: #bbb;
+        flex-shrink: 0;
+    }
+    .ov-chev i { font-size: 10px; transition: transform .16s ease; }
+    .js-dash-work-group[open] .ov-chev i { transform: rotate(90deg); }
+    .ov-task-title {
+        margin: 0;
+        flex: 1;
+        min-width: 0;
+        font-size: 16px;
+        font-weight: 500;
+        color: #222;
+        line-height: 1.35;
+    }
+    .ov-task-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .ov-task-body { padding: 0 16px 14px; }
+    .ov-task-meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px 16px;
+        margin-bottom: 12px;
+        font-size: 14px;
+        color: #777;
+    }
+    .ov-task-meta i { margin-right: 4px; color: #c0c0c0; }
+    .ov-task-meta .is-pri { color: #f26b21; }
+    .ov-task-meta .is-pri i { color: #f26b21; }
+    .ov-task-meta .is-late { color: #9b1c1c; }
+    .ov-task-meta .is-late i { color: #9b1c1c; }
+    .ov-item-due { flex-shrink: 0; font-size: 14px; color: #999; white-space: nowrap; }
+    .ov-item-due.is-late { color: #9b1c1c; font-weight: 500; }
+    .ov-task-count { margin-left: auto; color: #555; }
+    .ov-task-count strong { font-weight: 500; color: #222; }
+    .ov-task-count strong.is-late { color: #9b1c1c; }
+    .ov-prog {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+    }
+    .ov-prog-track {
+        flex: 1;
+        height: 8px;
+        border-radius: 999px;
+        background: #f0f0f0;
+        overflow: hidden;
+    }
+    .ov-prog-track span {
+        display: block;
+        height: 100%;
+        border-radius: inherit;
+        background: #f26b21;
+    }
+    .ov-prog > span { font-size: 14px; color: #888; white-space: nowrap; }
+    .ov-items { margin: 0; padding: 0; list-style: none; }
+    .ov-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        padding: 9px 2px;
+        border: 0;
+        border-top: 1px solid #f5f5f5;
+        background: transparent;
+        color: inherit;
+        cursor: pointer;
+        text-align: left;
+    }
+    .ov-item:hover { background: #fafafa; }
+    .ov-check {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 18px;
+        height: 18px;
+        border: 1.5px solid #d8d8d8;
+        border-radius: 999px;
+        flex-shrink: 0;
+        color: #fff;
+        font-size: 9px;
+    }
+    .ov-item.is-done .ov-check { background: #16a34a; border-color: #16a34a; }
+    .ov-item-name { flex: 1; min-width: 0; font-size: 16px; font-weight: 400; color: #333; }
+    .ov-item.is-done .ov-item-name { color: #888; }
+    .ov-item.is-late .ov-item-name { color: #9b1c1c; }
+    .ov-task-foot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px solid #f3f3f3;
+    }
+    .ov-link {
+        border: 0;
+        background: none;
+        color: #f26b21;
+        font-size: 15px;
+        cursor: pointer;
+    }
+    .ov-review {
+        border: 1px solid #eee;
+        border-radius: 10px;
+        background: #fff;
+    }
+    .ov-review-btn {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        padding: 12px 14px;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+        text-align: left;
+    }
+    .ov-review-btn:hover { background: #fafafa; }
+    .ov-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: #e8c48a;
+        flex-shrink: 0;
+    }
+    .ov-review-name { font-size: 16px; font-weight: 500; color: #333; }
+    .dash-work-blank { padding: 22px 10px; text-align: center; }
+    .dash-work-blank p { margin: 0; font-size: 16px; font-weight: 500; color: #666; }
+    @media (max-width: 720px) {
+        .ov-task-count { margin-left: 0; width: 100%; }
+        .ov-task-foot { flex-wrap: wrap; }
+    }
+    .js-dash-work-group > summary { list-style: none; }
+    .js-dash-work-group > summary::-webkit-details-marker { display: none; }

@@ -1,0 +1,341 @@
+.pf-page { display: grid; gap: 18px; }
+
+.pf-page .op-btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border: 1px solid #ececec;
+    border-radius: 8px;
+    background: #fff;
+    color: #334155;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.pf-page .op-btn-ghost:hover {
+    border-color: #f26b21;
+    color: #c2410c;
+}
+
+.pf-head p {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #94a3b8;
+}
+
+.pf-head h1 {
+    margin: 4px 0 6px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.pf-head span {
+    display: block;
+    font-size: 14px;
+    color: #64748b;
+}
+
+.pf-nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.pf-nav-tabs {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 4px;
+    border-radius: 12px;
+    background: #f8fafc;
+    border: 1px solid #ececec;
+}
+
+.pf-nav-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    color: #475569;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.pf-nav-tab.is-on,
+.pf-nav-tab:hover {
+    background: #fff;
+    color: #f26b21;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+}
+
+.pf-alert {
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+}
+
+.pf-alert p { margin: 0 0 4px; }
+.pf-alert p:last-child { margin: 0; }
+
+.pf-layout,
+.pf-password-layout {
+    display: grid;
+    grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+    gap: 16px;
+    align-items: start;
+}
+
+.pf-avatar-body {
+    display: grid;
+    gap: 16px;
+    justify-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.pf-avatar-preview {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: linear-gradient(180deg, #ffb26b 0%, #f26b21 100%);
+    box-shadow: 0 0 0 4px #fff4ea;
+}
+
+.pf-avatar-preview img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.pf-avatar-fallback {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    line-height: 1;
+}
+
+.pf-avatar-actions {
+    display: grid;
+    gap: 10px;
+    justify-items: center;
+}
+
+.pf-avatar-input { display: none; }
+
+.pf-remove-avatar {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #64748b;
+    cursor: pointer;
+}
+
+.pf-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    padding: 20px;
+}
+
+.pf-field { display: grid; gap: 6px; }
+.pf-field--full { grid-column: 1 / -1; }
+
+.pf-field label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #334155;
+}
+
+.pf-field label span { color: #dc2626; }
+
+.pf-field .input,
+.pf-password-form .input {
+    width: 100%;
+}
+
+.pf-field .input:disabled {
+    color: #7a736c;
+}
+
+.pf-hint {
+    margin: 0;
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+.pf-meta {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 16px;
+    font-size: 13px;
+    color: #64748b;
+}
+
+.pf-meta i { color: #f26b21; margin-right: 4px; }
+
+.pf-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px;
+    padding-top: 6px;
+}
+
+.pf-input-wrap {
+    position: relative;
+}
+
+.pf-input-wrap .input { padding-right: 42px; }
+
+.pf-toggle-pw {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #94a3b8;
+    cursor: pointer;
+}
+
+.pf-toggle-pw:hover { color: #f26b21; background: #fff4ea; }
+
+.pf-strength { display: grid; gap: 6px; }
+
+.pf-strength-bar {
+    height: 6px;
+    border-radius: 999px;
+    background: #e2e8f0;
+    overflow: hidden;
+}
+
+.pf-strength-bar span {
+    display: block;
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background: #94a3b8;
+    transition: width 0.2s ease, background 0.2s ease;
+}
+
+.pf-strength.is-weak .pf-strength-bar span { background: #ef4444; }
+.pf-strength.is-fair .pf-strength-bar span { background: #f59e0b; }
+.pf-strength.is-good .pf-strength-bar span { background: #3b82f6; }
+.pf-strength.is-strong .pf-strength-bar span { background: #16a34a; }
+
+.pf-strength-label { font-size: 12px; color: #64748b; }
+
+.pf-match {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #16a34a;
+}
+
+.pf-tip-list {
+    list-style: none;
+    margin: 0 0 12px;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+}
+
+.pf-tip-list li {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    font-size: 13px;
+    color: #475569;
+}
+
+.pf-tip-list i { color: #16a34a; margin-top: 3px; }
+
+.pf-password-form {
+    display: grid;
+    gap: 14px;
+}
+
+.pf-activity-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.pf-activity-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 14px 12px;
+    border-radius: 12px;
+    border: 1px solid #e8edf3;
+    background: #fff;
+}
+
+.pf-activity-stat i {
+    font-size: 14px;
+    color: #0d9488;
+}
+
+.pf-activity-stat span {
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+}
+
+.pf-activity-stat strong {
+    font-size: 16px;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.3;
+}
+
+.pf-activity-footnote {
+    margin: 14px 0 0;
+    font-size: 13px;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.pf-activity-footnote strong {
+    color: #334155;
+}
+
+@media (max-width: 860px) {
+    .pf-layout,
+    .pf-password-layout,
+    .pf-fields,
+    .pf-activity-stats {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,486 @@
+.so-page {
+    display: grid;
+    gap: 16px;
+}
+
+.so-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 9fr) minmax(260px, 3fr);
+    gap: 18px;
+    align-items: start;
+}
+
+.so-layout.is-session-only {
+    grid-template-columns: 1fr;
+}
+
+.so-main,
+.so-aside {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.so-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 36px 22px;
+    text-align: center;
+    color: #7a736c;
+}
+
+.so-empty strong {
+    color: #1f1c18;
+    font-size: 16px;
+}
+
+.so-empty p {
+    margin: 0;
+    max-width: 42ch;
+    line-height: 1.55;
+}
+
+.so-empty-icon {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: #fff4ea;
+    color: #f26b21;
+    font-size: 18px;
+}
+
+.so-levels-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.so-prestudy-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    min-width: 0;
+}
+
+.so-levels-head h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 650;
+    color: #1f1c18;
+}
+
+.so-levels-head p {
+    margin: 4px 0 0;
+    font-size: 13px;
+    color: #7a736c;
+}
+
+.so-levels-count {
+    display: inline-flex;
+    align-items: center;
+    height: 24px;
+    padding: 0 10px;
+    border-radius: 999px;
+    background: #fff3ea;
+    color: #c2410c;
+    font-size: 12px;
+    font-weight: 650;
+}
+
+.so-prestudy-head span,
+.so-session-kicker,
+.so-session-stat em {
+    display: block;
+    font-style: normal;
+    font-size: 12px;
+    color: #8a8796;
+}
+
+.so-session {
+    overflow: hidden;
+}
+
+.so-session.is-live {
+    box-shadow: inset 3px 0 0 #dc2626;
+}
+
+.so-session-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 20px 0;
+}
+
+.so-session-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: #fff3ea;
+    color: #c2410c;
+    font-size: 12px;
+    font-weight: 650;
+}
+
+.so-session-badge.is-live {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.so-session-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: #dc2626;
+    box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.12);
+}
+
+.so-session-mark {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: #fff4ea;
+    color: #f26b21;
+}
+
+.so-session-body {
+    padding: 12px 20px 20px;
+}
+
+.so-session-body h2 {
+    margin: 4px 0 0;
+    font-size: 22px;
+    font-weight: 650;
+    color: #1f1c18;
+    line-height: 1.3;
+}
+
+.so-session-countdown {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 12px 0 0;
+    padding: 7px 12px;
+    border-radius: 999px;
+    background: #fff7ed;
+    color: #c2410c;
+    font-size: 13px;
+    font-weight: 650;
+}
+
+.so-session.is-live .so-session-countdown {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.so-session-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.so-session-stat {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid #f3e8dc;
+    border-radius: 12px;
+    background: #fffaf6;
+}
+
+.so-session-stat i {
+    margin-top: 2px;
+    color: #f26b21;
+}
+
+.so-session-stat.is-accent {
+    border-color: #fdba74;
+    background: #fff7ed;
+}
+
+.so-session-stat strong {
+    display: block;
+    margin-top: 2px;
+    font-size: 14px;
+    font-weight: 650;
+    color: #1f1c18;
+}
+
+.so-session-stat strong small {
+    display: block;
+    margin-top: 2px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #7a736c;
+}
+
+.so-session-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.so-session-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 14px 0 0;
+    color: #7a736c;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.so-session-note i {
+    margin-top: 2px;
+    color: #c4b6a8;
+}
+
+.so-session-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #c2410c;
+    font-size: 14px;
+    font-weight: 650;
+    text-decoration: none;
+}
+
+.so-session.is-empty {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 20px;
+}
+
+.so-session.is-empty p {
+    margin: 4px 0 0;
+    color: #7a736c;
+    font-size: 13px;
+}
+
+.so-prestudy {
+    margin-top: 16px;
+    padding: 14px;
+    border: 1px solid #f3e8dc;
+    border-radius: 12px;
+    background: #fffaf6;
+}
+
+.so-prestudy-head {
+    align-items: center;
+}
+
+.so-prestudy-head strong {
+    display: block;
+    font-size: 14px;
+    color: #1f1c18;
+}
+
+.so-prestudy-head a {
+    margin-left: auto;
+    color: #c2410c;
+    font-size: 13px;
+    font-weight: 650;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.so-prestudy-body {
+    margin-top: 12px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #3f3a36;
+}
+
+.so-levels-head {
+    padding: 2px 2px 0;
+}
+
+.so-level-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.so-level {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 16px;
+    border: 1px solid #ececec;
+    border-radius: 14px;
+    background: #fff;
+    color: inherit;
+    text-decoration: none;
+    box-shadow: 0 8px 20px -18px rgba(90, 42, 8, 0.35);
+}
+
+.so-level:hover {
+    border-color: #fdba74;
+    background: #fffaf6;
+}
+
+.so-level.is-current {
+    border-color: #f26b21;
+    box-shadow: 0 10px 24px -16px rgba(242, 107, 33, 0.45);
+}
+
+.so-level-head {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr) auto;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.so-level-num {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: #fff4ea;
+    color: #c2410c;
+    font-size: 13px;
+    font-weight: 750;
+}
+
+.so-level-copy h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 650;
+    color: #1f1c18;
+}
+
+.so-level-copy p {
+    margin: 6px 0 0;
+    font-size: 12px;
+    line-height: 1.45;
+    color: #7a736c;
+}
+
+.so-level-badge {
+    display: inline-flex;
+    margin-top: 6px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: #fff3ea;
+    color: #c2410c;
+    font-size: 11px;
+    font-weight: 650;
+}
+
+.so-level-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: #fef2f2;
+    color: #dc2626;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.so-level-live span {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: #dc2626;
+}
+
+.so-level-progress-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 12px;
+    color: #7a736c;
+}
+
+.so-level-progress-top strong {
+    color: #c2410c;
+}
+
+.so-level-progress-bar {
+    height: 6px;
+    border-radius: 999px;
+    background: #f3e8dc;
+    overflow: hidden;
+}
+
+.so-level-progress-bar span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: #f26b21;
+}
+
+.so-level-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.so-level-metrics div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px;
+    border-radius: 10px;
+    background: #fffaf6;
+    border: 1px solid #f3e8dc;
+    text-align: center;
+}
+
+.so-level-metrics strong {
+    font-size: 16px;
+    color: #1f1c18;
+}
+
+.so-level-metrics span {
+    font-size: 11px;
+    color: #8a8796;
+}
+
+.so-level-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #c2410c;
+    font-size: 13px;
+    font-weight: 650;
+}
+
+@media (max-width: 1024px) {
+    .so-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .so-session-body h2 {
+        font-size: 18px;
+    }
+
+    .so-prestudy-head {
+        flex-wrap: wrap;
+    }
+
+    .so-prestudy-head a {
+        margin-left: 0;
+    }
+}

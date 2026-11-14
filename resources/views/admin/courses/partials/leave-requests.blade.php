@@ -1,0 +1,34 @@
+<section class="op-panel">
+    <div class="op-panel-head is-static">
+        <span class="op-panel-ico"><i class="fa-solid fa-calendar-xmark"></i></span>
+        <span class="op-panel-title">Đơn xin nghỉ</span>
+    </div>
+    <div class="op-panel-body" style="padding:16px 20px">
+        @if (empty($ready))
+            <p class="text-sm text-slate-600">Chưa có dữ liệu đơn nghỉ trên khóa này.</p>
+        @elseif (($rows ?? collect())->isEmpty())
+            <p class="text-sm text-slate-600">Chưa có đơn xin nghỉ gắn khóa này.</p>
+        @else
+            <table class="w-full text-sm">
+                <thead>
+                    <tr class="text-left text-slate-500">
+                        <th class="py-2">Học viên</th>
+                        <th>Ngày nghỉ</th>
+                        <th>Buổi</th>
+                        <th>Trạng thái</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($rows as $row)
+                        <tr class="border-t border-slate-100">
+                            <td class="py-2">{{ $row->full_name ?: $row->username }}</td>
+                            <td>{{ $row->leave_date ? date('d/m/Y', strtotime((string) $row->leave_date)) : '—' }}</td>
+                            <td>{{ $row->session_title ?: '—' }}</td>
+                            <td>{{ $statusLabels[$row->status] ?? $row->status }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endif
+    </div>
+</section>

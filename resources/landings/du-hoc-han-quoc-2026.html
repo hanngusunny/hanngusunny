@@ -1,0 +1,3116 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Du học Hàn Quốc cùng SUNNY | Minh bạch chi phí ồ An tâm du học</title>
+  <meta name="description" content="Du học Hàn Quốc cùng SUNNY: tối ưu chi phí, học bổng tới 100%, bay sớm sau 4 tháng. Tư vấn miễn phí hệ D4-1, D2-1, D2-2, D2-3. Tỷ lệ đỗ visa ~98%." />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://duhocsunny.com/" />
+  <meta property="og:title" content="Du học Hàn Quốc cùng SUNNY" />
+  <meta property="og:description" content="Tối ưu chi phí ồ nhận học bổng tới 100%. Minh bạch chi phí, an tâm du học." />
+  <meta property="og:image" content="https://duhocsunny.com/assets/img/logo.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="vi_VN" />
+  <link rel="icon" href="https://duhocsunny.com/assets/img/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@8..144,100..900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sunny: {
+              50: '#fff7ed',
+              100: '#ffedd5',
+              200: '#fed7aa',
+              400: '#fb923c',
+              500: '#f58220',
+              600: '#ea580c',
+              700: '#c2410c',
+            },
+            ink: {
+              900: '#0a0a0a',
+              700: '#111111',
+              500: '#1a1a1a',
+              100: '#f1f5f9',
+            }
+          },
+          fontFamily: {
+            sans: ['"Google Sans Flex"', 'system-ui', 'sans-serif'],
+          },
+          boxShadow: {
+            soft: '0 12px 40px -16px rgba(15, 23, 42, 0.18)',
+            cta: '0 10px 28px -8px rgba(245, 130, 32, 0.55)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --color-primary: #f58220;
+      --color-primary-dark: #ea580c;
+      --color-dark: #0f172a;
+      --radius-card: 24px;
+      --radius-button: 14px;
+    }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal, .float-soft { animation: none !important; opacity: 1 !important; transform: none !important; }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.is-visible { opacity: 1; transform: none; }
+    @keyframes floatSoft {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .float-soft { animation: floatSoft 5s ease-in-out infinite; }
+    .hero-mesh {
+      position: relative;
+      color: #fff;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 88% 12%, rgba(255, 255, 255, 0.22), transparent 42%),
+        radial-gradient(circle at 12% 78%, rgba(0, 0, 0, 0.1), transparent 38%),
+        radial-gradient(ellipse 60% 50% at 50% -10%, rgba(255, 196, 100, 0.35), transparent 55%),
+        linear-gradient(145deg, #d94f00 0%, #e85d04 28%, #f5891f 62%, #ffad4b 100%);
+    }
+    .hero-mesh::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 72px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 88' preserveAspectRatio='none'%3E%3Cpath d='M0,44 C240,88 480,0 720,44 C960,88 1200,0 1440,44 L1440,88 L0,88 Z' fill='%23ffffff'/%3E%3C/svg%3E") center bottom / 100% 100% no-repeat;
+      pointer-events: none;
+      z-index: 1;
+    }
+    @media (min-width: 768px) {
+      .hero-mesh::after { height: 88px; }
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      backdrop-filter: blur(8px);
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-weight: 600;
+      font-size: 12px;
+    }
+    .hero-station {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.95);
+      color: #e85d04;
+      font-size: 14px;
+      font-weight: 800;
+      padding: 10px 16px;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    }
+    .hero-glass {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      backdrop-filter: blur(12px);
+      border-radius: 16px;
+    }
+    .register-card {
+      background: #fff;
+      border: 1px solid rgba(245, 137, 31, 0.16);
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(142, 74, 13, 0.18);
+      overflow: hidden;
+      position: relative;
+      color: #1a1a1a;
+    }
+    .register-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #e85d04, #f5891f, #ffad4b);
+    }
+    .s2-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      background: #fff;
+      border: 1px solid #e8e8e8;
+      border-radius: 24px;
+      box-shadow: 0 8px 28px rgba(15, 23, 42, 0.05);
+      overflow: hidden;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+    .s2-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+      border-color: #d4d4d4;
+    }
+    .s2-card-bar {
+      height: 3px;
+      width: 100%;
+      background: #e5e5e5;
+    }
+    .s2-card-d41 .s2-card-bar,
+    .s2-card-d21 .s2-card-bar,
+    .s2-card-d22 .s2-card-bar,
+    .s2-card-d23 .s2-card-bar {
+      background: #f5891f;
+      opacity: 0.55;
+    }
+    .s2-card-body {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      padding: 26px 26px 24px;
+    }
+    .s2-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .s2-card-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: #f5f5f5;
+      color: #1a1a1a;
+      font-size: 24px;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+      flex-shrink: 0;
+    }
+    .s2-card-tag {
+      display: inline-flex;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .4px;
+      text-transform: uppercase;
+      color: #333;
+      background: #f5f5f5;
+      border-radius: 999px;
+      padding: 6px 12px;
+      white-space: nowrap;
+    }
+    .s2-card h3 {
+      font-size: clamp(20px, 2.2vw, 24px);
+      font-weight: 800;
+      letter-spacing: -.4px;
+      line-height: 1.25;
+      color: #1a1a1a;
+      margin: 0 0 14px;
+      padding-bottom: 14px;
+      position: relative;
+    }
+    .s2-card h3::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 36px;
+      height: 2px;
+      border-radius: 999px;
+      background: #1a1a1a;
+    }
+    .s2-card-fit {
+      font-size: 13px;
+      font-weight: 800;
+      color: #1a1a1a;
+      margin: 0 0 10px;
+    }
+    .s2-card-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 16px;
+      display: grid;
+      gap: 8px;
+    }
+    .s2-card-list li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 14px;
+      line-height: 1.55;
+      color: #1a1a1a;
+    }
+    .s2-card-list li::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      margin-top: 7px;
+      border-radius: 50%;
+      background: #1a1a1a;
+      flex-shrink: 0;
+    }
+    .s2-card-note {
+      margin: 0 0 20px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: #fafafa;
+      border: 1px solid #eeeeee;
+      font-size: 14px;
+      line-height: 1.65;
+      color: #1a1a1a;
+    }
+    .s2-card-note strong { color: #1a1a1a; }
+    .s2-card-cta {
+      margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 46px;
+      padding: 0 18px;
+      border-radius: 999px;
+      background: #ffe8cc;
+      color: #c2410c !important;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: none;
+      border: 1.5px solid #ffd4a3;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease, color .2s ease;
+      cursor: pointer;
+      width: 100%;
+    }
+    .s2-card-cta:hover {
+      border-color: #f5891f;
+      color: #9a3412 !important;
+      background: #ffd9a8;
+      transform: translateY(-1px);
+      filter: none;
+      box-shadow: none;
+    }
+    .s2-section {
+      background: #ffffff;
+    }
+    .cert-slider {
+      position: relative;
+    }
+    .cert-viewport {
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+      border-radius: 18px;
+    }
+    .cert-track {
+      display: flex;
+      gap: 16px;
+      transition: transform .55s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
+    }
+    .cert-slide {
+      background: #fff;
+      border: 1px solid #ffd4a3;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: none;
+      flex: 0 0 100%;
+      width: 100%;
+      max-width: 100%;
+      opacity: 0.55;
+      transform: scale(0.94);
+      transition: opacity .45s ease, transform .45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    @media (min-width: 640px) {
+      .cert-slide { flex-basis: calc((100% - 16px) / 2); width: calc((100% - 16px) / 2); }
+    }
+    @media (min-width: 1024px) {
+      .cert-slide { flex-basis: calc((100% - 32px) / 3); width: calc((100% - 32px) / 3); }
+    }
+    .cert-slide.is-active {
+      opacity: 1;
+      transform: scale(1);
+      box-shadow: none;
+    }
+    .cert-img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      background: #fffaf3;
+      transition: transform .6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    @media (min-width: 768px) {
+      .cert-img { height: 340px; }
+    }
+    @media (min-width: 1024px) {
+      .cert-img { height: 380px; }
+    }
+    .cert-slide.is-active .cert-img {
+      transform: scale(1.02);
+    }
+    .cert-img.cert-rotate {
+      transform: rotate(180deg);
+    }
+    .cert-slide.is-active .cert-img.cert-rotate {
+      transform: rotate(180deg) scale(1.02);
+    }
+    .cert-slide figcaption {
+      padding: 12px 14px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #1a1a1a;
+      border-top: 1px solid #f3e7db;
+      background: #fff;
+    }
+    .cert-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 5;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1.5px solid #ffd4a3;
+      background: rgba(255, 255, 255, 0.96);
+      color: #e85d04;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: none;
+      transition: background .2s ease, border-color .2s ease, color .2s ease, opacity .2s ease;
+    }
+    .cert-nav#certPrev { left: 10px; }
+    .cert-nav#certNext { right: 10px; }
+    .cert-nav:hover:not(:disabled) {
+      background: #f5891f;
+      border-color: #f5891f;
+      color: #fff;
+    }
+    .cert-nav:disabled {
+      opacity: 0.35;
+      cursor: default;
+    }
+    .cert-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 18px;
+    }
+    .cert-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      border: 0;
+      padding: 0;
+      background: #ffd4a3;
+      cursor: pointer;
+      transition: width .25s ease, background .25s ease;
+    }
+    .cert-dot.is-active {
+      width: 22px;
+      background: #f5891f;
+    }
+    .tiktok-slide {
+      background: #fff;
+      border: 1px solid #e8e8e8;
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.1);
+      display: flex;
+      flex-direction: column;
+      flex: 0 0 100%;
+      width: 100%;
+      max-width: 100%;
+    }
+    @media (min-width: 640px) {
+      .tiktok-slide { flex-basis: calc((100% - 16px) / 2); width: calc((100% - 16px) / 2); }
+    }
+    @media (min-width: 1024px) {
+      .tiktok-slide { flex-basis: calc((100% - 32px) / 3); width: calc((100% - 32px) / 3); }
+    }
+    .tiktok-slider {
+      position: relative;
+    }
+    .tiktok-viewport {
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+    .tiktok-track {
+      display: flex;
+      gap: 16px;
+      transition: transform .45s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
+    }
+    .tiktok-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 5;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1.5px solid #e5e5e5;
+      background: rgba(255, 255, 255, 0.96);
+      color: #1a1a1a;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: none;
+      transition: border-color .2s ease, color .2s ease, background .2s ease, opacity .2s ease;
+      cursor: pointer;
+    }
+    .tiktok-nav#slidePrev { left: 10px; }
+    .tiktok-nav#slideNext { right: 10px; }
+    .tiktok-nav:hover:not(:disabled) {
+      border-color: #f5891f;
+      color: #e85d04;
+      background: #fffaf5;
+    }
+    .tiktok-nav:disabled {
+      opacity: 0.35;
+      cursor: default;
+    }
+    @media (max-width: 639px) {
+      .tiktok-nav { width: 38px; height: 38px; font-size: 20px; }
+    }
+    .tiktok-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      max-height: min(68vh, 640px);
+      background: #f5f5f5;
+      overflow: hidden;
+      overscroll-behavior: none;
+      touch-action: manipulation;
+      isolation: isolate;
+      line-height: 0;
+    }
+    .tiktok-frame iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      overflow: hidden;
+      overscroll-behavior: none;
+    }
+    .tiktok-slide .tiktok-meta {
+      padding: 14px 16px 16px;
+      border-top: 1px solid #f0f0f0;
+      background: #fff;
+    }
+    .tiktok-slide .tiktok-meta h3 {
+      margin: 0 0 6px;
+      font-size: 15px;
+      font-weight: 800;
+      color: #1a1a1a;
+      line-height: 1.35;
+    }
+    .tiktok-slide .tiktok-meta a {
+      font-size: 13px;
+      font-weight: 700;
+      color: #e85d04;
+    }
+    .tiktok-slide .tiktok-meta a:hover { text-decoration: underline; }
+
+    /* Price quote slider (S5) */
+    .price-slider {
+      position: relative;
+    }
+    .price-viewport {
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+    .price-track {
+      display: flex;
+      gap: 16px;
+      transition: transform .4s ease;
+      will-change: transform;
+    }
+    .price-slide {
+      flex: 0 0 100%;
+      width: 100%;
+      background: #fff;
+      border: 1px solid #e8e8e8;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+    }
+    @media (min-width: 640px) {
+      .price-slide {
+        flex-basis: calc((100% - 16px) / 2);
+        width: calc((100% - 16px) / 2);
+      }
+    }
+    @media (min-width: 1024px) {
+      .price-slide {
+        flex-basis: calc((100% - 32px) / 3);
+        width: calc((100% - 32px) / 3);
+      }
+    }
+    .price-slide a.lightbox-trigger,
+    .cert-slide a.lightbox-trigger {
+      display: block;
+      cursor: zoom-in;
+    }
+    .price-slide img {
+      width: 100%;
+      height: auto;
+      max-height: 520px;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      background: #fffaf5;
+      transition: transform .35s ease;
+    }
+    .price-slide a.lightbox-trigger:hover img {
+      transform: scale(1.02);
+    }
+    .price-slide figcaption {
+      padding: 12px 14px 14px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #1a1a1a;
+      border-top: 1px solid #f0f0f0;
+      text-align: center;
+    }
+    .price-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 5;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1.5px solid #e5e5e5;
+      background: rgba(255, 255, 255, 0.96);
+      color: #1a1a1a;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: none;
+      transition: border-color .2s ease, color .2s ease, background .2s ease, opacity .2s ease;
+      cursor: pointer;
+    }
+    .price-nav#pricePrev { left: 10px; }
+    .price-nav#priceNext { right: 10px; }
+    .price-nav:hover:not(:disabled) {
+      border-color: #f5891f;
+      color: #e85d04;
+      background: #fffaf5;
+    }
+    .price-nav:disabled {
+      opacity: 0.35;
+      cursor: default;
+    }
+
+    /* Footer consult form */
+    .consult-band {
+      background: #fff7ed;
+      padding: 48px 0 56px;
+    }
+    .consult-box {
+      border: 2px dashed #f5891f;
+      border-radius: 8px;
+      background: #fffaf3;
+      padding: 20px;
+    }
+    @media (min-width: 768px) {
+      .consult-box { padding: 28px; }
+    }
+    .consult-grid {
+      display: grid;
+      gap: 24px;
+      align-items: start;
+    }
+    @media (min-width: 900px) {
+      .consult-grid {
+        grid-template-columns: minmax(240px, 0.9fr) 1.2fr;
+        gap: 32px;
+        align-items: stretch;
+      }
+    }
+    .consult-expert {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .consult-expert img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      object-position: top center;
+      max-height: 420px;
+      background: #f5f5f5;
+    }
+    .consult-expert-badge {
+      background: #f5891f;
+      color: #fff;
+      text-align: center;
+      padding: 14px 12px;
+    }
+    .consult-expert-badge strong {
+      display: block;
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+    .consult-expert-badge span {
+      font-size: 13px;
+      font-weight: 500;
+      opacity: 0.95;
+    }
+    .consult-form-wrap {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .consult-form-wrap h2 {
+      margin: 0 0 18px;
+      text-align: center;
+      color: #f5891f;
+      font-size: clamp(18px, 2.4vw, 26px);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    .consult-form .consult-field {
+      margin-bottom: 12px;
+    }
+    .consult-form .consult-input {
+      width: 100%;
+      min-height: 46px;
+      border: 1px solid #e5e5e5;
+      border-radius: 4px;
+      background: #fff;
+      padding: 10px 14px;
+      font-size: 14px;
+      color: #1a1a1a;
+      outline: none;
+    }
+    .consult-form .consult-input:focus {
+      border-color: #f5891f;
+      box-shadow: 0 0 0 3px rgba(245, 137, 31, 0.15);
+    }
+    .consult-form select.consult-input {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23666' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+    }
+    .consult-form .consult-submit {
+      min-height: 46px;
+      padding: 0 28px;
+      background: #f5891f;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+      transition: filter .2s ease;
+    }
+    .consult-form .consult-submit:hover { filter: brightness(1.05); }
+    .consult-form .consult-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+    .consult-form .error-msg { color: #dc2626; font-size: 12px; margin-top: 4px; display: none; }
+    .consult-form .error-msg.is-shown { display: block; }
+    .consult-form .form-status { font-size: 13px; margin-top: 10px; display: none; }
+    .consult-form .form-status.is-shown { display: block; }
+    .consult-form .form-status.is-success { color: #15803d; }
+    .consult-form .form-status.is-error { color: #dc2626; }
+    .consult-form .form-status.is-info { color: #525252; }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* Image lightbox */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      background: rgba(8, 12, 20, 0.92);
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity .25s ease, visibility .25s ease;
+    }
+    .lightbox.is-open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+    .lightbox-toolbar {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 16px;
+      background: rgba(0, 0, 0, 0.45);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .lightbox-title {
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: min(42vw, 420px);
+    }
+    .lightbox-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .lightbox-btn {
+      min-width: 40px;
+      height: 40px;
+      padding: 0 12px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .15s ease, border-color .15s ease, transform .15s ease;
+    }
+    .lightbox-btn:hover {
+      background: rgba(245, 137, 31, 0.28);
+      border-color: rgba(245, 137, 31, 0.55);
+    }
+    .lightbox-btn:active { transform: scale(0.96); }
+    .lightbox-zoom-label {
+      min-width: 56px;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 13px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+    .lightbox-close {
+      background: rgba(245, 137, 31, 0.2);
+      border-color: rgba(245, 137, 31, 0.45);
+    }
+    .lightbox-stage {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      cursor: grab;
+      touch-action: none;
+    }
+    .lightbox-stage.is-dragging { cursor: grabbing; }
+    .lightbox-img-wrap {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-origin: center center;
+      will-change: transform;
+    }
+    .lightbox-img-wrap img {
+      max-width: min(92vw, 1100px);
+      max-height: calc(100vh - 88px);
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 6px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+      user-select: none;
+      -webkit-user-drag: none;
+      background: #fff;
+    }
+    .lightbox-hint {
+      position: absolute;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 12px;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .lightbox-side-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 3;
+      width: 48px;
+      height: 48px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(0, 0, 0, 0.45);
+      color: #fff;
+      font-size: 26px;
+      font-weight: 700;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: background .2s ease, border-color .2s ease;
+    }
+    .lightbox.has-gallery .lightbox-side-nav { display: inline-flex; }
+    .lightbox-side-nav:hover {
+      background: rgba(245, 137, 31, 0.55);
+      border-color: rgba(245, 137, 31, 0.7);
+    }
+    .lightbox-side-nav.prev { left: 14px; }
+    .lightbox-side-nav.next { right: 14px; }
+    @media (max-width: 640px) {
+      .lightbox-title { max-width: 28vw; font-size: 12px; }
+      .lightbox-hint { display: none; }
+      .lightbox-btn { min-width: 36px; height: 36px; padding: 0 10px; }
+      .lightbox-side-nav { width: 40px; height: 40px; font-size: 22px; }
+      .lightbox-side-nav.prev { left: 8px; }
+      .lightbox-side-nav.next { right: 8px; }
+    }
+    .license-thumb {
+      cursor: zoom-in;
+    }
+
+    /* Lead modal (pricing section) */
+    .lead-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 11000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity .28s ease, visibility .28s ease;
+    }
+    .lead-modal.is-open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+    .lead-modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(12, 18, 28, 0.62);
+      backdrop-filter: blur(6px);
+    }
+    .lead-modal-panel {
+      position: relative;
+      z-index: 1;
+      width: min(100%, 440px);
+      max-height: min(92vh, 720px);
+      overflow: auto;
+      background: #fff;
+      border-radius: 22px;
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.28);
+      padding: 28px 24px 24px;
+      transform: translateY(18px) scale(0.97);
+      transition: transform .3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .lead-modal.is-open .lead-modal-panel {
+      transform: none;
+    }
+    .lead-modal-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      border: 1px solid #eee;
+      background: #fff;
+      color: #333;
+      font-size: 18px;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+    .lead-modal-close:hover {
+      border-color: #f5891f;
+      color: #e85d04;
+    }
+    .lead-modal-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: #e85d04;
+      background: #fff4e8;
+      border-radius: 999px;
+      padding: 6px 12px;
+      margin-bottom: 12px;
+    }
+    .lead-modal-panel h2 {
+      margin: 0;
+      font-size: clamp(20px, 3vw, 24px);
+      font-weight: 800;
+      color: #1a1a1a;
+      line-height: 1.3;
+    }
+    .lead-modal-panel > p {
+      margin: 10px 0 18px;
+      font-size: 14px;
+      line-height: 1.55;
+      color: #555;
+    }
+    .lead-modal-form .lm-field { margin-bottom: 12px; }
+    .lead-modal-form label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 6px;
+    }
+    .lead-modal-form .lm-input {
+      width: 100%;
+      min-height: 46px;
+      border: 1px solid #e8ddd4;
+      border-radius: 12px;
+      background: #fffaf6;
+      padding: 10px 14px;
+      font-size: 14px;
+      color: #1a1a1a;
+      outline: none;
+    }
+    .lead-modal-form .lm-input:focus {
+      border-color: #f5891f;
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(245, 137, 31, 0.15);
+    }
+    .lead-modal-form select.lm-input {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23666' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+    }
+    .lead-modal-form .error-msg {
+      color: #dc2626;
+      font-size: 12px;
+      margin-top: 4px;
+      display: none;
+    }
+    .lead-modal-form .error-msg.is-shown { display: block; }
+    .lead-modal-submit {
+      width: 100%;
+      min-height: 48px;
+      margin-top: 4px;
+      border: 0;
+      border-radius: 14px;
+      background: linear-gradient(145deg, #f5891f, #e85d04);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(245, 137, 31, 0.3);
+    }
+    .lead-modal-submit:hover { filter: brightness(1.05); }
+    .lead-modal-submit:disabled { opacity: 0.65; cursor: not-allowed; }
+    .lead-modal-form .form-status {
+      font-size: 13px;
+      margin-top: 10px;
+      text-align: center;
+      display: none;
+    }
+    .lead-modal-form .form-status.is-shown { display: block; }
+    .lead-modal-form .form-status.is-success { color: #15803d; }
+    .lead-modal-form .form-status.is-error { color: #dc2626; }
+    .lead-modal-form .form-status.is-info { color: #525252; }
+    .lead-modal-note {
+      margin: 12px 0 0;
+      font-size: 12px;
+      color: #888;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    /* Process timeline */
+    .process-section {
+      background: #fffaf5;
+      padding: 64px 0 72px;
+    }
+    .process-timeline {
+      position: relative;
+      max-width: 880px;
+      margin: 40px auto 0;
+      list-style: none;
+      padding: 0;
+    }
+    .process-timeline::before {
+      content: "";
+      position: absolute;
+      left: 24px;
+      top: 8px;
+      bottom: 8px;
+      width: 3px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #f5891f 0%, #ffd4a3 55%, #ffe8cc 100%);
+    }
+    @media (min-width: 768px) {
+      .process-timeline::before {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+    .process-step {
+      position: relative;
+      padding-left: 68px;
+      margin-bottom: 28px;
+    }
+    .process-step:last-child { margin-bottom: 0; }
+    @media (min-width: 768px) {
+      .process-step {
+        width: 50%;
+        padding-left: 0;
+        padding-right: 48px;
+        margin-bottom: 36px;
+      }
+      .process-step:nth-child(odd) {
+        margin-left: 0;
+        text-align: right;
+        padding-right: 48px;
+        padding-left: 0;
+      }
+      .process-step:nth-child(even) {
+        margin-left: 50%;
+        text-align: left;
+        padding-left: 48px;
+        padding-right: 0;
+      }
+    }
+    .process-dot {
+      position: absolute;
+      left: 8px;
+      top: 18px;
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      background: linear-gradient(145deg, #f5891f, #e85d04);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 0 0 6px #fffaf5, 0 8px 20px rgba(232, 93, 4, 0.28);
+      z-index: 2;
+    }
+    @media (min-width: 768px) {
+      .process-step:nth-child(odd) .process-dot {
+        left: auto;
+        right: -18px;
+      }
+      .process-step:nth-child(even) .process-dot {
+        left: -18px;
+        right: auto;
+      }
+    }
+    .process-card {
+      background: #fff;
+      border: 1px solid #ffd4a3;
+      border-radius: 20px;
+      padding: 20px 22px;
+      box-shadow: 0 12px 32px rgba(142, 74, 13, 0.08);
+      transition: transform .25s ease, box-shadow .25s ease;
+      text-align: left;
+    }
+    .process-step:hover .process-card {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 40px rgba(142, 74, 13, 0.14);
+    }
+    @media (min-width: 768px) {
+      .process-step:nth-child(odd) .process-card {
+        border-right: 3px solid #f5891f;
+      }
+      .process-step:nth-child(even) .process-card {
+        border-left: 3px solid #f5891f;
+      }
+    }
+    .process-card h3 {
+      margin: 0 0 8px;
+      font-size: 17px;
+      font-weight: 800;
+      color: #1a1a1a;
+      line-height: 1.35;
+    }
+    .process-card p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.65;
+      color: #333;
+    }
+    .process-note {
+      margin-top: 28px;
+      text-align: center;
+      font-size: 14px;
+      color: #555;
+    }
+    .process-note strong { color: #e85d04; }
+
+    /* Why choose SUNNY */
+    .why-section {
+      background: #ffffff;
+      padding: 56px 0 64px;
+    }
+    .why-header {
+      text-align: left;
+      max-width: 820px;
+      margin: 0 0 36px;
+    }
+    .why-header::before {
+      content: "";
+      display: block;
+      width: 48px;
+      height: 3px;
+      border-radius: 999px;
+      background: #f5891f;
+      margin: 0 0 18px;
+    }
+    .why-header h2 {
+      margin: 0;
+      color: #1a1a1a;
+      font-size: clamp(22px, 3vw, 34px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+    .why-header p {
+      margin: 14px 0 0;
+      max-width: 680px;
+      color: #555;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+    @media (min-width: 640px) {
+      .why-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1024px) {
+      .why-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    }
+    .why-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+      padding: 22px 22px 20px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+    }
+    .why-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #f5891f, #ffad4b);
+    }
+    .why-card-stat {
+      color: #f5891f;
+      font-size: clamp(26px, 3vw, 34px);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin: 0 0 6px;
+    }
+    .why-card-stat.is-text {
+      font-size: clamp(20px, 2.4vw, 26px);
+      margin-bottom: 14px;
+    }
+    .why-card-title {
+      margin: 0;
+      color: #1a1a1a;
+      font-size: 16px;
+      font-weight: 800;
+    }
+    .why-card-divider {
+      height: 1px;
+      background: #ececec;
+      margin: 14px 0;
+      border: 0;
+    }
+    .why-card-desc {
+      margin: 0;
+      color: #333;
+      font-size: 14px;
+      line-height: 1.65;
+    }
+    .why-card-desc + .why-card-desc { margin-top: 6px; }
+
+    /* Footer */
+    .site-footer {
+      background: #0b1c33;
+      color: #fff;
+      padding: 64px 0 0;
+    }
+    .site-footer .footer-logo {
+      height: 48px;
+      width: auto;
+      display: block;
+      margin-bottom: 16px;
+    }
+    .footer-top {
+      display: grid;
+      gap: 32px;
+      grid-template-columns: 1fr;
+      padding-bottom: 36px;
+    }
+    @media (min-width: 768px) {
+      .footer-top { grid-template-columns: 1.2fr 1fr 1fr; }
+    }
+    @media (min-width: 1024px) {
+      .footer-top { grid-template-columns: 1.35fr 0.9fr 1.1fr 1.15fr; gap: 40px; }
+    }
+    .footer-brand p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: rgba(255,255,255,.82);
+      margin: 0 0 18px;
+      max-width: 320px;
+    }
+    .footer-brand strong { color: #fff; font-weight: 700; }
+    .footer-social {
+      display: flex;
+      gap: 10px;
+    }
+    .footer-social a {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      display: grid;
+      place-items: center;
+      color: #fff;
+      transition: background .2s ease, border-color .2s ease, color .2s ease;
+    }
+    .footer-social a:hover {
+      background: rgba(245,137,31,.18);
+      border-color: rgba(245,137,31,.45);
+      color: #f5891f;
+    }
+    .footer-heading {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin: 0 0 16px;
+      color: #fff;
+    }
+    .footer-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+    }
+    .footer-links a {
+      font-size: 14px;
+      color: rgba(255,255,255,.78);
+      transition: color .2s ease;
+    }
+    .footer-links a:hover { color: #f5891f; }
+    .footer-contact {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 12px;
+      font-size: 14px;
+      color: rgba(255,255,255,.82);
+    }
+    .footer-contact span {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.55);
+      margin-bottom: 2px;
+    }
+    .footer-contact a {
+      color: #fff;
+      font-weight: 700;
+    }
+    .footer-contact a:hover { color: #f5891f; }
+    .footer-contact em {
+      font-style: normal;
+      color: rgba(255,255,255,.55);
+      font-weight: 500;
+      font-size: 13px;
+    }
+    .footer-email {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+      color: #f5891f;
+    }
+    .footer-email a {
+      color: #fff !important;
+      font-weight: 600;
+    }
+    .footer-offices {
+      border-top: 1px solid rgba(255,255,255,.12);
+      padding: 28px 0 8px;
+    }
+    .footer-office-grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 640px) {
+      .footer-office-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (min-width: 1024px) {
+      .footer-office-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    .footer-office-card {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 14px;
+      padding: 16px 16px 18px;
+      min-height: 100%;
+    }
+    .footer-office-card h4 {
+      margin: 0 0 8px;
+      font-size: 14px;
+      font-weight: 800;
+      color: #f5891f;
+    }
+    .footer-office-card p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.6;
+      color: rgba(255,255,255,.8);
+    }
+    .footer-bottom {
+      margin-top: 24px;
+      border-top: 1px solid rgba(255,255,255,.12);
+      padding: 18px 0 22px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 20px;
+      justify-content: space-between;
+      font-size: 12px;
+      color: rgba(255,255,255,.55);
+    }
+    .footer-bottom a {
+      color: rgba(255,255,255,.7);
+    }
+    .footer-bottom a:hover { color: #f5891f; }
+    .program-card[data-active="true"] {
+      border-color: #f5891f;
+      box-shadow: 0 0 0 2px rgba(245, 137, 31, 0.12), 0 12px 32px rgba(15, 23, 42, 0.06);
+      transform: translateY(-2px);
+    }
+    details summary::-webkit-details-marker { display: none; }
+    .sticky-cta { padding-bottom: env(safe-area-inset-bottom); }
+    .site-container {
+      width: 100%;
+      max-width: 1440px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+    }
+    @media (min-width: 768px) {
+      .site-container {
+        padding-left: 2rem;
+        padding-right: 2rem;
+      }
+    }
+    @media (min-width: 1280px) {
+      .site-container {
+        padding-left: 2.5rem;
+        padding-right: 2.5rem;
+      }
+    }
+    .topbar-shell {
+      background: #ffffff;
+      border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+      box-shadow: 0 4px 18px -14px rgba(15, 23, 42, 0.18);
+    }
+    .topbar-announce {
+      background: linear-gradient(90deg, #fff7ed 0%, #ffedd5 45%, #fed7aa 100%);
+      border-bottom: 1px solid rgba(245, 130, 32, 0.12);
+    }
+    .nav-shell {
+      display: none;
+      align-items: center;
+      gap: 4px;
+      padding: 5px;
+      border-radius: 999px;
+      background: #f8fafc;
+      border: 1px solid rgba(15, 23, 42, 0.06);
+    }
+    @media (min-width: 1024px) {
+      .nav-shell { display: flex; }
+    }
+    .nav-link {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 0 16px;
+      border-radius: 999px;
+      color: #111111;
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      transition: color .2s ease, background .2s ease, box-shadow .2s ease;
+    }
+    .nav-link:hover {
+      color: #c2410c;
+      background: #fff7ed;
+    }
+    .nav-link.is-active,
+    .nav-link:focus-visible {
+      color: #ea580c;
+      background: #ffffff;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(245, 130, 32, 0.18);
+      outline: none;
+    }
+    .header-cta {
+      background: linear-gradient(135deg, #f58220 0%, #ea580c 100%);
+      box-shadow: 0 8px 22px -8px rgba(245, 130, 32, 0.65);
+    }
+    .header-cta:hover {
+      filter: brightness(1.05);
+      transform: translateY(-1px);
+    }
+    .announce-dot {
+      animation: announcePulse 2s ease-in-out infinite;
+    }
+    @keyframes announcePulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.55; transform: scale(0.85); }
+    }
+    .mobile-menu {
+      display: none;
+      border-top: 1px solid rgba(15, 23, 42, 0.06);
+      background: #fff;
+    }
+    .mobile-menu.is-open { display: block; }
+    .mobile-menu a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 8px;
+      border-bottom: 1px solid #f1f5f9;
+      font-weight: 600;
+      color: #111111;
+    }
+    .mobile-menu a:last-child { border-bottom: 0; }
+    .mobile-menu a:hover { color: #ea580c; }
+    .menu-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      background: #fff;
+      color: #0f172a;
+      transition: background .2s ease, border-color .2s ease;
+    }
+    .menu-toggle:hover {
+      background: #fff7ed;
+      border-color: #fdba74;
+      color: #c2410c;
+    }
+    @media (min-width: 1024px) {
+      .menu-toggle { display: none; }
+    }
+  </style>
+</head>
+<body class="font-sans text-ink-900 bg-white antialiased pb-24 md:pb-0">
+  <!-- Topbar: Announcement + Header -->
+  <div class="sticky top-0 z-40">
+    <!-- 01 Announcement -->
+    <div class="topbar-announce">
+      <div class="site-container py-2 flex items-center justify-center gap-2.5 text-center">
+        <span class="announce-dot hidden sm:inline-flex w-2 h-2 rounded-full bg-sunny-500 shrink-0" aria-hidden="true"></span>
+        <p class="text-[13px] sm:text-sm text-sunny-800/90">
+          Sĩ tử 2K8: mọi thủ tục
+          <span class="font-bold text-sunny-700">⬦để Sunny lo</span>
+          — nhận tư vấn &amp; bảng chi phí miễn phí hôm nay.
+        </p>
+        <a href="#dang-ky" data-cta="announce_consult" class="hidden md:inline-flex items-center text-xs font-bold text-sunny-700 hover:text-sunny-600 underline underline-offset-2 decoration-sunny-400/60 shrink-0 ml-1">
+          Đăng ký ngay
+        </a>
+      </div>
+    </div>
+
+    <!-- 02 Header -->
+    <header class="topbar-shell">
+      <div class="site-container h-[68px] md:h-[80px] flex items-center justify-between gap-4 lg:gap-6">
+        <a href="#top" class="flex items-center shrink-0" aria-label="SUNNY ồ Trang chủ">
+          <img src="https://duhocsunny.com/assets/img/logo.png" alt="Logo SUNNY" width="148" height="52" class="h-10 md:h-12 w-auto object-contain" />
+        </a>
+
+        <nav class="nav-shell" aria-label="Điều hướng chính">
+          <a href="#chuong-trinh" class="nav-link">Chương trình</a>
+          <a href="#uy-tin" class="nav-link">Uy tín</a>
+          <a href="#truong" class="nav-link">Tham trường</a>
+          <a href="#chi-phi" class="nav-link">Chi phí</a>
+          <a href="#quy-trinh" class="nav-link">Quy trình</a>
+        </nav>
+
+        <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+          <a href="tel:0981698292" data-cta="header_phone" class="hidden md:inline-flex items-center gap-2 rounded-full bg-sunny-50 hover:bg-sunny-100 text-sunny-800 text-sm font-semibold px-3.5 py-2.5 border border-sunny-200/70 transition" aria-label="Gọi hotline">
+            <svg class="w-4 h-4 text-sunny-600" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2a1 1 0 011-.24c1.1.37 2.3.57 3.5.57a1 1 0 011 1V20a1 1 0 01-1 1C10.4 21 3 13.6 3 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.2.2 2.4.57 3.5a1 1 0 01-.25 1L6.6 10.8z"/></svg>
+            <span>0981 698 292</span>
+          </a>
+          <a href="#dang-ky" data-cta="header_consult" class="header-cta inline-flex items-center justify-center min-h-[44px] rounded-full text-white font-semibold text-sm px-4 sm:px-5 transition">
+            Nhận tư vấn
+            <span class="ml-1.5 hidden sm:inline" aria-hidden="true">→</span>
+          </a>
+          <button type="button" id="menuToggle" class="menu-toggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Mở menu">
+            <svg id="iconOpen" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            <svg id="iconClose" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div id="mobileMenu" class="mobile-menu lg:hidden">
+        <div class="site-container py-2 pb-4">
+          <a href="#chuong-trinh">Chương trình <span class="text-sunny-500">→</span></a>
+          <a href="#uy-tin">Uy tín <span class="text-sunny-500">→</span></a>
+          <a href="#truong">Tham trường <span class="text-sunny-500">→</span></a>
+          <a href="#chi-phi">Chi phí <span class="text-sunny-500">→</span></a>
+          <a href="#quy-trinh">Quy trình <span class="text-sunny-500">→</span></a>
+          <a href="tel:0981698292" class="text-sunny-700" data-cta="mobile_header_phone">Hotline 0981 698 292 <span class="text-sunny-500">→</span></a>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <main id="top">
+    <!-- 03 Hero + 04 Lead Form (S1) -->
+    <section class="hero-mesh relative">
+      <div class="site-container relative z-[2] pt-12 pb-24 md:pt-16 md:pb-28 grid lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+        <div class="lg:col-span-7 reveal">
+          <p class="hero-badge mb-5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_0_4px_rgba(52,211,153,0.25)]"></span>
+            Trung tâm du học Hàn Quốc SUNNY
+          </p>
+          <h1 class="text-3xl sm:text-4xl lg:text-[2.85rem] font-extrabold leading-tight tracking-tight text-white">
+            Du học Hàn Quốc cùng <span class="text-[#ffe2c2]">SUNNY</span>
+          </h1>
+          <div class="mt-4">
+            <span class="hero-station">Tối ưu chi phí · Học bổng tới 100%</span>
+          </div>
+          <div class="hero-glass mt-5 p-4 md:p-5 max-w-xl">
+            <p class="text-[15px] md:text-base text-white/95 leading-relaxed m-0">
+              Chi phí hợp lý, <strong class="text-white">minh bạch</strong>, cam kết không phát sinh trong quá trình xử lý hồ sơ.
+              Đồng hành từ tư vấn đến khi bạn hạ cánh tại Hàn Quốc.
+            </p>
+          </div>
+
+          <ul class="mt-6 space-y-3 text-[15px] md:text-base text-white">
+            <li class="flex gap-3"><span class="mt-0.5 shrink-0 w-5 h-5 rounded-full bg-white/20 text-[#ffe2c2] flex items-center justify-center text-xs font-bold">✓</span><span>Bay sớm nhất chỉ sau <strong>4 tháng</strong> đào tạo</span></li>
+            <li class="flex gap-3"><span class="mt-0.5 shrink-0 w-5 h-5 rounded-full bg-white/20 text-[#ffe2c2] flex items-center justify-center text-xs font-bold">✓</span><span>Không chi phí ẩn, có bảng giá chi tiết từ đầu</span></li>
+            <li class="flex gap-3"><span class="mt-0.5 shrink-0 w-5 h-5 rounded-full bg-white/20 text-[#ffe2c2] flex items-center justify-center text-xs font-bold">✓</span><span>Đầu vào vừa sức — nhận học sinh điểm tốt nghiệp từ <strong>6.8</strong></span></li>
+            <li class="flex gap-3"><span class="mt-0.5 shrink-0 w-5 h-5 rounded-full bg-white/20 text-[#ffe2c2] flex items-center justify-center text-xs font-bold">✓</span><span>Đồng hành từ tư vấn tới khi hạ cánh tại Hàn</span></li>
+          </ul>
+
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="#dang-ky" data-cta="hero_consult" class="inline-flex items-center justify-center min-h-[48px] rounded-full bg-white hover:bg-[#fff7ed] text-[#e85d04] font-bold px-6 shadow-[0_8px_28px_rgba(0,0,0,0.15)] transition">
+              Nhận tư vấn miễn phí
+            </a>
+            <a href="#chi-phi" data-cta="hero_price" class="inline-flex items-center justify-center min-h-[48px] rounded-full border border-white/40 hover:bg-white/10 text-white font-semibold px-6 transition">
+              Nhận bảng chi phí →
+            </a>
+          </div>
+
+          <div class="hero-glass mt-10 grid grid-cols-3 overflow-hidden">
+            <div class="p-4 text-center border-r border-white/20">
+              <p class="text-xl md:text-2xl font-extrabold text-white">4.000+</p>
+              <p class="text-[11px] md:text-xs text-white/80 mt-1">Học viên thành công</p>
+            </div>
+            <div class="p-4 text-center border-r border-white/20">
+              <p class="text-xl md:text-2xl font-extrabold text-white">100+</p>
+              <p class="text-[11px] md:text-xs text-white/80 mt-1">Đối tác đại học</p>
+            </div>
+            <div class="p-4 text-center">
+              <p class="text-xl md:text-2xl font-extrabold text-white">~98%*</p>
+              <p class="text-[11px] md:text-xs text-white/80 mt-1">Tỷ lệ đ— Visa</p>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-white/75 max-w-2xl">* Số liệu thống kê nội bộ dựa trên 9 năm xử lý hồ sơ và chắp cánh cho học sinh trên hành trình du học Hàn Quốc.</p>
+        </div>
+
+        <div id="dang-ky" class="lg:col-span-5 reveal float-soft">
+          <div class="register-card p-6 md:p-7">
+            <div class="mb-5">
+              <p class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wide text-[#e85d04] bg-[#fff4e8] rounded-full px-2.5 py-1 mb-2">Miễn phí · Tư vấn ngay</p>
+              <h2 class="text-xl md:text-2xl font-extrabold mt-1 text-[#1a1a1a]">Nhận bảng giá &amp; tư vấn miễn phí</h2>
+              <p class="text-sm text-[#3d3d3d] mt-2">Điền form — SUNNY liên hệ trong giờ làm việc. Không phát sinh phí ẩn.</p>
+            </div>
+
+            <form id="leadForm" class="space-y-4" novalidate>
+              <input type="text" name="website" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+              <input type="hidden" name="utm_source" />
+              <input type="hidden" name="utm_medium" />
+              <input type="hidden" name="utm_campaign" />
+              <input type="hidden" name="utm_content" />
+              <input type="hidden" name="utm_term" />
+              <input type="hidden" name="gclid" />
+              <input type="hidden" name="gbraid" />
+              <input type="hidden" name="wbraid" />
+              <input type="hidden" name="fbclid" />
+              <input type="hidden" name="landing_page" />
+              <input type="hidden" name="cta_id" value="hero_form" />
+
+              <div>
+                <label for="name" class="block text-sm font-semibold text-[#1a1a1a] mb-1.5">Họ và tên <span class="text-[#e85d04]">*</span></label>
+                <input id="name" name="name" type="text" required autocomplete="name" placeholder="Nguyễn VĒn A"
+                  class="w-full min-h-[48px] rounded-xl border border-[#e8ddd4] bg-[#fffaf6] px-4 text-base outline-none focus:border-[#f5891f] focus:bg-white focus:ring-2 focus:ring-[#f5891f]/20 transition" />
+                <p class="error-msg hidden text-sm text-red-600 mt-1" data-for="name"></p>
+              </div>
+
+              <div>
+                <label for="phone" class="block text-sm font-semibold text-[#1a1a1a] mb-1.5">Số điện thoại <span class="text-[#e85d04]">*</span></label>
+                <input id="phone" name="phone" type="tel" required inputmode="tel" autocomplete="tel" placeholder="09xx xxx xxx"
+                  class="w-full min-h-[48px] rounded-xl border border-[#e8ddd4] bg-[#fffaf6] px-4 text-base outline-none focus:border-[#f5891f] focus:bg-white focus:ring-2 focus:ring-[#f5891f]/20 transition" />
+                <p class="error-msg hidden text-sm text-red-600 mt-1" data-for="phone"></p>
+              </div>
+
+              <div>
+                <label for="program" class="block text-sm font-semibold text-[#1a1a1a] mb-1.5">Chương trình quan tâm <span class="text-[#e85d04]">*</span></label>
+                <select id="program" name="program" required
+                  class="w-full min-h-[48px] rounded-xl border border-[#e8ddd4] bg-[#fffaf6] px-4 text-base outline-none focus:border-[#f5891f] focus:bg-white focus:ring-2 focus:ring-[#f5891f]/20 transition">
+                  <option value="">Chọn hệ du học</option>
+                  <option value="D4-1">Hệ Tiếng Hàn (D4-1)</option>
+                  <option value="D2-1">Hệ Cao Đẳng (D2-1)</option>
+                  <option value="D2-2">Hệ Đại Học (D2-2)</option>
+                  <option value="D2-3">Hệ Thạc Sĩ (D2-3)</option>
+                  <option value="chua-ro">Chưa rõ ” cần tư vấn</option>
+                </select>
+                <p class="error-msg hidden text-sm text-red-600 mt-1" data-for="program"></p>
+              </div>
+
+              <div>
+                <label for="score" class="block text-sm font-semibold text-[#1a1a1a] mb-1.5">Điểm học tập (ước tính)</label>
+                <input id="score" name="academic_score" type="text" inputmode="decimal" placeholder="VD: 6.8 / 7.5 / GPA 3.0"
+                  class="w-full min-h-[48px] rounded-xl border border-[#e8ddd4] bg-[#fffaf6] px-4 text-base outline-none focus:border-[#f5891f] focus:bg-white focus:ring-2 focus:ring-[#f5891f]/20 transition" />
+              </div>
+
+              <button type="submit" id="submitBtn" data-cta="form_submit"
+                class="w-full min-h-[52px] rounded-[14px] bg-gradient-to-br from-[#f5891f] to-[#e85d04] hover:brightness-105 disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold text-base shadow-[0_8px_22px_rgba(245,137,31,0.35)] transition flex items-center justify-center gap-2">
+                <span class="btn-label">Nhận bảng giá chi tiết chi phí du học →</span>
+                <span class="btn-loading hidden items-center gap-2">
+                  <svg class="animate-spin h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg>
+                  Đang gửi thông tin⬦
+                </span>
+              </button>
+
+              <p id="formStatus" class="text-sm text-center hidden" role="status" aria-live="polite"></p>
+              <p class="text-xs text-[#3d3d3d] text-center leading-relaxed">Bằng việc gửi form, bạn đồng ý để SUNNY liên hệ tư vấn. Thông tin được bảo mật.</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S2 Programs -->
+    <section id="chuong-trinh" class="s2-section py-16 md:py-20">
+      <div class="site-container">
+        <div class="max-w-3xl reveal">
+          <p class="inline-flex items-center gap-2 text-[12px] font-bold uppercase tracking-wide text-[#333] bg-[#f5f5f5] rounded-full px-3 py-1.5 mb-4">Lộ trình du học</p>
+          <h2 class="text-2xl md:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#1a1a1a]">Đừng chọn sai lộ trình! Đâu là hệ phù hợp nhất với bạn?</h2>
+          <p class="mt-4 text-[#1a1a1a] text-base md:text-lg leading-relaxed">Chọn đúng hệ giúp tiết kiệm tối đa chi phí và quyết định lớn tới tỷ lệ đ— Visa. Khám phá 4 lộ trình SUNNY thiết kế theo từng xuất phát điểm.</p>
+        </div>
+
+        <div class="mt-10 grid md:grid-cols-2 gap-5 lg:gap-6">
+          <!-- D4-1 -->
+          <article class="program-card s2-card s2-card-d41 reveal" data-program="D4-1">
+            <div class="s2-card-bar" aria-hidden="true"></div>
+            <div class="s2-card-body">
+              <div class="s2-card-top">
+                <div class="s2-card-icon" aria-hidden="true">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19h16M7 19V8l5-3 5 3v11M9 11h.01M15 11h.01M9 15h.01M15 15h.01"/></svg>
+                </div>
+                <span class="s2-card-tag">Visa D4-1</span>
+              </div>
+              <h3>Hệ Tiếng Hàn (D4-1)</h3>
+              <p class="s2-card-fit">Phù hợp với:</p>
+              <ul class="s2-card-list">
+                <li>Học sinh mới tốt nghiệp THPT</li>
+                <li>Các bạn muốn sang Hàn rồi mới học tiếng</li>
+              </ul>
+              <p class="s2-card-note">Không yêu cầu biết tiếng Hàn đầu vào. Bay sang Hàn chỉ sau <strong>4 tháng</strong> nhập học tại SUNNY.</p>
+              <button type="button" data-cta="program_d4" data-fill-program="D4-1" class="s2-card-cta">Chọn hệ này <span aria-hidden="true">→</span></button>
+            </div>
+          </article>
+
+          <!-- D2-1 -->
+          <article class="program-card s2-card s2-card-d21 reveal" data-program="D2-1">
+            <div class="s2-card-bar" aria-hidden="true"></div>
+            <div class="s2-card-body">
+              <div class="s2-card-top">
+                <div class="s2-card-icon" aria-hidden="true">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                </div>
+                <span class="s2-card-tag">Visa D2-1</span>
+              </div>
+              <h3>Hệ Cao Đẳng (D2-1)</h3>
+              <p class="s2-card-fit">Phù hợp với:</p>
+              <ul class="s2-card-list">
+                <li>Học sinh đã tốt nghiệp THPT</li>
+                <li>Giảm thời gian học lý thuyết, nhiều thời gian đi làm</li>
+              </ul>
+              <p class="s2-card-note">Tập trung thực hành nghề. Tối đa cơ hội chuyển đổi visa làm việc <strong>(E-7)</strong> với khối kỹ thuật, làm đẹp.</p>
+              <button type="button" data-cta="program_d21" data-fill-program="D2-1" class="s2-card-cta">Chọn hệ này <span aria-hidden="true">→</span></button>
+            </div>
+          </article>
+
+          <!-- D2-2 -->
+          <article class="program-card s2-card s2-card-d22 reveal" data-program="D2-2">
+            <div class="s2-card-bar" aria-hidden="true"></div>
+            <div class="s2-card-body">
+              <div class="s2-card-top">
+                <div class="s2-card-icon" aria-hidden="true">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                </div>
+                <span class="s2-card-tag">Visa D2-2</span>
+              </div>
+              <h3>Hệ Đại Học (D2-2)</h3>
+              <p class="s2-card-fit">Phù hợp với:</p>
+              <ul class="s2-card-list">
+                <li>Học sinh THPT năng lực tốt; SV muốn chuyển tiếp</li>
+                <li>SĒn học bổng 30-100% từ ĐH top 100+ Hàn Quốc</li>
+              </ul>
+              <p class="s2-card-note">Sở hữu bằng từ ĐH <strong>TOP 100+</strong>. Tiết kiệm chi phí với học bổng tới 100 triệu từ các trường.</p>
+              <button type="button" data-cta="program_d22" data-fill-program="D2-2" class="s2-card-cta">Chọn hệ này <span aria-hidden="true">→</span></button>
+            </div>
+          </article>
+
+          <!-- D2-3 -->
+          <article class="program-card s2-card s2-card-d23 reveal" data-program="D2-3">
+            <div class="s2-card-bar" aria-hidden="true"></div>
+            <div class="s2-card-body">
+              <div class="s2-card-top">
+                <div class="s2-card-icon" aria-hidden="true">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+                </div>
+                <span class="s2-card-tag">Visa D2-3</span>
+              </div>
+              <h3>Hệ Thạc Sĩ (D2-3)</h3>
+              <p class="s2-card-fit">Phù hợp với:</p>
+              <ul class="s2-card-list">
+                <li>Cử nhân muốn phát triển sự nghiệp tại Hàn</li>
+                <li>Theo đuổi môi trường quốc tế tiên tiến</li>
+                <li>Ở lại Hàn làm việc với mức lương cao</li>
+              </ul>
+              <p class="s2-card-note">Nghiên cứu, luận vĒn, chuyên môn sâu ” mở đường tới <strong>Tiến sĩ / Giáo sư</strong> tại Hàn Quốc.</p>
+              <button type="button" data-cta="program_d23" data-fill-program="D2-3" class="s2-card-cta">Chọn hệ này <span aria-hidden="true">→</span></button>
+            </div>
+          </article>
+        </div>
+
+        <div class="mt-10 text-center reveal">
+          <a href="#dang-ky" data-cta="school_consult" class="inline-flex min-h-[48px] items-center justify-center rounded-full bg-[#1a1a1a] hover:bg-black text-white font-bold px-7 shadow-soft transition">
+            Nhận đánh giá hồ sơ &amp; tư vấn chọn hệ du học →
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- S3 Trust / Legal -->
+    <section id="uy-tin" class="py-16 md:py-20 relative overflow-hidden" style="background:#fff7ed">
+      <div class="site-container relative">
+        <div class="reveal max-w-3xl">
+          <h2 class="text-2xl md:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#1a1a1a]">Tính minh bạch pháp lý &amp; uy tín toàn cầu của SUNNY</h2>
+          <p class="mt-4 text-[#1a1a1a] text-base md:text-lg">Cam kết thủ tục tuân thủ pháp luật ” bảo vệ quyền lợi học viên.</p>
+        </div>
+
+        <div class="mt-10 grid md:grid-cols-2 gap-5">
+          <div class="reveal rounded-[24px] bg-white border border-[#ffd4a3] p-6 md:p-7 shadow-soft">
+            <a href="assets/licenses/giay-phep-2.jpg" class="license-thumb block mb-4 overflow-hidden rounded-xl border border-[#ffd4a3] bg-[#fffaf3]" data-lightbox data-cta="license1_preview" data-lightbox-title="Cấp phép bởi Sở GD&amp;ĐT">
+              <img src="assets/licenses/giay-phep-2.jpg" alt="Giấy chứng nhận đĒng ký kinh doanh dịch vụ tư vấn du học - Sở GD&amp;ĐT Hà Nội" width="600" height="850" loading="lazy" class="w-full h-auto object-cover object-top max-h-[480px] md:max-h-[560px]" />
+            </a>
+            <h3 class="text-lg font-bold text-[#1a1a1a]">Cấp phép bởi Sở GD&amp;ĐT</h3>
+            <p class="mt-3 text-[#1a1a1a] leading-relaxed text-[15px]">Được cấp phép chính quy bởi Sở GD&amp;ĐT. Mọi thủ tục, quy trình xử lý hồ sơ tuân thủ quy định pháp luật, bảo vệ quyền lợi học viên.</p>
+          </div>
+          <div class="reveal rounded-[24px] bg-white border border-[#ffd4a3] p-6 md:p-7 shadow-soft">
+            <a href="assets/licenses/giay-phep-1.jpg" class="license-thumb block mb-4 overflow-hidden rounded-xl border border-[#ffd4a3] bg-[#fffaf3]" data-lightbox data-cta="license2_preview" data-lightbox-title="Pháp nhân minh bạch">
+              <img src="assets/licenses/giay-phep-1.jpg" alt="Giấy chứng nhận đĒng ký doanh nghiệp - Công ty TNHH Hợp tác phát triển Sunny International" width="600" height="850" loading="lazy" class="w-full h-auto object-cover object-top max-h-[480px] md:max-h-[560px]" />
+            </a>
+            <h3 class="text-lg font-bold text-[#1a1a1a]">Pháp nhân minh bạch</h3>
+            <p class="mt-3 text-[#1a1a1a] leading-relaxed text-[15px]">Mọi giao dịch tài chính, hợp đồng dịch vụ được kê khai và xuất hóa đơn đầy đủ — giảm lo “phí ẩn” hay rủi ro tài chính.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why choose SUNNY -->
+    <section id="cam-ket" class="why-section">
+      <div class="site-container">
+        <div class="why-header reveal">
+          <h2>Vì sao nên chọn SUNNY khi du học Hàn Quốc?</h2>
+          <p>Số liệu và cam kết dưới đây được cập nhật theo hành trình thực tế cùng học viên ” minh bạch, có thỒ kiỒm chứng, và là cơ sở để bạn an tâm khi chọn đồng hành cùng SUNNY.</p>
+        </div>
+        <div class="why-grid reveal">
+          <article class="why-card">
+            <p class="why-card-stat">~98%</p>
+            <h3 class="why-card-title">Tỷ lệ đỗ visa</h3>
+            <hr class="why-card-divider" />
+            <p class="why-card-desc">Dựa trên 4000+ hồ sơ trong 9 năm.</p>
+          </article>
+          <article class="why-card">
+            <p class="why-card-stat">1 lần</p>
+            <h3 class="why-card-title">Thu phí duy nhất</h3>
+            <hr class="why-card-divider" />
+            <p class="why-card-desc">Hệ D4-: Chỉ thanh toán sau khi có visa.</p>
+            <p class="why-card-desc">Hệ D2-: Chỉ thanh toán sau khi nhận được thư mời từ trường.</p>
+          </article>
+          <article class="why-card">
+            <p class="why-card-stat">0đ</p>
+            <h3 class="why-card-title">Chi phí phát sinh</h3>
+            <hr class="why-card-divider" />
+            <p class="why-card-desc">Chi phí hợp lý, minh bạch, cam kết không phát sinh trong quá trình xử lý hồ sơ.</p>
+          </article>
+          <article class="why-card">
+            <p class="why-card-stat is-text">Trả Góp Linh Hoạt</p>
+            <hr class="why-card-divider" />
+            <p class="why-card-desc">Hỗ trợ trả góp các dịch vụ của Sunny qua Home Credit ồ chia nhỏ chi phí, chủ động kế hoạch tài chính.</p>
+          </article>
+          <article class="why-card">
+            <p class="why-card-stat">100+</p>
+            <h3 class="why-card-title">Liên kết trường</h3>
+            <hr class="why-card-divider" />
+            <p class="why-card-desc">Trung tâm Du học Hàn Quốc SUNNY hợp tác với Top 100+ trường Đại học tốt nhất Hàn Quốc.</p>
+          </article>
+          <article class="why-card">
+            <p class="why-card-stat is-text">Trải Nghiệm Đa Dạng</p>
+            <hr class="why-card-divider" />
+            <p class="why-card-desc">Thường xuyên tộ chức các hoạt động, sự kiện giúp học sinh phát triển kỹ năng, tự tin và kết nđi cộng đồng.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Partner certificates -->
+    <section id="chung-nhan" class="py-16 md:py-20 relative overflow-hidden" style="background:#fff7ed">
+      <div class="site-container relative">
+        <div class="reveal max-w-3xl mb-8">
+          <h2 class="text-2xl md:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#1a1a1a]">Chứng nhận đối tác từ các trường</h2>
+          <p class="mt-3 text-[#1a1a1a] text-base md:text-lg">Giấy chứng nhận / partnership từ các đại học chiến lược của SUNNY.</p>
+        </div>
+        <div class="reveal">
+          <div class="cert-slider" aria-label="Slider chứng nhận đối tác">
+            <div class="cert-viewport">
+              <div id="certTrack" class="cert-track">
+                <figure class="cert-slide">
+                  <a href="assets/certificates/keimyung-agency.jpg" class="lightbox-trigger" data-lightbox data-lightbox-group="certs" data-lightbox-title="Keimyung University · Agency Certificate" data-cta="cert_lightbox">
+                    <img src="assets/certificates/keimyung-agency.jpg" alt="Agency Certificate - Keimyung University" width="640" height="800" loading="lazy" class="cert-img" />
+                  </a>
+                  <figcaption>Keimyung University · Agency Certificate</figcaption>
+                </figure>
+                <figure class="cert-slide">
+                  <a href="assets/certificates/keimyung-best-partner.jpg" class="lightbox-trigger" data-lightbox data-lightbox-group="certs" data-lightbox-title="Keimyung University · Best Partner" data-cta="cert_lightbox">
+                    <img src="assets/certificates/keimyung-best-partner.jpg" alt="Best Partner Agency - Keimyung University" width="640" height="480" loading="lazy" class="cert-img cert-rotate" />
+                  </a>
+                  <figcaption>Keimyung University · Best Partner</figcaption>
+                </figure>
+                <figure class="cert-slide">
+                  <a href="assets/certificates/sejong-partnership.jpg" class="lightbox-trigger" data-lightbox data-lightbox-group="certs" data-lightbox-title="Sejong University · Partnership" data-cta="cert_lightbox">
+                    <img src="assets/certificates/sejong-partnership.jpg" alt="Certificate of Partnership - Sejong University" width="640" height="800" loading="lazy" class="cert-img cert-rotate" />
+                  </a>
+                  <figcaption>Sejong University · Partnership</figcaption>
+                </figure>
+                <figure class="cert-slide">
+                  <a href="assets/certificates/hufs-recognition.jpg" class="lightbox-trigger" data-lightbox data-lightbox-group="certs" data-lightbox-title="HUFS · Giấy chứng nhận" data-cta="cert_lightbox">
+                    <img src="assets/certificates/hufs-recognition.jpg" alt="Giấy chứng nhận - Hankuk University of Foreign Studies" width="640" height="800" loading="lazy" class="cert-img" />
+                  </a>
+                  <figcaption>HUFS · Giấy chứng nhận</figcaption>
+                </figure>
+                <figure class="cert-slide">
+                  <a href="assets/certificates/donga-honors.jpg" class="lightbox-trigger" data-lightbox data-lightbox-group="certs" data-lightbox-title="Dong-A University · Trusted Partner" data-cta="cert_lightbox">
+                    <img src="assets/certificates/donga-honors.jpg" alt="Dong-A Global Honors Center Partner" width="640" height="800" loading="lazy" class="cert-img" />
+                  </a>
+                  <figcaption>Dong-A University · Trusted Partner</figcaption>
+                </figure>
+                <figure class="cert-slide">
+                  <a href="assets/certificates/chungang-appreciation.jpg" class="lightbox-trigger" data-lightbox data-lightbox-group="certs" data-lightbox-title="Chung-Ang University · Appreciation" data-cta="cert_lightbox">
+                    <img src="assets/certificates/chungang-appreciation.jpg" alt="Appreciation Plaque - Chung-Ang University" width="640" height="800" loading="lazy" class="cert-img" />
+                  </a>
+                  <figcaption>Chung-Ang University · Appreciation</figcaption>
+                </figure>
+                <figure class="cert-slide">
+                  <a href="assets/certificates/ajou-partner.jpg" class="lightbox-trigger" data-lightbox data-lightbox-group="certs" data-lightbox-title="Ajou University · Excellent Partner" data-cta="cert_lightbox">
+                    <img src="assets/certificates/ajou-partner.jpg" alt="Excellent Collaborative Partner - Ajou University" width="640" height="480" loading="lazy" class="cert-img" />
+                  </a>
+                  <figcaption>Ajou University · Excellent Partner</figcaption>
+                </figure>
+                <figure class="cert-slide">
+                  <a href="assets/certificates/kookmin-partnership.jpg" class="lightbox-trigger" data-lightbox data-lightbox-group="certs" data-lightbox-title="Kookmin University · Partnership" data-cta="cert_lightbox">
+                    <img src="assets/certificates/kookmin-partnership.jpg" alt="Certificate of Partnership - Kookmin University" width="640" height="800" loading="lazy" class="cert-img cert-rotate" />
+                  </a>
+                  <figcaption>Kookmin University · Partnership</figcaption>
+                </figure>
+                <figure class="cert-slide">
+                  <a href="assets/certificates/kwangwoon-recognition.jpg" class="lightbox-trigger" data-lightbox data-lightbox-group="certs" data-lightbox-title="Kwangwoon University · Giấy chứng nhận" data-cta="cert_lightbox">
+                    <img src="assets/certificates/kwangwoon-recognition.jpg" alt="Giấy chứng nhận - Kwangwoon University" width="640" height="800" loading="lazy" class="cert-img" />
+                  </a>
+                  <figcaption>Kwangwoon University · Giấy chứng nhận</figcaption>
+                </figure>
+              </div>
+              <button type="button" id="certPrev" class="cert-nav" aria-label="Chứng nhận trước">‹</button>
+              <button type="button" id="certNext" class="cert-nav" aria-label="Chứng nhận tiếp">›</button>
+            </div>
+          </div>
+          <div id="certDots" class="cert-dots" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S4 Campus / Videos -->
+    <section id="truong" class="py-16 md:py-20 bg-white">
+      <div class="site-container">
+        <div class="max-w-3xl reveal">
+          <p class="inline-flex items-center gap-2 text-[12px] font-bold uppercase tracking-wide text-[#333] bg-[#f5f5f5] rounded-full px-3 py-1.5 mb-4">Mục sở thị</p>
+          <h2 class="text-2xl md:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#1a1a1a]">“Mục sở thị” đại học Hàn Quốc cùng đội ngũ SUNNY</h2>
+          <p class="mt-4 text-[#1a1a1a] text-base md:text-lg leading-relaxed">Không dùng ảnh mạng. Cùng SUNNY review KTX &amp; tham quan trường thật qua TikTok.</p>
+        </div>
+
+        <div class="mt-10 reveal">
+          <div class="tiktok-slider" aria-label="Slider video TikTok tham quan trường">
+            <div class="tiktok-viewport">
+              <div id="campusTrack" class="tiktok-track">
+                <article class="tiktok-slide">
+                  <div class="tiktok-frame">
+                    <iframe src="https://www.tiktok.com/embed/v2/7643757471437180180" title="Review cực nhanh ktx đại học Keimyung" allow="encrypted-media; fullscreen; picture-in-picture; accelerometer; autoplay; clipboard-write; gyroscope" scrolling="no" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                  </div>
+                  <div class="tiktok-meta">
+                    <h3>Review cực nhanh KTX đại học Keimyung</h3>
+                    <a href="https://www.tiktok.com/@duhocsunny/video/7643757471437180180" target="_blank" rel="noopener noreferrer" data-cta="tiktok_keimyung_ktx">Xem trên TikTok →</a>
+                  </div>
+                </article>
+
+                <article class="tiktok-slide">
+                  <div class="tiktok-frame">
+                    <iframe src="https://www.tiktok.com/embed/v2/7649028794015157512" title="Review ký túc xá Konkuk" allow="encrypted-media; fullscreen; picture-in-picture; accelerometer; autoplay; clipboard-write; gyroscope" scrolling="no" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                  </div>
+                  <div class="tiktok-meta">
+                    <h3>Review ký túc xá Konkuk</h3>
+                    <a href="https://www.tiktok.com/@duhocsunny/video/7649028794015157512" target="_blank" rel="noopener noreferrer" data-cta="tiktok_konkuk">Xem trên TikTok →</a>
+                  </div>
+                </article>
+
+                <article class="tiktok-slide">
+                  <div class="tiktok-frame">
+                    <iframe src="https://www.tiktok.com/embed/v2/7651900532600098068" title="Review KTX Chung Ang cùng SUNNY" allow="encrypted-media; fullscreen; picture-in-picture; accelerometer; autoplay; clipboard-write; gyroscope" scrolling="no" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                  </div>
+                  <div class="tiktok-meta">
+                    <h3>Review KTX Chung Ang cùng SUNNY</h3>
+                    <a href="https://www.tiktok.com/@duhocsunny/video/7651900532600098068" target="_blank" rel="noopener noreferrer" data-cta="tiktok_chungang">Xem trên TikTok →</a>
+                  </div>
+                </article>
+
+                <article class="tiktok-slide">
+                  <div class="tiktok-frame">
+                    <iframe src="https://www.tiktok.com/embed/v2/7634942737506127111" title="Review ĐH Kwangwoon" allow="encrypted-media; fullscreen; picture-in-picture; accelerometer; autoplay; clipboard-write; gyroscope" scrolling="no" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                  </div>
+                  <div class="tiktok-meta">
+                    <h3>Review ĐH Kwangwoon</h3>
+                    <a href="https://www.tiktok.com/@duhocsunny/video/7634942737506127111" target="_blank" rel="noopener noreferrer" data-cta="tiktok_kwangwoon">Xem trên TikTok →</a>
+                  </div>
+                </article>
+
+                <article class="tiktok-slide">
+                  <div class="tiktok-frame">
+                    <iframe src="https://www.tiktok.com/embed/v2/7627063513931926804" title="Cùng SUNNY tham quan trường đại học Keimyung" allow="encrypted-media; fullscreen; picture-in-picture; accelerometer; autoplay; clipboard-write; gyroscope" scrolling="no" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                  </div>
+                  <div class="tiktok-meta">
+                    <h3>Cùng SUNNY tham quan trường đại học Keimyung</h3>
+                    <a href="https://www.tiktok.com/@duhocsunny/video/7627063513931926804" target="_blank" rel="noopener noreferrer" data-cta="tiktok_keimyung_tour">Xem trên TikTok →</a>
+                  </div>
+                </article>
+              </div>
+              <button type="button" id="slidePrev" class="tiktok-nav" aria-label="Video trước">‹</button>
+              <button type="button" id="slideNext" class="tiktok-nav" aria-label="Video tiếp">›</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-10 text-center reveal">
+          <a href="#dang-ky" data-cta="campus_consult" class="inline-flex min-h-[48px] items-center justify-center rounded-full bg-[#1a1a1a] hover:bg-black text-white font-bold px-7 shadow-soft transition">
+            Tư vấn lộ trình vào trường bạn thích →
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- S5 Cost transparency -->
+    <section id="chi-phi" class="py-16 md:py-20" style="background:#fff7ed">
+      <div class="site-container">
+        <div class="max-w-3xl reveal">
+          <p class="inline-flex items-center gap-2 text-[12px] font-bold uppercase tracking-wide text-[#333] bg-white rounded-full px-3 py-1.5 mb-4">Minh bạch chi phí</p>
+          <h2 class="text-2xl md:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#1a1a1a]">Bảng báo giá mẫu theo từng trường</h2>
+          <p class="mt-4 text-[#1a1a1a] text-base md:text-lg leading-relaxed">Xem bảng giá chi tiết theo trường — học phí, phí hồ sơ, KTX, bảo hiểm, vé máy bay và các khoản tùy chọn.</p>
+        </div>
+
+        <div class="mt-10 reveal">
+          <div class="price-slider" aria-label="Slider bảng báo giá">
+            <div class="price-viewport">
+              <div id="priceTrack" class="price-track">
+                <figure class="price-slide">
+                  <a href="assets/pricing/keimyung.jpg" class="lightbox-trigger" data-lightbox data-lightbox-group="pricing" data-lightbox-title="Đại học Keimyung" data-cta="price_lightbox">
+                    <img src="assets/pricing/keimyung.jpg" alt="Bảng báo giá Đại học Keimyung" width="900" height="1270" loading="lazy" />
+                  </a>
+                  <figcaption>Đại học Keimyung</figcaption>
+                </figure>
+                <figure class="price-slide">
+                  <a href="assets/pricing/konkuk.jpg" class="lightbox-trigger" data-lightbox data-lightbox-group="pricing" data-lightbox-title="Đại học Konkuk" data-cta="price_lightbox">
+                    <img src="assets/pricing/konkuk.jpg" alt="Bảng báo giá Đại học Konkuk" width="900" height="1270" loading="lazy" />
+                  </a>
+                  <figcaption>Đại học Konkuk</figcaption>
+                </figure>
+                <figure class="price-slide">
+                  <a href="assets/pricing/youngsan.jpg" class="lightbox-trigger" data-lightbox data-lightbox-group="pricing" data-lightbox-title="Đại học Youngsan" data-cta="price_lightbox">
+                    <img src="assets/pricing/youngsan.jpg" alt="Bảng báo giá Đại học Youngsan" width="900" height="1270" loading="lazy" />
+                  </a>
+                  <figcaption>Đại học Youngsan</figcaption>
+                </figure>
+                <figure class="price-slide">
+                  <a href="assets/pricing/chosun.jpg" class="lightbox-trigger" data-lightbox data-lightbox-group="pricing" data-lightbox-title="Đại học Chosun" data-cta="price_lightbox">
+                    <img src="assets/pricing/chosun.jpg" alt="Bảng báo giá Đại học Chosun" width="900" height="1270" loading="lazy" />
+                  </a>
+                  <figcaption>Đại học Chosun</figcaption>
+                </figure>
+                <figure class="price-slide">
+                  <a href="assets/pricing/chungang.jpg" class="lightbox-trigger" data-lightbox data-lightbox-group="pricing" data-lightbox-title="Đại học ChungAng Seoul" data-cta="price_lightbox">
+                    <img src="assets/pricing/chungang.jpg" alt="Bảng báo giá Đại học ChungAng Seoul" width="900" height="1270" loading="lazy" />
+                  </a>
+                  <figcaption>Đại học ChungAng Seoul</figcaption>
+                </figure>
+                <figure class="price-slide">
+                  <a href="assets/pricing/kwangwoon.jpg" class="lightbox-trigger" data-lightbox data-lightbox-group="pricing" data-lightbox-title="Đại học Kwangwoon" data-cta="price_lightbox">
+                    <img src="assets/pricing/kwangwoon.jpg" alt="Bảng báo giá Đại học Kwangwoon" width="900" height="1270" loading="lazy" />
+                  </a>
+                  <figcaption>Đại học Kwangwoon</figcaption>
+                </figure>
+              </div>
+              <button type="button" id="pricePrev" class="price-nav" aria-label="Bảng giá trước">‹</button>
+              <button type="button" id="priceNext" class="price-nav" aria-label="Bảng giá tiếp">›</button>
+            </div>
+          </div>
+        </div>
+
+        <p class="mt-6 text-sm text-[#1a1a1a] reveal">Chi phí thực tế phụ thuộc chương trình, trường, thành phố, thời điểm và tỷ giá. Nhận bảng giá đúng hồ sơ của bạn.</p>
+        <div class="mt-8 text-center reveal">
+          <a href="#dang-ky" data-cta="price_request" class="inline-flex min-h-[48px] items-center justify-center rounded-full bg-[#1a1a1a] hover:bg-black text-white font-bold px-7 shadow-soft transition">
+            Nhận bảng chi phí theo hồ sơ →
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- S6 Process -->
+    <section id="quy-trinh" class="process-section">
+      <div class="site-container">
+        <div class="max-w-3xl reveal mx-auto text-center md:text-left md:mx-0">
+          <p class="inline-flex items-center gap-2 text-[12px] font-bold uppercase tracking-wide text-[#e85d04] bg-[#fff4e8] rounded-full px-3 py-1.5 mb-4">Visa D4-1</p>
+          <h2 class="text-2xl md:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#1a1a1a]">Quy trình nộp hồ sơ D4-1</h2>
+          <p class="mt-4 text-[#1a1a1a] text-base md:text-lg leading-relaxed">Tổng thời gian thường <strong>3–5 tháng</strong> (tùy kỳ nhập học và thời gian xử lý của trường — Đại sứ quán / Lãnh sự quán).</p>
+        </div>
+
+        <ol class="process-timeline">
+          <li class="process-step reveal">
+            <span class="process-dot" aria-hidden="true">01</span>
+            <div class="process-card">
+              <h3>Liên hệ SUNNY</h3>
+              <p>Đăng ký tư vấn, nêu nguyện vọng và thời gian dự kiến.</p>
+            </div>
+          </li>
+          <li class="process-step reveal">
+            <span class="process-dot" aria-hidden="true">02</span>
+            <div class="process-card">
+              <h3>Tư vấn chọn trường tiếng Hàn</h3>
+              <p>Gợi ý trường phù hợp ngân sách, khu vực và kỳ nhập học.</p>
+            </div>
+          </li>
+          <li class="process-step reveal">
+            <span class="process-dot" aria-hidden="true">03</span>
+            <div class="process-card">
+              <h3>Chuẩn bị hồ sơ</h3>
+              <p>Bằng cấp, học bạ, chứng minh tài chính, ảnh, hộ chiếu… theo checklist SUNNY.</p>
+            </div>
+          </li>
+          <li class="process-step reveal">
+            <span class="process-dot" aria-hidden="true">04</span>
+            <div class="process-card">
+              <h3>SUNNY nộp hồ sơ lên trường</h3>
+              <p>Trường xét duyệt; có thể mời phỏng vấn (tùy trường).</p>
+            </div>
+          </li>
+          <li class="process-step reveal">
+            <span class="process-dot" aria-hidden="true">05</span>
+            <div class="process-card">
+              <h3>Nhận thư mời &amp; nộp học phí</h3>
+              <p>Sau khi được chấp nhận, nhận thư mời và chuyển học phí theo hướng dẫn.</p>
+            </div>
+          </li>
+          <li class="process-step reveal">
+            <span class="process-dot" aria-hidden="true">06</span>
+            <div class="process-card">
+              <h3>Xin visa D4-1 &amp; xuất cảnh</h3>
+              <p>Nộp hồ sơ tại ĐSQ / LSQ Hàn Quốc → nhận visa → xuất cảnh nhập học.</p>
+            </div>
+          </li>
+        </ol>
+        <p class="process-note reveal">SUNNY đồng hành xuyên suốt — từ tư vấn đến khi bạn <strong>hạ cánh tại Hàn</strong>.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Consult form before footer -->
+  <section id="tu-van" class="consult-band">
+    <div class="site-container">
+      <div class="consult-box">
+        <div class="consult-grid">
+          <aside class="consult-expert">
+            <img src="https://duhocsunny.com/assets/img/form.jpg" alt="Chuyên gia tư vấn SUNNY" width="480" height="600" loading="lazy" />
+            <div class="consult-expert-badge">
+              <strong>Chuyên gia SUNNY</strong>
+              <span>6 năm kinh nghiệm tư vấn du học Hàn.</span>
+            </div>
+          </aside>
+
+          <div class="consult-form-wrap">
+            <h2>Đăng ký tư vấn miễn phí ngay</h2>
+            <form id="footerLeadForm" class="consult-form" novalidate>
+              <input type="text" name="website" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+              <input type="hidden" name="utm_source" />
+              <input type="hidden" name="utm_medium" />
+              <input type="hidden" name="utm_campaign" />
+              <input type="hidden" name="utm_content" />
+              <input type="hidden" name="utm_term" />
+              <input type="hidden" name="gclid" />
+              <input type="hidden" name="gbraid" />
+              <input type="hidden" name="wbraid" />
+              <input type="hidden" name="fbclid" />
+              <input type="hidden" name="landing_page" />
+              <input type="hidden" name="cta_id" value="footer_form" />
+
+              <div class="consult-field">
+                <label class="sr-only" for="f_program">Chương trình quan tâm</label>
+                <select id="f_program" name="program" required class="consult-input">
+                  <option value="">Chọn hệ du học *</option>
+                  <option value="D4-1">Hệ Tiếng Hàn (D4-1)</option>
+                  <option value="D2-1">Hệ Cao Đẳng (D2-1)</option>
+                  <option value="D2-2">Hệ Đại Học (D2-2)</option>
+                  <option value="D2-3">Hệ Thạc Sĩ (D2-3)</option>
+                  <option value="chua-ro">Chưa rõ ” cần tư vấn</option>
+                </select>
+                <p class="error-msg" data-for="program"></p>
+              </div>
+
+              <div class="consult-field">
+                <label class="sr-only" for="f_name">Họ và tên</label>
+                <input id="f_name" name="name" type="text" required autocomplete="name" placeholder="Họ và Tên *" class="consult-input" />
+                <p class="error-msg" data-for="name"></p>
+              </div>
+
+              <div class="consult-field">
+                <label class="sr-only" for="f_phone">Số điện thoại</label>
+                <input id="f_phone" name="phone" type="tel" required inputmode="tel" autocomplete="tel" placeholder="Số điện thoại *" class="consult-input" />
+                <p class="error-msg" data-for="phone"></p>
+              </div>
+
+              <div class="consult-field">
+                <label class="sr-only" for="f_score">Điểm học tập</label>
+                <input id="f_score" name="academic_score" type="text" inputmode="decimal" placeholder="Điểm học tập (ước tính)" class="consult-input" />
+              </div>
+
+              <button type="submit" id="footerSubmitBtn" class="consult-submit" data-cta="footer_form_submit">
+                <span class="btn-label">Hoàn thành</span>
+                <span class="btn-loading hidden">Đang gửi⬦</span>
+              </button>
+              <p id="footerFormStatus" class="form-status" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- S8 Footer -->
+  <footer class="site-footer">
+    <div class="site-container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#top" aria-label="SUNNY">
+            <img src="https://duhocsunny.com/assets/img/logo.png" alt="Logo SUNNY" width="120" height="44" class="footer-logo" />
+          </a>
+          <p>SUNNY là trung tâm du học Hàn Quốc với nguyên tắc cđt lõi: <strong>minh bạch chi phí</strong> và thông tin trong mọi lộ trình ” tư vấn đúng, nói thật, đồng hành có trách nhiệm.</p>
+          <div class="footer-social">
+            <a href="https://duhocsunny.com/" target="_blank" rel="noopener noreferrer" aria-label="Website" data-cta="footer_web">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20"/></svg>
+            </a>
+            <a href="https://www.facebook.com/duhocsunny" target="_blank" rel="noopener noreferrer" aria-label="Facebook" data-cta="footer_fb">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H8v3h2v7h3v-7h3l1-3h-4v-2c0-.6.4-1 1-1z"/></svg>
+            </a>
+            <a href="https://www.tiktok.com/@duhocsunny" target="_blank" rel="noopener noreferrer" aria-label="TikTok" data-cta="footer_tiktok">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.6 8.2a6.5 6.5 0 01-3.8-1.2v7.1a5.7 5.7 0 11-4.9-5.6v2.9a2.8 2.8 0 102 2.7V2.5h2.8c.3 1.8 1.6 3.4 3.3 4.2l.6.3v1.2z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="footer-heading">Khám phá</h3>
+          <ul class="footer-links">
+            <li><a href="https://duhocsunny.com/">Giới thiệu</a></li>
+            <li><a href="https://duhocsunny.com/">Khoảnh khắc đáng nhớ</a></li>
+            <li><a href="https://duhocsunny.com/">Điều kiện du học 2026</a></li>
+            <li><a href="https://duhocsunny.com/">Chọn trường 2026</a></li>
+            <li><a href="#chi-phi">Chi phí 2026</a></li>
+            <li><a href="https://duhocsunny.com/">Học bổng 2026</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="footer-heading">Menu du học</h3>
+          <ul class="footer-links">
+            <li><a href="#chuong-trinh">Hệ du học</a></li>
+            <li><a href="#chuong-trinh">Du học hệ tiếng (D4-1)</a></li>
+            <li><a href="#chuong-trinh">Du học hệ đại học (D2-2)</a></li>
+            <li><a href="#chuong-trinh">Du học hệ thạc sĩ (D2-3)</a></li>
+            <li><a href="#chuong-trinh">Du học hệ cao đẳng (D2-1)</a></li>
+            <li><a href="#truong">Trường đại học</a></li>
+            <li><a href="https://duhocsunny.com/">Ngành học</a></li>
+            <li><a href="https://duhocsunny.com/">Đào tạo tiếng Hàn</a></li>
+            <li><a href="https://duhocsunny.com/">Tin tức</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="footer-heading">Liên hệ</h3>
+          <ul class="footer-contact">
+            <li><span>Hotline</span><a href="tel:0981698292" data-cta="phone_click">0981 698 292</a></li>
+            <li><span>Miền Bắc</span><a href="tel:0355892252">0355.892.252</a> <em>(Trần Thị Thu Minh)</em></li>
+            <li><span>Miền Trung</span><a href="tel:0762885604">076.288.5604</a> <em>(Ms. Bích Hồng)</em></li>
+            <li><span>Miền Nam</span><a href="tel:0393725155">039.372.5155</a> <em>(Ms. Hồ Yến)</em></li>
+            <li class="footer-email">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+              <a href="mailto:info@duhocsunny.edu.vn">info@duhocsunny.edu.vn</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-offices">
+        <h3 class="footer-heading">Hệ thđng vĒn phòng</h3>
+        <div class="footer-office-grid">
+          <div class="footer-office-card">
+            <h4>SUNNY Hà Nội</h4>
+            <p>Số nhà 3 ngách 376/19 đường Bưởi, P. Ngọc Hà, Hà Nội.</p>
+          </div>
+          <div class="footer-office-card">
+            <h4>SUNNY Đà Nẵng</h4>
+            <p>63 Hà Huy Giáp, phường Hoà Cường, Đà Nẵng.</p>
+          </div>
+          <div class="footer-office-card">
+            <h4>SUNNY Hồ Chí Minh</h4>
+            <p>40 đường sđ 8 KDC Cityland Park Hills, Phường Gò Vấp, TP. Hồ Chí Minh.</p>
+          </div>
+          <div class="footer-office-card">
+            <h4>SUNNY Hàn Quốc</h4>
+            <p>Room 611, 6F, Ssangnim Building, 286 Toegye-ro, Jung-gu, Seoul, Korea.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© <span id="year"></span> Trung tâm Du học Hàn Quốc SUNNY ” <a href="https://duhocsunny.com/">duhocsunny.com</a></p>
+        <p><a href="https://duhocsunny.com/">Chính sách bảo mật</a> · <a href="https://duhocsunny.com/">Điều khoản sử dụng</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile sticky CTA -->
+  <div class="sticky-cta fixed bottom-0 inset-x-0 z-50 md:hidden bg-white/95 backdrop-blur border-t border-ink-100 p-3 shadow-[0_-8px_30px_rgba(15,23,42,0.12)]">
+    <div class="grid grid-cols-2 gap-2">
+      <button type="button" id="mobileConsultBtn" data-cta="mobile_consult" class="min-h-[48px] rounded-[14px] bg-sunny-500 text-white font-semibold text-sm flex items-center justify-center w-full">Nhận tư vấn</button>
+      <a href="#chi-phi" data-cta="mobile_price" class="min-h-[48px] rounded-[14px] border-2 border-sunny-500 text-sunny-700 font-semibold text-sm flex items-center justify-center">Xem chi phí</a>
+    </div>
+  </div>
+
+  <!-- Lead modal: show when reaching pricing section -->
+  <div id="priceLeadModal" class="lead-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="priceLeadTitle">
+    <div class="lead-modal-backdrop" data-close-price-modal></div>
+    <div class="lead-modal-panel">
+      <button type="button" class="lead-modal-close" id="priceLeadClose" aria-label="Đóng">✕</button>
+      <span class="lead-modal-badge">Ưu đãi tư vấn</span>
+      <h2 id="priceLeadTitle">Nhận bảng giá chi tiết miễn phí</h2>
+      <p>Điền thông tin — SUNNY gửi bảng chi phí phù hợp hồ sơ và tư vấn trong giờ làm việc.</p>
+      <form id="priceLeadForm" class="lead-modal-form" novalidate>
+        <input type="text" name="website" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+        <input type="hidden" name="utm_source" />
+        <input type="hidden" name="utm_medium" />
+        <input type="hidden" name="utm_campaign" />
+        <input type="hidden" name="utm_content" />
+        <input type="hidden" name="utm_term" />
+        <input type="hidden" name="gclid" />
+        <input type="hidden" name="gbraid" />
+        <input type="hidden" name="wbraid" />
+        <input type="hidden" name="fbclid" />
+        <input type="hidden" name="landing_page" />
+        <input type="hidden" name="cta_id" value="price_section_modal" />
+
+        <div class="lm-field">
+          <label for="m_name">Họ và tên <span style="color:#e85d04">*</span></label>
+          <input id="m_name" name="name" type="text" required autocomplete="name" placeholder="Nguyễn Văn A" class="lm-input" />
+          <p class="error-msg" data-for="name"></p>
+        </div>
+        <div class="lm-field">
+          <label for="m_phone">Số điện thoại <span style="color:#e85d04">*</span></label>
+          <input id="m_phone" name="phone" type="tel" required inputmode="tel" autocomplete="tel" placeholder="09xx xxx xxx" class="lm-input" />
+          <p class="error-msg" data-for="phone"></p>
+        </div>
+        <div class="lm-field">
+          <label for="m_program">Chương trình quan tâm <span style="color:#e85d04">*</span></label>
+          <select id="m_program" name="program" required class="lm-input">
+            <option value="">Chọn hệ du học</option>
+            <option value="D4-1">Hệ Tiếng Hàn (D4-1)</option>
+            <option value="D2-1">Hệ Cao Đẳng (D2-1)</option>
+            <option value="D2-2">Hệ Đại Học (D2-2)</option>
+            <option value="D2-3">Hệ Thạc Sĩ (D2-3)</option>
+            <option value="chua-ro">Chưa rõ — cần tư vấn</option>
+          </select>
+          <p class="error-msg" data-for="program"></p>
+        </div>
+        <div class="lm-field">
+          <label for="m_score">Điểm học tập (ước tính)</label>
+          <input id="m_score" name="academic_score" type="text" inputmode="decimal" placeholder="VD: 6.8 / 7.5 / GPA 3.0" class="lm-input" />
+        </div>
+        <button type="submit" id="priceLeadSubmit" class="lead-modal-submit" data-cta="price_modal_submit">
+          <span class="btn-label">Nhận bảng giá ngay →</span>
+          <span class="btn-loading hidden">Đang gửi…</span>
+        </button>
+        <p id="priceLeadStatus" class="form-status" role="status" aria-live="polite"></p>
+        <p class="lead-modal-note">Thông tin được bảo mật. Không phát sinh phí ẩn.</p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Image lightbox -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Xem ảnh giấy phép">
+    <div class="lightbox-toolbar">
+      <p id="lightboxTitle" class="lightbox-title">Xem giấy phép</p>
+      <div class="lightbox-actions">
+        <button type="button" class="lightbox-btn" id="lbZoomOut" aria-label="Thu nhỏ" title="Thu nhỏ">−</button>
+        <span id="lbZoomLabel" class="lightbox-zoom-label">100%</span>
+        <button type="button" class="lightbox-btn" id="lbZoomIn" aria-label="Phóng to" title="Phóng to">+</button>
+        <button type="button" class="lightbox-btn" id="lbZoomReset" aria-label="Về vừa khung" title="Vừa khung">⟲</button>
+        <button type="button" class="lightbox-btn lightbox-close" id="lbClose" aria-label="Đóng" title="Đóng (Esc)">✕</button>
+      </div>
+    </div>
+    <div class="lightbox-stage" id="lightboxStage">
+      <button type="button" class="lightbox-side-nav prev" id="lbPrev" aria-label="Ảnh trước">‹</button>
+      <button type="button" class="lightbox-side-nav next" id="lbNext" aria-label="Ảnh tiếp">›</button>
+      <div class="lightbox-img-wrap" id="lightboxWrap">
+        <img id="lightboxImg" src="" alt="" />
+      </div>
+      <p class="lightbox-hint">Cuộn chuột để zoom · Kéo để di chuyển · Esc để đóng</p>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const DEBUG = false;
+      const CONFIG = {
+        API_URL: '', // TODO: POST /api/leads khi có backend
+        GA4_ID: '',
+        GOOGLE_ADS_ID: '',
+        META_PIXEL_ID: ''
+      };
+
+      // Mobile menu
+      const menuToggle = document.getElementById('menuToggle');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const iconOpen = document.getElementById('iconOpen');
+      const iconClose = document.getElementById('iconClose');
+      const setMenuOpen = (open) => {
+        mobileMenu.classList.toggle('is-open', open);
+        menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        menuToggle.setAttribute('aria-label', open ? 'Đóng menu' : 'Mở menu');
+        iconOpen.classList.toggle('hidden', open);
+        iconClose.classList.toggle('hidden', !open);
+      };
+      menuToggle.addEventListener('click', () => setMenuOpen(!mobileMenu.classList.contains('is-open')));
+      mobileMenu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenuOpen(false)));
+
+      // Active nav by section
+      const sectionIds = ['chuong-trinh', 'uy-tin', 'truong', 'chi-phi', 'quy-trinh'];
+      const navLinks = document.querySelectorAll('.nav-shell .nav-link');
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const id = entry.target.id;
+          navLinks.forEach((link) => {
+            link.classList.toggle('is-active', link.getAttribute('href') === `#${id}`);
+          });
+        });
+      }, { rootMargin: '-35% 0px -55% 0px', threshold: 0 });
+      sectionIds.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) sectionObserver.observe(el);
+      });
+
+      window.dataLayer = window.dataLayer || [];
+      const log = (...args) => { if (DEBUG) console.log('[SUNNY LP]', ...args); };
+
+      const track = (event, payload = {}) => {
+        window.dataLayer.push({ event, ...payload });
+        log('event', event, payload);
+      };
+
+      // Attribution
+      const params = new URLSearchParams(location.search);
+      const ATTR_KEYS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','gclid','gbraid','wbraid','fbclid'];
+      const attr = {};
+      ATTR_KEYS.forEach((k) => {
+        const v = params.get(k);
+        if (v) attr[k] = v;
+      });
+      try {
+        const prev = JSON.parse(localStorage.getItem('sunny_first_touch') || 'null');
+        if (!prev && Object.keys(attr).length) localStorage.setItem('sunny_first_touch', JSON.stringify({ ...attr, ts: Date.now() }));
+        if (Object.keys(attr).length) localStorage.setItem('sunny_last_touch', JSON.stringify({ ...attr, ts: Date.now() }));
+      } catch (e) {}
+
+      const fillAttr = (formEl) => {
+        ATTR_KEYS.forEach((k) => {
+          const input = formEl.querySelector(`[name="${k}"]`);
+          if (input) input.value = attr[k] || '';
+        });
+        const lp = formEl.querySelector('[name="landing_page"]');
+        if (lp) lp.value = location.href;
+      };
+
+      const bindLeadForm = (formEl, opts) => {
+        if (!formEl) return;
+        fillAttr(formEl);
+
+        let formStarted = false;
+        const formViewIo = new IntersectionObserver((entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              track('form_view', { form_id: opts.formId });
+              formViewIo.disconnect();
+            }
+          });
+        }, { threshold: 0.4 });
+        formViewIo.observe(formEl);
+
+        formEl.querySelectorAll('input, select').forEach((el) => {
+          el.addEventListener('focus', () => {
+            if (!formStarted) {
+              formStarted = true;
+              track('form_start', { form_id: opts.formId });
+            }
+          });
+        });
+
+        const showError = (name, message) => {
+          const el = formEl.querySelector(`.error-msg[data-for="${name}"]`);
+          const field = formEl.querySelector(`[name="${name}"]`);
+          if (el) {
+            el.textContent = message;
+            el.classList.remove('hidden');
+            el.classList.add('is-shown');
+          }
+          if (field) field.setAttribute('aria-invalid', 'true');
+        };
+        const clearErrors = () => {
+          formEl.querySelectorAll('.error-msg').forEach((e) => {
+            e.classList.add('hidden');
+            e.classList.remove('is-shown');
+            e.textContent = '';
+          });
+          formEl.querySelectorAll('[aria-invalid]').forEach((f) => f.removeAttribute('aria-invalid'));
+        };
+
+        const validate = (data) => {
+          clearErrors();
+          let ok = true;
+          if (!data.name || data.name.trim().length < 2) {
+            showError('name', 'Vui lòng nhập họ và tên.');
+            ok = false;
+          }
+          const phone = (data.phone || '').replace(/\s+/g, '');
+          if (!/^(0|\+84)[0-9]{8,10}$/.test(phone)) {
+            showError('phone', 'Số điện thoại không hợp lệ.');
+            ok = false;
+          }
+          if (!data.program) {
+            showError('program', 'Vui lòng chọn chương trình quan tâm.');
+            ok = false;
+          }
+          return ok;
+        };
+
+        const btn = document.getElementById(opts.submitBtnId);
+        const statusEl = document.getElementById(opts.statusId);
+
+        const setLoading = (loading) => {
+          if (!btn) return;
+          btn.disabled = loading;
+          const label = btn.querySelector('.btn-label');
+          const loadingEl = btn.querySelector('.btn-loading');
+          if (label) label.classList.toggle('hidden', loading);
+          if (loadingEl) {
+            loadingEl.classList.toggle('hidden', !loading);
+            loadingEl.classList.toggle('flex', loading);
+          }
+        };
+
+        const setStatus = (type, message) => {
+          if (!statusEl) return;
+          statusEl.classList.remove('hidden', 'text-green-700', 'text-red-600', 'text-ink-500', 'is-success', 'is-error', 'is-info');
+          statusEl.classList.add('is-shown');
+          if (type === 'success') statusEl.classList.add('text-green-700', 'is-success');
+          else if (type === 'error') statusEl.classList.add('text-red-600', 'is-error');
+          else statusEl.classList.add('text-ink-500', 'is-info');
+          statusEl.textContent = message;
+        };
+
+        formEl.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const fd = new FormData(formEl);
+          if (fd.get('website')) return;
+
+          const data = Object.fromEntries(fd.entries());
+          if (!validate(data)) {
+            track('form_error', { reason: 'validation', form_id: opts.formId });
+            return;
+          }
+
+          setLoading(true);
+          setStatus('info', 'Đang gửi thông tin...');
+          track('form_submit', { program: data.program, cta_id: data.cta_id, form_id: opts.formId });
+
+          try {
+            if (CONFIG.API_URL) {
+              const res = await fetch(CONFIG.API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify({
+                  ...data,
+                  referrer: document.referrer || '',
+                  device: /Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop',
+                  browser: navigator.userAgent,
+                  created_at: new Date().toISOString()
+                })
+              });
+              if (!res.ok) throw new Error('API error');
+              track('form_success', { program: data.program, lead_source: data.utm_source || 'direct', form_id: opts.formId });
+              track('lead_submit', { lead_source: data.utm_source || 'google_ads', program: data.program, cta_id: data.cta_id, form_id: opts.formId });
+              setStatus('success', 'Đã nhận thông tin. SUNNY sẽ liên hệ tư vấn cho bạn.');
+              formEl.reset();
+              fillAttr(formEl);
+            } else {
+              log('Lead payload (no API_URL):', data);
+              track('form_success', { program: data.program, mode: 'static_validated', form_id: opts.formId });
+              setStatus('success', 'Đã nhận thông tin. SUNNY sẽ liên hệ tư vấn cho bạn.');
+              formEl.reset();
+              fillAttr(formEl);
+            }
+          } catch (err) {
+            log('submit error', err);
+            track('form_error', { reason: 'network', form_id: opts.formId });
+            setStatus('error', 'Có l—i xảy ra. Vui lòng thử lại hoặc gọi hotline 0981 698 292.');
+          } finally {
+            setLoading(false);
+          }
+        });
+      };
+
+      const form = document.getElementById('leadForm');
+      bindLeadForm(form, { formId: 'hero_lead', submitBtnId: 'submitBtn', statusId: 'formStatus' });
+      bindLeadForm(document.getElementById('footerLeadForm'), { formId: 'footer_lead', submitBtnId: 'footerSubmitBtn', statusId: 'footerFormStatus' });
+      bindLeadForm(document.getElementById('priceLeadForm'), { formId: 'price_modal_lead', submitBtnId: 'priceLeadSubmit', statusId: 'priceLeadStatus' });
+
+      // Pricing section lead modal
+      const priceModal = document.getElementById('priceLeadModal');
+      const PRICE_MODAL_KEY = 'sunny_price_modal_seen';
+      const openPriceModal = () => {
+        if (!priceModal || priceModal.classList.contains('is-open')) return;
+        if (document.getElementById('lightbox')?.classList.contains('is-open')) return;
+        priceModal.classList.add('is-open');
+        priceModal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        track('price_modal_view', { form_id: 'price_modal_lead' });
+        setTimeout(() => document.getElementById('m_name')?.focus(), 280);
+      };
+      const closePriceModal = () => {
+        if (!priceModal) return;
+        priceModal.classList.remove('is-open');
+        priceModal.setAttribute('aria-hidden', 'true');
+        if (!document.getElementById('lightbox')?.classList.contains('is-open')) {
+          document.body.style.overflow = '';
+        }
+        try { sessionStorage.setItem(PRICE_MODAL_KEY, '1'); } catch (e) {}
+      };
+      document.getElementById('priceLeadClose')?.addEventListener('click', closePriceModal);
+      priceModal?.querySelectorAll('[data-close-price-modal]').forEach((el) => {
+        el.addEventListener('click', closePriceModal);
+      });
+      document.getElementById('mobileConsultBtn')?.addEventListener('click', () => {
+        const ctaField = priceModal?.querySelector('input[name="cta_id"]');
+        if (ctaField) ctaField.value = 'mobile_consult_modal';
+        openPriceModal();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && priceModal?.classList.contains('is-open')) {
+          closePriceModal();
+        }
+      });
+      const chiPhiSection = document.getElementById('chi-phi');
+      if (chiPhiSection) {
+        let priceModalTimer = null;
+        const priceModalIo = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            let seen = false;
+            try { seen = sessionStorage.getItem(PRICE_MODAL_KEY) === '1'; } catch (e) {}
+            if (seen) {
+              priceModalIo.disconnect();
+              return;
+            }
+            priceModalIo.disconnect();
+            priceModalTimer = setTimeout(openPriceModal, 700);
+          });
+        }, { threshold: 0.28 });
+        priceModalIo.observe(chiPhiSection);
+        window.addEventListener('beforeunload', () => clearTimeout(priceModalTimer));
+      }
+
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      // Reveal on scroll
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('is-visible'); });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+      // CTA clicks
+      document.querySelectorAll('[data-cta]').forEach((el) => {
+        el.addEventListener('click', () => {
+          track('cta_click', { cta_id: el.getAttribute('data-cta') });
+        });
+      });
+
+      // Program select → fill form
+      document.querySelectorAll('[data-fill-program]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const value = btn.getAttribute('data-fill-program');
+          document.querySelectorAll('.program-card').forEach((c) => c.setAttribute('data-active', c.getAttribute('data-program') === value ? 'true' : 'false'));
+          const select = document.getElementById('program');
+          select.value = value;
+          const fProgram = document.getElementById('f_program');
+          if (fProgram) fProgram.value = value;
+          if (form) form.querySelector('[name="cta_id"]').value = btn.getAttribute('data-cta') || 'program_select';
+          document.getElementById('dang-ky').scrollIntoView({ behavior: 'smooth', block: 'center' });
+          select.focus();
+        });
+      });
+
+      // TikTok slider (no scroll, side nav)
+      const trackEl = document.getElementById('campusTrack');
+      const btnPrev = document.getElementById('slidePrev');
+      const btnNext = document.getElementById('slideNext');
+      let tiktokIndex = 0;
+      const getPerView = () => {
+        if (window.innerWidth >= 1024) return 3;
+        if (window.innerWidth >= 640) return 2;
+        return 1;
+      };
+      const updateTiktokSlider = () => {
+        const slides = trackEl.querySelectorAll('.tiktok-slide');
+        const perView = getPerView();
+        const maxIndex = Math.max(0, slides.length - perView);
+        if (tiktokIndex > maxIndex) tiktokIndex = maxIndex;
+        const slide = slides[0];
+        const gap = 16;
+        const step = slide ? slide.getBoundingClientRect().width + gap : 0;
+        trackEl.style.transform = `translateX(-${tiktokIndex * step}px)`;
+        btnPrev.disabled = tiktokIndex <= 0;
+        btnNext.disabled = tiktokIndex >= maxIndex;
+      };
+      btnPrev.addEventListener('click', () => {
+        tiktokIndex = Math.max(0, tiktokIndex - 1);
+        updateTiktokSlider();
+      });
+      btnNext.addEventListener('click', () => {
+        const perView = getPerView();
+        const maxIndex = Math.max(0, trackEl.querySelectorAll('.tiktok-slide').length - perView);
+        tiktokIndex = Math.min(maxIndex, tiktokIndex + 1);
+        updateTiktokSlider();
+      });
+      window.addEventListener('resize', updateTiktokSlider);
+      updateTiktokSlider();
+
+      const certTrack = document.getElementById('certTrack');
+      const certPrev = document.getElementById('certPrev');
+      const certNext = document.getElementById('certNext');
+      const certDots = document.getElementById('certDots');
+      let certIndex = 0;
+      let certTimer = null;
+      const getCertPerView = () => {
+        if (window.innerWidth >= 1024) return 3;
+        if (window.innerWidth >= 640) return 2;
+        return 1;
+      };
+      const buildCertDots = () => {
+        const slides = certTrack.querySelectorAll('.cert-slide');
+        const perView = getCertPerView();
+        const pages = Math.max(1, slides.length - perView + 1);
+        certDots.innerHTML = '';
+        for (let i = 0; i < pages; i++) {
+          const dot = document.createElement('button');
+          dot.type = 'button';
+          dot.className = 'cert-dot' + (i === certIndex ? ' is-active' : '');
+          dot.setAttribute('aria-label', `Trang chứng nhận ${i + 1}`);
+          dot.addEventListener('click', () => {
+            certIndex = i;
+            updateCertSlider();
+            restartCertAuto();
+          });
+          certDots.appendChild(dot);
+        }
+      };
+      const updateCertSlider = () => {
+        const slides = certTrack.querySelectorAll('.cert-slide');
+        const perView = getCertPerView();
+        const maxIndex = Math.max(0, slides.length - perView);
+        if (certIndex > maxIndex) certIndex = maxIndex;
+        if (certIndex < 0) certIndex = 0;
+        const slide = slides[0];
+        const gap = 16;
+        const step = slide ? slide.getBoundingClientRect().width + gap : 0;
+        certTrack.style.transform = `translateX(-${certIndex * step}px)`;
+        slides.forEach((s, i) => {
+          const active = i >= certIndex && i < certIndex + perView;
+          s.classList.toggle('is-active', active);
+        });
+        certPrev.disabled = certIndex <= 0;
+        certNext.disabled = certIndex >= maxIndex;
+        const dots = certDots.querySelectorAll('.cert-dot');
+        if (dots.length !== maxIndex + 1) buildCertDots();
+        else dots.forEach((d, i) => d.classList.toggle('is-active', i === certIndex));
+      };
+      const restartCertAuto = () => {
+        clearInterval(certTimer);
+        certTimer = setInterval(() => {
+          const perView = getCertPerView();
+          const maxIndex = Math.max(0, certTrack.querySelectorAll('.cert-slide').length - perView);
+          certIndex = certIndex >= maxIndex ? 0 : certIndex + 1;
+          updateCertSlider();
+        }, 4200);
+      };
+      certPrev.addEventListener('click', () => {
+        certIndex = Math.max(0, certIndex - 1);
+        updateCertSlider();
+        restartCertAuto();
+      });
+      certNext.addEventListener('click', () => {
+        const perView = getCertPerView();
+        const maxIndex = Math.max(0, certTrack.querySelectorAll('.cert-slide').length - perView);
+        certIndex = Math.min(maxIndex, certIndex + 1);
+        updateCertSlider();
+        restartCertAuto();
+      });
+      window.addEventListener('resize', () => {
+        updateCertSlider();
+      });
+      updateCertSlider();
+      restartCertAuto();
+      const certSliderEl = certTrack.closest('.cert-slider');
+      if (certSliderEl) {
+        certSliderEl.addEventListener('mouseenter', () => clearInterval(certTimer));
+        certSliderEl.addEventListener('mouseleave', restartCertAuto);
+      }
+
+      // Price quote slider (S5)
+      const priceTrack = document.getElementById('priceTrack');
+      const pricePrev = document.getElementById('pricePrev');
+      const priceNext = document.getElementById('priceNext');
+      let priceIndex = 0;
+      const getPricePerView = () => {
+        if (window.innerWidth >= 1024) return 3;
+        if (window.innerWidth >= 640) return 2;
+        return 1;
+      };
+      const updatePriceSlider = () => {
+        const slides = priceTrack.querySelectorAll('.price-slide');
+        const perView = getPricePerView();
+        const maxIndex = Math.max(0, slides.length - perView);
+        if (priceIndex > maxIndex) priceIndex = maxIndex;
+        const slide = slides[0];
+        const gap = 16;
+        const step = slide ? slide.getBoundingClientRect().width + gap : 0;
+        priceTrack.style.transform = `translateX(-${priceIndex * step}px)`;
+        pricePrev.disabled = priceIndex <= 0;
+        priceNext.disabled = priceIndex >= maxIndex;
+      };
+      pricePrev.addEventListener('click', () => {
+        priceIndex = Math.max(0, priceIndex - 1);
+        updatePriceSlider();
+      });
+      priceNext.addEventListener('click', () => {
+        const perView = getPricePerView();
+        const maxIndex = Math.max(0, priceTrack.querySelectorAll('.price-slide').length - perView);
+        priceIndex = Math.min(maxIndex, priceIndex + 1);
+        updatePriceSlider();
+      });
+      window.addEventListener('resize', updatePriceSlider);
+      updatePriceSlider();
+
+      // Scroll depth
+      const depths = [25, 50, 75, 90];
+      const fired = new Set();
+      window.addEventListener('scroll', () => {
+        const h = document.documentElement;
+        const pct = Math.round((h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100);
+        depths.forEach((d) => {
+          if (pct >= d && !fired.has(d)) {
+            fired.add(d);
+            track('scroll_depth', { depth: d });
+          }
+        });
+      }, { passive: true });
+
+      // License image lightbox
+      const lb = document.getElementById('lightbox');
+      const lbImg = document.getElementById('lightboxImg');
+      const lbWrap = document.getElementById('lightboxWrap');
+      const lbStage = document.getElementById('lightboxStage');
+      const lbTitle = document.getElementById('lightboxTitle');
+      const lbZoomLabel = document.getElementById('lbZoomLabel');
+      let lbScale = 1;
+      let lbX = 0;
+      let lbY = 0;
+      let lbDragging = false;
+      let lbMoved = false;
+      let dragStartX = 0;
+      let dragStartY = 0;
+      let originX = 0;
+      let originY = 0;
+      const LB_MIN = 0.5;
+      const LB_MAX = 4;
+
+      const applyLbTransform = () => {
+        lbWrap.style.transform = `translate(${lbX}px, ${lbY}px) scale(${lbScale})`;
+        lbZoomLabel.textContent = `${Math.round(lbScale * 100)}%`;
+      };
+
+      const setLbScale = (next, aroundX, aroundY) => {
+        const prev = lbScale;
+        lbScale = Math.min(LB_MAX, Math.max(LB_MIN, next));
+        if (aroundX != null && aroundY != null && prev !== 0) {
+          const rect = lbStage.getBoundingClientRect();
+          const cx = aroundX - rect.left - rect.width / 2;
+          const cy = aroundY - rect.top - rect.height / 2;
+          const ratio = lbScale / prev;
+          lbX = cx - (cx - lbX) * ratio;
+          lbY = cy - (cy - lbY) * ratio;
+        }
+        if (lbScale <= 1.01) {
+          lbScale = 1;
+          lbX = 0;
+          lbY = 0;
+        }
+        applyLbTransform();
+      };
+
+      const openLightbox = (src, title, alt) => {
+        lbImg.src = src;
+        lbImg.alt = alt || title || 'Xem ảnh';
+        lbTitle.textContent = title || 'Xem ảnh';
+        lbScale = 1;
+        lbX = 0;
+        lbY = 0;
+        applyLbTransform();
+        lb.classList.toggle('has-gallery', lbGallery.length > 1);
+        lb.classList.add('is-open');
+        lb.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        document.getElementById('lbClose').focus();
+      };
+
+      let lbGallery = [];
+      let lbGalleryIndex = 0;
+
+      const openLightboxFromEl = (el) => {
+        const img = el.querySelector('img') || (el.tagName === 'IMG' ? el : null);
+        const src = el.getAttribute('href') || (img && (img.currentSrc || img.src));
+        if (!src) return;
+        const title = el.getAttribute('data-lightbox-title') || (img ? img.alt : '') || 'Xem ảnh';
+        const alt = img ? img.alt : title;
+        const group = el.getAttribute('data-lightbox-group');
+        if (group) {
+          lbGallery = Array.from(document.querySelectorAll(`[data-lightbox-group="${group}"]`)).map((node) => {
+            const nodeImg = node.querySelector('img') || (node.tagName === 'IMG' ? node : null);
+            return {
+              src: node.getAttribute('href') || (nodeImg && (nodeImg.currentSrc || nodeImg.src)),
+              title: node.getAttribute('data-lightbox-title') || (nodeImg ? nodeImg.alt : '') || 'Xem ảnh',
+              alt: nodeImg ? nodeImg.alt : ''
+            };
+          }).filter((item) => item.src);
+          lbGalleryIndex = Math.max(0, lbGallery.findIndex((item) => item.src === src));
+        } else {
+          lbGallery = [{ src, title, alt }];
+          lbGalleryIndex = 0;
+        }
+        openLightbox(src, title, alt);
+      };
+
+      const showGalleryAt = (index) => {
+        if (!lbGallery.length) return;
+        lbGalleryIndex = (index + lbGallery.length) % lbGallery.length;
+        const item = lbGallery[lbGalleryIndex];
+        openLightbox(item.src, item.title, item.alt);
+      };
+
+      const closeLightbox = () => {
+        lb.classList.remove('is-open', 'has-gallery');
+        lb.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        lbImg.removeAttribute('src');
+        lbGallery = [];
+        lbGalleryIndex = 0;
+      };
+
+      document.querySelectorAll('[data-lightbox]').forEach((el) => {
+        el.addEventListener('click', (e) => {
+          e.preventDefault();
+          openLightboxFromEl(el);
+        });
+      });
+
+      document.getElementById('lbClose').addEventListener('click', closeLightbox);
+      document.getElementById('lbZoomIn').addEventListener('click', () => setLbScale(lbScale + 0.25));
+      document.getElementById('lbZoomOut').addEventListener('click', () => setLbScale(lbScale - 0.25));
+      document.getElementById('lbZoomReset').addEventListener('click', () => setLbScale(1));
+      const lbPrevBtn = document.getElementById('lbPrev');
+      const lbNextBtn = document.getElementById('lbNext');
+      if (lbPrevBtn) lbPrevBtn.addEventListener('click', (e) => { e.stopPropagation(); showGalleryAt(lbGalleryIndex - 1); });
+      if (lbNextBtn) lbNextBtn.addEventListener('click', (e) => { e.stopPropagation(); showGalleryAt(lbGalleryIndex + 1); });
+
+      lbStage.addEventListener('wheel', (e) => {
+        if (!lb.classList.contains('is-open')) return;
+        e.preventDefault();
+        const delta = e.deltaY > 0 ? -0.15 : 0.15;
+        setLbScale(lbScale + delta, e.clientX, e.clientY);
+      }, { passive: false });
+
+      lbStage.addEventListener('pointerdown', (e) => {
+        if (e.button !== 0) return;
+        lbDragging = true;
+        lbMoved = false;
+        dragStartX = e.clientX;
+        dragStartY = e.clientY;
+        originX = lbX;
+        originY = lbY;
+        lbStage.classList.add('is-dragging');
+        lbStage.setPointerCapture(e.pointerId);
+      });
+      lbStage.addEventListener('pointermove', (e) => {
+        if (!lbDragging) return;
+        const dx = e.clientX - dragStartX;
+        const dy = e.clientY - dragStartY;
+        if (Math.abs(dx) > 3 || Math.abs(dy) > 3) lbMoved = true;
+        if (lbScale > 1) {
+          lbX = originX + dx;
+          lbY = originY + dy;
+          applyLbTransform();
+        }
+      });
+      const endDrag = (e) => {
+        if (!lbDragging) return;
+        lbDragging = false;
+        lbStage.classList.remove('is-dragging');
+        try { lbStage.releasePointerCapture(e.pointerId); } catch (_) {}
+      };
+      lbStage.addEventListener('pointerup', endDrag);
+      lbStage.addEventListener('pointercancel', endDrag);
+      lbStage.addEventListener('click', (e) => {
+        if (lbMoved) return;
+        if (e.target === lbStage) closeLightbox();
+      });
+      lbStage.addEventListener('dblclick', (e) => {
+        e.preventDefault();
+        if (lbScale > 1.1) setLbScale(1);
+        else setLbScale(2.2, e.clientX, e.clientY);
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (!lb.classList.contains('is-open')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === '+' || e.key === '=') setLbScale(lbScale + 0.25);
+        if (e.key === '-') setLbScale(lbScale - 0.25);
+        if (e.key === '0') setLbScale(1);
+        if (e.key === 'ArrowLeft' && lbGallery.length > 1) showGalleryAt(lbGalleryIndex - 1);
+        if (e.key === 'ArrowRight' && lbGallery.length > 1) showGalleryAt(lbGalleryIndex + 1);
+      });
+    })();
+  </script>
+</body>
+</html>
+
