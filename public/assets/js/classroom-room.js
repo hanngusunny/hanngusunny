@@ -70,6 +70,7 @@
   let switchingJitsi = false;
   let ignoreJitsiClose = false;
   let jitsiRemountAttempts = 0;
+  let lastAudioMuted = null;
   let teacherWasPresent = false;
   let teacherAbsentStreak = 0;
   let redirectingAfterTeacherLeft = false;
@@ -1314,6 +1315,10 @@
       subject += " — Phòng thảo luận " + breakoutIndex;
     }
 
+    const startAudioMuted = lastAudioMuted !== null
+      ? lastAudioMuted
+      : (cfg.isModerator ? false : true);
+
     const options = {
       roomName,
       parentNode: container,
@@ -1339,18 +1344,35 @@
         hideEmailInSettings: true,
         defaultLanguage: "vi",
         subject,
-        startWithAudioMuted: true,
+        p2p: {
+          enabled: false,
+        },
+        disableFilmstrip: false,
+        disableResponsiveTiles: false,
+        enableNoAudioDetection: true,
+        enableTalkWhileMuted: true,
+        disableAudioLevels: false,
+        enableNoisyMicDetection: true,
+        audioQuality: {
+          stereo: false,
+        },
+        resolution: 720,
+        constraints: {
+          video: {
+            height: { ideal: 720, max: 720, min: 240 },
+          },
+        },
+        startWithAudioMuted: startAudioMuted,
         startWithVideoMuted: false,
         analytics: { disabled: true },
-        disableFilmstrip: true,
-        disableFullscreen: true,
+        disableFullscreen: false,
         disableScreensharing: false,
         toolbarButtons: buildToolbarButtons(),
       },
       interfaceConfigOverwrite: {
         APP_NAME: "Phòng học SUNNY",
-        DISABLE_FILMSTRIP: true,
-        DISABLE_FULLSCREEN: true,
+        DISABLE_FILMSTRIP: false,
+        DISABLE_FULLSCREEN: false,
         SHOW_JITSI_WATERMARK: false,
         SHOW_WATERMARK_FOR_GUESTS: false,
         SHOW_BRAND_WATERMARK: false,
@@ -1422,6 +1444,26 @@
       }
       pingPresence();
       fetchParticipants();
+    });
+
+    jitsiApi.addListener("audioMuteStatusChanged", (payload) => {
+      lastAudioMuted = Boolean(payload && payload.muted);
+    });
+
+    jitsiApi.addListener("micError", (err) => {
+      console.error("[Jitsi Mic Error]", err);
+      showBreakToast("Microphone gặp sự cố. Hãy kiểm tra lại mic hoặc cắm lại tai nghe.", "error");
+    });
+
+    jitsiApi.addListener("cameraError", (err) => {
+      console.error("[Jitsi Camera Error]", err);
+      showBreakToast("Không truy cập được camera. Hãy kiểm tra quyền thiết bị trên trình duyệt.", "error");
+    });
+
+    jitsiApi.addListener("audioAvailabilityChanged", (payload) => {
+      if (payload && payload.available === false) {
+        showBreakToast("Không tìm thấy thiết bị micro nào được kết nối.", "error");
+      }
     });
 
     jitsiApi.addListener("readyToClose", () => {

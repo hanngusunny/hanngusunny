@@ -52,9 +52,33 @@
     updateButtons();
   });
 
-  window.addEventListener("beforeunload", () => {
-    stream?.getTracks().forEach((t) => t.stop());
+  const stopLobbyStream = () => {
+    if (stream) {
+      try {
+        stream.getTracks().forEach((t) => {
+          t.stop();
+          t.enabled = false;
+        });
+      } catch (e) {
+        /* ignore */
+      }
+      stream = null;
+    }
+    if (video) {
+      video.srcObject = null;
+    }
+  };
+
+  window.stopLobbyPreviewStream = stopLobbyStream;
+
+  document.querySelectorAll("form.cr-enter-form").forEach((form) => {
+    form.addEventListener("submit", () => {
+      stopLobbyStream();
+    });
   });
+
+  window.addEventListener("beforeunload", stopLobbyStream);
+  window.addEventListener("pagehide", stopLobbyStream);
 
   startPreview();
   updateButtons();

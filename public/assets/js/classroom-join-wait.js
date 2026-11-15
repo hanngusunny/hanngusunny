@@ -15,6 +15,9 @@
       if (!data.ok) return;
 
       if (data.status === "approved") {
+        if (typeof window.stopLobbyPreviewStream === "function") {
+          window.stopLobbyPreviewStream();
+        }
         window.location.href = data.redirectUrl || window.location.href.replace("/phong-cho", "/vao");
         return;
       }
