@@ -166,8 +166,8 @@ class AssessmentTakeController extends Controller
 
         try {
             $this->submissions->saveSubmission($id, $userId, $parsed, $questions, [
-                'allowPartial' => $timedOut,
-                'fillUnanswered' => $timedOut,
+                'allowPartial' => true,
+                'fillUnanswered' => true,
             ]);
         } catch (\RuntimeException $e) {
             if ($e->getMessage() === 'already_submitted') {

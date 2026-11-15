@@ -349,28 +349,4 @@
 
     if (status && matchedCount === 0) status.textContent = "Lật 2 thẻ: ghép ảnh với chữ giải thích đúng cặp";
   });
-
-  const quizForm = document.querySelector(".session-quiz-form");
-
-  quizForm?.addEventListener("submit", (event) => {
-    const timedOutInput = quizForm.querySelector("#sessionKnowledgeReviewTimedOut, #assessmentQuizTimedOut, [name='timed_out']");
-    if (timedOutInput && timedOutInput.value === "1") {
-      return;
-    }
-
-    const memoryInputs = quizForm.querySelectorAll("[data-memory-complete-input]");
-    const incomplete = Array.from(memoryInputs).filter((input) => {
-      try {
-        const data = JSON.parse(input.value || "{}");
-        return data.status !== "completed";
-      } catch (error) {
-        return true;
-      }
-    });
-
-    if (incomplete.length > 0) {
-      event.preventDefault();
-      window.alert("Hãy hoàn thành trò chơi lật ảnh trước khi nộp bài ôn tập.");
-    }
-  });
 })();

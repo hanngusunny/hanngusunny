@@ -82,7 +82,6 @@
                         id="quiz-answer-<?= esc((string) $questionId) ?>"
                         name="answers[<?= esc((string) $questionId) ?>]"
                         rows="5"
-                        required
                         placeholder="Viết câu trả lời của bạn..."
                       ><?= esc($savedRaw) ?></textarea>
                     </div>
@@ -523,7 +522,7 @@
                         }
                       ?>
                       <label class="session-quiz-option">
-                        <input type="radio" name="answers[<?= esc((string) $questionId) ?>]" value="<?= esc($key) ?>" required<?= $savedRaw === $key ? ' checked' : '' ?>>
+                        <input type="radio" name="answers[<?= esc((string) $questionId) ?>]" value="<?= esc($key) ?>"<?= $savedRaw === $key ? ' checked' : '' ?>>
                         <span class="session-quiz-option-key"><?= esc($label) ?></span>
                         <span class="session-quiz-option-text"><?= esc($optText) ?></span>
                       </label>
