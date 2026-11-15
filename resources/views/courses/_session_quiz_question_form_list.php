@@ -500,7 +500,7 @@
                         <label class="session-quiz-option session-quiz-option--multi">
                           <input type="checkbox" value="<?= esc($key) ?>" data-multi-select-choice>
                           <span class="session-quiz-option-key"><?= esc($label) ?></span>
-                          <span class="session-quiz-option-text"><?= esc($optText) ?></span>
+                          <span class="session-quiz-option-text course-rich-content"><?= app(\App\Support\Questions\QuestionBankItemModel::class)->renderOptionContent($optText, $label) ?></span>
                         </label>
                       <?php endfor ?>
                       <input
@@ -524,7 +524,7 @@
                       <label class="session-quiz-option">
                         <input type="radio" name="answers[<?= esc((string) $questionId) ?>]" value="<?= esc($key) ?>"<?= $savedRaw === $key ? ' checked' : '' ?>>
                         <span class="session-quiz-option-key"><?= esc($label) ?></span>
-                        <span class="session-quiz-option-text"><?= esc($optText) ?></span>
+                        <span class="session-quiz-option-text course-rich-content"><?= app(\App\Support\Questions\QuestionBankItemModel::class)->renderOptionContent($optText, $label) ?></span>
                       </label>
                     <?php endfor ?>
                   </div>

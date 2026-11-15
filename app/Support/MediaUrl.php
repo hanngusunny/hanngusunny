@@ -6,7 +6,8 @@ class MediaUrl
 {
     public static function to(string $value): string
     {
-        $value = trim(str_replace('\\', '/', $value));
+        $value = trim(html_entity_decode(str_replace('\\', '/', $value), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+        $value = trim($value, " \t\n\r\0\x0B'\"");
 
         if ($value === '' || str_starts_with($value, 'data:') || str_starts_with($value, 'blob:')) {
             return $value;
@@ -25,7 +26,7 @@ class MediaUrl
             $value = $path !== '' ? $path : $value;
         }
 
-        if (preg_match('#(?:^|/)(?:(?:\.\./)|(?:\./))*(?:public/)?(uploads/.+)$#i', $value, $match) === 1) {
+        if (preg_match('#(?:^|/)(?:(?:\.\./)|(?:\./))*(?:public/)?((?:uploads|assets|storage)/.+)$#i', $value, $match) === 1) {
             return asset($match[1]);
         }
 
@@ -47,9 +48,15 @@ class MediaUrl
         }
 
         return (string) preg_replace_callback(
-            '/\b(src|href|poster)=([\'"])([^\'"]+)\2/i',
+            '/\b(src|href|poster)\s*=\s*(?:([\'"])(.*?)\2|([^\s>]+))/i',
             static function (array $match): string {
-                return $match[1].'='.$match[2].e(self::to($match[3])).$match[2];
+                $attr = $match[1];
+                $quote = $match[2] ?? '"';
+                $rawUrl = isset($match[3]) && $match[3] !== '' ? $match[3] : ($match[4] ?? '');
+                $converted = self::to($rawUrl);
+                $url = $converted !== '' ? $converted : $rawUrl;
+
+                return $attr.'='.$quote.e($url).$quote;
             },
             $html
         );

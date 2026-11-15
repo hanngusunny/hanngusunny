@@ -173,7 +173,7 @@ require_once __DIR__ . '/_session_quiz_title_helpers.php';
               <label class="session-quiz-option session-quiz-option--multi">
                 <input type="checkbox" value="<?= esc($key) ?>" data-phat-am-multi-select-choice>
                 <span class="session-quiz-option-key"><?= esc($label) ?></span>
-                <span class="session-quiz-option-text"><?= esc($optText) ?></span>
+                <span class="session-quiz-option-text course-rich-content"><?= app(\App\Support\Questions\QuestionBankItemModel::class)->renderOptionContent($optText, $label) ?></span>
               </label>
             <?php endforeach ?>
             <input type="hidden" value="" data-phat-am-multi-select-output>
@@ -192,7 +192,7 @@ require_once __DIR__ . '/_session_quiz_title_helpers.php';
               <label class="session-quiz-option">
                 <input type="radio" name="phat-am-choice-<?= esc($itemUid) ?>" value="<?= esc($key) ?>" data-phat-am-choice-input<?= trim((string) ($savedItemAnswer['choice'] ?? '')) === $key ? ' checked' : '' ?>>
                 <span class="session-quiz-option-key"><?= esc($label) ?></span>
-                <span class="session-quiz-option-text"><?= esc($optText) ?></span>
+                <span class="session-quiz-option-text course-rich-content"><?= app(\App\Support\Questions\QuestionBankItemModel::class)->renderOptionContent($optText, $label) ?></span>
               </label>
             <?php endforeach ?>
           </div>

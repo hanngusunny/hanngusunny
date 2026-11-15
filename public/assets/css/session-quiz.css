@@ -1625,6 +1625,17 @@
   min-width: 0;
 }
 
+.session-quiz-option-img,
+.session-quiz-option-text img {
+  display: block;
+  max-width: 100%;
+  max-height: 220px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 6px;
+  margin-top: 6px;
+}
+
 .sunny-app.page-session-show .session-quiz-scoreboard {
   display: flex;
   align-items: center;

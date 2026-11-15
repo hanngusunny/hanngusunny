@@ -1119,7 +1119,7 @@
                     <div class="<?= esc($optionClass) ?>">
                       <span class="session-quiz-option-key"><?= esc($label) ?></span>
                       <span class="session-quiz-option-main">
-                        <span class="session-quiz-option-text"><?= esc($optText) ?></span>
+                        <span class="session-quiz-option-text course-rich-content"><?= app(\App\Support\Questions\QuestionBankItemModel::class)->renderOptionContent($optText, $label) ?></span>
                         <?php if ($isSelected): ?>
                           <span class="session-quiz-option-tag session-quiz-option-tag--yours">Bạn chọn</span>
                         <?php endif ?>
@@ -1152,7 +1152,7 @@
                     <div class="<?= esc($optionClass) ?>">
                       <span class="session-quiz-option-key"><?= esc($label) ?></span>
                       <span class="session-quiz-option-main">
-                        <span class="session-quiz-option-text course-rich-content"><?= $richTextModel->renderComment($optText) ?></span>
+                        <span class="session-quiz-option-text course-rich-content"><?= app(\App\Support\Questions\QuestionBankItemModel::class)->renderOptionContent($optText, $label) ?></span>
                         <?php if ($isSelected): ?>
                           <span class="session-quiz-option-tag session-quiz-option-tag--yours">Đáp án bạn chọn</span>
                         <?php elseif ($isCorrectOption && ! $isCorrect): ?>

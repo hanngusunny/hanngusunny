@@ -400,7 +400,21 @@ class ZaloAssessmentApiService
             $questionId = (int) ($question['id'] ?? 0);
             $questionType = (string) ($question['question_type'] ?? 'choice');
             $answerRow = $answerMap[$questionId] ?? [];
-            $options = $this->decodeOptions($question['options_json'] ?? $question['options'] ?? null);
+            $rawOptions = $this->decodeOptions($question['options_json'] ?? $question['options'] ?? null);
+            $bankModel = app(\App\Support\Questions\QuestionBankItemModel::class);
+            $options = array_map(function ($opt) use ($bankModel) {
+                if (! is_string($opt) || trim($opt) === '') {
+                    return $opt;
+                }
+                $trimmed = trim($opt);
+                if (str_contains($trimmed, '<')) {
+                    return HtmlContent::render($trimmed);
+                }
+                if ($bankModel->isOptionImage($trimmed)) {
+                    return \App\Support\MediaUrl::to($trimmed);
+                }
+                return $trimmed;
+            }, $rawOptions);
 
             $item = [
                 'id' => $questionId,
@@ -453,7 +467,10 @@ class ZaloAssessmentApiService
                     $item['correct_answer_label'] = $answerLabels[$correct] ?? null;
                 }
 
-                $item['explanation'] = (string) ($question['answer_explanation'] ?? '');
+                $rawExplanation = (string) ($question['answer_explanation'] ?? '');
+                $renderedExplanation = HtmlContent::render($rawExplanation);
+                $item['explanation'] = $renderedExplanation;
+                $item['explanation_html'] = $renderedExplanation;
             }
 
             $out[] = $item;

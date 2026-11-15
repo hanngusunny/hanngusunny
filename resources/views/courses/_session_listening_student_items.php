@@ -171,7 +171,7 @@ require_once __DIR__ . '/_session_quiz_title_helpers.php';
               <label class="session-quiz-option">
                 <input type="radio" name="listening-choice-<?= esc($itemUid) ?>" value="<?= esc($key) ?>" data-listening-choice-input<?= trim((string) ($savedItemAnswer['choice'] ?? '')) === $key ? ' checked' : '' ?>>
                 <span class="session-quiz-option-key"><?= esc($label) ?></span>
-                <span class="session-quiz-option-text"><?= esc($optText) ?></span>
+                <span class="session-quiz-option-text course-rich-content"><?= app(\App\Support\Questions\QuestionBankItemModel::class)->renderOptionContent($optText, $label) ?></span>
               </label>
             <?php endforeach ?>
           </div>
