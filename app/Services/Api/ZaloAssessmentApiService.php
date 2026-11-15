@@ -14,6 +14,7 @@ use App\Services\AssessmentSubmissionService;
 use App\Services\StudentAssessmentService;
 use App\Services\StudentCourseNavService;
 use App\Models\StudyProgramLevel;
+use App\Support\HtmlContent;
 
 class ZaloAssessmentApiService
 {
@@ -399,20 +400,35 @@ class ZaloAssessmentApiService
             $questionId = (int) ($question['id'] ?? 0);
             $questionType = (string) ($question['question_type'] ?? 'choice');
             $answerRow = $answerMap[$questionId] ?? [];
-            $options = $this->decodeOptions($question['options_json'] ?? $question['options'] ?? null);
+            $rawOptions = $this->decodeOptions($question['options_json'] ?? $question['options'] ?? null);
+            $bankModel = app(\App\Support\Questions\QuestionBankItemModel::class);
+            $options = array_map(function ($opt) use ($bankModel) {
+                if (! is_string($opt) || trim($opt) === '') {
+                    return $opt;
+                }
+                $trimmed = trim($opt);
+                if (str_contains($trimmed, '<')) {
+                    return HtmlContent::render($trimmed);
+                }
+                if ($bankModel->isOptionImage($trimmed)) {
+                    return \App\Support\MediaUrl::to($trimmed);
+                }
+                return $trimmed;
+            }, $rawOptions);
 
             $item = [
                 'id' => $questionId,
                 'sort_order' => (int) ($question['sort_order'] ?? $index),
                 'question_type' => $questionType,
-                'question_text' => (string) ($question['question_text'] ?? ''),
+                'question_text' => HtmlContent::render((string) ($question['question_text'] ?? '')),
                 'points' => $this->scoring->questionPoints($question),
                 'options' => $options,
                 'has_answer' => $answerRow !== [],
             ];
 
             if ($questionType === 'essay' || $questionType === 'fill') {
-                $item['student_answer_text'] = (string) ($answerRow['answer_text'] ?? $answerRow['selected_answer'] ?? '');
+                $rawAnswer = (string) ($answerRow['answer_text'] ?? $answerRow['selected_answer'] ?? '');
+                $item['student_answer_text'] = HtmlContent::render($rawAnswer);
             } else {
                 $selected = strtolower(trim((string) ($answerRow['selected_answer'] ?? '')));
                 $item['student_answer'] = $selected !== '' ? $selected : null;
@@ -451,7 +467,10 @@ class ZaloAssessmentApiService
                     $item['correct_answer_label'] = $answerLabels[$correct] ?? null;
                 }
 
-                $item['explanation'] = (string) ($question['answer_explanation'] ?? '');
+                $rawExplanation = (string) ($question['answer_explanation'] ?? '');
+                $renderedExplanation = HtmlContent::render($rawExplanation);
+                $item['explanation'] = $renderedExplanation;
+                $item['explanation_html'] = $renderedExplanation;
             }
 
             $out[] = $item;

@@ -127,6 +127,12 @@
                 'label' => 'Bài kiểm tra',
             ];
             $nav[] = [
+                'id' => 'vouchers_check',
+                'href' => route('staff.vouchers.check'),
+                'icon' => 'fa-ticket',
+                'label' => 'Kiểm tra Voucher',
+            ];
+            $nav[] = [
                 'id' => 'rules',
                 'href' => route('school-rules.edit'),
                 'icon' => 'fa-book',
@@ -143,6 +149,7 @@
             $nav[] = ['id' => 'programs', 'href' => route('admin.programs.index'), 'icon' => 'fa-graduation-cap', 'label' => 'Chương trình'];
             $nav[] = ['id' => 'courses', 'href' => route('admin.courses.index'), 'icon' => 'fa-chalkboard', 'label' => 'Khóa học'];
             $nav[] = ['id' => 'members', 'href' => route('admin.users.index'), 'icon' => 'fa-users', 'label' => 'Thành viên'];
+            $nav[] = ['id' => 'vouchers', 'href' => route('admin.vouchers.index'), 'icon' => 'fa-ticket', 'label' => 'Voucher'];
             $nav[] = ['id' => 'activity', 'href' => route('activity-logs.index'), 'icon' => 'fa-clock-rotate-left', 'label' => 'Lịch sử hoạt động'];
             $nav[] = ['id' => 'rules', 'href' => route('school-rules.edit'), 'icon' => 'fa-book', 'label' => 'Nội quy'];
             $nav[] = ['id' => 'classroom', 'href' => route('classroom.index'), 'icon' => 'fa-video', 'label' => 'Lớp học online'];

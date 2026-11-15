@@ -30,6 +30,7 @@
   let toastTimer = null;
   let resizeTimer = null;
   let tileViewRetries = 0;
+  let lastAudioMuted = null;
 
   const displayName = String(cfg.jitsiDisplayName || cfg.userName || "Học viên").trim();
   let inCall = false;
@@ -207,6 +208,9 @@
 
     const startVideoMuted = preferStableMobileVideo;
     const disableFilmstrip = false;
+    const startAudioMuted = lastAudioMuted !== null
+      ? lastAudioMuted
+      : (cfg.isModerator ? false : true);
 
     jitsiApi = new JitsiMeetExternalAPI(domain || cfg.jitsiDomain || "8x8.vc", {
       roomName,
@@ -235,7 +239,14 @@
         hideConferenceSubject: true,
         defaultLanguage: "vi",
         subject: "Lớp học",
-        startWithAudioMuted: true,
+        p2p: {
+          enabled: false,
+        },
+        enableNoAudioDetection: true,
+        enableTalkWhileMuted: true,
+        disableAudioLevels: false,
+        enableNoisyMicDetection: true,
+        startWithAudioMuted: startAudioMuted,
         startWithVideoMuted: startVideoMuted,
         analytics: { disabled: true },
         disableFilmstrip: disableFilmstrip,
@@ -283,6 +294,21 @@
         showToast("Nếu hình đen: bấm Tile view hoặc bật Camera. Giữ app ở màn hình chính.");
       }
     });
+
+    jitsiApi.addListener("audioMuteStatusChanged", (payload) => {
+      lastAudioMuted = Boolean(payload && payload.muted);
+    });
+
+    jitsiApi.addListener("micError", (err) => {
+      console.error("[PWA Jitsi Mic Error]", err);
+      showToast("Microphone gặp sự cố. Vui lòng kiểm tra lại mic.");
+    });
+
+    jitsiApi.addListener("cameraError", (err) => {
+      console.error("[PWA Jitsi Camera Error]", err);
+      showToast("Không truy cập được camera. Hãy kiểm tra quyền thiết bị.");
+    });
+
     jitsiApi.addListener("readyToClose", () => {
       if (switching || ignoreClose) return;
       if (remountAttempts >= 2) {
@@ -536,7 +562,7 @@
 
   if (enterBtn) {
     enterBtn.addEventListener("click", startCall);
+  } else {
+    startCall();
   }
-
-  startCall();
 })();

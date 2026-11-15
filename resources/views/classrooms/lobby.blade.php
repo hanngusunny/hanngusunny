@@ -197,6 +197,6 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('assets/js/classroom-lobby.js') }}"></script>
-    <script src="{{ asset('assets/js/classroom-join-wait.js') }}"></script>
+    <script src="{{ asset('assets/js/classroom-lobby.js') }}?v=2"></script>
+    <script src="{{ asset('assets/js/classroom-join-wait.js') }}?v=2"></script>
 @endpush

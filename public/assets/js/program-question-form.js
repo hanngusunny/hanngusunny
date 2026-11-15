@@ -97,7 +97,10 @@
     promotion: false,
     resize: true,
     paste_as_text: false,
-    content_style: 'body { font-family: "Google Sans Flex", Arial, sans-serif; font-size: 14px; line-height: 1.6; }',
+    convert_urls: false,
+    relative_urls: false,
+    remove_script_host: false,
+    content_style: 'body { font-family: "Google Sans Flex", Arial, sans-serif; font-size: 14px; line-height: 1.6; } img { max-width: 100%; height: auto; }',
     ...tinymceImageUpload,
   };
 

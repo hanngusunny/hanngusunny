@@ -193,7 +193,7 @@ require_once __DIR__ . '/_session_quiz_title_helpers.php';
             <div class="<?= esc($optionClass) ?>">
               <span class="session-quiz-option-key"><?= esc($label) ?></span>
               <span class="session-quiz-option-main">
-                <span class="session-quiz-option-text"><?= esc($optText) ?></span>
+                <span class="session-quiz-option-text course-rich-content"><?= app(\App\Support\Questions\QuestionBankItemModel::class)->renderOptionContent($optText, $label) ?></span>
                 <?php if ($isSelected): ?>
                   <span class="session-quiz-option-tag session-quiz-option-tag--yours">Bạn chọn</span>
                 <?php endif ?>
@@ -227,7 +227,7 @@ require_once __DIR__ . '/_session_quiz_title_helpers.php';
             <div class="<?= esc($optionClass) ?>">
               <span class="session-quiz-option-key"><?= esc($label) ?></span>
               <span class="session-quiz-option-main">
-                <span class="session-quiz-option-text"><?= esc($optText) ?></span>
+                <span class="session-quiz-option-text course-rich-content"><?= app(\App\Support\Questions\QuestionBankItemModel::class)->renderOptionContent($optText, $label) ?></span>
                 <?php if ($isSelected): ?>
                   <span class="session-quiz-option-tag session-quiz-option-tag--yours">Đáp án bạn chọn</span>
                 <?php elseif ($isCorrectOption && ! $itemChoiceCorrect): ?>

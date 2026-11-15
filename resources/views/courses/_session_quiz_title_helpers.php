@@ -104,7 +104,8 @@ if (! function_exists('sessionQuizPlainText')) {
     function sessionQuizRenderTitleHtml(int $no, string $questionType, string $questionTextRaw, object $richTextModel): string
     {
         $plain     = sessionQuizPlainText($questionTextRaw);
-        $hasCustom = $plain !== '' && ! sessionQuizIsRedundantQuestionText($plain, $questionType);
+        $hasMedia  = preg_match('/<(img|audio|video|iframe|table|ul|ol|figure)\b/i', $questionTextRaw) === 1;
+        $hasCustom = ($plain !== '' && ! sessionQuizIsRedundantQuestionText($plain, $questionType)) || $hasMedia;
 
         if ($hasCustom) {
             $rendered = $richTextModel->renderComment(sessionQuizPrepareRichContent($questionTextRaw));

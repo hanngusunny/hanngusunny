@@ -473,17 +473,20 @@
       return;
     }
 
-    event.preventDefault();
-    markUnanswered(targets);
-    releaseSubmitUi();
-
     const count = targets.length;
-    window.alert(
+    const confirmMsg =
       count === 1
-        ? "Còn 1 câu chưa điền. Hệ thống đã đưa bạn về câu đó (đánh dấu đỏ)."
-        : "Còn " + count + " câu chưa điền. Hệ thống đã đưa bạn về câu trống đầu tiên — các câu còn thiếu được bôi đỏ."
-    );
+        ? "Bạn còn 1 câu chưa làm xong. Bạn có chắc chắn muốn nộp bài không?"
+        : "Bạn còn " + count + " câu chưa làm xong. Bạn có chắc chắn muốn nộp bài không?";
 
-    revealFirstUnanswered(targets[0]);
+    if (!window.confirm(confirmMsg)) {
+      event.preventDefault();
+      markUnanswered(targets);
+      releaseSubmitUi();
+      revealFirstUnanswered(targets[0]);
+      return;
+    }
+
+    clearUnansweredMarks();
   });
 })();

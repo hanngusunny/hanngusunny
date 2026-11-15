@@ -538,10 +538,55 @@ class ProgramCourseSyncService
     private function updateAssessmentQuestionsInPlace(array $sourceRows, array $destRows, int $courseAssessmentId): void
     {
         $parser = app(QuestionParser::class);
+        $usedDestIds = [];
+        $matchedPairs = [];
 
-        foreach ($sourceRows as $index => $source) {
-            $dest = $destRows[$index] ?? null;
+        // Pass 1: Match by exact sort_order and question_type
+        foreach ($sourceRows as $sIndex => $source) {
+            $sourceType = $this->syncedQuestionType($parser, $source->toArray());
+
+            foreach ($destRows as $dest) {
+                if (! in_array($dest->id, $usedDestIds, true)
+                    && (int) $dest->sort_order === (int) $source->sort_order
+                    && (string) $dest->question_type === $sourceType
+                ) {
+                    $matchedPairs[$sIndex] = $dest;
+                    $usedDestIds[] = $dest->id;
+                    break;
+                }
+            }
+        }
+
+        // Pass 2: Match by question_type and index / any unmatched dest
+        foreach ($sourceRows as $sIndex => $source) {
+            if (isset($matchedPairs[$sIndex])) {
+                continue;
+            }
+
+            $sourceType = $this->syncedQuestionType($parser, $source->toArray());
+            $dest = $destRows[$sIndex] ?? null;
+
+            if ($dest instanceof CourseAssessmentQuestion
+                && ! in_array($dest->id, $usedDestIds, true)
+                && (string) $dest->question_type === $sourceType
+            ) {
+                $matchedPairs[$sIndex] = $dest;
+                $usedDestIds[] = $dest->id;
+                continue;
+            }
+
+            foreach ($destRows as $candidate) {
+                if (! in_array($candidate->id, $usedDestIds, true)) {
+                    $matchedPairs[$sIndex] = $candidate;
+                    $usedDestIds[] = $candidate->id;
+                    break;
+                }
+            }
+        }
+
+        foreach ($sourceRows as $sIndex => $source) {
             $payload = $this->assessmentQuestionPayload($source, $parser);
+            $dest = $matchedPairs[$sIndex] ?? null;
 
             if ($dest instanceof CourseAssessmentQuestion) {
                 $dest->update($payload);
@@ -551,6 +596,21 @@ class ProgramCourseSyncService
             CourseAssessmentQuestion::query()->create(array_merge($payload, [
                 'course_assessment_id' => $courseAssessmentId,
             ]));
+        }
+
+        foreach ($destRows as $extra) {
+            if (in_array($extra->id, $usedDestIds, true)) {
+                continue;
+            }
+
+            $hasAnswer = (Schema::hasTable('course_assessment_answers')
+                && DB::table('course_assessment_answers')->where('question_id', $extra->id)->exists())
+                || (Schema::hasTable('course_assessment_answer_drafts')
+                && DB::table('course_assessment_answer_drafts')->where('question_id', $extra->id)->exists());
+
+            if (! $hasAnswer) {
+                $extra->delete();
+            }
         }
     }
 

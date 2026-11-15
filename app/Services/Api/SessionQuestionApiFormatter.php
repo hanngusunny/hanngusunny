@@ -62,13 +62,16 @@ class SessionQuestionApiFormatter
             $hasAnswer   = $answerRow !== [];
             $rawSelected = trim((string) ($answerRow['selected_answer'] ?? ''));
 
+            $rawQuestionText      = (string) ($question['question_text'] ?? '');
+            $renderedQuestionHtml = $this->bankModel->renderQuestionText($rawQuestionText);
+
             $item = [
                 'id'                  => $questionId,
                 'sort_order'          => (int) ($question['sort_order'] ?? $index),
                 'question_type'       => $questionType,
                 'question_type_label' => self::TYPE_LABELS[$questionType] ?? $questionType,
-                'question_text'       => (string) ($question['question_text'] ?? ''),
-                'question_plain'      => QuestionParser::plainTextFromHtml((string) ($question['question_text'] ?? '')),
+                'question_text'       => $renderedQuestionHtml,
+                'question_plain'      => QuestionParser::plainTextFromHtml($rawQuestionText),
                 'options'             => $options,
                 'choice_options'      => $choiceOpts,
                 'has_answer'          => $hasAnswer,
@@ -120,11 +123,13 @@ class SessionQuestionApiFormatter
                 break;
             }
 
+            $resolvedValue = $this->resolveOptionValue((string) $value);
+
             $labeled[] = array_merge([
                 'key'   => $key,
                 'label' => $answerLabels[$key] ?? strtoupper($key),
-                'value' => $value,
-            ], $this->describeOptionMedia((string) $value));
+                'value' => $resolvedValue,
+            ], $this->describeOptionMedia($resolvedValue));
         }
 
         $item['choice_options_labeled'] = $labeled;
@@ -675,11 +680,22 @@ class SessionQuestionApiFormatter
     {
         $rawValue = trim($rawValue);
         $isImage  = $rawValue !== '' && $this->bankModel->isOptionImage($rawValue);
-        $resolved = $isImage ? $this->resolveOptionValue($rawValue) : $rawValue;
+        $resolved = $isImage
+            ? $this->resolveOptionValue($rawValue)
+            : (str_contains($rawValue, '<') ? \App\Support\HtmlContent::render($rawValue) : $rawValue);
+
+        $imageUrl = null;
+        if ($isImage) {
+            if (preg_match('/<img[^>]+src=[\'"]([^\'"]+)[\'"]/i', $resolved, $imgMatch)) {
+                $imageUrl = $imgMatch[1];
+            } else {
+                $imageUrl = $resolved;
+            }
+        }
 
         return [
             'is_image'   => $isImage,
-            'image_url'  => $isImage ? $resolved : null,
+            'image_url'  => $imageUrl,
             'text'       => $isImage ? '' : $resolved,
             'text_plain' => $isImage ? '' : QuestionParser::plainTextFromHtml($resolved),
         ];
@@ -1225,10 +1241,14 @@ class SessionQuestionApiFormatter
     private function resolveQuestionItemMedia(array &$item, bool $showResults): void
     {
         $rawText = (string) ($item['question_text'] ?? '');
-        $item['question_html'] = $this->bankModel->renderQuestionText($rawText);
+        $renderedHtml = $this->bankModel->renderQuestionText($rawText);
+        $item['question_html'] = $renderedHtml;
+        $item['question_text'] = $renderedHtml;
 
         if (isset($item['explanation']) && (string) $item['explanation'] !== '') {
-            $item['explanation_html'] = $this->bankModel->renderExplanation((string) $item['explanation']);
+            $renderedExplanation = $this->bankModel->renderExplanation((string) $item['explanation']);
+            $item['explanation_html'] = $renderedExplanation;
+            $item['explanation'] = $renderedExplanation;
         }
 
         if (! empty($item['choice_options']) && is_array($item['choice_options'])) {
@@ -1245,6 +1265,7 @@ class SessionQuestionApiFormatter
                 }
 
                 $labeled['value'] = $this->resolveOptionValue((string) ($labeled['value'] ?? ''));
+                $labeled = array_merge($labeled, $this->describeOptionMedia((string) $labeled['value']));
             }
             unset($labeled);
         }
@@ -1346,8 +1367,14 @@ class SessionQuestionApiFormatter
 
     private function resolveOptionValue(string $value): string
     {
+        $value = trim($value);
+
         if ($value === '') {
             return '';
+        }
+
+        if (str_contains($value, '<')) {
+            return \App\Support\HtmlContent::render($value);
         }
 
         if ($this->bankModel->isOptionImage($value)) {

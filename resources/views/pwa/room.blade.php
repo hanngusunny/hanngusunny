@@ -107,5 +107,5 @@
     };
 </script>
 <script src="https://{{ $jitsiDomain }}/external_api.js"></script>
-<script src="{{ asset('assets/js/pwa-room.js') }}?v=7"></script>
+<script src="{{ asset('assets/js/pwa-room.js') }}?v=8"></script>
 @endpush

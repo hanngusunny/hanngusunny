@@ -63,7 +63,9 @@ class JitsiMeetLink
         $hashParts = [
             'config.prejoinPageEnabled=false',
             'config.disableDeepLinking=true',
-            'config.startWithAudioMuted=true',
+            'config.p2p.enabled=false',
+            'config.disableFilmstrip=false',
+            'config.startWithAudioMuted=false',
             'config.disableScreensharing=false',
             'config.enableClosePage=false',
             'config.toolbarButtons='.$toolbarJson,

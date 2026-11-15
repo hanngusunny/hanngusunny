@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\StudyProgramController;
 use App\Http\Controllers\Admin\StudyProgramKnowledgeReviewController;
 use App\Http\Controllers\Admin\StudyProgramSessionController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\VoucherController;
 use App\Http\Controllers\SchoolRuleController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardGatewayController;
@@ -197,6 +198,25 @@ Route::middleware('auth')->group(function () {
     Route::middleware('admin')->prefix('cap-nhat-csdl')->name('admin.database.')->group(function () {
         Route::get('/', [DatabaseMaintenanceController::class, 'index'])->name('index');
         Route::post('/longtext-cau-hoi', [DatabaseMaintenanceController::class, 'expandQuestionText'])->name('expand-question-text');
+    });
+
+    Route::middleware('admin')->prefix('quan-ly-voucher')->name('admin.vouchers.')->group(function () {
+        Route::get('/', [VoucherController::class, 'index'])->name('index');
+        Route::post('/tao', [VoucherController::class, 'store'])->name('store');
+        Route::get('/kiem-tra', [VoucherController::class, 'checkPage'])->name('check');
+        Route::post('/check-ajax', [VoucherController::class, 'checkAjax'])->name('check.ajax');
+        Route::post('/ap-dung', [VoucherController::class, 'redeem'])->name('redeem');
+        Route::post('/upload-phoi', [VoucherController::class, 'uploadTemplate'])->name('template.upload');
+        Route::post('/khoi-phuc-phoi', [VoucherController::class, 'revertTemplate'])->name('template.revert');
+        Route::post('/luu-cau-hinh-phoi', [VoucherController::class, 'saveSettings'])->name('template.settings');
+        Route::post('/{voucher}/tao-lai-anh', [VoucherController::class, 'regenerate'])->name('regenerate');
+        Route::post('/{voucher}/xoa', [VoucherController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::middleware('staff')->prefix('kiem-tra-voucher')->name('staff.vouchers.')->group(function () {
+        Route::get('/', [VoucherController::class, 'checkPage'])->name('check');
+        Route::post('/check-ajax', [VoucherController::class, 'checkAjax'])->name('check.ajax');
+        Route::post('/ap-dung', [VoucherController::class, 'redeem'])->name('redeem');
     });
 
     Route::middleware('admin')->prefix('nguoi-dung')->name('admin.users.')->group(function () {

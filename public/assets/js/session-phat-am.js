@@ -496,19 +496,6 @@
       resetRecordingUi();
     });
 
-    if (requireSubmit) {
-      board.closest("form")?.addEventListener("submit", (event) => {
-        if (!uploadedPath && !readStoredPath()) {
-          event.preventDefault();
-          setStatus({
-            state: "error",
-            title: "Chưa có bản ghi",
-            hint: "Hãy ghi âm trước khi nộp bài.",
-          });
-        }
-      });
-    }
-
     uploadedPath = readStoredPath();
 
     if (uploadedPath) {
