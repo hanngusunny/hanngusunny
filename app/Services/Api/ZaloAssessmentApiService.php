@@ -14,6 +14,7 @@ use App\Services\AssessmentSubmissionService;
 use App\Services\StudentAssessmentService;
 use App\Services\StudentCourseNavService;
 use App\Models\StudyProgramLevel;
+use App\Support\HtmlContent;
 
 class ZaloAssessmentApiService
 {
@@ -405,14 +406,15 @@ class ZaloAssessmentApiService
                 'id' => $questionId,
                 'sort_order' => (int) ($question['sort_order'] ?? $index),
                 'question_type' => $questionType,
-                'question_text' => (string) ($question['question_text'] ?? ''),
+                'question_text' => HtmlContent::render((string) ($question['question_text'] ?? '')),
                 'points' => $this->scoring->questionPoints($question),
                 'options' => $options,
                 'has_answer' => $answerRow !== [],
             ];
 
             if ($questionType === 'essay' || $questionType === 'fill') {
-                $item['student_answer_text'] = (string) ($answerRow['answer_text'] ?? $answerRow['selected_answer'] ?? '');
+                $rawAnswer = (string) ($answerRow['answer_text'] ?? $answerRow['selected_answer'] ?? '');
+                $item['student_answer_text'] = HtmlContent::render($rawAnswer);
             } else {
                 $selected = strtolower(trim((string) ($answerRow['selected_answer'] ?? '')));
                 $item['student_answer'] = $selected !== '' ? $selected : null;

@@ -203,7 +203,8 @@
             : $scoring->formatPoints($maxPoints).' đ · '.$resultPill;
         $plainTitle = \App\Support\HtmlContent::plain($question['question_text'] ?? '');
         $defaultType = $typeLabel($questionType);
-        $hasCustomTitle = $plainTitle !== '' && mb_strtolower($plainTitle) !== mb_strtolower($defaultType);
+        $hasMediaTitle = preg_match('/<(img|audio|video|iframe|table|ul|ol|figure)\b/i', (string) ($question['question_text'] ?? '')) === 1;
+        $hasCustomTitle = ($plainTitle !== '' && mb_strtolower($plainTitle) !== mb_strtolower($defaultType)) || $hasMediaTitle;
     @endphp
 
     <article

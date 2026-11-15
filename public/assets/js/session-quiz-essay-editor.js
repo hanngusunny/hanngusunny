@@ -45,6 +45,12 @@
       }
 
       editor.save();
+      const el = editor.getElement();
+
+      if (el) {
+        el.dispatchEvent(new Event("input", { bubbles: true }));
+        el.dispatchEvent(new Event("change", { bubbles: true }));
+      }
     } catch (error) {
       editor.notificationManager.open({
         text: error.message || "Không tải được ảnh.",
@@ -71,6 +77,9 @@
     suffix: ".min",
     language: "vi",
     language_url: tinymceBaseUrl + "/langs/vi.js",
+    relative_urls: false,
+    remove_script_host: false,
+    convert_urls: false,
     height: 220,
     min_height: 160,
     menubar: false,
@@ -113,6 +122,7 @@
 
         if (el) {
           el.dispatchEvent(new Event("input", { bubbles: true }));
+          el.dispatchEvent(new Event("change", { bubbles: true }));
         }
       });
     },

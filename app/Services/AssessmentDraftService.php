@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Models\CourseAssessmentAnswer;
 use App\Models\CourseAssessmentAnswerDraft;
+use App\Models\CourseAssessmentQuestion;
+use App\Models\StudyProgramAssessmentQuestion;
 
 class AssessmentDraftService
 {
@@ -194,28 +196,75 @@ class AssessmentDraftService
             }
         }
 
-        $orphanValues = [];
+        $orphanMap = [];
 
         foreach ($map as $oldQuestionId => $value) {
-            if (! in_array((int) $oldQuestionId, $ids, true)) {
-                $orphanValues[] = $value;
+            $oldQuestionId = (int) $oldQuestionId;
+
+            if (! in_array($oldQuestionId, $ids, true)) {
+                $orphanMap[$oldQuestionId] = $value;
             }
         }
 
-        $emptySlots = [];
+        if ($orphanMap === []) {
+            return $aligned;
+        }
 
-        foreach ($ids as $questionId) {
-            if (! isset($aligned[$questionId])) {
-                $emptySlots[] = $questionId;
+        // Try to match orphans by looking up the old question record
+        $oldQuestions = CourseAssessmentQuestion::query()
+            ->whereIn('id', array_keys($orphanMap))
+            ->get()
+            ->keyBy('id');
+
+        $missingOldIds = array_diff(array_keys($orphanMap), $oldQuestions->keys()->all());
+
+        if ($missingOldIds !== []) {
+            $programQuestions = StudyProgramAssessmentQuestion::query()
+                ->whereIn('id', $missingOldIds)
+                ->get()
+                ->keyBy('id');
+
+            foreach ($programQuestions as $pId => $pQ) {
+                $oldQuestions->put($pId, $pQ);
             }
         }
 
-        foreach ($emptySlots as $index => $questionId) {
-            if (! isset($orphanValues[$index])) {
-                break;
+        $remainingOrphans = [];
+
+        foreach ($orphanMap as $oldQuestionId => $value) {
+            $oldQ = $oldQuestions->get($oldQuestionId);
+
+            if ($oldQ !== null) {
+                $matchedId = null;
+
+                foreach ($questions as $q) {
+                    $qId = (int) ($q['id'] ?? 0);
+
+                    if (! isset($aligned[$qId])
+                        && (int) ($q['sort_order'] ?? -1) === (int) $oldQ->sort_order
+                        && (string) ($q['question_type'] ?? '') === (string) $oldQ->question_type
+                    ) {
+                        $matchedId = $qId;
+                        break;
+                    }
+                }
+
+                if ($matchedId !== null) {
+                    $aligned[$matchedId] = $value;
+                    continue;
+                }
             }
 
-            $aligned[$questionId] = $orphanValues[$index];
+            $remainingOrphans[$oldQuestionId] = $value;
+        }
+
+        // Only do full 1:1 positional alignment if ALL questions were orphans and counts match exactly
+        if ($aligned === [] && count($remainingOrphans) === count($ids)) {
+            $orphanValues = array_values($remainingOrphans);
+
+            foreach ($ids as $index => $questionId) {
+                $aligned[$questionId] = $orphanValues[$index];
+            }
         }
 
         return $aligned;

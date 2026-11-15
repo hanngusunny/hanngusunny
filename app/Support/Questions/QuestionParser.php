@@ -329,6 +329,7 @@ public function parseQuestionRow(array $item, string $group, ?array $existingRow
             || $pairBundle['word_order'] !== []
             || trim((string) ($pairBundle['listening']['audio'] ?? '')) !== ''
             || trim((string) ($pairBundle['listening']['text'] ?? '')) !== ''
+            || $this->hasListeningBundleDraftContent($this->normalizeListeningData($pairBundle['listening'] ?? []))
             || $this->hasPlayableTrueFalseItems($pairBundle['true_false_items'])
             || $this->hasPlayableMultiChoiceItems($pairBundle['multi_choice_items'])
             || $this->hasPlayableCategorySort($pairBundle['category_sort'])
@@ -1110,8 +1111,9 @@ public function isReadyForUse(array $row): bool
             $bundle = $this->decodeListeningBundle($row);
             $hasAudio = trim((string) ($bundle['audio'] ?? '')) !== '';
             $hasText  = trim((string) ($bundle['text'] ?? '')) !== '';
+            $hasQuestionText = trim(strip_tags((string) ($row['question_text'] ?? ''))) !== '';
 
-            if (! $hasAudio && ! $hasText) {
+            if (! $hasAudio && ! $hasText && ! $hasQuestionText && count($bundle['questions']) <= 1) {
                 return false;
             }
 
@@ -4242,6 +4244,10 @@ public function normalizeListeningConfig(array $config): array
 
 public function hasListeningQuestionDraftContent(array $question): bool
     {
+        if (trim((string) ($question['choice_question'] ?? '')) !== '') {
+            return true;
+        }
+
         $mode = (string) ($question['answer_mode'] ?? 'choice');
 
         if ($mode === 'word_link') {
@@ -4252,7 +4258,43 @@ public function hasListeningQuestionDraftContent(array $question): bool
             return trim((string) ($question['fill_blanks']['template'] ?? '')) !== '';
         }
 
-        return $this->hasPhatAmQuestionDraftContent($question);
+        if ($mode === 'true_false') {
+            foreach ($question['true_false_items'] ?? [] as $tf) {
+                if (is_array($tf) && trim((string) ($tf['statement'] ?? '')) !== '') {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        if ($mode === 'multi_choice') {
+            foreach ($question['multi_choice_items'] ?? [] as $mc) {
+                if (! is_array($mc)) {
+                    continue;
+                }
+                if (trim((string) ($mc['question'] ?? '')) !== '') {
+                    return true;
+                }
+                foreach ($mc['options'] ?? [] as $opt) {
+                    if (trim((string) $opt) !== '') {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        if ($mode === 'choice' || $mode === 'multi_select') {
+            return count($question['options'] ?? []) >= 1;
+        }
+
+        if ($mode === 'fill') {
+            return trim((string) ($question['correct_text'] ?? '')) !== '';
+        }
+
+        return false;
     }
 
 public function hasListeningQuestionPlayableContent(array $question): bool
@@ -4275,11 +4317,21 @@ public function hasListeningBundleDraftContent(array $listening): bool
         $hasAudio = trim((string) ($listening['audio'] ?? '')) !== '';
         $hasText  = trim((string) ($listening['text'] ?? '')) !== '';
 
-        if (! $hasAudio && ! $hasText) {
+        if ($hasAudio || $hasText) {
+            return true;
+        }
+
+        $questions = $listening['questions'] ?? [];
+
+        if (! is_array($questions)) {
             return false;
         }
 
-        foreach ($listening['questions'] ?? [] as $question) {
+        if (count($questions) > 1) {
+            return true;
+        }
+
+        foreach ($questions as $question) {
             if (! is_array($question)) {
                 continue;
             }
