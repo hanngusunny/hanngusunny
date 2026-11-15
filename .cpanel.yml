@@ -1,9 +1,9 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/duhocsun6967/hanngusunny/
+    - export DEPLOYPATH=/home/duhocsun6967/public_html/online.hanngusunny.edu.vn/
     - /usr/bin/rsync -av --delete --exclude='.git' --exclude='.env' --exclude='storage/' --exclude='vendor/' --exclude='public/uploads/' ./ $DEPLOYPATH
-    - cd $DEPLOYPATH && /usr/local/bin/composer install --no-dev --optimize-autoloader
-    - cd $DEPLOYPATH && /usr/local/bin/php artisan config:cache
-    - cd $DEPLOYPATH && /usr/local/bin/php artisan route:cache
-    - cd $DEPLOYPATH && /usr/local/bin/php artisan view:cache
+    - cd $DEPLOYPATH && /usr/local/bin/php artisan migrate --force
+    - cd $DEPLOYPATH && /usr/local/bin/php artisan config:clear
+    - cd $DEPLOYPATH && /usr/local/bin/php artisan route:clear
+    - cd $DEPLOYPATH && /usr/local/bin/php artisan view:clear
