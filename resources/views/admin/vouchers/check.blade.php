@@ -9,6 +9,14 @@
     <a href="{{ route('admin.vouchers.check') }}" class="os-tab is-on"><i class="fa-solid fa-qrcode"></i> Kiểm tra & Áp dụng mã</a>
 @endsection
 
+@push('styles')
+<style>
+    body.os-body .os-main input.voucher-code-input {
+        padding-left: 56px !important;
+    }
+</style>
+@endpush
+
 @section('content')
 <div class="op-stack space-y-6 max-w-4xl mx-auto">
     <x-page-title kicker="Quản lý" icon="fa-qrcode" title="Kiểm tra & Áp dụng Voucher">
@@ -32,12 +40,13 @@
         <form id="checkVoucherForm" class="flex flex-col sm:flex-row gap-3">
             @csrf
             <div class="relative flex-1">
-                <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-orange-500 text-xl font-bold">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-orange-500 text-xl font-bold pointer-events-none z-10">
                     <i class="fa-solid fa-ticket"></i>
                 </span>
                 <input type="text" id="voucherCodeInput" name="code" autofocus autocomplete="off"
                     placeholder="Ví dụ: SN-98765"
-                    class="w-full pl-12 pr-4 py-4 rounded-2xl border-2 border-slate-200 bg-slate-50/50 text-xl font-mono font-black text-slate-800 placeholder-slate-400 focus:bg-white focus:border-orange-500 focus:ring-4 focus:ring-orange-100 transition uppercase">
+                    style="padding-left: 56px !important;"
+                    class="voucher-code-input w-full pr-4 py-4 rounded-2xl border-2 border-slate-200 bg-slate-50/50 text-xl font-mono font-black text-slate-800 placeholder-slate-400 focus:bg-white focus:border-orange-500 focus:ring-4 focus:ring-orange-100 transition uppercase">
             </div>
             <button type="submit" id="btnCheckSubmit"
                 class="px-8 py-4 rounded-2xl font-black text-white text-base bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 shadow-lg shadow-orange-500/20 flex items-center justify-center gap-2 transition transform active:scale-95 whitespace-nowrap">
