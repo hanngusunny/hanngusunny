@@ -147,67 +147,51 @@
             </form>
         </div>
 
-        <!-- Quản lý Phôi Voucher (5 cols) -->
+        <!-- Phôi Voucher Chuẩn (5 cols) -->
         <div class="lg:col-span-5 bg-white rounded-2xl border border-slate-100 shadow-sm p-6 flex flex-col justify-between">
             <div>
                 <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-lg font-bold">
-                            <i class="fa-solid fa-image"></i>
+                        <div class="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center text-lg font-bold">
+                            <i class="fa-solid fa-ticket"></i>
                         </div>
                         <div>
-                            <h2 class="text-lg font-bold text-slate-800">Phôi ảnh Voucher</h2>
-                            <p class="text-xs text-slate-500">Phôi mẫu dùng để chèn đè chữ (Mã, Tên, SĐT)</p>
+                            <h2 class="text-lg font-bold text-slate-800">Phôi Voucher chuẩn</h2>
+                            <p class="text-xs text-slate-500">Giảm ngay 1.000.000đ khi đăng ký học online</p>
                         </div>
                     </div>
-                    @if ($hasCustomTemplate)
-                        <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
-                            Phôi riêng
-                        </span>
-                    @else
-                        <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">
-                            Phôi chuẩn
-                        </span>
-                    @endif
+                    <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+                        Phôi chuẩn
+                    </span>
                 </div>
 
                 <!-- Phôi Preview -->
-                <div class="relative rounded-xl overflow-hidden border border-slate-200 group bg-slate-900 shadow-inner">
-                    <img src="{{ $templateUrl }}?v={{ time() }}" alt="Phôi voucher" class="w-full h-44 object-cover object-center group-hover:scale-105 transition duration-300">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-3">
-                        <span class="text-xs text-white/90 font-medium">
-                            <i class="fa-solid fa-circle-info mr-1 text-amber-400"></i> {{ $hasCustomTemplate ? 'Đang dùng phôi bạn đã tải lên' : 'Đang dùng phôi mặc định SUNNY' }}
+                <div class="relative rounded-xl overflow-hidden border border-slate-200 group bg-slate-950 shadow-inner">
+                    <img src="{{ $templateUrl }}?v={{ time() }}" alt="Phôi voucher" class="w-full h-auto object-cover object-center group-hover:scale-[1.02] transition duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-3">
+                        <span class="text-xs text-white/95 font-medium flex items-center gap-1.5">
+                            <i class="fa-solid fa-circle-check text-emerald-400"></i> Phôi mẫu chính thức của Tiếng Hàn Sunny
                         </span>
                     </div>
                 </div>
 
-                <!-- Form Upload phôi mới -->
-                <form method="POST" action="{{ route('admin.vouchers.template.upload') }}" enctype="multipart/form-data" class="mt-4">
-                    @csrf
-                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">
-                        Tải lên phôi mới (PNG hoặc JPG, khuyến nghị 1200x600 px):
-                    </label>
-                    <div class="flex gap-2">
-                        <input type="file" name="template_file" accept="image/png, image/jpeg" required
-                            class="flex-1 text-xs text-slate-500 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 cursor-pointer border border-slate-200 rounded-xl px-2 py-1">
-                        <button type="submit" class="px-3 py-2 text-xs font-semibold rounded-xl bg-slate-800 text-white hover:bg-slate-900 transition flex items-center gap-1.5 whitespace-nowrap">
-                            <i class="fa-solid fa-upload"></i> Cập nhật
-                        </button>
+                <div class="mt-4 p-3.5 bg-orange-50/60 rounded-xl border border-orange-100 text-xs text-slate-600 space-y-1.5">
+                    <div class="font-bold text-orange-700 flex items-center gap-1.5">
+                        <i class="fa-solid fa-circle-info"></i> Các trường tự động điền đè lên phôi:
                     </div>
-                </form>
+                    <ul class="list-disc list-inside space-y-1 text-slate-600 pl-1">
+                        <li><strong>Mã Voucher:</strong> Tự động gen ngẫu nhiên vào ô lớn</li>
+                        <li><strong>Họ và tên:</strong> Điền vào ô học viên hàng 1</li>
+                        <li><strong>Số điện thoại:</strong> Điền vào ô SĐT hàng 2</li>
+                        <li><strong>Ngày sinh:</strong> Điền vào ô ngày sinh hàng 3</li>
+                    </ul>
+                </div>
             </div>
 
-            @if ($hasCustomTemplate)
-                <div class="pt-3 border-t border-slate-100 mt-4 flex justify-between items-center">
-                    <span class="text-xs text-slate-400">Bạn có thể quay lại phôi mẫu gốc</span>
-                    <form method="POST" action="{{ route('admin.vouchers.template.revert') }}" onsubmit="return confirm('Bạn có chắc muốn dùng lại phôi mặc định?');">
-                        @csrf
-                        <button type="submit" class="text-xs font-semibold text-rose-600 hover:text-rose-700 flex items-center gap-1">
-                            <i class="fa-solid fa-rotate-left"></i> Khôi phục phôi mặc định
-                        </button>
-                    </form>
-                </div>
-            @endif
+            <div class="pt-3 border-t border-slate-100 mt-4 flex items-center justify-between text-xs text-slate-400">
+                <span>Định dạng xuất: PNG chất lượng cao</span>
+                <span class="text-slate-500 font-mono">1531 x 681 px</span>
+            </div>
         </div>
     </div>
 

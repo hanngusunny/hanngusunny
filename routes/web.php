@@ -206,9 +206,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/kiem-tra', [VoucherController::class, 'checkPage'])->name('check');
         Route::post('/check-ajax', [VoucherController::class, 'checkAjax'])->name('check.ajax');
         Route::post('/ap-dung', [VoucherController::class, 'redeem'])->name('redeem');
-        Route::post('/upload-phoi', [VoucherController::class, 'uploadTemplate'])->name('template.upload');
-        Route::post('/khoi-phuc-phoi', [VoucherController::class, 'revertTemplate'])->name('template.revert');
-        Route::post('/luu-cau-hinh-phoi', [VoucherController::class, 'saveSettings'])->name('template.settings');
         Route::post('/{voucher}/tao-lai-anh', [VoucherController::class, 'regenerate'])->name('regenerate');
         Route::post('/{voucher}/xoa', [VoucherController::class, 'destroy'])->name('destroy');
     });
