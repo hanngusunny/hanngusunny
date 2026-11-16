@@ -7,6 +7,14 @@
     <a href="{{ route('admin.vouchers.check') }}" class="os-tab"><i class="fa-solid fa-qrcode"></i> Kiểm tra & Áp dụng mã</a>
 @endsection
 
+@push('styles')
+<style>
+    body.os-body .os-main input.voucher-input-icon {
+        padding-left: 44px !important;
+    }
+</style>
+@endpush
+
 @section('content')
 <div class="op-stack space-y-6">
     <x-page-title kicker="Quản trị" icon="fa-ticket" title="Quản lý Voucher">
@@ -87,12 +95,13 @@
                             Họ và Tên học viên <span class="text-rose-500">*</span>
                         </label>
                         <div class="relative">
-                            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400 pointer-events-none z-10">
                                 <i class="fa-solid fa-user"></i>
                             </span>
                             <input type="text" name="student_name" id="student_name" required maxlength="255"
                                 placeholder="Ví dụ: Nguyễn Văn A"
-                                class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition">
+                                style="padding-left: 44px !important;"
+                                class="voucher-input-icon w-full pr-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition">
                         </div>
                     </div>
 
@@ -101,12 +110,13 @@
                             Số Điện Thoại <span class="text-rose-500">*</span>
                         </label>
                         <div class="relative">
-                            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400 pointer-events-none z-10">
                                 <i class="fa-solid fa-phone"></i>
                             </span>
                             <input type="tel" name="phone" id="phone" required maxlength="50"
                                 placeholder="Ví dụ: 0912 345 678"
-                                class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition">
+                                style="padding-left: 44px !important;"
+                                class="voucher-input-icon w-full pr-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition">
                         </div>
                     </div>
 
@@ -115,11 +125,12 @@
                             Ngày tháng năm sinh <span class="text-rose-500">*</span>
                         </label>
                         <div class="relative">
-                            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400 pointer-events-none z-10">
                                 <i class="fa-solid fa-calendar"></i>
                             </span>
                             <input type="date" name="dob" id="dob" required
-                                class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition">
+                                style="padding-left: 44px !important;"
+                                class="voucher-input-icon w-full pr-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition">
                         </div>
                     </div>
 
