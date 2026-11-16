@@ -17,7 +17,7 @@ class VoucherController extends Controller
     /**
      * Voucher list & creation form
      */
-    public function index(Request $request, VoucherImageService $imageService): View
+    public function index(Request $request): View
     {
         $q = trim((string) $request->query('q', ''));
         $status = trim((string) $request->query('status', ''));
@@ -44,8 +44,7 @@ class VoucherController extends Controller
             'used' => Voucher::where('status', Voucher::STATUS_USED)->count(),
         ];
 
-        $hasCustomTemplate = $imageService->hasCustomTemplate();
-        $templateUrl = asset($hasCustomTemplate ? 'uploads/vouchers/template.png' : 'assets/images/voucher-template.png');
+        $templateUrl = asset('assets/images/voucher-template.png');
 
         return view('admin.vouchers.index', [
             'vouchers' => $vouchers,
@@ -54,9 +53,7 @@ class VoucherController extends Controller
                 'q' => $q,
                 'status' => $status,
             ],
-            'hasCustomTemplate' => $hasCustomTemplate,
             'templateUrl' => $templateUrl,
-            'settings' => $imageService->getSettings(),
         ]);
     }
 
@@ -234,68 +231,6 @@ class VoucherController extends Controller
         }
 
         return back()->with('success', "Đã áp dụng voucher {$voucher->code} thành công!");
-    }
-
-    /**
-     * Upload custom template ("phôi voucher")
-     */
-    public function uploadTemplate(Request $request, VoucherImageService $imageService): RedirectResponse
-    {
-        $request->validate([
-            'template_file' => ['required', 'image', 'mimes:jpeg,png,jpg', 'max:10240'],
-        ], [
-            'template_file.required' => 'Vui lòng chọn file ảnh phôi.',
-            'template_file.image' => 'File tải lên phải là hình ảnh (PNG, JPG, JPEG).',
-            'template_file.max' => 'Dung lượng ảnh tối đa 10MB.',
-        ]);
-
-        $saved = $imageService->saveCustomTemplate($request->file('template_file'));
-
-        if (!$saved) {
-            return back()->with('error', 'Không thể xử lý file ảnh phôi. Vui lòng thử lại.');
-        }
-
-        return back()->with('success', 'Đã tải lên phôi voucher mới thành công!');
-    }
-
-    /**
-     * Revert custom template back to default
-     */
-    public function revertTemplate(VoucherImageService $imageService): RedirectResponse
-    {
-        $imageService->revertToDefaultTemplate();
-        return back()->with('success', 'Đã khôi phục phôi voucher mặc định.');
-    }
-
-    /**
-     * Save template text settings (coordinates and colors)
-     */
-    public function saveSettings(Request $request, VoucherImageService $imageService): RedirectResponse
-    {
-        $settings = $request->validate([
-            'code_x' => ['required', 'integer'],
-            'code_y' => ['required', 'integer'],
-            'code_size' => ['required', 'integer', 'min:10', 'max:100'],
-            'code_color' => ['required', 'string', 'max:20'],
-            'name_x' => ['required', 'integer'],
-            'name_y' => ['required', 'integer'],
-            'name_size' => ['required', 'integer', 'min:8', 'max:80'],
-            'name_color' => ['required', 'string', 'max:20'],
-            'phone_x' => ['required', 'integer'],
-            'phone_y' => ['required', 'integer'],
-            'phone_size' => ['required', 'integer', 'min:8', 'max:80'],
-            'phone_color' => ['required', 'string', 'max:20'],
-            'dob_x' => ['required', 'integer'],
-            'dob_y' => ['required', 'integer'],
-            'dob_size' => ['required', 'integer', 'min:8', 'max:80'],
-            'dob_color' => ['required', 'string', 'max:20'],
-            'show_dob' => ['nullable'],
-        ]);
-
-        $settings['show_dob'] = $request->has('show_dob');
-        $imageService->saveSettings($settings);
-
-        return back()->with('success', 'Đã lưu cấu hình vị trí chữ trên phôi voucher!');
     }
 
     /**
