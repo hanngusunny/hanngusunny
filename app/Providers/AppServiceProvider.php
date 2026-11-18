@@ -44,6 +44,9 @@ class AppServiceProvider extends ServiceProvider
             $view->with('notifications', $notifications);
         });
 
+        View::composer('admin.layouts.app', \App\View\Composers\AdminLayoutComposer::class);
+        View::composer('public.layout', \App\View\Composers\PublicLayoutComposer::class);
+
         View::composer('pwa.partials.nav', static function ($view): void {
             $user = auth()->user();
             $zoomLive = false;

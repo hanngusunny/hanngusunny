@@ -10,7 +10,7 @@ class EnsureUserIsAdmin
 {
     public function handle(Request $request, Closure $next): Response
     {
-        $user = $request->user();
+        $user = $request->user() ?? $request->user('admin');
 
         if (! $user || ! $user->isAdmin()) {
             return redirect()->to($user?->homePath() ?? route('login'))

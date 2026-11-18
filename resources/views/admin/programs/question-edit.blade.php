@@ -14,6 +14,17 @@
 @endsection
 
 @section('content')
+@php
+    $cloneUrl = null;
+    if (!empty($session)) {
+        $cloneUrl = route('admin.programs.sessions.questions.clone', [$program->id, $session->id, $question->id]);
+    } elseif (!empty($assessment)) {
+        $cloneUrl = route('admin.programs.assessments.questions.clone', [$program->id, $assessment->id, $question->id]);
+    } elseif (!empty($review)) {
+        $cloneUrl = route('admin.programs.reviews.questions.clone', [$program->id, $review->id, $question->id]);
+    }
+@endphp
+
 <div class="op-stack program-question-page">
     <x-page-title :kicker="$groupLabel" icon="fa-pen" lead="Chọn loại câu, soạn nội dung và đáp án. Thay đổi được lưu tự động.">
         Câu {{ $questionNo }}@if ($questionTotal) <span class="text-slate-400">/ {{ $questionTotal }}</span>@endif
@@ -67,10 +78,20 @@
             </section>
         </form>
         <div class="program-question-edit-actions">
-            <form class="program-question-edit-delete-form" method="post" action="{{ $deleteUrl }}" onsubmit="return confirm('Xóa câu hỏi này?');">
-                @csrf
-                <button type="submit" class="btn btn-outline pq-btn-danger"><i class="fa-solid fa-trash"></i> Xóa câu này</button>
-            </form>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <form class="program-question-edit-delete-form" method="post" action="{{ $deleteUrl }}" onsubmit="return confirm('Xóa câu hỏi này?');">
+                    @csrf
+                    <button type="submit" class="btn btn-outline pq-btn-danger"><i class="fa-solid fa-trash"></i> Xóa câu này</button>
+                </form>
+                @if ($cloneUrl)
+                    <form method="post" action="{{ $cloneUrl }}">
+                        @csrf
+                        <button type="submit" class="btn btn-outline" style="border-color: #cbd5e1; color: #0284c7; padding: 8px 14px; border-radius: 8px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
+                            <i class="fa-solid fa-copy"></i> Nhân bản câu hỏi
+                        </button>
+                    </form>
+                @endif
+            </div>
             <div class="program-question-edit-actions-main">
                 <a class="op-btn-ghost" href="{{ $listUrl }}"><i class="fa-solid fa-arrow-left"></i> Quay lại danh sách câu</a>
                 <button class="op-btn" type="submit" form="programQuestionEditForm"><i class="fa-solid fa-floppy-disk"></i> Lưu câu hỏi</button>

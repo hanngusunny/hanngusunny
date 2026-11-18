@@ -9,9 +9,9 @@
     <link rel="icon" type="image/png" href="{{ asset('assets/images/favicon.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Ephesis&family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ephesis&family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
     <style>
-        :root { --app-font: "Inter Tight", ui-sans-serif, system-ui, sans-serif; --app-font-display: "Ephesis", cursive; }
+        :root { --app-font: "Nunito", "Inter Tight", ui-sans-serif, system-ui, sans-serif; --app-font-display: "Ephesis", cursive; }
         html, body, button, input, select, textarea { font-family: var(--app-font); }
         body.os-body { font-family: var(--app-font); }
         main :is(.text-slate-300, .text-slate-400, .text-slate-500),

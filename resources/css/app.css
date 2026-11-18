@@ -1,0 +1,65 @@
+/* SUNNY Design System 1.0 — Tokens from Figma */
+:root {
+  --sunny-primary: #9a4700;
+  --sunny-primary-hover: #7d3900;
+  --sunny-primary-light: #fff3e6;
+  --sunny-text-main: #242424;
+  --sunny-text-sub: #313b47;
+  --sunny-text-muted: #63758d;
+  --sunny-bg: #f6f8fc;
+  --sunny-card-bg: #ffffff;
+  --sunny-border: #eff3f8;
+  --sunny-border-active: #d1d9e2;
+  --sunny-font: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  --sunny-radius-sm: 6px;
+  --sunny-radius-md: 10px;
+  --sunny-radius-lg: 16px;
+  --sunny-radius-full: 9999px;
+
+  --sunny-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --sunny-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+  --sunny-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+}
+
+body {
+  font-family: var(--sunny-font);
+  color: var(--sunny-text-main);
+  background-color: var(--sunny-bg);
+}
+
+.sunny-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.625rem;
+  border-radius: var(--sunny-radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.sunny-badge-live {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.sunny-badge-success {
+  background-color: #dcfce7;
+  color: #16a34a;
+}
+
+.sunny-badge-warning {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+.sunny-btn-primary {
+  background-color: var(--sunny-primary);
+  color: #ffffff;
+  border-radius: var(--sunny-radius-md);
+  font-weight: 600;
+  transition: background-color 0.15s ease-in-out;
+}
+
+.sunny-btn-primary:hover {
+  background-color: var(--sunny-primary-hover);
+}

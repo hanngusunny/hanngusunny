@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateSchoolRuleRequest;
 use App\Services\SchoolRuleService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -22,13 +23,11 @@ class SchoolRuleController extends Controller
                 ->with('error', 'Module nội quy chưa sẵn sàng.');
         }
 
-        if ($this->rules->canEdit($request->user())) {
-            return redirect()->route('school-rules.edit');
-        }
+        $canEdit = $this->rules->canEdit($request->user());
 
         return view('school_rules.show', [
             'rules' => $this->rules->current(),
-            'canEdit' => false,
+            'canEdit' => $canEdit,
             'preview' => false,
         ]);
     }
@@ -49,15 +48,23 @@ class SchoolRuleController extends Controller
         ]);
     }
 
-    public function update(UpdateSchoolRuleRequest $request): RedirectResponse
+    public function update(UpdateSchoolRuleRequest $request): RedirectResponse|JsonResponse
     {
-        $this->rules->save(
+        $updated = $this->rules->save(
             (string) $request->validated('title'),
             (string) $request->validated('content'),
             $request->user()
         );
 
-        return redirect()->route('school-rules.edit')->with('success', 'Đã cập nhật nội quy.');
+        if ($request->wantsJson()) {
+            return response()->json([
+                'ok' => true,
+                'message' => 'Lưu nội quy thành công.',
+                'rules' => $updated,
+            ]);
+        }
+
+        return redirect()->route('school-rules.edit')->with('success', 'Lưu nội quy thành công.');
     }
 
     public function preview(Request $request): View|RedirectResponse

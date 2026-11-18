@@ -14,7 +14,15 @@
             <p>{{ $questions->count() }} câu · kéo tay cầm để đổi thứ tự, bấm nội dung để soạn.</p>
         </div>
         @unless ($program->isArchived())
-            <div class="pw-panel-tools">
+            <div class="pw-panel-tools" style="display: flex; align-items: center; gap: 8px;">
+                @if ($questions->isNotEmpty())
+                    <form method="post" action="{{ route('admin.programs.assessments.equalize-points', [$program->id, $assessment->id]) }}" style="display: inline;" onsubmit="return confirm('Chia đều 100 điểm cho {{ $questions->count() }} câu hỏi trong đề này?');">
+                        @csrf
+                        <button type="submit" class="op-btn-ghost" style="border: 1px solid #cbd5e1; color: #9a4700; font-weight: 700; font-size: 13px; padding: 7px 14px; border-radius: 8px;" title="Chia đều 100 điểm cho các câu hỏi">
+                            <i class="fa-solid fa-scale-balanced"></i> Chia đều 100 điểm
+                        </button>
+                    </form>
+                @endif
                 <details class="pw-type-pop">
                     <summary class="op-btn"><i class="fa-solid fa-plus"></i> Thêm câu</summary>
                     <div class="pw-type-menu">
@@ -77,6 +85,14 @@
                         <strong>{{ $pointsLabel }}</strong>
                         <span>điểm</span>
                     </div>
+                    @unless ($program->isArchived())
+                        <form method="post" action="{{ route('admin.programs.assessments.questions.clone', [$program->id, $assessment->id, $question->id]) }}" style="display: inline;">
+                            @csrf
+                            <button type="submit" class="pw-link-btn" title="Nhân bản câu này" style="color: #0284c7; background: #f0f9ff; border: 1px solid #bae6fd;">
+                                <i class="fa-solid fa-copy"></i>
+                            </button>
+                        </form>
+                    @endunless
                     <a href="{{ $editUrl }}" class="pw-link-btn">Sửa</a>
                 </div>
             </article>

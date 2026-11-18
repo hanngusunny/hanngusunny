@@ -154,9 +154,34 @@
             </div>
         </div>
     </div>
+
+    @include('teacher.schedule.partials.attendance-drawer')
 </div>
 @endsection
 
 @push('scripts')
     <script src="{{ asset('assets/js/teacher-schedule.js') }}"></script>
+    <script>
+    (() => {
+        const drawer = document.getElementById('attendanceDrawer');
+        const drawerPanel = drawer ? drawer.querySelector('.attendance-drawer-panel') : null;
+        const btnClose = document.getElementById('btnCloseAttendanceDrawer');
+        const btnDone = document.getElementById('btnDoneAttendance');
+
+        function closeDrawer() {
+            if (!drawer || !drawerPanel) return;
+            drawer.style.opacity = '0';
+            drawer.style.pointerEvents = 'none';
+            drawerPanel.style.transform = 'translateX(100%)';
+        }
+
+        if (btnClose) btnClose.addEventListener('click', closeDrawer);
+        if (btnDone) btnDone.addEventListener('click', closeDrawer);
+        if (drawer) {
+            drawer.addEventListener('click', (e) => {
+                if (e.target === drawer) closeDrawer();
+            });
+        }
+    })();
+    </script>
 @endpush

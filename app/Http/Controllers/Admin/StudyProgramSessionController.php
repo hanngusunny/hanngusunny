@@ -205,6 +205,36 @@ class StudyProgramSessionController extends Controller
             ->with('success', 'Đã xóa câu hỏi.');
     }
 
+    public function cloneQuestion(int $id, int $sessionId, int $questionId): RedirectResponse
+    {
+        $program = $this->findProgram($id);
+        $session = $program?->sessions()->whereKey($sessionId)->first();
+        $question = $session
+            ? StudyProgramSessionQuestion::query()->where('session_id', $session->id)->whereKey($questionId)->first()
+            : null;
+
+        if (! $program || ! $session || ! $question) {
+            return redirect()->route('admin.programs.index')->with('error', 'Không tìm thấy câu hỏi.');
+        }
+
+        if ($program->isArchived()) {
+            return $this->archivedRedirect($program);
+        }
+
+        $clone = $question->replicate();
+        $clone->sort_order = ((int) StudyProgramSessionQuestion::query()
+            ->where('session_id', $session->id)
+            ->where('question_group', $question->question_group)
+            ->max('sort_order')) + 1;
+        $clone->save();
+
+        $this->sync->syncSessionQuestions($session->id);
+
+        return redirect()
+            ->route('admin.programs.sessions.questions.edit', [$program->id, $session->id, $clone->id])
+            ->with('success', 'Đã nhân bản câu hỏi.');
+    }
+
     public function reorderQuestions(Request $request, int $id, int $sessionId): JsonResponse
     {
         $program = $this->findProgram($id);

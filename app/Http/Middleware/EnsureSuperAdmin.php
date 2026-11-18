@@ -10,8 +10,9 @@ class EnsureSuperAdmin
 {
     public function handle(Request $request, Closure $next): Response
     {
-        $user = $request->user('admin');
-        if ($user === null || ! $user->isSuperAdmin()) {
+        $user = $request->user('admin') ?? $request->user();
+        $isSuper = $user !== null && (method_exists($user, 'isSuperAdmin') ? $user->isSuperAdmin() : (method_exists($user, 'isAdmin') && $user->isAdmin()));
+        if (! $isSuper) {
             abort(403);
         }
 

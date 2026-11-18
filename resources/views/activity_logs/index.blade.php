@@ -105,7 +105,15 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="9" class="px-5 py-10 text-center text-slate-500">Chưa có dữ liệu hoạt động trong khoảng thời gian này.</td>
+                                <td colspan="9" style="text-align: center; padding: 60px 20px;">
+                                    <div style="width: 64px; height: 64px; border-radius: 50%; background: #f8fafc; color: #94a3b8; display: flex; align-items: center; justify-content: center; font-size: 26px; margin: 0 auto 16px;">
+                                        <i class="fa-solid fa-clock-rotate-left"></i>
+                                    </div>
+                                    <h4 style="font-size: 17px; font-weight: 700; color: #1e293b; margin: 0 0 6px;">Không có dữ liệu lịch sử hoạt động</h4>
+                                    <p style="color: #64748b; font-size: 13.5px; max-width: 440px; margin: 0 auto;">
+                                        Không ghi nhận lượt truy cập hoặc thao tác nào của vai trò này trong khoảng thời gian đã chọn. Thử mở rộng khoảng ngày lọc.
+                                    </p>
+                                </td>
                             </tr>
                         @endforelse
                     </tbody>

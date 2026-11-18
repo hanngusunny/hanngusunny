@@ -5,7 +5,42 @@ use App\Http\Controllers\AttendanceCheckController;
 use App\Http\Controllers\TeacherCommentsController;
 use App\Http\Controllers\StudentReflectionsController;
 use App\Http\Controllers\ActivityPulseController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LandingController;
+use App\Http\Controllers\ConsultController;
+use App\Http\Controllers\PublicFormController;
+use App\Http\Controllers\PublicCommentController;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\HotlineController;
+use App\Http\Controllers\SeoController;
+use App\Http\Controllers\RssController;
+use App\Http\Controllers\MediaFileController;
+use App\Http\Controllers\PublicContentController;
 use App\Http\Controllers\Admin\ClassroomController;
+use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\Admin\AdminLanguageController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\AnalyticsController;
+use App\Http\Controllers\Admin\CmsEmbedController;
+use App\Http\Controllers\Admin\ConsultLeadController;
+use App\Http\Controllers\Admin\ContentCategoryController;
+use App\Http\Controllers\Admin\ContentPostController;
+use App\Http\Controllers\Admin\ContentTagController;
+use App\Http\Controllers\Admin\ContentTemplateController;
+use App\Http\Controllers\Admin\CustomFormController;
+use App\Http\Controllers\Admin\FaqController;
+use App\Http\Controllers\Admin\FrontendAppearanceController;
+use App\Http\Controllers\Admin\NavMenuController;
+use App\Http\Controllers\Admin\PostCommentController;
+use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
+use App\Http\Controllers\Admin\SchemaMigrateController;
+use App\Http\Controllers\Admin\SiteBlockController;
+use App\Http\Controllers\Admin\SiteCustomizeController;
+use App\Http\Controllers\Admin\SiteMediaController;
+use App\Http\Controllers\Admin\SitePageController;
+use App\Http\Controllers\Admin\SiteSettingsController;
+use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\AdminUiSettingsController;
 use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\DatabaseMaintenanceController;
 use App\Http\Controllers\Admin\CourseMemberController;
@@ -38,10 +73,60 @@ use App\Http\Controllers\Teacher\GradingController as TeacherGradingController;
 use App\Http\Controllers\Teacher\ScheduleController;
 use Illuminate\Support\Facades\Route;
 
+// Public Website & Landing
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/du-hoc-han-quoc-2026', [LandingController::class, 'duHocHanQuoc2026'])->name('landing.duhoc2026');
+Route::post('/du-hoc-han-quoc-2026/lead', [LandingController::class, 'duHocHanQuoc2026Lead'])->name('landing.duhoc2026.lead');
+
+// SEO & Utilities
+Route::get('/robots.txt', [SeoController::class, 'robots'])->name('seo.robots');
+Route::get('/sitemap.xml', [SeoController::class, 'sitemap'])->name('seo.sitemap');
+Route::get('/sitemap-pages.xml', [SeoController::class, 'sitemapPages'])->name('seo.sitemap.pages');
+Route::get('/sitemap-posts.xml', [SeoController::class, 'sitemapPosts'])->name('seo.sitemap.posts');
+Route::get('/sitemap-schools.xml', [SeoController::class, 'sitemapSchools'])->name('seo.sitemap.schools');
+Route::get('/sitemap-events.xml', [SeoController::class, 'sitemapEvents'])->name('seo.sitemap.events');
+Route::get('/rss', [RssController::class, 'index'])->name('rss');
+Route::get('/rss.xml', [RssController::class, 'index']);
+Route::get('/tim-kiem', [SearchController::class, 'index'])->name('search');
+Route::post('/hotline-click', [HotlineController::class, 'click'])->name('hotline.click');
+Route::get('/media/file/{id}/{name?}', [MediaFileController::class, 'file'])->name('media.file');
+Route::get('/media/slider/{id}/{variant?}', [MediaFileController::class, 'sliderAsset'])->name('media.slider');
+
+// Consult & Forms
+Route::get('/tu-van/thong-bao', [ConsultController::class, 'notice'])->name('consult.notice');
+Route::post('/tu-van', [ConsultController::class, 'submit'])->name('consult.submit');
+Route::get('/form/{slug}', [PublicFormController::class, 'show'])->name('public.form.show');
+Route::post('/form/{slug}', [PublicFormController::class, 'submit'])->name('public.form.submit');
+
+// Public Comments
+Route::post('/su-kien/{slug}/comment', [PublicCommentController::class, 'storeEvent'])->name('public.comment.event');
+Route::post('/nganh/{slug}/comment', [PublicCommentController::class, 'storeMajor'])->name('public.comment.major');
+Route::post('/truong/{category}/{slug}/comment', [PublicCommentController::class, 'storeSchool'])->name('public.comment.school');
+Route::post('/truong/{slug}/comment', [PublicCommentController::class, 'storeSchoolLegacy'])->name('public.comment.school.legacy');
+Route::post('/post/{slug}/comment', [PublicCommentController::class, 'store'])->name('public.comment.post');
+Route::post('/{category}/{slug}/comment', [PublicCommentController::class, 'storeCategoryPost'])->name('public.comment.category');
+Route::post('/{slug}/comment', [PublicCommentController::class, 'store'])->name('public.comment.general');
+
+// Public Scoped Content Views
+Route::get('/su-kien/{slug}', [PublicContentController::class, 'event'])->name('public.event');
+Route::get('/nganh/{slug}', [PublicContentController::class, 'major'])->name('public.major');
+Route::get('/truong/{categorySlug}/{postSlug}', [PublicContentController::class, 'school'])->name('public.school');
+Route::get('/truong/{slug}', [PublicContentController::class, 'schoolLegacy'])->name('public.school.legacy');
+Route::get('/post/{slug}', [PublicContentController::class, 'post'])->name('public.post');
+Route::get('/tag/{slug}', [PublicContentController::class, 'tag'])->name('public.tag');
+Route::get('/{categorySlug}/{postSlug}', [PublicContentController::class, 'categoryPost'])->name('public.category.post');
+
 Route::middleware('guest')->group(function () {
-    Route::get('/', [LoginController::class, 'show'])->name('login');
-    Route::get('/dang-nhap', [LoginController::class, 'show'])->name('login.alias');
+    Route::get('/dang-nhap', [LoginController::class, 'show'])->name('login');
     Route::post('/auth/login', [LoginController::class, 'login'])->name('login.attempt');
+});
+
+Route::prefix('admin')->group(function () {
+    Route::get('/dang-nhap', [AdminAuthController::class, 'showLogin'])->name('admin.login');
+    Route::post('/dang-nhap', [AdminAuthController::class, 'login'])->name('admin.login.auth');
+    Route::post('/dang-nhap/attempt', [AdminAuthController::class, 'login'])->name('admin.login.attempt');
+    Route::match(['get', 'post'], '/dang-xuat', [AdminAuthController::class, 'logout'])->name('admin.logout');
+    Route::get('/ngon-ngu/{code}', [AdminLanguageController::class, 'set'])->name('admin.language.set');
 });
 
 Route::get('/app/manifest.json', [PwaController::class, 'manifest'])->name('pwa.manifest');
@@ -186,6 +271,208 @@ Route::middleware('auth')->group(function () {
         Route::post('/{code}/nhan-xet', [SessionActionController::class, 'saveReflection'])->name('reflection');
     });
 
+    Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/dashboard', AdminDashboardController::class)->name('dashboard');
+
+        // CMS Dynamic Modules: news, events, schools, majors
+        foreach (['news', 'events', 'schools', 'majors'] as $mod) {
+            Route::prefix($mod)->name($mod.'.')->group(function () use ($mod) {
+                // Posts
+                Route::get('/bai-viet', [ContentPostController::class, 'index'])->defaults('module', $mod)->name('posts.index');
+                Route::get('/bai-viet/tao', [ContentPostController::class, 'create'])->defaults('module', $mod)->name('posts.create');
+                Route::post('/bai-viet', [ContentPostController::class, 'store'])->defaults('module', $mod)->name('posts.store');
+                Route::get('/bai-viet/{post}/sua', [ContentPostController::class, 'edit'])->defaults('module', $mod)->name('posts.edit');
+                Route::match(['post', 'put'], '/bai-viet/{post}', [ContentPostController::class, 'update'])->defaults('module', $mod)->name('posts.update');
+                Route::match(['post', 'delete'], '/bai-viet/{post}/xoa', [ContentPostController::class, 'destroy'])->defaults('module', $mod)->name('posts.destroy');
+
+                // Categories
+                Route::get('/chuyen-muc', [ContentCategoryController::class, 'index'])->defaults('module', $mod)->name('categories.index');
+                Route::get('/chuyen-muc/tao', [ContentCategoryController::class, 'create'])->defaults('module', $mod)->name('categories.create');
+                Route::post('/chuyen-muc', [ContentCategoryController::class, 'store'])->defaults('module', $mod)->name('categories.store');
+                Route::get('/chuyen-muc/{category}/sua', [ContentCategoryController::class, 'edit'])->defaults('module', $mod)->name('categories.edit');
+                Route::match(['post', 'put'], '/chuyen-muc/{category}', [ContentCategoryController::class, 'update'])->defaults('module', $mod)->name('categories.update');
+                Route::match(['post', 'delete'], '/chuyen-muc/{category}/xoa', [ContentCategoryController::class, 'destroy'])->defaults('module', $mod)->name('categories.destroy');
+                Route::post('/chuyen-muc/{category}/len', [ContentCategoryController::class, 'moveUp'])->defaults('module', $mod)->name('categories.up');
+                Route::post('/chuyen-muc/{category}/xuong', [ContentCategoryController::class, 'moveDown'])->defaults('module', $mod)->name('categories.down');
+
+                // Tags
+                Route::get('/tags', [ContentTagController::class, 'index'])->defaults('module', $mod)->name('tags.index');
+                Route::get('/tags/tao', [ContentTagController::class, 'create'])->defaults('module', $mod)->name('tags.create');
+                Route::post('/tags', [ContentTagController::class, 'store'])->defaults('module', $mod)->name('tags.store');
+                Route::get('/tags/{tag}/sua', [ContentTagController::class, 'edit'])->defaults('module', $mod)->name('tags.edit');
+                Route::match(['post', 'put'], '/tags/{tag}', [ContentTagController::class, 'update'])->defaults('module', $mod)->name('tags.update');
+                Route::match(['post', 'delete'], '/tags/{tag}/xoa', [ContentTagController::class, 'destroy'])->defaults('module', $mod)->name('tags.destroy');
+                Route::post('/tags/{tag}/len', [ContentTagController::class, 'moveUp'])->defaults('module', $mod)->name('tags.up');
+                Route::post('/tags/{tag}/xuong', [ContentTagController::class, 'moveDown'])->defaults('module', $mod)->name('tags.down');
+            });
+        }
+
+        // Site Pages
+        Route::prefix('trang-tinh')->name('site-pages.')->group(function () {
+            Route::get('/', [SitePageController::class, 'index'])->name('index');
+            Route::get('/tao', [SitePageController::class, 'create'])->name('create');
+            Route::post('/', [SitePageController::class, 'store'])->name('store');
+            Route::get('/{id}/sua', [SitePageController::class, 'edit'])->name('edit');
+            Route::match(['post', 'put'], '/{id}', [SitePageController::class, 'update'])->name('update');
+            Route::match(['post', 'delete'], '/{id}/xoa', [SitePageController::class, 'destroy'])->name('destroy');
+            Route::post('/{id}/dat-trang-chu', [SitePageController::class, 'setHomepage'])->name('homepage');
+        });
+
+        // Site Blocks
+        Route::prefix('blocks')->name('blocks.')->group(function () {
+            Route::get('/', [SiteBlockController::class, 'index'])->name('index');
+            Route::get('/tao', [SiteBlockController::class, 'create'])->name('create');
+            Route::post('/', [SiteBlockController::class, 'store'])->name('store');
+            Route::get('/{id}/sua', [SiteBlockController::class, 'edit'])->name('edit');
+            Route::match(['post', 'put'], '/{id}', [SiteBlockController::class, 'update'])->name('update');
+            Route::match(['post', 'delete'], '/{id}/xoa', [SiteBlockController::class, 'destroy'])->name('destroy');
+        });
+
+        // Templates
+        Route::prefix('templates')->name('templates.')->group(function () {
+            Route::get('/', [ContentTemplateController::class, 'index'])->name('index');
+            Route::post('/', [ContentTemplateController::class, 'store'])->name('store');
+            Route::get('/{id}/sua', [ContentTemplateController::class, 'edit'])->name('edit');
+            Route::match(['post', 'put'], '/{id}', [ContentTemplateController::class, 'update'])->name('update');
+            Route::post('/{id}/kich-hoat', [ContentTemplateController::class, 'setActive'])->name('activate');
+        });
+
+        // Sliders
+        Route::prefix('slider')->name('slider.')->group(function () {
+            Route::get('/', [SliderController::class, 'index'])->name('index');
+            Route::post('/chuyen-muc', [SliderController::class, 'storeCategory'])->name('categories.store');
+            Route::match(['post', 'put'], '/chuyen-muc/{id}', [SliderController::class, 'updateCategory'])->name('categories.update');
+            Route::match(['post', 'delete'], '/chuyen-muc/{id}/xoa', [SliderController::class, 'destroyCategory'])->name('categories.destroy');
+            Route::get('/{category}/slides', [SliderController::class, 'slides'])->name('slides');
+            Route::post('/{category}/slides', [SliderController::class, 'storeSlide'])->name('slides.store');
+            Route::match(['post', 'put'], '/{category}/slides/{slide}', [SliderController::class, 'updateSlide'])->name('slides.update');
+            Route::match(['post', 'delete'], '/{category}/slides/{slide}/xoa', [SliderController::class, 'destroySlide'])->name('slides.destroy');
+            Route::post('/{category}/slides/{slide}/len', [SliderController::class, 'moveSlideUp'])->name('slides.up');
+            Route::post('/{category}/slides/{slide}/xuong', [SliderController::class, 'moveSlideDown'])->name('slides.down');
+        });
+
+        // Media
+        Route::prefix('media')->name('media.')->group(function () {
+            Route::get('/', [SiteMediaController::class, 'index'])->name('index');
+            Route::get('/json', [SiteMediaController::class, 'json'])->name('json');
+            Route::post('/upload', [SiteMediaController::class, 'store'])->name('store');
+            Route::post('/from-url', [SiteMediaController::class, 'storeFromUrl'])->name('store-url');
+            Route::match(['post', 'delete'], '/{id}/xoa', [SiteMediaController::class, 'destroy'])->name('destroy');
+        });
+
+        // Comments
+        Route::prefix('binh-luan')->name('comments.')->group(function () {
+            Route::get('/', [PostCommentController::class, 'index'])->name('index');
+            Route::post('/{id}/duyet', function ($id) {
+                return app(PostCommentController::class)->setStatus($id, 'approved');
+            })->name('approve');
+            Route::post('/{id}/spam', function ($id) {
+                return app(PostCommentController::class)->setStatus($id, 'spam');
+            })->name('spam');
+            Route::match(['post', 'delete'], '/{id}/xoa', [PostCommentController::class, 'destroy'])->name('destroy');
+        });
+
+        // FAQ
+        Route::prefix('faq')->name('faq.')->group(function () {
+            Route::get('/', [FaqController::class, 'index'])->name('index');
+            Route::post('/chuyen-muc', [FaqController::class, 'storeCategory'])->name('categories.store');
+            Route::match(['post', 'put'], '/chuyen-muc/{id}', [FaqController::class, 'updateCategory'])->name('categories.update');
+            Route::match(['post', 'delete'], '/chuyen-muc/{id}/xoa', [FaqController::class, 'destroyCategory'])->name('categories.destroy');
+            Route::get('/{category}/items', [FaqController::class, 'items'])->name('items');
+            Route::post('/{category}/items', [FaqController::class, 'storeItem'])->name('items.store');
+            Route::match(['post', 'put'], '/{category}/items/{item}', [FaqController::class, 'updateItem'])->name('items.update');
+            Route::match(['post', 'delete'], '/{category}/items/{item}/xoa', [FaqController::class, 'destroyItem'])->name('items.destroy');
+            Route::post('/{category}/items/{item}/len', [FaqController::class, 'moveItemUp'])->name('items.up');
+            Route::post('/{category}/items/{item}/xuong', [FaqController::class, 'moveItemDown'])->name('items.down');
+        });
+
+        // Custom Forms
+        Route::prefix('forms')->name('forms.')->group(function () {
+            Route::get('/', [CustomFormController::class, 'index'])->name('index');
+            Route::get('/tao', [CustomFormController::class, 'create'])->name('create');
+            Route::post('/', [CustomFormController::class, 'store'])->name('store');
+            Route::get('/{id}/sua', [CustomFormController::class, 'edit'])->name('edit');
+            Route::match(['post', 'put'], '/{id}', [CustomFormController::class, 'update'])->name('update');
+            Route::match(['post', 'delete'], '/{id}/xoa', [CustomFormController::class, 'destroy'])->name('destroy');
+            Route::get('/{id}/fields', [CustomFormController::class, 'fields'])->name('fields');
+            Route::post('/{id}/fields', [CustomFormController::class, 'storeField'])->name('fields.store');
+            Route::match(['post', 'put'], '/{id}/fields/{fieldId}', [CustomFormController::class, 'updateField'])->name('fields.update');
+            Route::match(['post', 'delete'], '/{id}/fields/{fieldId}/xoa', [CustomFormController::class, 'destroyField'])->name('fields.destroy');
+            Route::post('/{id}/fields/{fieldId}/len', [CustomFormController::class, 'moveFieldUp'])->name('fields.up');
+            Route::post('/{id}/fields/{fieldId}/xuong', [CustomFormController::class, 'moveFieldDown'])->name('fields.down');
+            Route::get('/{id}/submissions', [CustomFormController::class, 'submissions'])->name('submissions');
+            Route::get('/{id}/submissions/export', [CustomFormController::class, 'exportSubmissions'])->name('submissions.export');
+        });
+
+        // Consult Leads
+        Route::prefix('lien-he-tu-van')->name('consult-leads.')->group(function () {
+            Route::get('/', [ConsultLeadController::class, 'index'])->name('index');
+            Route::get('/export', [ConsultLeadController::class, 'export'])->name('export');
+            Route::get('/{id}', [ConsultLeadController::class, 'show'])->name('show');
+            Route::match(['post', 'delete'], '/{id}/xoa', [ConsultLeadController::class, 'destroy'])->name('destroy');
+        });
+
+        // Analytics
+        Route::prefix('bao-cao-thong-ke')->name('analytics.')->group(function () {
+            Route::get('/', [AnalyticsController::class, 'index'])->name('index');
+            Route::get('/export', [AnalyticsController::class, 'export'])->name('export');
+            Route::get('/chi-tiet', [AnalyticsController::class, 'detail'])->name('detail');
+        });
+
+        // Site Settings
+        Route::prefix('cai-dat-he-thong')->name('settings.')->group(function () {
+            Route::get('/', [SiteSettingsController::class, 'edit'])->name('edit');
+            Route::post('/luu', [SiteSettingsController::class, 'update'])->name('update');
+        });
+
+        // Site Customize (Identity & Topbar)
+        Route::prefix('nhan-dien')->name('customize.')->group(function () {
+            Route::get('/', [SiteCustomizeController::class, 'identity'])->name('identity');
+            Route::post('/luu', [SiteCustomizeController::class, 'saveIdentity'])->name('identity.save');
+            Route::get('/topbar', [SiteCustomizeController::class, 'topbar'])->name('topbar');
+            Route::post('/topbar/luu', [SiteCustomizeController::class, 'saveTopbar'])->name('topbar.save');
+        });
+
+        // Frontend Appearance
+        Route::prefix('giao-dien-blade')->name('appearance.')->group(function () {
+            Route::get('/', [FrontendAppearanceController::class, 'edit'])->name('edit');
+            Route::post('/luu', [FrontendAppearanceController::class, 'update'])->name('update');
+        });
+
+        // Navigation Menus
+        Route::prefix('menu')->name('menus.')->group(function () {
+            Route::get('/', [NavMenuController::class, 'index'])->name('index');
+            Route::post('/', [NavMenuController::class, 'store'])->name('store');
+            Route::match(['post', 'put'], '/{id}', [NavMenuController::class, 'update'])->name('update');
+            Route::match(['post', 'delete'], '/{id}/xoa', [NavMenuController::class, 'destroy'])->name('destroy');
+            Route::get('/{id}/builder', [NavMenuController::class, 'builder'])->name('builder');
+            Route::post('/{id}/items', [NavMenuController::class, 'storeItem'])->name('items.store');
+            Route::match(['post', 'put'], '/{id}/items/{itemId}', [NavMenuController::class, 'updateItem'])->name('items.update');
+            Route::match(['post', 'delete'], '/{id}/items/{itemId}/xoa', [NavMenuController::class, 'destroyItem'])->name('items.destroy');
+            Route::post('/{id}/tree', [NavMenuController::class, 'saveTree'])->name('tree');
+        });
+
+        // Admin Profile & UI Settings
+        Route::prefix('ho-so')->name('profile.')->group(function () {
+            Route::get('/', [AdminProfileController::class, 'edit'])->name('edit');
+            Route::post('/luu', [AdminProfileController::class, 'update'])->name('update');
+        });
+        Route::post('/cai-dat-giao-dien', [AdminUiSettingsController::class, 'update'])->name('admin-settings.update');
+
+        // CMS Embeds
+        Route::prefix('embeds')->name('embeds.')->group(function () {
+            Route::get('/blocks', [CmsEmbedController::class, 'blocks'])->name('blocks');
+            Route::get('/faqs', [CmsEmbedController::class, 'faqs'])->name('faqs');
+            Route::get('/sliders', [CmsEmbedController::class, 'sliders'])->name('sliders');
+        });
+
+        // SQL Updates
+        Route::prefix('csdl-nang-cap')->name('sql.')->group(function () {
+            Route::get('/', [SchemaMigrateController::class, 'index'])->name('index');
+            Route::post('/chay', [SchemaMigrateController::class, 'run'])->name('run');
+        });
+    });
+
     Route::middleware('admin')->prefix('quan-ly-lop-hoc')->name('admin.classrooms.')->group(function () {
         Route::get('/', [ClassroomController::class, 'index'])->name('index');
         Route::get('/tao', [ClassroomController::class, 'create'])->name('create');
@@ -271,6 +558,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/{id}/buoi-hoc/{sessionId}/cau-hoi/{questionId}', [StudyProgramSessionController::class, 'editQuestion'])->name('sessions.questions.edit');
         Route::post('/{id}/buoi-hoc/{sessionId}/cau-hoi/sap-xep', [StudyProgramSessionController::class, 'reorderQuestions'])->name('sessions.questions.reorder');
         Route::post('/{id}/buoi-hoc/{sessionId}/cau-hoi/{questionId}/luu', [StudyProgramSessionController::class, 'updateQuestion'])->name('sessions.questions.update');
+        Route::post('/{id}/buoi-hoc/{sessionId}/cau-hoi/{questionId}/nhan-ban', [StudyProgramSessionController::class, 'cloneQuestion'])->name('sessions.questions.clone');
         Route::post('/{id}/buoi-hoc/{sessionId}/cau-hoi/{questionId}/luu-tu-dong', [StudyProgramSessionController::class, 'autosaveQuestion'])->name('sessions.questions.autosave');
         Route::post('/{id}/buoi-hoc/{sessionId}/cau-hoi/{questionId}/xoa', [StudyProgramSessionController::class, 'deleteQuestion'])->name('sessions.questions.destroy');
 
@@ -278,6 +566,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/{id}/bai-kiem-tra/sap-xep', [StudyProgramAssessmentController::class, 'reorder'])->name('assessments.reorder');
         Route::get('/{id}/bai-kiem-tra/{assessmentId}', [StudyProgramAssessmentController::class, 'show'])->name('assessments.show');
         Route::post('/{id}/bai-kiem-tra/{assessmentId}/luu', [StudyProgramAssessmentController::class, 'update'])->name('assessments.update');
+        Route::post('/{id}/bai-kiem-tra/{assessmentId}/chia-deu-diem', [StudyProgramAssessmentController::class, 'equalizePoints'])->name('assessments.equalize-points');
         Route::post('/{id}/bai-kiem-tra/{assessmentId}/xoa', [StudyProgramAssessmentController::class, 'destroy'])->name('assessments.destroy');
         Route::post('/{id}/bai-kiem-tra/{assessmentId}/upload-anh-cap', [StudyProgramAssessmentController::class, 'uploadPairImage'])->name('assessments.upload.image');
         Route::post('/{id}/bai-kiem-tra/{assessmentId}/upload-mp3-nghe', [StudyProgramAssessmentController::class, 'uploadListeningAudio'])->name('assessments.upload.audio');
@@ -285,6 +574,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/{id}/bai-kiem-tra/{assessmentId}/cau-hoi/{questionId}', [StudyProgramAssessmentController::class, 'editQuestion'])->name('assessments.questions.edit');
         Route::post('/{id}/bai-kiem-tra/{assessmentId}/cau-hoi/sap-xep', [StudyProgramAssessmentController::class, 'reorderQuestions'])->name('assessments.questions.reorder');
         Route::post('/{id}/bai-kiem-tra/{assessmentId}/cau-hoi/{questionId}/luu', [StudyProgramAssessmentController::class, 'updateQuestion'])->name('assessments.questions.update');
+        Route::post('/{id}/bai-kiem-tra/{assessmentId}/cau-hoi/{questionId}/nhan-ban', [StudyProgramAssessmentController::class, 'cloneQuestion'])->name('assessments.questions.clone');
         Route::post('/{id}/bai-kiem-tra/{assessmentId}/cau-hoi/{questionId}/luu-tu-dong', [StudyProgramAssessmentController::class, 'autosaveQuestion'])->name('assessments.questions.autosave');
         Route::post('/{id}/bai-kiem-tra/{assessmentId}/cau-hoi/{questionId}/xoa', [StudyProgramAssessmentController::class, 'deleteQuestion'])->name('assessments.questions.destroy');
 
@@ -299,7 +589,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/{id}/on-tap-kien-thuc/{reviewId}/cau-hoi/{questionId}', [StudyProgramKnowledgeReviewController::class, 'editQuestion'])->name('reviews.questions.edit');
         Route::post('/{id}/on-tap-kien-thuc/{reviewId}/cau-hoi/sap-xep', [StudyProgramKnowledgeReviewController::class, 'reorderQuestions'])->name('reviews.questions.reorder');
         Route::post('/{id}/on-tap-kien-thuc/{reviewId}/cau-hoi/{questionId}/luu', [StudyProgramKnowledgeReviewController::class, 'updateQuestion'])->name('reviews.questions.update');
+        Route::post('/{id}/on-tap-kien-thuc/{reviewId}/cau-hoi/{questionId}/nhan-ban', [StudyProgramKnowledgeReviewController::class, 'cloneQuestion'])->name('reviews.questions.clone');
         Route::post('/{id}/on-tap-kien-thuc/{reviewId}/cau-hoi/{questionId}/luu-tu-dong', [StudyProgramKnowledgeReviewController::class, 'autosaveQuestion'])->name('reviews.questions.autosave');
         Route::post('/{id}/on-tap-kien-thuc/{reviewId}/cau-hoi/{questionId}/xoa', [StudyProgramKnowledgeReviewController::class, 'deleteQuestion'])->name('reviews.questions.destroy');
     });
 });
+
+// Catch-all Public Page/Category Route (Must remain at the very end of web.php)
+Route::get('/{slug}', [PublicContentController::class, 'slug'])->name('public.slug');

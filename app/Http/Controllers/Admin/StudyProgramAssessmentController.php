@@ -227,6 +227,63 @@ class StudyProgramAssessmentController extends Controller
             ->with('success', 'Đã xóa câu hỏi.');
     }
 
+    public function cloneQuestion(int $id, int $assessmentId, int $questionId): RedirectResponse
+    {
+        [$program, $assessment] = $this->pair($id, $assessmentId);
+        $question = $assessment
+            ? StudyProgramAssessmentQuestion::query()->where('assessment_id', $assessment->id)->whereKey($questionId)->first()
+            : null;
+
+        if (! $program || ! $assessment || ! $question) {
+            return redirect()->route('admin.programs.index')->with('error', 'Không tìm thấy câu hỏi.');
+        }
+
+        if ($program->isArchived()) {
+            return $this->archivedRedirect($program);
+        }
+
+        $clone = $question->replicate();
+        $clone->sort_order = ((int) $assessment->questions()->max('sort_order')) + 1;
+        $clone->save();
+
+        $this->sync->syncAssessment($assessment);
+
+        return redirect()
+            ->route('admin.programs.assessments.questions.edit', [$program->id, $assessment->id, $clone->id])
+            ->with('success', 'Đã nhân bản câu hỏi.');
+    }
+
+    public function equalizePoints(int $id, int $assessmentId): RedirectResponse
+    {
+        [$program, $assessment] = $this->pair($id, $assessmentId);
+
+        if (! $program || ! $assessment) {
+            return redirect()->route('admin.programs.index')->with('error', 'Không tìm thấy bài kiểm tra.');
+        }
+
+        if ($program->isArchived()) {
+            return $this->archivedRedirect($program);
+        }
+
+        $questions = $assessment->questions()->get();
+        $total = $questions->count();
+
+        if ($total > 0) {
+            $each = round(100 / $total, 2);
+            foreach ($questions as $q) {
+                $q->update(['points' => $each]);
+            }
+            $this->sync->syncAssessment($assessment);
+            return redirect()
+                ->route('admin.programs.assessments.show', [$program->id, $assessment->id])
+                ->with('success', "Đã chia đều 100 điểm ({$each} đ/câu) cho {$total} câu hỏi.");
+        }
+
+        return redirect()
+            ->route('admin.programs.assessments.show', [$program->id, $assessment->id])
+            ->with('error', 'Bài kiểm tra chưa có câu hỏi nào.');
+    }
+
     public function reorderQuestions(Request $request, int $id, int $assessmentId): JsonResponse
     {
         [$program, $assessment] = $this->pair($id, $assessmentId);

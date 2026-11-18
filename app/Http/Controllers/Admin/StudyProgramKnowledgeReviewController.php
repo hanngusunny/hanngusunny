@@ -238,6 +238,32 @@ class StudyProgramKnowledgeReviewController extends Controller
             ->with('success', 'Đã xóa câu hỏi.');
     }
 
+    public function cloneQuestion(int $id, int $reviewId, int $questionId): RedirectResponse
+    {
+        [$program, $review] = $this->pair($id, $reviewId);
+        $question = $review
+            ? StudyProgramKnowledgeReviewQuestion::query()->where('knowledge_review_id', $review->id)->whereKey($questionId)->first()
+            : null;
+
+        if (! $program || ! $review || ! $question) {
+            return redirect()->route('admin.programs.index')->with('error', 'Không tìm thấy câu hỏi.');
+        }
+
+        if ($program->isArchived()) {
+            return $this->archivedRedirect($program);
+        }
+
+        $clone = $question->replicate();
+        $clone->sort_order = ((int) $review->questions()->max('sort_order')) + 1;
+        $clone->save();
+
+        $this->sync->syncKnowledgeReview($review);
+
+        return redirect()
+            ->route('admin.programs.reviews.questions.edit', [$program->id, $review->id, $clone->id])
+            ->with('success', 'Đã nhân bản câu hỏi.');
+    }
+
     public function reorderQuestions(Request $request, int $id, int $reviewId): JsonResponse
     {
         [$program, $review] = $this->pair($id, $reviewId);

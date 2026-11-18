@@ -213,6 +213,28 @@
                         <p>Chưa có trình độ nào.</p>
                     </div>
                 @else
+                    @if ($selectedLevel->sessions->count() > 9)
+                        @php
+                            $totalSes = $selectedLevel->sessions->count();
+                            $chunkSize = 9;
+                            $numChunks = (int) ceil($totalSes / $chunkSize);
+                        @endphp
+                        <div class="pw-session-chunk-nav" style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; padding: 4px 0;">
+                            <button type="button" class="pw-chunk-tab is-active" data-chunk="all" style="padding: 6px 14px; border-radius: 9999px; font-size: 13px; font-weight: 700; border: 1px solid transparent; background: #9a4700; color: #fff; cursor: pointer; transition: all 0.2s;">
+                                Tất cả ({{ $totalSes }})
+                            </button>
+                            @for ($c = 0; $c < $numChunks; $c++)
+                                @php
+                                    $startNo = $c * $chunkSize + 1;
+                                    $endNo = min(($c + 1) * $chunkSize, $totalSes);
+                                @endphp
+                                <button type="button" class="pw-chunk-tab" data-chunk="{{ $c }}" style="padding: 6px 14px; border-radius: 9999px; font-size: 13px; font-weight: 700; border: 1px solid #e2e8f0; background: #f8fafc; color: #475569; cursor: pointer; transition: all 0.2s;">
+                                    Buổi {{ $startNo }} - {{ $endNo }}
+                                </button>
+                            @endfor
+                        </div>
+                    @endif
+
                     <div id="session-list" class="pw-session-list" data-level-id="{{ $selectedLevel->id }}" data-reorder-url="{{ route('admin.programs.sessions.reorder', $program->id) }}">
                         @forelse ($selectedLevel->sessions as $index => $session)
                             @php
@@ -223,7 +245,7 @@
                                     ['label' => 'Ôn', 'count' => (int) ($session->post_practice_count ?? 0)],
                                 ];
                             @endphp
-                            <article class="pw-session js-session-row" data-id="{{ $session->id }}" draggable="{{ $program->isActive() ? 'true' : 'false' }}">
+                            <article class="pw-session js-session-row" data-id="{{ $session->id }}" data-index="{{ $index }}" draggable="{{ $program->isActive() ? 'true' : 'false' }}">
                                 <span class="js-drag pw-grip" title="Kéo để sắp xếp">
                                     @unless ($program->isArchived())
                                         <i class="fa-solid fa-grip-vertical"></i>
@@ -535,6 +557,32 @@
                 form.title.value = btn.dataset.title || '';
                 form.description.value = btn.dataset.description || '';
                 form.duration_minutes.value = btn.dataset.duration || '';
+            });
+        });
+    });
+    document.querySelectorAll('.pw-chunk-tab').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.pw-chunk-tab').forEach(b => {
+                b.style.background = '#f8fafc';
+                b.style.color = '#475569';
+                b.style.borderColor = '#e2e8f0';
+            });
+            btn.style.background = '#9a4700';
+            btn.style.color = '#fff';
+            btn.style.borderColor = 'transparent';
+
+            const chunk = btn.dataset.chunk;
+            const rows = document.querySelectorAll('#session-list .pw-session');
+            rows.forEach(row => {
+                if (chunk === 'all') {
+                    row.style.display = '';
+                } else {
+                    const idx = parseInt(row.dataset.index, 10);
+                    const c = parseInt(chunk, 10);
+                    const start = c * 9;
+                    const end = start + 9;
+                    row.style.display = (idx >= start && idx < end) ? '' : 'none';
+                }
             });
         });
     });
