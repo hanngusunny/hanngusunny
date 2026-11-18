@@ -529,6 +529,6 @@
 
 @push('scripts')
     <script src="https://{{ $jitsiDomain }}/external_api.js"></script>
-    <script src="{{ asset('assets/js/classroom-room.js') }}?v=29"></script>
+    <script src="{{ asset('assets/js/classroom-room.js') }}?v=30"></script>
     <script src="{{ asset('assets/js/classroom-polls.js') }}?v=6"></script>
 @endpush
