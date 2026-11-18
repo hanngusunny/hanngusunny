@@ -191,6 +191,7 @@
         "clipboard-write *",
         "fullscreen *",
         "screen-wake-lock *",
+        "speaker-selection *",
       ].join("; ")
     );
   };
@@ -1349,12 +1350,20 @@
         },
         disableFilmstrip: false,
         disableResponsiveTiles: false,
-        enableNoAudioDetection: true,
-        enableTalkWhileMuted: true,
-        disableAudioLevels: false,
-        enableNoisyMicDetection: true,
+        enableNoAudioDetection: false,
+        enableTalkWhileMuted: false,
+        disableAudioLevels: true,
+        enableNoisyMicDetection: false,
+        enableOpusRed: true,
+        websocketKeepAlive: 10000,
+        disabledNotifications: [
+          "notify.havingTroubleWithMic",
+          "notify.noisyMic",
+          "notify.talkWhileMuted",
+        ],
         audioQuality: {
           stereo: false,
+          enableOpusDtx: false,
         },
         resolution: 720,
         constraints: {
@@ -1450,9 +1459,20 @@
       lastAudioMuted = Boolean(payload && payload.muted);
     });
 
+    let audioUnavailableTimer = null;
+    let lastMicErrorTime = 0;
+
     jitsiApi.addListener("micError", (err) => {
-      console.error("[Jitsi Mic Error]", err);
-      showBreakToast("Microphone gặp sự cố. Hãy kiểm tra lại mic hoặc cắm lại tai nghe.", "error");
+      console.warn("[Jitsi Mic Warning]", err);
+      const now = Date.now();
+      if (now - lastMicErrorTime < 10000) return;
+      lastMicErrorTime = now;
+      const errStr = String((err && (err.message || err.name || err)) || "");
+      if (errStr.includes("NotFoundError") || errStr.includes("DevicesNotFoundError")) {
+        showBreakToast("Không tìm thấy micro. Hãy kiểm tra lại thiết bị thu âm.", "error");
+      } else if (errStr.includes("NotAllowedError") || errStr.includes("PermissionDeniedError")) {
+        showBreakToast("Chưa cấp quyền truy cập micro cho trình duyệt. Vui lòng cho phép trên thanh địa chỉ.", "error");
+      }
     });
 
     jitsiApi.addListener("cameraError", (err) => {
@@ -1462,7 +1482,26 @@
 
     jitsiApi.addListener("audioAvailabilityChanged", (payload) => {
       if (payload && payload.available === false) {
-        showBreakToast("Không tìm thấy thiết bị micro nào được kết nối.", "error");
+        if (!audioUnavailableTimer) {
+          audioUnavailableTimer = setTimeout(async () => {
+            audioUnavailableTimer = null;
+            try {
+              if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
+                const devs = await navigator.mediaDevices.enumerateDevices();
+                const hasMic = devs.some((d) => d.kind === "audioinput");
+                if (hasMic) return;
+              }
+            } catch (e) {
+              /* ignore */
+            }
+            showBreakToast("Không tìm thấy thiết bị micro nào được kết nối.", "error");
+          }, 3500);
+        }
+      } else {
+        if (audioUnavailableTimer) {
+          clearTimeout(audioUnavailableTimer);
+          audioUnavailableTimer = null;
+        }
       }
     });
 
@@ -1649,6 +1688,30 @@
     window.addEventListener("focus", refreshPresence);
     window.addEventListener("online", refreshPresence);
   };
+
+  const unlockClassroomAudio = () => {
+    try {
+      if (container) {
+        const audios = container.querySelectorAll("audio");
+        audios.forEach((a) => {
+          if (a.paused && !a.muted) {
+            a.play().catch(() => {});
+          }
+        });
+      }
+    } catch (e) {
+      /* ignore */
+    }
+  };
+
+  ["click", "touchstart", "keydown"].forEach((evt) => {
+    document.addEventListener(evt, unlockClassroomAudio, { passive: true });
+  });
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") {
+      unlockClassroomAudio();
+    }
+  });
 
   initJitsi();
   setupRoomMetaCopy();

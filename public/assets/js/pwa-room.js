@@ -132,7 +132,7 @@
     if (!iframe) return;
     iframe.setAttribute(
       "allow",
-      "camera *; microphone *; display-capture *; autoplay *; clipboard-write *; fullscreen *; screen-wake-lock *"
+      "camera *; microphone *; display-capture *; autoplay *; clipboard-write *; fullscreen *; screen-wake-lock *; speaker-selection *"
     );
     iframe.setAttribute("playsinline", "true");
     iframe.setAttribute("webkit-playsinline", "true");
@@ -242,10 +242,21 @@
         p2p: {
           enabled: false,
         },
-        enableNoAudioDetection: true,
-        enableTalkWhileMuted: true,
-        disableAudioLevels: false,
-        enableNoisyMicDetection: true,
+        enableNoAudioDetection: false,
+        enableTalkWhileMuted: false,
+        disableAudioLevels: true,
+        enableNoisyMicDetection: false,
+        enableOpusRed: true,
+        websocketKeepAlive: 10000,
+        disabledNotifications: [
+          "notify.havingTroubleWithMic",
+          "notify.noisyMic",
+          "notify.talkWhileMuted",
+        ],
+        audioQuality: {
+          stereo: false,
+          enableOpusDtx: false,
+        },
         startWithAudioMuted: startAudioMuted,
         startWithVideoMuted: startVideoMuted,
         analytics: { disabled: true },
@@ -299,9 +310,18 @@
       lastAudioMuted = Boolean(payload && payload.muted);
     });
 
+    let lastMicErrorTime = 0;
     jitsiApi.addListener("micError", (err) => {
-      console.error("[PWA Jitsi Mic Error]", err);
-      showToast("Microphone gặp sự cố. Vui lòng kiểm tra lại mic.");
+      console.warn("[PWA Jitsi Mic Warning]", err);
+      const now = Date.now();
+      if (now - lastMicErrorTime < 10000) return;
+      lastMicErrorTime = now;
+      const errStr = String((err && (err.message || err.name || err)) || "");
+      if (errStr.includes("NotFoundError") || errStr.includes("DevicesNotFoundError")) {
+        showToast("Không tìm thấy micro. Vui lòng kiểm tra lại thiết bị thu âm.");
+      } else if (errStr.includes("NotAllowedError") || errStr.includes("PermissionDeniedError")) {
+        showToast("Trình duyệt chưa được cấp quyền micro. Vui lòng bật quyền mic.");
+      }
     });
 
     jitsiApi.addListener("cameraError", (err) => {
@@ -527,6 +547,25 @@
       scheduleResizeJitsi();
       forceTileView();
     }
+  });
+
+  const unlockClassroomAudio = () => {
+    try {
+      if (container) {
+        const audios = container.querySelectorAll("audio");
+        audios.forEach((a) => {
+          if (a.paused && !a.muted) {
+            a.play().catch(() => {});
+          }
+        });
+      }
+    } catch (e) {
+      /* ignore */
+    }
+  };
+
+  ["click", "touchstart", "keydown"].forEach((evt) => {
+    document.addEventListener(evt, unlockClassroomAudio, { passive: true });
   });
 
   const startCall = async () => {
