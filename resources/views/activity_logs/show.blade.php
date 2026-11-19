@@ -21,7 +21,7 @@
 <div class="op-stack al-page">
     <x-page-title kicker="Giám sát hệ thống" icon="fa-clock-rotate-left" :title="$subject?->name" :lead="($subject?->role_label ?? '').($subject?->phone ? ' · SĐT: '.$subject->phone : '')">
         <x-slot:aside>
-            <a class="op-btn-ghost" href="{{ route('activity-logs.index', ['from' => $filters['from'], 'to' => $filters['to']]) }}"><i class="fa-solid fa-arrow-left"></i> Quay lại danh sách</a>
+            <x-button variant="white" href="{{ route('activity-logs.index', ['from' => $filters['from'], 'to' => $filters['to']]) }}" icon="fa-solid fa-arrow-left">Quay lại danh sách</x-button>
         </x-slot:aside>
     </x-page-title>
 
@@ -34,7 +34,7 @@
                     <input type="hidden" name="tab" value="{{ $tab }}">
                     <input type="date" name="from" value="{{ $filters['from'] ?? '' }}" class="px-3 py-2 text-sm">
                     <input type="date" name="to" value="{{ $filters['to'] ?? '' }}" class="px-3 py-2 text-sm">
-                    <button class="op-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i> Lọc dữ liệu</button>
+                    <x-button type="submit" icon="fa-solid fa-magnifying-glass">Lọc dữ liệu</x-button>
                 </form>
             </div>
         </div>

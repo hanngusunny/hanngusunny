@@ -20,7 +20,7 @@
                 @csrf
                 @include('admin.courses.partials.course-fields', ['course' => null, 'disabled' => false])
                 <div class="mt-6">
-                    <button type="submit" class="op-btn">Tạo khóa học</button>
+                    <x-button type="submit">Tạo khóa học</x-button>
                 </div>
             </form>
         </div>

@@ -109,11 +109,8 @@
                         @endif
                     </div>
                     <div class="pf-actions">
-                        <a class="op-btn-ghost" href="{{ $user->homePath() }}">Hủy</a>
-                        <button class="op-btn" type="submit">
-                            <i class="fa-solid fa-floppy-disk"></i>
-                            <span>Lưu thay đổi</span>
-                        </button>
+                        <x-button variant="white" href="{{ $user->homePath() }}">Hủy</x-button>
+                        <x-button type="submit" icon="fa-solid fa-floppy-disk">Lưu thay đổi</x-button>
                     </div>
                 </div>
             </section>

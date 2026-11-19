@@ -10,20 +10,21 @@
   <h1 class="admin-page-title">{{ __('admin_profile.profile_heading') }}</h1>
   <form method="post" action="{{ route('admin.profile.update') }}" enctype="multipart/form-data">
     @csrf
-    <label class="form-label">{{ __('admin_users.users_add_field_name') }}</label>
-    <input class="form-control" name="name" value="{{ old('name', $profileUser->name) }}">
-    <label class="form-label">{{ __('admin_profile.profile_password_old') }}</label>
-    <input class="form-control" type="password" name="password_old">
-    <label class="form-label">{{ __('admin_profile.profile_password_new') }}</label>
-    <input class="form-control" type="password" name="password_new">
-    <label class="form-label">{{ __('admin_profile.profile_password_confirm') }}</label>
-    <input class="form-control" type="password" name="password_confirm">
-    <label class="form-label">{{ __('admin_profile.profile_avatar') }}</label>
-    <input class="form-control" type="file" name="avatar" accept="image/*">
+    <x-sunny.input name="name" :label="__('admin_users.users_add_field_name')" :value="$profileUser->name" />
+    <x-sunny.input name="password_old" type="password" :label="__('admin_profile.profile_password_old')" />
+    <x-sunny.input name="password_new" type="password" :label="__('admin_profile.profile_password_new')" />
+    <x-sunny.input name="password_confirm" type="password" :label="__('admin_profile.profile_password_confirm')" />
+
+    <div class="sn-form-group">
+      <label class="sn-label" for="avatar">{{ __('admin_profile.profile_avatar') }}</label>
+      <input class="sn-input" type="file" id="avatar" name="avatar" accept="image/*">
+    </div>
+
     <div class="form-check mt-2">
       <input class="form-check-input" type="checkbox" name="remove_avatar" value="1" id="remove_avatar">
       <label class="form-check-label" for="remove_avatar">{{ __('admin_profile.profile_remove_avatar') }}</label>
     </div>
-    <button class="btn btn-primary mt-3" type="submit">{{ __('admin_profile.profile_save') }}</button>
+
+    <x-sunny.button type="submit" class="mt-3">{{ __('admin_profile.profile_save') }}</x-sunny.button>
   </form>
 @endsection

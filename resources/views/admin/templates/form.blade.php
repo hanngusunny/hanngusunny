@@ -3,10 +3,8 @@
   @if (session('ok')) <p class="alert alert-success">{{ session('ok') }}</p> @endif
   <h1 class="admin-page-title">{{ $row->name }}</h1>
   <form method="post" action="{{ route('admin.templates.update', $row) }}">@csrf
-    <label class="form-label">Tên</label>
-    <input class="form-control" name="name" value="{{ $row->name }}" required>
-    <label class="form-label">Nội dung (lưu DB, không execute)</label>
-    <textarea class="form-control" name="content" rows="16">{{ $row->content }}</textarea>
-    <button class="btn btn-primary mt-3" type="submit">Lưu</button>
+    <x-sunny.input name="name" label="Tên" :value="$row->name" :required="true" />
+    <x-sunny.textarea name="content" label="Nội dung (lưu DB, không execute)" :rows="16" :value="$row->content" />
+    <x-sunny.button type="submit" class="mt-3">Lưu</x-sunny.button>
   </form>
 @endsection

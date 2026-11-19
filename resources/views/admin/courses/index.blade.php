@@ -42,7 +42,7 @@
                         </button>
                     </form>
                 @endif
-                <a href="{{ route('admin.courses.create') }}" class="op-btn"><i class="fa-solid fa-plus"></i> Tạo khóa học</a>
+                <x-button href="{{ route('admin.courses.create') }}" icon="fa-solid fa-plus">Tạo khóa học</x-button>
             </div>
         </div>
         <div class="op-panel-body is-flush">

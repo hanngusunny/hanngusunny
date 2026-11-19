@@ -49,7 +49,7 @@
                     @endif
                     <input type="date" name="from" value="{{ $filters['from'] ?? '' }}" class="px-3 py-2 text-sm">
                     <input type="date" name="to" value="{{ $filters['to'] ?? '' }}" class="px-3 py-2 text-sm">
-                    <button class="op-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i> Lọc dữ liệu</button>
+                    <x-button type="submit" icon="fa-solid fa-magnifying-glass">Lọc dữ liệu</x-button>
                 </form>
             </div>
         </div>

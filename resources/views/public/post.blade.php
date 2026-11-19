@@ -182,10 +182,7 @@
                     <i class="bi bi-arrow-left" aria-hidden="true"></i>
                     Về trang {{ mb_strtolower($hubLabel) }}
                   </a>
-                  <a href="{{ route('home') }}#dang-ky" class="btn btn-sunny text-white px-4 inline-flex items-center justify-center gap-1">
-                    <i class="bi bi-chat-dots" aria-hidden="true"></i>
-                    Tư vấn hồ sơ
-                  </a>
+                  <x-sunny.button href="{{ route('home') }}#dang-ky" icon="bi bi-chat-dots">Tư vấn hồ sơ</x-sunny.button>
                 </div>
 
                 @if (!empty($commentsEnabled) || (!empty($comments) && $comments->isNotEmpty()))
@@ -200,10 +197,10 @@
                     @if (!empty($commentsEnabled))
                       <form method="post" action="{{ $commentAction ?? url('/post/'.$post->slug.'/comment') }}">
                         @csrf
-                        <input class="tw-field" name="author_name" placeholder="Tên" required>
-                        <input class="tw-field mt-2" name="author_email" placeholder="Email">
-                        <textarea class="tw-field mt-2" name="body" required></textarea>
-                        <button class="btn btn-sunny mt-3" type="submit">Gửi bình luận</button>
+                        <x-sunny.input name="author_name" placeholder="Tên" :required="true" />
+                        <x-sunny.input name="author_email" placeholder="Email" class="mt-2" />
+                        <textarea class="sn-textarea mt-2" name="body" placeholder="Nội dung bình luận..." required></textarea>
+                        <x-sunny.button class="mt-3" type="submit">Gửi bình luận</x-sunny.button>
                       </form>
                     @endif
                   </section>
