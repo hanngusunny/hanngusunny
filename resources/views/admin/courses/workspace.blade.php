@@ -36,10 +36,10 @@
                     @include('admin.courses.partials.course-fields', ['disabled' => $course->isCancelled()])
                     @unless ($course->isCancelled())
                         <div class="mt-6 flex flex-wrap gap-2">
-                            <button type="submit" class="op-btn">Lưu thông tin</button>
-                            <button type="submit" form="course-cancel-form" class="rounded-lg border border-red-100 px-4 py-2 text-sm text-red-600" onclick="return confirm('Hủy khóa học? Học viên sẽ được gỡ và có thể vào khóa khác.');">Hủy khóa</button>
+                            <x-button type="submit">Lưu thông tin</x-button>
+                            <x-button variant="danger" size="sm" type="submit" form="course-cancel-form" onclick="return confirm('Hủy khóa học? Học viên sẽ được gỡ và có thể vào khóa khác.');">Hủy khóa</x-button>
                             @if ($course->hasNoMembers())
-                                <button type="submit" form="course-delete-form" class="rounded-lg border border-red-100 px-4 py-2 text-sm text-red-600" onclick="return confirm('Xóa vĩnh viễn khóa học không có học viên?');">Xóa khóa</button>
+                                <x-button variant="danger" size="sm" type="submit" form="course-delete-form" onclick="return confirm('Xóa vĩnh viễn khóa học không có học viên?');">Xóa khóa</x-button>
                             @endif
                         </div>
                     @else
@@ -93,7 +93,7 @@
         <label class="block">Video ghi hình
             <input type="url" name="record_video_url" class="mt-1 w-full rounded-lg bg-slate-100 px-3 py-2">
         </label>
-        <button type="submit" class="op-btn">Lưu buổi học</button>
+        <x-button type="submit">Lưu buổi học</x-button>
     </form>
 </div>
 <div id="assessment-edit-tpl" hidden>
@@ -109,7 +109,7 @@
         <label class="block">Kết thúc
             <input type="time" name="end_time" class="mt-1 w-full rounded-lg bg-slate-100 px-3 py-2">
         </label>
-        <button type="submit" class="op-btn">Lưu bài kiểm tra</button>
+        <x-button type="submit">Lưu bài kiểm tra</x-button>
     </form>
 </div>
 @endsection

@@ -7,47 +7,43 @@
     $endTime = old('default_end_time', $scheduleService->formatTimeForInput($course?->default_end_time));
 @endphp
 <div class="grid gap-4 sm:grid-cols-2">
-    <label class="block text-sm">Giáo viên đứng lớp *
-        <select name="teacher_id" required class="mt-1 w-full rounded-lg bg-slate-100 px-3 py-2" @disabled($disabled)>
+    <div class="sn-form-group">
+        <label class="sn-label">Giáo viên đứng lớp <span class="required">*</span></label>
+        <select name="teacher_id" required class="sn-select" @disabled($disabled)>
             @foreach ($teachers as $teacher)
                 <option value="{{ $teacher->id }}" @selected((int) old('teacher_id', $course?->teacher_id ?? auth()->id()) === (int) $teacher->id)>{{ $teacher->name }}</option>
             @endforeach
         </select>
-        <span class="mt-1 block text-xs text-slate-500">Một giáo viên có thể phụ trách nhiều khóa cùng lúc.</span>
-    </label>
-    <label class="block text-sm">Chương trình học
-        <select name="program_id" class="mt-1 w-full rounded-lg bg-slate-100 px-3 py-2" @disabled($disabled)>
+        <span class="sn-hint">Một giáo viên có thể phụ trách nhiều khóa cùng lúc.</span>
+    </div>
+    <div class="sn-form-group">
+        <label class="sn-label">Chương trình học</label>
+        <select name="program_id" class="sn-select" @disabled($disabled)>
             <option value="">— Không chọn —</option>
             @foreach ($programs as $program)
                 <option value="{{ $program->id }}" @selected((int) old('program_id', $course?->program_id ?? 0) === (int) $program->id)>{{ $program->title }}</option>
             @endforeach
         </select>
-        <span class="mt-1 block text-xs text-slate-500">Gắn chương trình để sao chép buổi học, rồi đặt lịch tuần.</span>
-    </label>
-    <label class="block text-sm sm:col-span-2">Tên khóa học *
-        <input name="title" required minlength="3" maxlength="255" value="{{ old('title', $course?->title ?? '') }}" class="mt-1 w-full rounded-lg bg-slate-100 px-3 py-2" @disabled($disabled)>
-    </label>
-    <label class="block text-sm sm:col-span-2">Mô tả
-        <textarea name="description" rows="3" class="mt-1 w-full rounded-lg bg-slate-100 px-3 py-2" @disabled($disabled)>{{ old('description', $course?->description ?? '') }}</textarea>
-    </label>
+        <span class="sn-hint">Gắn chương trình để sao chép buổi học, rồi đặt lịch tuần.</span>
+    </div>
+    <div class="sn-form-group sm:col-span-2">
+        <x-sunny.input name="title" label="Tên khóa học" :required="true" minlength="3" maxlength="255" :value="$course?->title ?? ''" :disabled="$disabled" />
+    </div>
+    <div class="sn-form-group sm:col-span-2">
+        <x-sunny.textarea name="description" label="Mô tả" :rows="3" :value="$course?->description ?? ''" :disabled="$disabled" />
+    </div>
 </div>
 
 <div class="mt-6">
     <p class="text-sm font-semibold text-slate-900">Lịch học mặc định</p>
     <p class="mt-0.5 text-xs text-slate-500">Dùng để xếp ngày cho các buổi sau khi gắn chương trình. Có thể chỉnh từng buổi ở tab Thời gian học.</p>
     <div class="mt-3 grid gap-4 sm:grid-cols-3">
-        <label class="block text-sm">Ngày bắt đầu
-            <input type="date" name="schedule_start_date" value="{{ $startDate }}" class="mt-1 w-full rounded-lg bg-slate-100 px-3 py-2" @disabled($disabled)>
-        </label>
-        <label class="block text-sm">Giờ bắt đầu
-            <input type="time" name="default_start_time" value="{{ $startTime }}" class="mt-1 w-full rounded-lg bg-slate-100 px-3 py-2" @disabled($disabled)>
-        </label>
-        <label class="block text-sm">Giờ kết thúc
-            <input type="time" name="default_end_time" value="{{ $endTime }}" class="mt-1 w-full rounded-lg bg-slate-100 px-3 py-2" @disabled($disabled)>
-        </label>
+        <x-sunny.input type="date" name="schedule_start_date" label="Ngày bắt đầu" :value="$startDate" :disabled="$disabled" />
+        <x-sunny.input type="time" name="default_start_time" label="Giờ bắt đầu" :value="$startTime" :disabled="$disabled" />
+        <x-sunny.input type="time" name="default_end_time" label="Giờ kết thúc" :value="$endTime" :disabled="$disabled" />
     </div>
     <div class="mt-3">
-        <p class="text-sm">Ngày học trong tuần</p>
+        <label class="sn-label">Ngày học trong tuần</label>
         <div class="mt-2 flex flex-wrap gap-2">
             @foreach ($weekdayOptions as $key => $label)
                 <label class="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm {{ $disabled ? 'opacity-60' : 'cursor-pointer hover:border-orange-200' }}">

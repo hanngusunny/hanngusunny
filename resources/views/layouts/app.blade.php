@@ -9,7 +9,7 @@
     <link rel="icon" type="image/png" href="{{ asset('assets/images/favicon.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Ephesis&family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ephesis&family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Noto+Sans+KR:wght@400;500;700&family=Nunito:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
     <style>
         :root { --app-font: "Inter Tight", ui-sans-serif, system-ui, sans-serif; --app-font-display: "Ephesis", cursive; }
         html, body, button, input, select, textarea { font-family: var(--app-font); }
@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/office-page.css') }}?v=6">
     <link rel="stylesheet" href="{{ asset('assets/css/notifications.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/sunny-ds.css') }}?v=1">
     @stack('styles')
     <script src="https://cdn.tailwindcss.com"></script>
     <style>

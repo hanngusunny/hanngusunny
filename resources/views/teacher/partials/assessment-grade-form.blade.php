@@ -163,10 +163,9 @@
         @else
             <span class="teacher-essay-grade-updated" data-autosave-status hidden></span>
         @endif
-        <button type="submit" class="op-btn op-btn-sm" data-autosave-submit>
-            <i class="fa-solid fa-floppy-disk"></i>
-            <span>{{ ($isGraded || $isAutoScored || $isFillBlanksGrade || $isCompositeItemGrade) ? 'Cập nhật điểm' : 'Lưu điểm' }}</span>
-        </button>
+        <x-sunny.button type="submit" size="sm" data-autosave-submit icon="fa-solid fa-floppy-disk">
+            {{ ($isGraded || $isAutoScored || $isFillBlanksGrade || $isCompositeItemGrade) ? 'Cập nhật điểm' : 'Lưu điểm' }}
+        </x-sunny.button>
     </div>
 
     @if (! $embedFieldsOnly)

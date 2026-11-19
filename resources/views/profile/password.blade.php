@@ -80,14 +80,8 @@
                         </small>
                     </div>
                     <div class="pf-actions">
-                        <a class="op-btn-ghost" href="{{ route('profile.show') }}">
-                            <i class="fa-solid fa-arrow-left"></i>
-                            <span>Quay lại hồ sơ</span>
-                        </a>
-                        <button class="op-btn" type="submit">
-                            <i class="fa-solid fa-shield"></i>
-                            <span>Lưu mật khẩu mới</span>
-                        </button>
+                        <x-button variant="white" href="{{ route('profile.show') }}" icon="fa-solid fa-arrow-left">Quay lại hồ sơ</x-button>
+                        <x-button type="submit" icon="fa-solid fa-shield">Lưu mật khẩu mới</x-button>
                     </div>
                 </form>
             </div>

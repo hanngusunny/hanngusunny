@@ -35,11 +35,12 @@
   @endif
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@100..900&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@100..900&family=Noto+Sans+KR:wght@400;500;700&family=Nunito:ital,wght@0,400..900;1,400..900&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
   <link href="{{ asset('assets/css/tailwind.css') }}" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet">
   <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/css/sunny-ds.css') }}?v=1" rel="stylesheet">
   @yield('head')
   <script>document.documentElement.classList.add("js");</script>
 </head>

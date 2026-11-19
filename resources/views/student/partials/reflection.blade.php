@@ -45,10 +45,7 @@
             >{{ $comment }}</textarea>
         </div>
         <div class="session-post-card-foot">
-            <button class="btn btn-primary btn-with-icon session-post-submit" type="submit">
-                <i class="bi bi-save"></i>
-                <span>Lưu đánh giá</span>
-            </button>
+            <x-sunny.button type="submit" icon="bi bi-save" class="session-post-submit">Lưu đánh giá</x-sunny.button>
         </div>
     </form>
 </article>

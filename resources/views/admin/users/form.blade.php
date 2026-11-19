@@ -8,15 +8,13 @@
   <form method="post" action="{{ $editUser ? route('admin.users.update', $editUser) : route('admin.users.store') }}">
     @csrf
     @unless ($editUser)
-      <label class="form-label">{{ __('admin_users.users_add_field_username') }}</label>
-      <input class="form-control" name="username" value="{{ old('username') }}" required>
+      <x-sunny.input name="username" :label="__('admin_users.users_add_field_username')" :required="true" />
     @else
-      <p>{{ __('admin_users.users_edit_username_locked') }}: <strong>{{ $editUser->username }}</strong></p>
+      <p class="mb-3">{{ __('admin_users.users_edit_username_locked') }}: <strong>{{ $editUser->username }}</strong></p>
     @endunless
-    <label class="form-label">{{ __('admin_users.users_add_field_password') }}</label>
-    <input class="form-control" type="password" name="password" {{ $editUser ? '' : 'required' }}>
-    <label class="form-label">{{ __('admin_users.users_add_field_name') }}</label>
-    <input class="form-control" name="name" value="{{ old('name', $editUser->name ?? '') }}">
+    <x-sunny.input name="password" type="password" :label="__('admin_users.users_add_field_password')" :required="!$editUser" />
+    <x-sunny.input name="name" :label="__('admin_users.users_add_field_name')" :value="$editUser->name ?? ''" />
+
     <div class="form-check mt-2">
       <input class="form-check-input" type="checkbox" name="is_active" value="1" id="is_active" @checked(old('is_active', $editUser->is_active ?? true))>
       <label class="form-check-label" for="is_active">{{ __('admin_users.users_add_active_label') }}</label>
@@ -27,6 +25,6 @@
         <label class="form-check-label" for="is_super_admin">{{ __('admin_users.users_field_super_admin') }}</label>
       </div>
     @endif
-    <button class="btn btn-primary mt-3" type="submit">{{ $editUser ? __('admin_users.users_edit_btn_submit') : __('admin_users.users_add_btn_submit') }}</button>
+    <x-sunny.button type="submit" class="mt-3">{{ $editUser ? __('admin_users.users_edit_btn_submit') : __('admin_users.users_add_btn_submit') }}</x-sunny.button>
   </form>
 @endsection
