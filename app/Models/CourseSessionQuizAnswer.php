@@ -57,37 +57,95 @@ class CourseSessionQuizAnswer extends Model
     }
 
     /**
-     * @param  list<int>  $questionIds
+     * Batch count completed exercises for a user across multiple session IDs in 1-2 queries.
+     * An exercise group is completed when it has at least 1 question and all questions are submitted.
+     *
+     * @param  list<int>  $sessionIds
+     * @return array<int, int> Map of [course_session_id => completed_count]
      */
+    public static function batchCountCompletedExercisesForUser(int $userId, array $sessionIds): array
+    {
+        $sessionIds = array_values(array_unique(array_filter(array_map('intval', $sessionIds), static fn ($id) => $id > 0)));
+
+        if ($userId <= 0 || $sessionIds === []) {
+            return [];
+        }
+
+        $result = array_fill_keys($sessionIds, 0);
+
+        $questions = CourseSessionQuestion::query()
+            ->whereIn('course_session_id', $sessionIds)
+            ->whereIn('question_group', ['pre', 'review', 'post_practice'])
+            ->select(['id', 'course_session_id', 'question_group'])
+            ->get();
+
+        if ($questions->isEmpty()) {
+            return $result;
+        }
+
+        $sessionGroupQuestions = [];
+        $neededQuestionIds = [];
+
+        foreach ($questions as $q) {
+            $sId = (int) $q->course_session_id;
+            $grp = (string) $q->question_group;
+            $qId = (int) $q->id;
+
+            $sessionGroupQuestions[$sId][$grp][] = $qId;
+            $neededQuestionIds[] = $qId;
+        }
+
+        $submittedMap = static::query()
+            ->where('user_id', $userId)
+            ->whereIn('course_session_id', $sessionIds)
+            ->whereIn('question_id', $neededQuestionIds)
+            ->pluck('question_id')
+            ->map(static fn ($id): int => (int) $id)
+            ->flip()
+            ->all();
+
+        foreach ($sessionIds as $sessionId) {
+            $completed = 0;
+            $groups = $sessionGroupQuestions[$sessionId] ?? null;
+
+            if ($groups === null) {
+                $result[$sessionId] = 0;
+                continue;
+            }
+
+            foreach (['pre', 'review', 'post_practice'] as $group) {
+                $qIds = $groups[$group] ?? [];
+                if ($qIds === []) {
+                    continue;
+                }
+
+                $allDone = true;
+                foreach ($qIds as $qId) {
+                    if (! isset($submittedMap[$qId])) {
+                        $allDone = false;
+                        break;
+                    }
+                }
+
+                if ($allDone) {
+                    $completed++;
+                }
+            }
+
+            $result[$sessionId] = $completed;
+        }
+
+        return $result;
+    }
+
     /**
      * @param  list<int>  $sessionIds
      */
     public static function countCompletedExercisesForUser(int $userId, array $sessionIds): int
     {
-        $sessionIds = array_values(array_filter(array_map('intval', $sessionIds), static fn ($id) => $id > 0));
+        $batch = self::batchCountCompletedExercisesForUser($userId, $sessionIds);
 
-        if ($userId <= 0 || $sessionIds === []) {
-            return 0;
-        }
-
-        $count = 0;
-
-        foreach ($sessionIds as $sessionId) {
-            foreach (['pre', 'review', 'post_practice'] as $group) {
-                $questionIds = CourseSessionQuestion::forSessionGroup($sessionId, $group)
-                    ->pluck('id')
-                    ->map(fn ($id) => (int) $id)
-                    ->filter(fn ($id) => $id > 0)
-                    ->values()
-                    ->all();
-
-                if ($questionIds !== [] && self::hasSubmittedForQuestionIds($sessionId, $userId, $questionIds)) {
-                    $count++;
-                }
-            }
-        }
-
-        return $count;
+        return array_sum($batch);
     }
 
     public static function hasSubmittedForQuestionIds(int $sessionId, int $userId, array $questionIds): bool

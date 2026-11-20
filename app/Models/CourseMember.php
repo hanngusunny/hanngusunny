@@ -59,10 +59,26 @@ class CourseMember extends Model
         return self::statusLabels()[$this->status] ?? $this->status;
     }
 
+    /** @var array<int, Course|null> */
+    private static array $activeCourseCache = [];
+
+    /** @var array<string, bool> */
+    private static array $isMemberCache = [];
+
+    public static function clearMemberCache(): void
+    {
+        self::$activeCourseCache = [];
+        self::$isMemberCache = [];
+    }
+
     public static function activeCourseFor(int $userId): ?Course
     {
         if ($userId <= 0) {
             return null;
+        }
+
+        if (array_key_exists($userId, self::$activeCourseCache)) {
+            return self::$activeCourseCache[$userId];
         }
 
         $member = static::query()
@@ -73,7 +89,7 @@ class CourseMember extends Model
             ->latest('id')
             ->first();
 
-        return $member?->course;
+        return self::$activeCourseCache[$userId] = $member?->course;
     }
 
     public static function isMemberOf(int $courseId, int $userId): bool
@@ -82,7 +98,17 @@ class CourseMember extends Model
             return false;
         }
 
-        return static::query()
+        $cacheKey = "{$courseId}:{$userId}";
+        if (isset(self::$isMemberCache[$cacheKey])) {
+            return self::$isMemberCache[$cacheKey];
+        }
+
+        // Fast-path: nếu active course của user chính là courseId này
+        if (isset(self::$activeCourseCache[$userId]) && (int) (self::$activeCourseCache[$userId]?->id ?? 0) === $courseId) {
+            return self::$isMemberCache[$cacheKey] = true;
+        }
+
+        return self::$isMemberCache[$cacheKey] = static::query()
             ->where('course_id', $courseId)
             ->where('user_id', $userId)
             ->where('status', self::STATUS_ACTIVE)

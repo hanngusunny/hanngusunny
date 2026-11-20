@@ -15,7 +15,24 @@ use App\Models\StudyProgramSession;
 class StudentSessionCatalogService
 {
     /** @var array<int, bool> */
-    private array $teacherPresentCache = [];
+    private static array $teacherPresentCache = [];
+
+    /** @var array<string, list<array<string, mixed>>> */
+    private static array $studentCourseCatalogCache = [];
+
+    /**
+     * Clear catalog cache if needed.
+     */
+    public static function clearStaticCache(): void
+    {
+        self::$studentCourseCatalogCache = [];
+        self::$teacherPresentCache = [];
+    }
+
+    public function clearCache(): void
+    {
+        self::clearStaticCache();
+    }
 
     /**
      * @return list<array<string, mixed>>
@@ -26,6 +43,11 @@ class StudentSessionCatalogService
             return [];
         }
 
+        $cacheKey = "{$courseId}:{$userId}";
+        if (isset(self::$studentCourseCatalogCache[$cacheKey])) {
+            return self::$studentCourseCatalogCache[$cacheKey];
+        }
+
         $sessions = CourseSession::query()
             ->with(['programSession.level', 'course.teacher', 'course.room'])
             ->where('course_id', $courseId)
@@ -33,10 +55,13 @@ class StudentSessionCatalogService
             ->inProgramOrder()
             ->get();
 
+        $sessionIds = $sessions->pluck('id')->map(static fn ($id): int => (int) $id)->all();
+        $attendedMap = CourseSessionAttendance::attendedMapForUser($sessionIds, $userId);
+
         $rows = [];
 
         foreach ($sessions as $session) {
-            $rows[] = $this->toStudentRow($session, $userId);
+            $rows[] = $this->toStudentRow($session, $userId, $attendedMap[(int) $session->id] ?? false);
         }
 
         $nearestId = $this->nearestSessionId($rows);
@@ -46,7 +71,7 @@ class StudentSessionCatalogService
         }
         unset($row);
 
-        return $rows;
+        return self::$studentCourseCatalogCache[$cacheKey] = $rows;
     }
 
     /**
@@ -164,7 +189,7 @@ class StudentSessionCatalogService
     /**
      * @return array<string, mixed>
      */
-    public function toStudentRow(CourseSession $session, int $userId = 0): array
+    public function toStudentRow(CourseSession $session, int $userId = 0, ?bool $hasAttended = null): array
     {
         $phase = $session->livePhase();
         $display = $session->studentDisplay();
@@ -203,7 +228,9 @@ class StudentSessionCatalogService
             'room_code' => (string) ($room?->room_code ?? ''),
             'room_status' => (string) ($room?->status ?? ''),
             'phase' => $phase,
-            'has_attended' => $userId > 0 && CourseSessionAttendance::hasAttended((int) $session->id, $userId),
+            'has_attended' => $hasAttended !== null
+                ? $hasAttended
+                : ($userId > 0 && CourseSessionAttendance::hasAttended((int) $session->id, $userId)),
             'teacher_in_room' => $teacherInRoom,
             'waiting_teacher' => $inTimeWindow && ! $teacherInRoom,
             'is_joinable' => $inTimeWindow,
@@ -219,18 +246,18 @@ class StudentSessionCatalogService
 
         $roomId = (int) $room->id;
 
-        if (array_key_exists($roomId, $this->teacherPresentCache)) {
-            return $this->teacherPresentCache[$roomId];
+        if (array_key_exists($roomId, self::$teacherPresentCache)) {
+            return self::$teacherPresentCache[$roomId];
         }
 
         $timeout = app(ClassroomConfig::class)->presenceTimeout();
-        $this->teacherPresentCache[$roomId] = OnlineRoomParticipant::isTeacherPresent(
+        self::$teacherPresentCache[$roomId] = OnlineRoomParticipant::isTeacherPresent(
             $roomId,
             [$teacherId, (int) $room->host_id],
             $timeout
         );
 
-        return $this->teacherPresentCache[$roomId];
+        return self::$teacherPresentCache[$roomId];
     }
 
     /**

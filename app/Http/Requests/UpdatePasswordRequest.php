@@ -15,7 +15,7 @@ class UpdatePasswordRequest extends FormRequest
     {
         return [
             'current_password' => ['required', 'current_password'],
-            'password' => ['required', 'string', 'min:6', 'max:255', 'confirmed'],
+            'password' => ['required', 'string', 'min:8', 'max:255', 'confirmed'],
         ];
     }
 
@@ -23,10 +23,10 @@ class UpdatePasswordRequest extends FormRequest
     {
         return [
             'current_password.required' => 'Vui lòng nhập mật khẩu hiện tại.',
-            'current_password.current_password' => 'Mật khẩu hiện tại không đúng.',
+            'current_password.current_password' => 'Mật khẩu hiện tại không chính xác.',
             'password.required' => 'Vui lòng nhập mật khẩu mới.',
-            'password.min' => 'Mật khẩu mới phải có ít nhất 6 ký tự.',
-            'password.confirmed' => 'Mật khẩu xác nhận không khớp.',
+            'password.min' => 'Mật khẩu mới phải có ít nhất 8 ký tự.',
+            'password.confirmed' => 'Mật khẩu xác nhận không khớp với mật khẩu mới.',
         ];
     }
 }

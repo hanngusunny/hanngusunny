@@ -24,10 +24,33 @@ class NotificationController extends Controller
         }
 
         $all = $service->buildAll($userId, $role);
-        $items = $service->filterItems($all['items'], $typeFilter, $readFilter);
+        // Luôn nạp toàn bộ items để client-side có thể lọc tức thì 0ms giữa Tất cả, Chưa đọc, Đã đọc mà không cần reload trang
+        $items = $typeFilter !== '' ? $service->filterItems($all['items'], $typeFilter, 'all') : $all['items'];
+
+        $groupedItems = [];
+        $today = date('Y-m-d');
+        $yesterday = date('Y-m-d', strtotime('-1 day'));
+
+        foreach ($items as $item) {
+            $sortAt = (int) ($item['sort_at'] ?? 0);
+            if ($sortAt > 0) {
+                $date = date('Y-m-d', $sortAt);
+                if ($date === $today) {
+                    $groupKey = 'Hôm nay';
+                } elseif ($date === $yesterday) {
+                    $groupKey = 'Hôm qua';
+                } else {
+                    $groupKey = 'Trước đó';
+                }
+            } else {
+                $groupKey = 'Trước đó';
+            }
+            $groupedItems[$groupKey][] = $item;
+        }
 
         return view('notifications.index', [
             'items' => $items,
+            'groupedItems' => $groupedItems,
             'filters' => [
                 'loai' => $typeFilter,
                 'doc' => $readFilter,
@@ -55,36 +78,52 @@ class NotificationController extends Controller
         }
 
         UserNotificationRead::markRead($userId, $notificationKey);
+        TopbarNotificationService::clearBuildCache();
 
         return response()->json(['ok' => true]);
     }
 
-    public function markAllRead(Request $request): JsonResponse
+    public function markAllRead(Request $request, ?TopbarNotificationService $service = null): JsonResponse
     {
-        $userId = (int) ($request->user()?->id ?? 0);
+        $service ??= app(TopbarNotificationService::class);
+        $user = $request->user();
+        $userId = (int) ($user?->id ?? 0);
 
         if ($userId <= 0) {
             return response()->json(['ok' => false, 'message' => 'Unauthorized'], 401);
         }
 
+        $role = (string) ($user?->role ?: 'student');
         $rawIds = $request->input('ids');
-        $ids = is_array($rawIds) ? $rawIds : [];
+        $isGlobalAll = $request->boolean('all') || ! $request->has('ids');
+
         $keys = [];
-
-        foreach ($ids as $id) {
-            $key = trim((string) $id);
-
-            if ($key !== '' && strlen($key) <= 120) {
-                $keys[] = $key;
+        if (is_array($rawIds)) {
+            foreach ($rawIds as $id) {
+                $key = trim((string) $id);
+                if ($key !== '' && strlen($key) <= 120) {
+                    $keys[] = $key;
+                }
             }
         }
 
-        if ($keys === []) {
-            return response()->json(['ok' => false, 'message' => 'No notification ids'], 422);
+        // Lấy toàn bộ thông báo chưa đọc của user từ hệ thống để đảm bảo 100% không bị sót bất kỳ thông báo nào
+        $all = $service->buildAll($userId, $role);
+        $allUnreadKeys = [];
+        foreach ($all['items'] as $item) {
+            if (! empty($item['unread'])) {
+                $allUnreadKeys[] = (string) ($item['id'] ?? '');
+            }
         }
 
-        UserNotificationRead::markManyRead($userId, $keys);
+        $mergedKeys = array_values(array_unique(array_filter(array_merge($keys, $allUnreadKeys))));
 
-        return response()->json(['ok' => true, 'count' => count($keys)]);
+        if (! empty($mergedKeys)) {
+            UserNotificationRead::markManyRead($userId, $mergedKeys);
+        }
+
+        TopbarNotificationService::clearBuildCache();
+
+        return response()->json(['ok' => true, 'count' => count($mergedKeys)]);
     }
 }

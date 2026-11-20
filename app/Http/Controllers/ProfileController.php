@@ -13,25 +13,34 @@ class ProfileController extends Controller
 {
     public function show(): View
     {
-        $user = request()->user();
+        $user = auth()->user() ?? request()->user();
         $activity = app(\App\Services\UserActivityService::class);
         $activitySummary = $activity->getProfileActivitySummary((int) ($user?->id ?? 0));
-        $activityDetailUrl = null;
 
-        if ($user?->isAdmin()) {
-            $activityDetailUrl = route('activity-logs.show', [
-                'id' => $user->id,
-                'from' => $activitySummary['from'],
-                'to' => $activitySummary['to'],
-            ]);
+        $activeSeconds = (int) ($activitySummary['active_seconds'] ?? 0);
+        $hours = intdiv($activeSeconds, 3600);
+        $minutes = intdiv($activeSeconds % 3600, 60);
+
+        if ($hours > 0) {
+            $activeHoursText = $minutes > 0 ? "{$hours} giờ {$minutes} phút" : "{$hours} giờ";
+        } elseif ($minutes > 0) {
+            $activeHoursText = "{$minutes} phút";
+        } else {
+            $activeHoursText = "0 phút";
+        }
+
+        $activeDays = (int) ($activitySummary['active_days'] ?? 0);
+        if ($activeDays > 0) {
+            $avgMinutes = (int) round(($activeSeconds / 60) / $activeDays);
+            $activeAvgDailyText = $avgMinutes > 0 ? "Khoảng {$avgMinutes} phút / ngày" : "Chưa ghi nhận hoạt động";
+        } else {
+            $activeAvgDailyText = $activeSeconds > 0 ? "Khoảng " . (int) round($activeSeconds / 60) . " phút / ngày" : "Chưa ghi nhận hoạt động";
         }
 
         return view('profile.show', [
             'user' => $user,
-            'activeTab' => 'profile',
-            'activitySummary' => $activitySummary,
-            'activityHelper' => $activity,
-            'activityDetailUrl' => $activityDetailUrl,
+            'activeHoursText' => $activeHoursText,
+            'activeAvgDailyText' => $activeAvgDailyText,
         ]);
     }
 
@@ -55,14 +64,13 @@ class ProfileController extends Controller
         $user->save();
 
         return redirect()->to($this->accountReturn($request, 'profile.show'))
-            ->with('success', 'Đã cập nhật hồ sơ cá nhân.');
+            ->with('success', 'Đã lưu thay đổi hồ sơ thành công.');
     }
 
     public function password(): View
     {
         return view('profile.password', [
-            'user' => request()->user(),
-            'activeTab' => 'password',
+            'user' => auth()->user() ?? request()->user(),
         ]);
     }
 
@@ -78,7 +86,7 @@ class ProfileController extends Controller
             $url .= '#mat-khau';
         }
 
-        return redirect()->to($url)->with('success', 'Đã đổi mật khẩu thành công.');
+        return redirect()->to($url)->with('success', 'Cập nhật mật khẩu thành công. Hãy sử dụng mật khẩu mới trong lần đăng nhập tiếp theo.');
     }
 
     private function accountReturn(\Illuminate\Http\Request $request, string $desktopRoute): string

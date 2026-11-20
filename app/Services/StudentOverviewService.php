@@ -10,10 +10,23 @@ use App\Support\HtmlContent;
 
 class StudentOverviewService
 {
+    /**
+     * @var array<int, array<string, mixed>>
+     */
+    private static array $buildCache = [];
+
     public function __construct(
         private StudentSessionCatalogService $catalog,
         private StudentCourseNavService $nav,
     ) {
+    }
+
+    /**
+     * Clear memoized cache (useful in tests or when data changes).
+     */
+    public static function clearCache(): void
+    {
+        self::$buildCache = [];
     }
 
     /**
@@ -25,23 +38,41 @@ class StudentOverviewService
      */
     public function build(int $userId): array
     {
+        if (isset(self::$buildCache[$userId])) {
+            return self::$buildCache[$userId];
+        }
+
         $course = CourseMember::activeCourseFor($userId);
 
         if ($course === null) {
-            return [
+            $data = [
                 'course' => null,
                 'levels' => [],
                 'nextSchedule' => $this->emptyNextSchedule(),
+                'hasPendingHomework' => false,
+                'pendingHomeworkCount' => 0,
+                'homeworkUrl' => route('student.assessments'),
             ];
+
+            return self::$buildCache[$userId] = $data;
         }
 
         $sessions = $this->catalog->forStudentCourse((int) $course->id, $userId);
+        $levelsData = $this->levelCards($course, $sessions, $userId);
+        $totalSessions = array_sum(array_column($levelsData, 'session_count'));
+        $completedExercises = array_sum(array_column($levelsData, 'completed_exercises_count'));
+        $hasPendingHomework = $totalSessions > $completedExercises;
 
-        return [
+        $data = [
             'course' => $course,
-            'levels' => $this->levelCards($course, $sessions, $userId),
+            'levels' => $levelsData,
             'nextSchedule' => $this->nextSchedule($sessions),
+            'hasPendingHomework' => $hasPendingHomework,
+            'pendingHomeworkCount' => max(0, $totalSessions - $completedExercises),
+            'homeworkUrl' => route('student.assessments'),
         ];
+
+        return self::$buildCache[$userId] = $data;
     }
 
     /**
@@ -62,6 +93,21 @@ class StudentOverviewService
             ->orderBy('id')
             ->get();
 
+        $allSessionIds = array_values(array_filter(array_map(
+            static fn (array $session): int => (int) ($session['id'] ?? 0),
+            $sessions
+        )));
+
+        $completedBySession = CourseSessionQuizAnswer::batchCountCompletedExercisesForUser($userId, $allSessionIds);
+        $activeLevelId = $this->nav->resolveActiveLevelId($userId);
+
+        $thumbnailMap = [
+            1 => 'assets/images/figma-level-socap1.png',
+            2 => 'assets/images/figma-level-socap2.png',
+            3 => 'assets/images/figma-level-trungcap.png',
+            4 => 'assets/images/figma-level-topik.png',
+        ];
+
         $tones = ['blue', 'teal', 'violet', 'amber', 'rose'];
         $cards = [];
 
@@ -75,6 +121,13 @@ class StudentOverviewService
                 $levelSessions
             )));
 
+            $completedCount = 0;
+            foreach ($sessionIds as $sId) {
+                $completedCount += $completedBySession[$sId] ?? 0;
+            }
+
+            $isUnlocked = $index === 0 || $attended > 0 || ((int) $level->id === $activeLevelId && $activeLevelId > 0);
+
             $cards[] = [
                 'id' => (int) $level->id,
                 'title' => (string) $level->title,
@@ -83,12 +136,14 @@ class StudentOverviewService
                 'display_index' => $index + 1,
                 'session_count' => $total,
                 'attended_count' => $attended,
-                'completed_exercises_count' => CourseSessionQuizAnswer::countCompletedExercisesForUser($userId, $sessionIds),
+                'completed_exercises_count' => $completedCount,
                 'live_count' => (int) $stats['live'],
                 'ended_count' => (int) $stats['ended'],
                 'progress_pct' => $total > 0 ? (int) round(($attended / $total) * 100) : 0,
                 'url' => $this->nav->levelUrl((int) $level->id),
                 'tone' => $tones[$index % count($tones)],
+                'is_unlocked' => $isUnlocked,
+                'thumbnail_path' => $thumbnailMap[$index + 1] ?? 'assets/images/figma-level-socap1.png',
             ];
         }
 

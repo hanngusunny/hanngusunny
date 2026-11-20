@@ -1,9 +1,18 @@
 (function () {
   const input = document.getElementById("avatar");
+  const btnChooseAvatar = document.getElementById("btnChooseAvatar");
   const preview = document.getElementById("avatarPreview");
   const fallback = document.querySelector("[data-avatar-fallback]");
-  const removeCheckbox = document.querySelector('input[name="remove_avatar"]');
   const wrap = preview ? preview.closest("[data-user-avatar]") : null;
+  const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB chuẩn Figma
+
+  // Kích hoạt input file ẩn khi bấm nút "Chọn ảnh mới"
+  if (btnChooseAvatar && input) {
+    btnChooseAvatar.addEventListener("click", function (e) {
+      e.preventDefault();
+      input.click();
+    });
+  }
 
   if (!input || !preview) {
     return;
@@ -22,7 +31,7 @@
     preview.src = src;
     preview.hidden = false;
     if (fallback) {
-      fallback.hidden = false;
+      fallback.hidden = true;
     }
     wrap?.classList.remove("is-fallback");
   };
@@ -41,8 +50,11 @@
       return;
     }
 
-    if (removeCheckbox) {
-      removeCheckbox.checked = false;
+    // Kiểm tra dung lượng tối đa 5MB
+    if (file.size > MAX_FILE_SIZE) {
+      alert("Ảnh đại diện tối đa 5MB. Vui lòng chọn ảnh có dung lượng nhỏ hơn.");
+      input.value = "";
+      return;
     }
 
     const reader = new FileReader();
@@ -53,15 +65,4 @@
     };
     reader.readAsDataURL(file);
   });
-
-  if (removeCheckbox) {
-    removeCheckbox.addEventListener("change", function () {
-      if (!removeCheckbox.checked) {
-        return;
-      }
-
-      input.value = "";
-      showFallback();
-    });
-  }
 })();

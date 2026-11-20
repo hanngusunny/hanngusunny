@@ -174,48 +174,54 @@
     </aside>
 
     <div class="os-wrap">
-        <header class="os-top">
-            <a class="os-who" href="{{ route('profile.show') }}" title="Hồ sơ của bạn">
-                <x-user-avatar class="os-who-avatar" :url="$authUser?->avatarUrl()" :name="$authUser?->name" />
-                <span class="os-who-copy">
-                    <strong>{{ $authUser?->name }}</strong>
-                    <small>{{ $authUser?->role_label }}</small>
-                </span>
-                <span class="os-who-gear"><i class="fa-solid fa-gear"></i></span>
-            </a>
-            <div class="os-tools">
+        <header class="os-top sn-topbar">
+            <div class="sn-topbar-user">
+                <div class="sn-topbar-avatar-ring">
+                    <x-user-avatar class="sn-topbar-avatar" :url="$authUser?->avatarUrl()" :name="$authUser?->name" />
+                </div>
+                <div class="sn-topbar-meta">
+                    <a href="{{ route('profile.show') }}" class="sn-topbar-name" title="Hồ sơ của bạn">
+                        {{ $authUser?->name }}
+                    </a>
+                    <span class="sn-role-badge sn-role-badge--{{ $authUser?->role ?? 'student' }}">
+                        {{ $authUser?->role_label ?? 'Học sinh' }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="os-tools sn-topbar-tools">
                 @if ($authUser && ! $authUser->isGuest())
                     @include('partials.notifications-bell')
                 @endif
-                <details class="os-drop group relative">
-                    <summary class="os-account" title="Tài khoản">
-                        <x-user-avatar class="os-avatar" :url="$authUser?->avatarUrl()" :name="$authUser?->name" />
-                        <i class="fa-solid fa-chevron-down"></i>
+                <details class="os-drop sn-setting-dropdown group relative">
+                    <summary class="sn-topbar-circle-btn sn-topbar-setting-btn" title="Cài đặt" aria-label="Cài đặt">
+                        <img src="{{ asset('assets/images/figma-setting.svg') }}" alt="Cài đặt" width="24" height="24">
                     </summary>
-                    <div class="nav-dropcard os-account-menu">
-                        <div class="os-account-head">
-                            <x-user-avatar class="os-who-avatar" :url="$authUser?->avatarUrl()" :name="$authUser?->name" />
-                            <div class="os-account-id">
-                                <strong>{{ $authUser?->name }}</strong>
-                                <small>{{ $authUser?->role_label }}</small>
-                            </div>
-                        </div>
-                        <nav class="os-account-links">
-                            <a class="os-account-link{{ ($active ?? '') === 'profile' ? ' is-on' : '' }}" href="{{ route('profile.show') }}">
-                                <span class="os-account-ico"><i class="fa-solid fa-user"></i></span>Hồ sơ cá nhân
+                    <div class="sn-setting-card" role="menu">
+                        <div class="sn-setting-group">
+                            <a class="sn-setting-menu-item{{ ($active ?? '') === 'profile' ? ' is-active' : '' }}" href="{{ route('profile.show') }}">
+                                <span class="sn-setting-icon-box">
+                                    <img src="{{ asset('assets/images/figma-profile.svg') }}" alt="Hồ sơ cá nhân" width="20" height="20">
+                                </span>
+                                <span class="sn-setting-label">Hồ sơ cá nhân</span>
                             </a>
-                            <a class="os-account-link{{ ($active ?? '') === 'password' ? ' is-on' : '' }}" href="{{ route('profile.password') }}">
-                                <span class="os-account-ico"><i class="fa-solid fa-key"></i></span>Đổi mật khẩu
+                            <a class="sn-setting-menu-item{{ ($active ?? '') === 'password' ? ' is-active' : '' }}" href="{{ route('profile.password') }}">
+                                <span class="sn-setting-icon-box">
+                                    <img src="{{ asset('assets/images/figma-key.svg') }}" alt="Đổi mật khẩu" width="20" height="20">
+                                </span>
+                                <span class="sn-setting-label">Đổi mật khẩu</span>
                             </a>
-                        </nav>
-                        <div class="os-account-foot">
-                            <form method="post" action="{{ route('logout') }}">
-                                @csrf
-                                <button type="submit" class="os-account-link is-out">
-                                    <span class="os-account-ico"><i class="fa-solid fa-right-from-bracket"></i></span>Đăng xuất
-                                </button>
-                            </form>
                         </div>
+                        <div class="sn-setting-divider"></div>
+                        <form method="post" action="{{ route('logout') }}" class="w-full m-0">
+                            @csrf
+                            <button type="submit" class="sn-setting-menu-item sn-setting-menu-item--logout">
+                                <span class="sn-setting-icon-box sn-setting-icon-box--logout">
+                                    <img src="{{ asset('assets/images/figma-logout.svg') }}" alt="Đăng xuất" width="20" height="20">
+                                </span>
+                                <span class="sn-setting-label sn-setting-label--logout">Đăng xuất</span>
+                            </button>
+                        </form>
                     </div>
                 </details>
             </div>
@@ -278,6 +284,27 @@
             });
         </script>
     @endif
+    <script>
+        document.addEventListener('click', function (e) {
+            document.querySelectorAll('.os-tools details.os-drop[open]').forEach(function (drop) {
+                if (!drop.contains(e.target)) {
+                    drop.removeAttribute('open');
+                }
+            });
+        });
+
+        document.querySelectorAll('.os-tools details.os-drop').forEach(function (drop) {
+            drop.addEventListener('toggle', function () {
+                if (drop.open) {
+                    document.querySelectorAll('.os-tools details.os-drop').forEach(function (other) {
+                        if (other !== drop && other.open) {
+                            other.removeAttribute('open');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
     @stack('scripts')
 </body>
 </html>

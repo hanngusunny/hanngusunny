@@ -42,6 +42,36 @@ class CourseSessionAttendance extends Model
     }
 
     /**
+     * Batch check attendance for multiple sessions for a user in 1 query.
+     *
+     * @param  list<int>  $sessionIds
+     * @return array<int, bool> Map of [session_id => bool]
+     */
+    public static function attendedMapForUser(array $sessionIds, int $userId): array
+    {
+        $sessionIds = array_values(array_filter(array_map('intval', $sessionIds), static fn ($id) => $id > 0));
+
+        if ($userId <= 0 || $sessionIds === []) {
+            return [];
+        }
+
+        $attendedIds = static::query()
+            ->where('user_id', $userId)
+            ->whereIn('session_id', $sessionIds)
+            ->pluck('session_id')
+            ->map(static fn ($id): int => (int) $id)
+            ->flip()
+            ->all();
+
+        $map = [];
+        foreach ($sessionIds as $id) {
+            $map[$id] = isset($attendedIds[$id]);
+        }
+
+        return $map;
+    }
+
+    /**
      * @return array{first: bool, joined_at: string|null}
      */
     public static function markPresent(int $sessionId, int $userId): array

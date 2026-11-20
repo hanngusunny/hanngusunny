@@ -195,6 +195,7 @@
   transition: var(--sn-transition);
   position: relative;
   box-sizing: border-box;
+  will-change: transform;
 }
 
 .sn-btn:focus-visible {
@@ -767,4 +768,560 @@
 @keyframes snScaleIn {
   from { opacity: 0; transform: scale(0.95); }
   to { opacity: 1; transform: scale(1); }
+}
+
+/* Base Utilities */
+.w-full {
+  width: 100% !important;
+}
+
+.sn-btn--block,
+.sn-btn--full {
+  width: 100% !important;
+}
+
+/* ==========================================================================
+   SUNNY TOP BAR (Figma Node #505:28360)
+   ========================================================================== */
+
+header.os-top.sn-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: #FFFFFF;
+  border-radius: 20px;
+  border: 1px solid #E4E8ED;
+  box-shadow: 0px 4px 0px 0px rgba(228, 232, 237, 1);
+  height: auto;
+  min-height: 70px;
+  box-sizing: border-box;
+}
+
+.sn-topbar-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sn-topbar-avatar-ring {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid #CCD4DC;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: #FFFFFF;
+  position: relative;
+}
+
+.sn-topbar-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #D9D9D9;
+}
+
+.sn-topbar-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.sn-topbar-meta {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+
+.sn-topbar-name {
+  font-family: var(--sn-font-sans);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  color: #171C22;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.sn-topbar-name:hover {
+  color: var(--sn-primary);
+}
+
+.sn-role-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  font-family: var(--sn-font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  color: #FFFFFF;
+  background: #33A957; /* Student default Green / 05 */
+  width: fit-content;
+}
+
+.sn-role-badge--teacher,
+.sn-role-badge--instructor {
+  background: #0D99FF;
+}
+
+.sn-role-badge--admin,
+.sn-role-badge--staff {
+  background: #8A38F5;
+}
+
+.sn-topbar-tools {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Circle Action Buttons: Notification & Setting */
+.sn-topbar-circle-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+  user-select: none;
+  -webkit-appearance: none;
+  list-style: none;
+}
+
+.sn-topbar-circle-btn::-webkit-details-marker {
+  display: none;
+}
+
+.sn-topbar-circle-btn:active {
+  transform: scale(0.95);
+}
+
+.sn-topbar-notify-btn {
+  background-color: #EFF5FD;
+}
+
+.sn-topbar-notify-btn:hover {
+  background-color: #DDEBFD;
+}
+
+.sn-topbar-notify-badge {
+  position: absolute;
+  top: -2px;
+  right: -4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #E01F1F;
+  color: #FFFFFF;
+  font-family: var(--sn-font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 20px;
+  text-align: center;
+  box-shadow: 0 0 0 2px #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sn-topbar-notify-badge.is-hidden {
+  display: none !important;
+}
+
+.sn-topbar-setting-btn {
+  background-color: #F4F5F7;
+}
+
+.sn-topbar-setting-btn:hover {
+  background-color: #E4E8ED;
+}
+
+/* ==========================================================================
+   SUNNY SETTING DROPDOWN (Figma Node #1023:26242)
+   ========================================================================== */
+
+.sn-setting-dropdown {
+  position: relative;
+}
+
+.sn-setting-card {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  z-index: 90;
+  width: 343px;
+  max-width: calc(100vw - 32px);
+  background: #FFFFFF;
+  border: 1px solid #E4E8ED;
+  border-radius: 20px;
+  box-shadow: 0px 4px 0px 0px rgba(228, 232, 237, 1);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+.sn-setting-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.sn-setting-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #FFFFFF;
+  border: 2px solid #E4E8ED;
+  border-radius: 12px;
+  box-shadow: 0px 4px 0px 0px #E4E8ED;
+  text-decoration: none;
+  color: #313B47;
+  width: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-family: var(--sn-font-sans);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  text-align: left;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.sn-setting-menu-item:hover {
+  border-color: #CCD4DC;
+  transform: translateY(-1px);
+  box-shadow: 0px 5px 0px 0px #CCD4DC;
+}
+
+.sn-setting-menu-item:active {
+  transform: translateY(2px);
+  box-shadow: 0px 1px 0px 0px #CCD4DC;
+}
+
+.sn-setting-menu-item.is-active {
+  border-color: #0D99FF;
+  background: #EFF5FD;
+}
+
+.sn-setting-icon-box {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #F4F5F7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sn-setting-label {
+  flex: 1;
+  font-family: var(--sn-font-sans);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  color: #313B47;
+}
+
+.sn-setting-divider {
+  height: 1px;
+  width: 100%;
+  background-color: #F4F5F7;
+  margin: 2px 0;
+}
+
+.sn-setting-menu-item--logout {
+  border-color: #E4E8ED;
+  background: #FFFFFF;
+}
+
+.sn-setting-menu-item--logout:hover {
+  border-color: #FA553C;
+  background: #FFFBFB;
+}
+
+.sn-setting-icon-box--logout {
+  background-color: #FCE9E9;
+}
+
+.sn-setting-label--logout {
+  color: #E01F1F !important;
+}
+
+/* ==========================================================================
+   SUNNY NOTIFICATION POPOVER (Figma Node #1020:6149 / ComponentSet #1020:6983)
+   ========================================================================== */
+
+.sn-notify-dropdown {
+  position: relative;
+}
+
+.os-notify-card.sn-notify-popover {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  z-index: 90;
+  width: 468px;
+  max-width: calc(100vw - 32px);
+  background: #FFFFFF !important;
+  border: 1px solid #E4E8ED !important;
+  border-radius: 20px !important;
+  box-shadow: 0px 12px 24px 0px rgba(48, 59, 71, 0.16) !important;
+  padding: 20px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
+}
+
+/* Scrollable container */
+.sn-notify-body {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.sn-notify-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 398px;
+  overflow-y: auto;
+  padding-right: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Custom Scrollbar matching Figma node #178:5444 */
+.sn-notify-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sn-notify-list::-webkit-scrollbar-track {
+  background: #F4F5F7;
+  border-radius: 9999px;
+}
+
+.sn-notify-list::-webkit-scrollbar-thumb {
+  background: #CCD4DC;
+  border-radius: 9999px;
+}
+
+.sn-notify-list::-webkit-scrollbar-thumb:hover {
+  background: #9AA8BA;
+}
+
+/* Notification Item (Figma Component #1020:5905 & #1020:5931) */
+.sn-notify-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px;
+  border-radius: 16px;
+  text-decoration: none;
+  box-sizing: border-box;
+  transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+  cursor: pointer;
+}
+
+.sn-notify-item:hover {
+  transform: translateY(-1px);
+}
+
+/* Unread item (State=Chưa đọc, Kiểu=Bảng nổi) */
+.sn-notify-item.is-unread {
+  background-color: #EFF5FD;
+  border: 1px solid transparent;
+}
+
+.sn-notify-item.is-unread:hover {
+  background-color: #E3EEFC;
+}
+
+/* Read item (State=Đã đọc, Kiểu=Bảng nổi) */
+.sn-notify-item.is-read {
+  background-color: #FFFFFF;
+  border: 1px solid #E4E8ED;
+}
+
+.sn-notify-item.is-read:hover {
+  background-color: #FAFAFA;
+}
+
+.sn-notify-item-title {
+  font-family: var(--sn-font-sans);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #313B47;
+  margin: 0;
+}
+
+.sn-notify-item-desc {
+  font-family: var(--sn-font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.45;
+  color: #63758D;
+  margin: 0;
+}
+
+.sn-notify-item-time {
+  font-family: var(--sn-font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #8092A8;
+  margin-top: 2px;
+}
+
+/* Empty State */
+.sn-notify-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 36px 20px;
+  gap: 10px;
+}
+
+.sn-notify-empty-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #EFF5FD;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.sn-notify-empty-title {
+  font-family: var(--sn-font-sans);
+  font-size: 16px;
+  font-weight: 700;
+  color: #313B47;
+  margin: 0;
+}
+
+.sn-notify-empty-text {
+  font-family: var(--sn-font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: #63758D;
+  line-height: 1.45;
+  max-width: 320px;
+  margin: 0;
+}
+
+/* Footer Actions (Figma Node #1020:6259) */
+.sn-notify-actions {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 12px !important;
+  width: 100% !important;
+  padding-top: 4px !important;
+  box-sizing: border-box !important;
+}
+
+.sn-notify-actions .notification-view-all,
+.sn-notify-actions .sn-btn--white {
+  height: 48px !important;
+  padding: 12px 24px !important;
+  border-radius: 12px !important;
+  background-color: #FFFFFF !important;
+  border: 1px solid #E4E8ED !important;
+  box-shadow: 0px 4px 0px 0px #E4E8ED !important;
+  color: #313B47 !important;
+  font-family: var(--sn-font-sans) !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  line-height: 24px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+  transition: all 0.15s ease !important;
+}
+
+.sn-notify-actions .notification-view-all:hover,
+.sn-notify-actions .sn-btn--white:hover {
+  background-color: #F4F5F7 !important;
+  border-color: #CCD4DC !important;
+}
+
+.sn-notify-actions .notification-view-all:active,
+.sn-notify-actions .sn-btn--white:active {
+  transform: translateY(3px) !important;
+  box-shadow: 0px 1px 0px 0px #E4E8ED !important;
+}
+
+.sn-notify-actions .notification-mark-all,
+.sn-notify-actions .sn-btn--primary {
+  height: 48px !important;
+  padding: 12px 24px !important;
+  border-radius: 12px !important;
+  background-color: #FF7614 !important;
+  border: none !important;
+  box-shadow: 0px 4px 0px 0px #E95308 !important;
+  color: #FFFFFF !important;
+  font-family: var(--sn-font-sans) !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  line-height: 24px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+  transition: all 0.15s ease !important;
+  will-change: transform !important;
+}
+
+.sn-notify-actions .notification-mark-all:hover:not(:disabled):not(.is-disabled),
+.sn-notify-actions .sn-btn--primary:hover:not(:disabled):not(.is-disabled) {
+  background-color: #FF8B38 !important;
+}
+
+.sn-notify-actions .notification-mark-all:active:not(:disabled):not(.is-disabled),
+.sn-notify-actions .sn-btn--primary:active:not(:disabled):not(.is-disabled) {
+  transform: translateY(3px) !important;
+  box-shadow: 0px 1px 0px 0px #E95308 !important;
+}
+
+.sn-notify-actions .notification-mark-all:disabled,
+.sn-notify-actions .notification-mark-all.is-disabled,
+.sn-notify-actions .sn-btn--primary:disabled,
+.sn-notify-actions .sn-btn--primary.is-disabled {
+  background-color: #FFD2B1 !important;
+  box-shadow: 0px 4px 0px 0px rgba(255, 195, 165, 1) !important;
+  color: #FFFFFF !important;
+  cursor: not-allowed !important;
+  opacity: 0.8 !important;
 }

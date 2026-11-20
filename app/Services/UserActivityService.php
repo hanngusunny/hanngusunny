@@ -333,21 +333,12 @@ class UserActivityService
             $activeSeconds += (int) ($row->active_seconds ?? 0);
         }
 
-        $sessions = $this->getLoginSessions($userId, $from, $to, 1);
-        $lastSeen = null;
-
-        if ($sessions !== []) {
-            $session = $sessions[0];
-            $seen = $session->last_seen_at ?? $session->login_at ?? null;
-            $lastSeen = $seen instanceof \DateTimeInterface ? $seen->format('Y-m-d H:i:s') : ($seen ? (string) $seen : null);
-        }
-
         return [
             'active_days' => count($stats),
             'page_views' => $pageViews,
             'actions' => $actions,
             'active_seconds' => $activeSeconds,
-            'last_seen_at' => $lastSeen,
+            'last_seen_at' => null,
             'period_days' => $days,
             'from' => $from,
             'to' => $to,

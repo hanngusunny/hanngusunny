@@ -33,7 +33,7 @@ class UpdateProfileRequest extends FormRequest
             'full_name' => ['required', 'string', 'min:2', 'max:120'],
             'email' => ['required', 'email', 'max:120', Rule::unique('users', 'email')->ignore($userId)],
             'phone' => ['nullable', 'string', 'min:9', 'max:20', 'regex:/^[0-9+\-\s\.]+$/', Rule::unique('users', 'phone')->ignore($userId)],
-            'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,gif', 'max:2048'],
+            'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,gif', 'max:5120'],
             'remove_avatar' => ['sometimes', 'boolean'],
         ];
     }
@@ -51,7 +51,7 @@ class UpdateProfileRequest extends FormRequest
             'phone.regex' => 'Số điện thoại không hợp lệ.',
             'avatar.image' => 'Ảnh đại diện không hợp lệ.',
             'avatar.mimes' => 'Ảnh đại diện phải là JPG, PNG, WEBP hoặc GIF.',
-            'avatar.max' => 'Ảnh đại diện tối đa 2MB.',
+            'avatar.max' => 'Ảnh đại diện tối đa 5MB.',
         ];
     }
 }
