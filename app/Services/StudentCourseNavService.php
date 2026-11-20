@@ -25,6 +25,14 @@ class StudentCourseNavService
 
     private const SESSION_COURSE_KEY = 'student_active_course_id';
 
+    /** @var array<int, int> */
+    private static array $resolvedLevelCache = [];
+
+    public static function clearResolvedLevelCache(): void
+    {
+        self::$resolvedLevelCache = [];
+    }
+
     public function overviewUrl(): string
     {
         return route('overview');
@@ -102,6 +110,8 @@ class StudentCourseNavService
             return;
         }
 
+        self::$resolvedLevelCache = [];
+
         Session::put([
             self::SESSION_LEVEL_KEY => $levelId,
             self::SESSION_COURSE_KEY => $courseId,
@@ -118,20 +128,24 @@ class StudentCourseNavService
             return 0;
         }
 
+        if (isset(self::$resolvedLevelCache[$userId])) {
+            return self::$resolvedLevelCache[$userId];
+        }
+
         $course = CourseMember::activeCourseFor($userId);
 
         if ($course === null) {
-            return 0;
+            return self::$resolvedLevelCache[$userId] = 0;
         }
 
         $storedCourseId = (int) Session::get(self::SESSION_COURSE_KEY, 0);
         $storedLevelId = (int) Session::get(self::SESSION_LEVEL_KEY, 0);
 
         if ($storedCourseId === (int) $course->id && $storedLevelId > 0 && $this->isValidLevelForCourse($course, $storedLevelId)) {
-            return $storedLevelId;
+            return self::$resolvedLevelCache[$userId] = $storedLevelId;
         }
 
-        return $this->inferDefaultLevelId($course, $userId);
+        return self::$resolvedLevelCache[$userId] = $this->inferDefaultLevelId($course, $userId);
     }
 
     public function dashboardSessionUrl(int $levelId, string $publicCode, ?string $tab = null): string

@@ -30,179 +30,145 @@
 
 @if ($scheduleLabel === '')
 @elseif ($isLive || $isUpcoming)
-    <article class="op-panel so-session{{ $isLive ? ' is-live' : '' }}" aria-label="{{ $isLive ? 'Buổi học đang diễn ra' : 'Buổi học sắp tới' }}">
-        <header class="so-session-head">
-            @if ($isLive)
-                <span class="so-session-badge is-live">
-                    <span class="so-session-dot" aria-hidden="true"></span>
-                    Đang live
-                </span>
-            @else
-                <span class="so-session-badge">
-                    <i class="fa-solid fa-calendar-day" aria-hidden="true"></i>
-                    Buổi học sắp tới
-                </span>
-            @endif
-            <span class="so-session-mark" aria-hidden="true">
-                <i class="fa-solid {{ $isLive ? 'fa-tower-broadcast' : 'fa-calendar-day' }}"></i>
-            </span>
-        </header>
-
-        <div class="so-session-body">
-            <span class="so-session-kicker">{{ $isLive ? 'Đang tới giờ học' : 'Lịch học tiếp theo' }}</span>
-            <h2>{{ $sessionTitle !== '' ? $sessionTitle : $scheduleLabel }}</h2>
-
-            @if ($isLive || $countdownLabel !== '')
-                <div class="so-session-countdown" role="status">
-                    <i class="fa-solid {{ $isLive ? 'fa-tower-broadcast' : 'fa-bell' }}" aria-hidden="true"></i>
-                    <span>{{ $isLive ? ($countdownLabel !== '' ? $countdownLabel : 'Đang diễn ra') : $countdownLabel }}</span>
-                </div>
-            @endif
-
-            <div class="so-session-stats">
-                @if ($hasSchedule && $scheduleWhen !== '')
-                    <div class="so-session-stat is-wide">
-                        <i class="fa-solid fa-clock" aria-hidden="true"></i>
-                        <span>
-                            <em>Giờ học</em>
-                            <strong>
-                                @if ($scheduleDate !== '')
-                                    {{ $scheduleDate }}
-                                @endif
-                                @if ($scheduleTime !== '')
-                                    <small>{{ $scheduleTime }}</small>
-                                @endif
-                            </strong>
-                        </span>
-                    </div>
-                @elseif (! $hasSchedule)
-                    <div class="so-session-stat">
-                        <i class="fa-regular fa-calendar-xmark" aria-hidden="true"></i>
-                        <span>
-                            <em>Lịch học</em>
-                            <strong>Chưa lên lịch cụ thể</strong>
-                        </span>
-                    </div>
-                @elseif ($timeLabel !== '')
-                    <div class="so-session-stat">
-                        <i class="fa-solid fa-clock" aria-hidden="true"></i>
-                        <span>
-                            <em>Giờ học</em>
-                            <strong>{{ $timeLabel }}</strong>
-                        </span>
-                    </div>
-                @endif
-
+    <article class="sn-next-session-box" aria-label="{{ $isLive ? 'Buổi học đang diễn ra' : 'Buổi học sắp tới' }}">
+        <!-- Top bar: Trình độ & Trạng thái live/sắp tới -->
+        <header class="sn-session-top-bar">
+            <div class="sn-session-badges-left">
                 @if ($levelTitle !== '')
-                    <div class="so-session-stat">
-                        <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
-                        <span>
-                            <em>Trình độ</em>
-                            <strong>{{ $levelTitle }}</strong>
-                        </span>
-                    </div>
-                @endif
-
-                @if ($durationLabel !== '')
-                    <div class="so-session-stat">
-                        <i class="fa-solid fa-hourglass-half" aria-hidden="true"></i>
-                        <span>
-                            <em>Thời lượng</em>
-                            <strong>{{ $durationLabel }}</strong>
-                        </span>
-                    </div>
-                @endif
-
-                @if ($isLive)
-                    <div class="so-session-stat is-accent">
-                        <i class="fa-solid fa-door-open" aria-hidden="true"></i>
-                        <span>
-                            <em>Cửa lớp</em>
-                            <strong>Đang mở · vào học ngay</strong>
-                        </span>
-                    </div>
-                @elseif ($hasSchedule && $opensAtLabel !== '')
-                    <div class="so-session-stat">
-                        <i class="fa-solid fa-door-open" aria-hidden="true"></i>
-                        <span>
-                            <em>Cửa lớp mở</em>
-                            <strong>{{ $opensAtLabel }}</strong>
-                        </span>
-                    </div>
+                    <span class="sn-session-level-badge">{{ $levelTitle }}</span>
+                @else
+                    <span class="sn-session-level-badge">Lịch học tiếp theo</span>
                 @endif
             </div>
 
-            @if ($showJoinActions && $publicCode !== '')
-                <div class="so-session-actions">
-                    @if (! empty($session['is_joinable']))
-                        <form method="post" action="{{ route('student.session.join', $publicCode) }}">
-                            @csrf
-                            <button class="op-btn" type="submit">
-                                <i class="fa-solid fa-video"></i>
-                                <span>{{ ! empty($session['has_attended']) ? 'Vào lại lớp học' : 'Vào học ngay' }}</span>
-                            </button>
-                        </form>
+            <div>
+                @if ($isLive)
+                    <span class="sn-session-status-badge is-live">
+                        <span class="sn-live-pulse-dot" aria-hidden="true"></span>
+                        <span>Đang live</span>
+                    </span>
+                @else
+                    <span class="sn-session-status-badge is-upcoming">
+                        <i class="fa-solid fa-calendar-day" aria-hidden="true"></i>
+                        <span>Buổi học sắp tới</span>
+                    </span>
+                @endif
+            </div>
+        </header>
+
+        <!-- Tiêu đề buổi học -->
+        <div class="sn-session-headline">
+            <h3>{{ $sessionTitle !== '' ? $sessionTitle : $scheduleLabel }}</h3>
+            @if ($isLive || $countdownLabel !== '')
+                <p>
+                    <i class="fa-solid {{ $isLive ? 'fa-tower-broadcast' : 'fa-clock' }} text-orange-500"></i>
+                    <strong>{{ $isLive ? ($countdownLabel !== '' ? $countdownLabel : 'Lớp học đang diễn ra') : $countdownLabel }}</strong>
+                </p>
+            @endif
+        </div>
+
+        <!-- White Cards Grid: Giờ học & Sẵn sàng buổi học (Figma Node #317:12132) -->
+        <div class="sn-session-cards-grid">
+            <!-- Card 1: Giờ học (Figma Node #317:12133) -->
+            <div class="sn-session-white-card sn-session-time-card">
+                <div class="sn-session-card-header">
+                    <span class="sn-session-cal-icon-box">
+                        <img src="{{ asset('assets/images/figma-calendar.svg') }}" alt="Giờ học" width="20" height="20">
+                    </span>
+                    <span class="sn-session-cal-label">Giờ học</span>
+                </div>
+                <div class="sn-session-time-body">
+                    @if ($scheduleTime !== '')
+                        <div class="sn-session-time-highlight">{{ $scheduleTime }}</div>
+                    @elseif ($timeLabel !== '')
+                        <div class="sn-session-time-highlight">{{ $timeLabel }}</div>
+                    @else
+                        <div class="sn-session-time-highlight">19:30 – 22:00</div>
                     @endif
-                    @if (! empty($session['waiting_teacher']))
-                        <p class="so-session-note">
-                            <i class="fa-solid fa-hourglass-half"></i>
-                            <span>Giáo viên chưa vào lớp — bạn vẫn vào phòng được, vui lòng đợi giáo viên.</span>
-                        </p>
+
+                    @if ($scheduleDate !== '')
+                        <div class="sn-session-date-sub">{{ $scheduleDate }}</div>
+                    @elseif ($durationLabel !== '')
+                        <div class="sn-session-date-sub">Thời lượng: {{ $durationLabel }}</div>
+                    @else
+                        <div class="sn-session-date-sub">Lịch học trực tuyến SUNNY</div>
                     @endif
                 </div>
+            </div>
+
+            <!-- Card 2: Sẵn sàng buổi học (Figma Node #317:12141) -->
+            <div class="sn-session-white-card sn-session-ready-card">
+                <div class="sn-session-ready-content">
+                    <h4 class="sn-session-ready-title">Bạn đã <span class="text-[#0D99FF]">sẵn sàng</span> cho buổi học sắp tới chưa?</h4>
+                    <p class="sn-session-ready-desc">Ôn lại bài để tự tin hơn nhé!</p>
+                </div>
+                <div class="sn-session-ready-visual">
+                    <img src="{{ asset('assets/images/figma-ready-mascot.png') }}" alt="Sẵn sàng" class="sn-session-ready-img" loading="lazy">
+                </div>
+            </div>
+        </div>
+
+        <!-- Tài liệu ôn tập trước buổi học (nếu có) -->
+        @if ($hasPreStudy)
+            <div class="sn-prestudy-box">
+                <div class="sn-prestudy-title">
+                    <i class="fa-solid fa-book-open text-orange-500"></i>
+                    <span>Tài liệu chuẩn bị trước buổi học đã sẵn sàng</span>
+                </div>
+                @if ($preStudyDetailUrl !== null)
+                    <a href="{{ $preStudyDetailUrl }}" class="sn-login-link flex items-center gap-1">
+                        <span>Xem chi tiết</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                @endif
+            </div>
+        @endif
+
+        <!-- Action Bar: Vào lớp học / Ôn tập -->
+        <footer class="sn-session-action-bar">
+            @if ($hasPreStudy && $preStudyDetailUrl !== null)
+                <x-sunny.button variant="white" href="{{ $preStudyDetailUrl }}" icon="fa-solid fa-book-open">
+                    Ôn tập trước buổi
+                </x-sunny.button>
             @endif
 
-            @if ($hasPreStudy)
-                @if ($isLive && $preStudyDetailUrl !== null)
-                    <div class="so-session-actions">
-                        <a class="op-btn-ghost" href="{{ $preStudyDetailUrl }}">
-                            <i class="fa-solid fa-book-open-reader"></i>
-                            <span>Ôn tập trước buổi</span>
-                        </a>
-                    </div>
-                @elseif (! $isLive)
-                    <section class="so-prestudy" aria-label="Tài liệu chuẩn bị trước buổi học">
-                        <div class="so-prestudy-head">
-                            <span class="op-panel-ico" aria-hidden="true"><i class="fa-solid fa-book-open"></i></span>
-                            <div>
-                                <strong>Chuẩn bị trước buổi học</strong>
-                                <span>Giáo viên gợi ý nội dung nên xem trước</span>
-                            </div>
-                            @if ($preStudyDetailUrl !== null)
-                                <a href="{{ $preStudyDetailUrl }}">
-                                    Xem nội dung trước buổi học <i class="fa-solid fa-arrow-right"></i>
-                                </a>
-                            @endif
-                        </div>
-                        @if (($nextSchedule['preSessionHtml'] ?? '') !== '')
-                            <div class="so-prestudy-body">{!! $nextSchedule['preSessionHtml'] !!}</div>
-                        @endif
-                    </section>
+            @if ($showJoinActions && $publicCode !== '')
+                @if (! empty($session['is_joinable']))
+                    <form method="post" action="{{ route('student.session.join', $publicCode) }}" class="inline-block m-0">
+                        @csrf
+                        <x-sunny.button variant="secondary" type="submit" icon="fa-solid fa-video" iconRight="fa-solid fa-arrow-right">
+                            {{ ! empty($session['has_attended']) ? 'Vào lại lớp học' : 'Vào lớp học' }}
+                        </x-sunny.button>
+                    </form>
                 @endif
+            @elseif ($scheduleUrl)
+                <x-sunny.button variant="secondary" href="{{ $scheduleUrl }}" icon="fa-solid fa-video" iconRight="fa-solid fa-arrow-right">
+                    Vào lớp học
+                </x-sunny.button>
             @else
-                <p class="so-session-note">
-                    <i class="fa-solid fa-book-open"></i>
-                    <span>Giáo viên chưa đăng tài liệu chuẩn bị — xem chi tiết buổi học.</span>
-                </p>
-                @if ($scheduleUrl !== null)
-                    <div class="so-session-actions">
-                        <a class="so-session-more" href="{{ $scheduleUrl }}">
-                            Xem nội dung trước buổi học
-                            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                @endif
+                <x-sunny.button variant="secondary" href="#" icon="fa-solid fa-video" iconRight="fa-solid fa-arrow-right">
+                    Vào lớp học
+                </x-sunny.button>
             @endif
-        </div>
+        </footer>
+
+        @if (! empty($session['waiting_teacher']))
+            <p class="text-xs text-amber-700 bg-amber-50 p-3 rounded-xl border border-amber-200 mt-2 flex items-center gap-2">
+                <i class="fa-solid fa-hourglass-half"></i>
+                <span>Giáo viên chưa vào lớp — bạn vẫn có thể vào phòng trước và chuẩn bị micro, tai nghe.</span>
+            </p>
+        @endif
     </article>
 @else
-    <article class="op-panel so-session is-empty">
-        <span class="so-session-mark" aria-hidden="true"><i class="fa-solid fa-calendar-day"></i></span>
-        <div>
-            <strong>{{ $scheduleLabel }}</strong>
-            @if (trim((string) ($nextSchedule['detail'] ?? '')) !== '')
-                <p>{{ $nextSchedule['detail'] }}</p>
-            @endif
+    <article class="sn-next-session-box text-center py-10" aria-label="Chưa có lịch học">
+        <div class="w-16 h-16 rounded-2xl bg-orange-50 text-orange-500 flex items-center justify-center text-2xl mx-auto mb-3">
+            <i class="fa-solid fa-calendar-day"></i>
         </div>
+        <h4 class="font-bold text-slate-800 text-lg mb-1">{{ $scheduleLabel }}</h4>
+        @if (trim((string) ($nextSchedule['detail'] ?? '')) !== '')
+            <p class="text-sm text-slate-500 max-w-md mx-auto">{{ $nextSchedule['detail'] }}</p>
+        @else
+            <p class="text-sm text-slate-500 max-w-md mx-auto">Giáo viên sẽ cập nhật lịch học sớm nhất có thể.</p>
+        @endif
     </article>
 @endif

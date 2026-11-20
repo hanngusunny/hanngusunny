@@ -16,6 +16,26 @@ use Throwable;
 
 class TopbarNotificationService
 {
+    /** @var array<string, bool> */
+    private static array $tableExistsCache = [];
+
+    /** @var array<string, bool>|null */
+    private static ?array $existingTablesMap = null;
+
+    /** @var array<string, array<string, mixed>> */
+    private static array $buildCache = [];
+
+    /** @var array<string, array<string, mixed>> */
+    private static array $buildAllCache = [];
+
+    public static function clearBuildCache(): void
+    {
+        self::$buildCache = [];
+        self::$buildAllCache = [];
+        self::$existingTablesMap = null;
+        self::$tableExistsCache = [];
+    }
+
     /** @var array<string, string> */
     public const TYPE_LABELS = [
         'session' => 'Buổi học',
@@ -28,20 +48,42 @@ class TopbarNotificationService
         'room_join' => 'Xin vào lớp',
     ];
 
+    private function tableExists(string $table): bool
+    {
+        if (self::$existingTablesMap === null) {
+            try {
+                self::$existingTablesMap = array_flip(Schema::getTableListing());
+            } catch (Throwable) {
+                return self::$tableExistsCache[$table] ??= Schema::hasTable($table);
+            }
+        }
+
+        return isset(self::$existingTablesMap[$table]);
+    }
+
     /**
      * @return array{count: int, items: list<array{id: string, type: string, title: string, text: string, url: string, time: string, sort_at: int, icon: string, unread: bool}>}
      */
     public function build(int $userId, string $role): array
     {
+        $cacheKey = $userId . ':' . $role;
+        if (isset(self::$buildCache[$cacheKey])) {
+            return self::$buildCache[$cacheKey];
+        }
+
         $all = $this->buildAll($userId, $role);
         $unread = array_values(array_filter(
             $all['items'],
             static fn (array $item): bool => ! empty($item['unread'])
         ));
+        $read = array_values(array_filter(
+            $all['items'],
+            static fn (array $item): bool => empty($item['unread'])
+        ));
 
-        return [
+        return self::$buildCache[$cacheKey] = [
             'count' => count($unread),
-            'items' => array_slice($unread, 0, 10),
+            'items' => array_slice(array_merge($unread, $read), 0, 10),
         ];
     }
 
@@ -60,6 +102,11 @@ class TopbarNotificationService
                 'unread_count' => 0,
                 'type_counts' => [],
             ];
+        }
+
+        $cacheKey = $userId . ':' . $role;
+        if (isset(self::$buildAllCache[$cacheKey])) {
+            return self::$buildAllCache[$cacheKey];
         }
 
         $items = match ($role) {
@@ -86,7 +133,7 @@ class TopbarNotificationService
             }
         }
 
-        return [
+        return self::$buildAllCache[$cacheKey] = [
             'items' => $items,
             'unread_count' => $unread,
             'type_counts' => $typeCounts,
@@ -284,7 +331,7 @@ class TopbarNotificationService
         $items = [];
 
         try {
-            if (! Schema::hasTable('homework_assignments') || ! Schema::hasTable('homework_submissions')) {
+            if (! $this->tableExists('homework_assignments') || ! $this->tableExists('homework_submissions')) {
                 return [];
             }
 
@@ -334,7 +381,7 @@ class TopbarNotificationService
         $items = [];
 
         try {
-            if (! Schema::hasTable('student_warnings')) {
+            if (! $this->tableExists('student_warnings')) {
                 return [];
             }
 
@@ -387,7 +434,7 @@ class TopbarNotificationService
         $items = [];
 
         try {
-            if (! Schema::hasTable('homework_assignments') || ! Schema::hasTable('homework_submissions')) {
+            if (! $this->tableExists('homework_assignments') || ! $this->tableExists('homework_submissions')) {
                 return [];
             }
 
@@ -438,9 +485,9 @@ class TopbarNotificationService
 
         try {
             if (
-                ! Schema::hasTable('course_assessment_submissions')
-                || ! Schema::hasTable('course_assessments')
-                || ! Schema::hasTable('course_assessment_answers')
+                ! $this->tableExists('course_assessment_submissions')
+                || ! $this->tableExists('course_assessments')
+                || ! $this->tableExists('course_assessment_answers')
             ) {
                 return [];
             }
@@ -524,59 +571,55 @@ class TopbarNotificationService
             $nav = app(StudentCourseNavService::class);
             $levelId = $nav->resolveActiveLevelId($userId);
 
-            if (Schema::hasTable('course_sessions')) {
-                $sessions = CourseSession::query()
-                    ->where('course_id', $courseId)
-                    ->where('status', '!=', 'cancelled')
-                    ->orderBy('session_date')
-                    ->orderBy('start_time')
-                    ->orderBy('sort_order')
-                    ->get();
+            if ($this->tableExists('course_sessions')) {
+                $catalog = app(StudentSessionCatalogService::class);
+                $catalogSessions = $catalog->forStudentCourse($courseId, $userId);
 
                 $upcoming = [];
 
-                foreach ($sessions as $session) {
-                    $phase = $session->livePhase();
+                foreach ($catalogSessions as $sessData) {
+                    $phase = (string) ($sessData['phase'] ?? '');
 
                     if (! in_array($phase, ['live', 'upcoming'], true)) {
                         continue;
                     }
 
-                    $upcoming[] = $session;
+                    $upcoming[] = $sessData;
                 }
 
-                usort($upcoming, static function (CourseSession $a, CourseSession $b): int {
+                usort($upcoming, static function (array $a, array $b): int {
                     $phaseOrder = ['live' => 0, 'upcoming' => 1];
-                    $phaseCmp = ($phaseOrder[$a->livePhase()] ?? 2) <=> ($phaseOrder[$b->livePhase()] ?? 2);
+                    $phaseCmp = ($phaseOrder[$a['phase'] ?? ''] ?? 2) <=> ($phaseOrder[$b['phase'] ?? ''] ?? 2);
 
                     if ($phaseCmp !== 0) {
                         return $phaseCmp;
                     }
 
-                    $aStart = $a->isTimed() ? (int) ($a->window()['start'] ?? PHP_INT_MAX) : PHP_INT_MAX;
-                    $bStart = $b->isTimed() ? (int) ($b->window()['start'] ?? PHP_INT_MAX) : PHP_INT_MAX;
+                    $aStart = (int) ($a['display']['window']['start'] ?? PHP_INT_MAX);
+                    $bStart = (int) ($b['display']['window']['start'] ?? PHP_INT_MAX);
 
                     return $aStart <=> $bStart;
                 });
 
-                foreach (array_slice($upcoming, 0, 20) as $session) {
-                    $sessionId = (int) $session->id;
+                foreach (array_slice($upcoming, 0, 20) as $sessData) {
+                    $sessionId = (int) ($sessData['id'] ?? 0);
 
                     if ($sessionId <= 0) {
                         continue;
                     }
 
-                    $phase = $session->livePhase();
+                    $phase = (string) ($sessData['phase'] ?? '');
                     $isLive = $phase === 'live';
-                    $title = trim((string) ($session->title ?? 'Buổi học'));
-                    $display = $session->studentDisplay();
+                    $title = trim((string) ($sessData['title'] ?? 'Buổi học'));
+                    $display = $sessData['display'] ?? [];
                     $whenText = trim(($display['dateLabel'] ?? '').(! empty($display['timeLabel']) ? ' · '.$display['timeLabel'] : ''));
-                    $sortAt = $session->isTimed()
-                        ? (int) ($session->window()['start'] ?? time())
+                    $sortAt = ! empty($display['window']['start'])
+                        ? (int) $display['window']['start']
                         : time();
-                    $code = trim((string) ($session->public_code ?? ''));
-                    $url = $levelId > 0 && $code !== ''
-                        ? $nav->dashboardSessionUrl($levelId, $code, $nav->defaultTabForSession(['phase' => $phase]))
+                    $code = trim((string) ($sessData['public_code'] ?? ''));
+                    $sessLevelId = (int) ($sessData['level_id'] ?? $levelId);
+                    $url = $sessLevelId > 0 && $code !== ''
+                        ? $nav->dashboardSessionUrl($sessLevelId, $code, $nav->defaultTabForSession(['phase' => $phase]))
                         : $nav->dashboardUrlForStudent($userId);
 
                     $items[] = $this->item(
@@ -592,7 +635,7 @@ class TopbarNotificationService
                 }
             }
 
-            if (Schema::hasTable('course_assessments')) {
+            if ($this->tableExists('course_assessments')) {
                 $assessments = CourseAssessment::query()
                     ->with('slots')
                     ->where('course_id', $courseId)
@@ -602,12 +645,31 @@ class TopbarNotificationService
                     ->get();
 
                 $upcoming = [];
+                $assessmentIds = $assessments->pluck('id')->all();
+
+                $submittedAssessmentIds = [];
+                if ($this->tableExists('course_assessment_answers') && ! empty($assessmentIds)) {
+                    $submittedAssessmentIds = CourseAssessmentAnswer::query()
+                        ->whereIn('course_assessment_id', $assessmentIds)
+                        ->where('user_id', $userId)
+                        ->pluck('course_assessment_id')
+                        ->flip()
+                        ->all();
+                }
+
+                $retakeAllowedMap = [];
+                if ($this->tableExists('course_assessment_retakes') && ! empty($assessmentIds)) {
+                    $retakeAllowedMap = CourseAssessmentRetake::query()
+                        ->whereIn('course_assessment_id', $assessmentIds)
+                        ->where('user_id', $userId)
+                        ->pluck('course_assessment_id')
+                        ->flip()
+                        ->all();
+                }
 
                 foreach ($assessments as $assessment) {
-                    $hasSubmitted = Schema::hasTable('course_assessment_answers')
-                        && CourseAssessmentAnswer::hasSubmitted((int) $assessment->id, $userId);
-                    $allowRetake = Schema::hasTable('course_assessment_retakes')
-                        && CourseAssessmentRetake::isAllowed((int) $assessment->id, $userId);
+                    $hasSubmitted = isset($submittedAssessmentIds[(int) $assessment->id]);
+                    $allowRetake = isset($retakeAllowedMap[(int) $assessment->id]);
                     $phase = $assessment->studentPhase($hasSubmitted, $allowRetake);
 
                     if (! in_array($phase, ['open', 'upcoming', 'retake'], true)) {

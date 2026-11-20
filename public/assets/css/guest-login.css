@@ -1,299 +1,541 @@
-/* Original login layout, restyled with the new SUNNY guest UI. */
+/* ==========================================================================
+   SUNNY STUDENT LOGIN SCREEN — PIXEL-PERFECT FIGMA IMPLEMENTATION
+   Figma: Node #317:13203 & Component #222:9579 ("Global / Layout / Login Screen")
+   ========================================================================== */
 
-.ga-page.is-login {
-    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+html {
+    background-color: #FCF0E6 !important;
 }
 
-.ga-hero.is-login {
-    padding: 48px 52px 40px;
-    justify-content: space-between;
-}
-
-.ga-hero.is-login .ga-hero-inner {
-    min-height: auto;
-    flex: 1;
-    justify-content: space-between;
-    gap: 36px;
-}
-
-.ga-login-lead {
-    display: block;
+body.ga-body {
     margin: 0;
-    font-size: clamp(1.15rem, 2.1vw, 1.45rem);
-    font-weight: 500;
-    line-height: 1.4;
-    color: var(--ga-muted);
-}
-
-.ga-login-brandline {
-    display: block;
-    margin: 8px 0 0;
-    font-size: clamp(1.7rem, 3.1vw, 2.35rem);
-    font-weight: 800;
-    line-height: 1.2;
-    letter-spacing: -0.03em;
-    color: var(--ga-ink);
-}
-
-.ga-login-brandline em {
-    font-family: inherit;
-    font-style: normal;
-    font-weight: inherit;
-    font-size: inherit;
-    color: #f26b21;
-}
-
-.ga-features {
-    position: relative;
-    z-index: 2;
-    display: grid;
-    gap: 12px;
-    max-width: 440px;
-}
-
-.ga-feature {
+    padding: 0;
+    min-height: 100vh;
+    background-color: #FCF0E6 !important;
+    font-family: 'Nunito', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #313B47;
     display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    padding: 14px 16px;
-    border-radius: 14px;
-    background: rgba(255, 255, 255, 0.82);
-    border: 1px solid rgba(255, 255, 255, 0.95);
-    box-shadow: 0 8px 22px rgba(47, 43, 61, 0.05);
-    backdrop-filter: blur(10px);
-}
-
-.ga-feature-ico {
-    width: 42px;
-    height: 42px;
-    border-radius: 12px;
-    display: grid;
-    place-items: center;
-    flex-shrink: 0;
-    font-size: 16px;
-}
-
-.ga-feature-ico.is-orange {
-    background: #fff4ea;
-    color: #f26b21;
-}
-
-.ga-feature-ico.is-blue {
-    background: #eef2ff;
-    color: var(--ga-primary);
-}
-
-.ga-feature-ico.is-teal {
-    background: #ecfdf5;
-    color: #059669;
-}
-
-.ga-feature strong {
-    display: block;
-    margin-bottom: 3px;
-    font-size: 14px;
-    font-weight: 750;
-    color: var(--ga-ink);
-}
-
-.ga-feature small {
-    font-size: 12.5px;
-    line-height: 1.5;
-    color: var(--ga-muted);
-}
-
-.ga-scene {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 220px;
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.88;
-}
-
-.ga-scene .mountain {
-    position: absolute;
-    bottom: 52px;
-    width: 180px;
-    height: 90px;
-    clip-path: polygon(0 100%, 50% 18%, 100% 100%);
-}
-
-.ga-scene .m1 {
-    left: -20px;
-    background: linear-gradient(180deg, #f3e0c6, #e8cba0);
-}
-
-.ga-scene .m2 {
-    left: 70px;
-    width: 210px;
-    height: 108px;
-    background: linear-gradient(180deg, #f8ead4, #efd4ae);
-}
-
-.ga-scene .lake {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 72px;
-    background: linear-gradient(180deg, #f7d7b0 0%, #ffe7c8 42%, #fff6ec 100%);
-}
-
-.ga-scene .pagoda {
-    position: absolute;
-    right: 72px;
-    bottom: 48px;
-    width: 72px;
-    height: 58px;
-}
-
-.ga-scene .pagoda::before {
-    content: "";
-    position: absolute;
-    left: 2px;
-    right: 2px;
-    top: 12px;
-    height: 10px;
-    background: #f26b21;
-    border-radius: 8px 8px 1px 1px;
-    box-shadow: 0 15px 0 #ffb36a;
-}
-
-.ga-scene .pagoda::after {
-    content: "";
-    position: absolute;
-    left: 18px;
-    right: 18px;
-    bottom: 0;
-    height: 34px;
-    border-left: 5px solid #8a6a4a;
-    border-right: 5px solid #8a6a4a;
-}
-
-.ga-scene .tower {
-    position: absolute;
-    right: 52px;
-    bottom: 48px;
-    width: 2px;
-    height: 108px;
-    background: linear-gradient(180deg, #958b84, #7a726c);
-}
-
-.ga-scene .tower::before {
-    content: "";
-    position: absolute;
-    left: -7px;
-    top: 18px;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 14px solid #77736e;
-}
-
-.ga-scene .flower {
-    position: absolute;
-    border-radius: 50%;
-    background: #f9b4c4;
-    box-shadow: 8px 3px 0 #ffc4d0, -5px 7px 0 #f5a2b6;
-}
-
-.ga-scene .f1 { right: 28px; bottom: 158px; width: 10px; height: 10px; }
-.ga-scene .f2 { right: 52px; bottom: 128px; width: 9px; height: 9px; }
-.ga-scene .f3 { right: 34px; bottom: 98px; width: 8px; height: 8px; }
-
-.ga-page.is-login .ga-blob {
-    display: none;
-}
-
-.ga-panel.is-login {
-    padding: 40px 36px;
-    background: #fff;
-}
-
-.ga-card.is-login {
-    width: min(440px, 100%);
-    padding: 36px 34px 28px;
-}
-
-.ga-login-logo {
-    display: flex;
+    align-items: center;
     justify-content: center;
-    margin-bottom: 22px;
+    box-sizing: border-box;
 }
 
-.ga-login-logo img {
-    width: auto;
-    height: auto;
-    max-width: 150px;
-    max-height: 72px;
-    border-radius: 12px;
-    object-fit: contain;
+.sn-login-page {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 56px 40px;
+    box-sizing: border-box;
 }
 
-.ga-card.is-login .ga-card-head {
-    display: block;
-    margin-bottom: 18px;
+.sn-login-container {
+    width: 100%;
+    max-width: 1280px;
+    min-height: 720px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 493px;
+    gap: 32px;
+    align-items: stretch;
 }
 
-.ga-card.is-login .ga-card-title {
-    font-size: 1.85rem;
+/* ==========================================================================
+   Left Hero Section (Figma #188:5662)
+   ========================================================================== */
+.sn-login-hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 40px 0 0;
+    min-height: 100%;
+    box-sizing: border-box;
 }
 
-.ga-login-help {
-    margin: 8px 0 0;
-    font-size: 14px;
-    line-height: 1.55;
-    color: var(--ga-muted);
-}
-
-.ga-label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 13px;
-    font-weight: 650;
-    color: #4b4860;
-}
-
-.ga-field-box {
-    position: relative;
-}
-
-.ga-card.is-login .ga-field {
-    position: static;
-}
-
-.ga-card.is-login .ga-field-icon,
-.ga-card.is-login .ga-field-toggle {
-    top: 0;
-    bottom: 0;
-}
-
-.ga-card.is-login .ga-submit {
-    text-transform: none;
-    letter-spacing: 0;
+/* Wordmark (#223:10982) */
+.sn-login-brandmark {
+    display: flex;
+    flex-direction: column;
     gap: 8px;
 }
 
-.ga-card.is-login .ga-submit i {
-    font-size: 14px;
+.sn-login-lead {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 30px;
+    color: #313B47;
+    margin: 0;
 }
 
-.ga-login-foot {
-    margin: 22px 0 0;
-    text-align: center;
-    font-size: 12.5px;
-    color: #a8a5b5;
-    line-height: 1.5;
+.sn-login-title {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 36px;
+    letter-spacing: -0.02em;
+    color: #171C22;
+    margin: 0;
 }
 
-@media (max-width: 980px) {
-    .ga-page.is-login {
+.sn-login-title span {
+    color: #FF7614;
+}
+
+/* Mascot Stage with White Inset Podium & Speech Bubble (#223:10972) */
+.sn-mascot-stage {
+    position: relative;
+    width: 643px;
+    max-width: 100%;
+    height: 512px;
+    margin: auto auto 0;
+    flex-shrink: 0;
+}
+
+/* White Elliptical Podium (#223:10979)
+   Location: x=0 (or centered), y=395; width=619px, height=77px
+   Inset shadow: inset 0px 6px 0px 0px rgba(0, 0, 0, 0.25) */
+.sn-mascot-podium {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 395px;
+    width: 619px;
+    max-width: 98%;
+    height: 77px;
+    background: #FFFFFF;
+    border-radius: 50%;
+    box-shadow: inset 0px 6px 0px 0px rgba(0, 0, 0, 0.25);
+    z-index: 1;
+}
+
+/* Mascot Anh Cam Image (#398:24751)
+   Location: x=0 (centered), y=162; width=619px, height=325px */
+.sn-mascot-img {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 162px;
+    width: 619px;
+    max-width: 98%;
+    height: 325px;
+    object-fit: contain;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Speech Bubble (#375:14718)
+   Location: x=193, y=82; width=234px; padding=10px
+   Border-radius: 20px 20px 20px 0px; 3D Blue shadow: 0px 4px 0px 0px #088AE9 */
+.sn-speech-bubble {
+    position: absolute;
+    top: 82px;
+    left: 193px;
+    width: 235px;
+    background: #FFFFFF;
+    border-radius: 20px 20px 20px 0px;
+    box-shadow: 0px 4px 0px 0px rgba(8, 138, 233, 1);
+    padding: 10px 12px;
+    box-sizing: border-box;
+    z-index: 3;
+    animation: floatBubble 3.5s ease-in-out infinite;
+}
+
+.sn-speech-bubble-text {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.25em;
+    color: #0D99FF;
+    margin: 0;
+    text-align: left;
+}
+
+@keyframes floatBubble {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-6px); }
+}
+
+/* ==========================================================================
+   Right Login Card (#222:9579)
+   Width: 493px, padding: 40px, borderRadius: 20px, shadow: 0px 4px 0px #E4E8ED
+   ========================================================================== */
+.sn-login-card {
+    width: 493px;
+    min-height: 720px;
+    background: #FFFFFF;
+    border-radius: 20px;
+    box-shadow: 0px 4px 0px 0px rgba(228, 232, 237, 1);
+    padding: 40px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Card Top: Logo box & Brand text (#188:5671) */
+.sn-login-card-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.sn-logo-box {
+    width: 76px;
+    height: 76px;
+    background: #FF7614;
+    border-radius: 19px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 0px 0px #E95308;
+    transition: transform 0.2s ease;
+}
+
+.sn-logo-box:hover {
+    transform: scale(1.03);
+}
+
+.sn-logo-box img,
+.sn-logo-box svg {
+    width: 54px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.sn-card-brand-name {
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 18px;
+    letter-spacing: 0.06em;
+    color: #171C22;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+/* Card Body: Heading, Fields, Button (#188:5863) */
+.sn-login-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* H2 Heading (#188:5751) */
+.sn-form-heading {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 36px;
+    letter-spacing: -0.02em;
+    color: #171C22;
+    margin: 0;
+}
+
+/* Form Fields (#188:5754 & #188:5837) */
+.sn-login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.sn-login-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sn-login-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.sn-login-label {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    color: #8092A8;
+    margin: 0;
+}
+
+.sn-login-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: #FAFAFA;
+    border: 2px solid #E4E8ED;
+    border-radius: 12px;
+    padding: 0 16px;
+    height: 48px;
+    gap: 8px;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+.sn-login-input-wrap:focus-within {
+    background: #FFFFFF;
+    border-color: #FF7614;
+    box-shadow: 0 0 0 3px rgba(255, 118, 20, 0.12);
+}
+
+.sn-login-field-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #8092A8;
+    transition: color 0.2s ease;
+}
+
+.sn-login-field-icon svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+}
+
+.sn-login-input-wrap:focus-within .sn-login-field-icon {
+    color: #FF7614;
+}
+
+.sn-login-input {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #313B47;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.sn-login-input::placeholder {
+    color: #8092A8;
+    font-weight: 400;
+}
+
+/* Fix browser autofill background */
+.sn-login-input:-webkit-autofill,
+.sn-login-input:-webkit-autofill:hover,
+.sn-login-input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 30px #FAFAFA inset !important;
+    -webkit-text-fill-color: #313B47 !important;
+    font-family: inherit !important;
+}
+
+.sn-login-input-wrap:focus-within .sn-login-input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px #FFFFFF inset !important;
+}
+
+/* Hide Edge native password reveal */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+    display: none;
+}
+
+/* Options: Remember & Forgot (#188:5836) */
+.sn-login-options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+}
+
+.sn-login-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    color: #63758D;
+    user-select: none;
+}
+
+.sn-login-check input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    accent-color: #FF7614;
+    cursor: pointer;
+}
+
+.sn-login-forgot {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    color: #0D99FF;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.sn-login-forgot:hover {
+    color: #0364C6;
+    text-decoration: underline;
+}
+
+/* Submit Button (#188:5838) */
+.sn-login-submit-btn,
+.sn-login-form .sn-btn {
+    width: 100% !important;
+    height: 48px !important;
+    padding: 12px 24px !important;
+    background: #FF7614 !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    border-radius: 12px !important;
+    font-family: inherit !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    line-height: 24px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    box-shadow: 0px 4px 0px 0px rgba(233, 83, 8, 1) !important;
+    box-sizing: border-box !important;
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease !important;
+}
+
+.sn-login-submit-btn:hover,
+.sn-login-form .sn-btn:hover {
+    background-color: #FF8B38 !important;
+}
+
+.sn-login-submit-btn:active,
+.sn-login-form .sn-btn:active {
+    transform: translateY(2px) !important;
+    box-shadow: 0px 2px 0px 0px rgba(233, 83, 8, 1) !important;
+}
+    box-shadow: 0px 1px 0px 0px rgba(233, 83, 8, 1);
+}
+
+/* Card Bottom Footer (#188:5862) */
+.sn-login-card-foot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 16px;
+    line-height: 24px;
+    margin: 0;
+}
+
+.sn-login-app-link {
+    font-weight: 600;
+    color: #0D99FF;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.sn-login-app-link:hover {
+    color: #0364C6;
+    text-decoration: underline;
+}
+
+.sn-login-copyright {
+    font-weight: 500;
+    color: #63758D;
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+@media (max-width: 1140px) {
+    .sn-login-container {
         grid-template-columns: 1fr;
+        justify-items: center;
+        gap: 40px;
     }
 
-    .ga-hero.is-login {
-        display: none;
+    .sn-login-hero {
+        align-items: center;
+        text-align: center;
+        padding-top: 0;
+    }
+
+    .sn-speech-bubble {
+        position: relative;
+        top: 0;
+        left: 0;
+        margin-bottom: 12px;
+        width: auto;
+        max-width: 380px;
+    }
+
+    .sn-mascot-stage {
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .sn-mascot-podium {
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: none;
+        width: 100%;
+        max-width: 500px;
+        height: 60px;
+        order: 3;
+        margin-top: -30px;
+    }
+
+    .sn-mascot-img {
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: none;
+        width: 100%;
+        max-width: 500px;
+        height: auto;
+        order: 2;
+        z-index: 2;
+    }
+
+    .sn-login-card {
+        width: 100%;
+        max-width: 493px;
+        min-height: auto;
+        gap: 32px;
+    }
+}
+
+@media (max-width: 600px) {
+    .sn-login-page {
+        padding: 24px 16px;
+    }
+
+    .sn-login-title {
+        font-size: 28px;
+    }
+
+    .sn-login-lead {
+        font-size: 17px;
+    }
+
+    .sn-speech-bubble-text {
+        font-size: 15px;
+    }
+
+    .sn-login-card {
+        padding: 28px 20px;
+    }
+
+    .sn-login-options {
+        font-size: 14px;
+    }
+
+    .sn-login-check,
+    .sn-login-forgot,
+    .sn-login-card-foot {
+        font-size: 14px;
     }
 }

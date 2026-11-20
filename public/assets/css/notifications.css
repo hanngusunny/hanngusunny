@@ -557,3 +557,297 @@
         display: none;
     }
 }
+
+/* ==========================================================================
+   SUNNY FULL NOTIFICATION PAGE (Figma Nodes #425:39445 / #406:28291 / #406:28234)
+   ========================================================================== */
+
+.sn-notif-page {
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    border: 1px solid #E4E8ED;
+    box-shadow: 0px 4px 0px 0px rgba(228, 232, 237, 1);
+    padding: 32px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    box-sizing: border-box;
+}
+
+.sn-notif-title {
+    font-family: var(--sn-font-sans, 'Nunito', sans-serif);
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 36px;
+    letter-spacing: -0.02em;
+    color: #171C22;
+    margin: 0;
+}
+
+.sn-notif-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.sn-notif-tabs {
+    display: inline-flex;
+    align-items: center;
+    background-color: #F4F5F7;
+    border-radius: 999px;
+    padding: 8px;
+    gap: 4px;
+    box-sizing: border-box;
+}
+
+.sn-notif-tab {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    border-radius: 999px;
+    font-family: var(--sn-font-sans, 'Nunito', sans-serif);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    color: #171C22;
+    text-decoration: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.sn-notif-tab.is-active {
+    background-color: #0D99FF;
+    color: #FFFFFF;
+}
+
+.sn-notif-mark-all-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 48px;
+    padding: 12px 24px;
+    border-radius: 12px;
+    background-color: #FF7614;
+    color: #FFFFFF;
+    box-shadow: 0px 4px 0px 0px #E95308;
+    font-family: var(--sn-font-sans, 'Nunito', sans-serif);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    box-sizing: border-box;
+    transition: all 0.15s ease;
+    will-change: transform;
+}
+
+.sn-notif-mark-all-btn:hover:not(:disabled):not(.is-disabled) {
+    background-color: #FF8B38;
+}
+
+.sn-notif-mark-all-btn:active:not(:disabled):not(.is-disabled) {
+    transform: translateY(3px);
+    box-shadow: 0px 1px 0px 0px #E95308;
+}
+
+.sn-notif-mark-all-btn:disabled,
+.sn-notif-mark-all-btn.is-disabled {
+    background-color: #FFD2B1;
+    box-shadow: 0px 4px 0px 0px rgba(255, 195, 165, 1);
+    color: #FFFFFF;
+    cursor: not-allowed;
+    opacity: 0.85;
+}
+
+.sn-notif-container {
+    background-color: #F4F5F7;
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    box-sizing: border-box;
+}
+
+.sn-notif-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sn-notif-group-title {
+    font-family: var(--sn-font-sans, 'Nunito', sans-serif);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 30px;
+    color: #171C22;
+    margin: 0;
+}
+
+.sn-notif-group-items {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sn-notif-card {
+    width: 100%;
+    padding: 16px 20px;
+    border-radius: 16px;
+    border: 1.5px solid #F2F2F2;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.sn-notif-card.is-unread {
+    background-color: #EFF5FD;
+    box-shadow: 0px 4px 0px 0px rgba(8, 138, 233, 0.12);
+}
+
+.sn-notif-card.is-unread:hover {
+    background-color: #E5F0FC;
+}
+
+.sn-notif-card.is-read {
+    background-color: #FFFFFF;
+}
+
+.sn-notif-card.is-read:hover {
+    background-color: #FAFAFA;
+}
+
+.sn-notif-card-main {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+}
+
+.sn-notif-card-title {
+    font-family: var(--sn-font-sans, 'Nunito', sans-serif);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    color: #171C22;
+    margin: 0;
+}
+
+.sn-notif-card-desc {
+    font-family: var(--sn-font-sans, 'Nunito', sans-serif);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 21px;
+    color: #62758D;
+    margin: 0;
+}
+
+.sn-notif-card-time {
+    font-family: var(--sn-font-sans, 'Nunito', sans-serif);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+    color: #8092A8;
+}
+
+.sn-notif-card-status {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sn-notif-unread-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 9999px;
+    background-color: #0D99FF;
+    display: inline-block;
+}
+
+.sn-notif-read-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 8px;
+    border-radius: 9999px;
+    background-color: #F4F5F7;
+    font-family: var(--sn-font-sans, 'Nunito', sans-serif);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+    color: #62758D;
+    white-space: nowrap;
+}
+
+.sn-notif-empty {
+    padding: 48px 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.sn-notif-empty-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 9999px;
+    background-color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(48, 59, 71, 0.08);
+}
+
+.sn-notif-empty-title {
+    font-family: var(--sn-font-sans, 'Nunito', sans-serif);
+    font-size: 18px;
+    font-weight: 700;
+    color: #171C22;
+    margin: 0;
+}
+
+.sn-notif-empty-text {
+    font-family: var(--sn-font-sans, 'Nunito', sans-serif);
+    font-size: 14px;
+    color: #62758D;
+    margin: 0;
+    max-width: 360px;
+}
+
+@media (max-width: 768px) {
+    .sn-notif-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .sn-notif-tabs {
+        width: 100%;
+    }
+
+    .sn-notif-tab {
+        flex: 1;
+        padding: 10px 8px;
+        font-size: 14px;
+    }
+
+    .sn-notif-mark-all-btn {
+        width: 100%;
+    }
+}

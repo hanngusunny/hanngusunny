@@ -88,8 +88,38 @@ class UserNotificationRead extends Model
      */
     public static function markManyRead(int $userId, array $notificationKeys): void
     {
-        foreach ($notificationKeys as $key) {
-            self::markRead($userId, (string) $key);
+        if ($userId <= 0 || empty($notificationKeys) || ! self::ready()) {
+            return;
+        }
+
+        try {
+            $existingKeys = static::query()
+                ->where('user_id', $userId)
+                ->whereIn('notification_key', $notificationKeys)
+                ->pluck('notification_key')
+                ->all();
+
+            $existingSet = array_flip($existingKeys);
+            $now = now();
+            $rowsToInsert = [];
+
+            foreach ($notificationKeys as $key) {
+                $trimmedKey = trim((string) $key);
+                if ($trimmedKey !== '' && ! isset($existingSet[$trimmedKey])) {
+                    $rowsToInsert[] = [
+                        'user_id' => $userId,
+                        'notification_key' => $trimmedKey,
+                        'read_at' => $now,
+                    ];
+                    $existingSet[$trimmedKey] = true;
+                }
+            }
+
+            if ($rowsToInsert !== []) {
+                static::query()->insert($rowsToInsert);
+            }
+        } catch (Throwable $e) {
+            report($e);
         }
     }
 }
