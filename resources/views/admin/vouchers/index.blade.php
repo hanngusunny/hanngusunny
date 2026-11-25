@@ -22,9 +22,17 @@
             Tạo mã voucher ngẫu nhiên gắn với học viên, tự động xuất ảnh đè lên phôi và hỗ trợ copy ảnh để gửi qua Zalo / Facebook.
         </x-slot:lead>
         <x-slot:aside>
-            <a href="{{ route('admin.vouchers.check') }}" class="op-btn is-primary flex items-center gap-2">
-                <i class="fa-solid fa-magnifying-glass"></i> Đi đến trang check mã
-            </a>
+            <div class="flex flex-wrap items-center gap-2">
+                <button type="button"
+                    onclick="navigator.clipboard?.writeText('{{ route('public.vouchers.create') }}').then(() => showAppToast('success', 'Đã copy link tạo voucher công khai!'))"
+                    class="op-btn flex items-center gap-2"
+                    title="{{ route('public.vouchers.create') }}">
+                    <i class="fa-solid fa-link text-orange-500"></i> Copy link tạo công khai
+                </button>
+                <a href="{{ route('admin.vouchers.check') }}" class="op-btn is-primary flex items-center gap-2">
+                    <i class="fa-solid fa-magnifying-glass"></i> Đi đến trang check mã
+                </a>
+            </div>
         </x-slot:aside>
     </x-page-title>
 

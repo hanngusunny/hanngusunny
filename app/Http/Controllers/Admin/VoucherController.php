@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreVoucherRequest;
 use App\Models\Voucher;
 use App\Services\VoucherImageService;
-use Carbon\Carbon;
+use App\Services\VoucherService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -60,53 +61,15 @@ class VoucherController extends Controller
     /**
      * Store new voucher and generate image
      */
-    public function store(Request $request, VoucherImageService $imageService): JsonResponse|RedirectResponse
+    public function store(StoreVoucherRequest $request, VoucherService $voucherService): JsonResponse|RedirectResponse
     {
-        $validated = $request->validate([
-            'student_name' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'string', 'max:50'],
-            'dob' => ['required', 'date'],
-            'note' => ['nullable', 'string', 'max:500'],
-        ], [
-            'student_name.required' => 'Vui lòng nhập Họ và Tên học viên.',
-            'phone.required' => 'Vui lòng nhập Số điện thoại.',
-            'dob.required' => 'Vui lòng chọn Ngày tháng năm sinh.',
-            'dob.date' => 'Ngày tháng năm sinh không đúng định dạng.',
-        ]);
-
-        $code = Voucher::generateUniqueCode('SN-');
-
-        $voucher = new Voucher();
-        $voucher->code = $code;
-        $voucher->student_name = trim($validated['student_name']);
-        $voucher->phone = trim($validated['phone']);
-        $voucher->dob = $validated['dob'] ? Carbon::parse($validated['dob']) : null;
-        $voucher->note = $validated['note'] ?? null;
-        $voucher->status = Voucher::STATUS_UNUSED;
-        $voucher->created_by = auth()->id();
-        $voucher->save();
-
-        // Generate voucher image overlaying phôi
-        try {
-            $imageService->generate($voucher);
-        } catch (\Throwable $e) {
-            report($e);
-        }
+        $voucher = $voucherService->create($request->validated(), auth()->id());
 
         if ($request->wantsJson() || $request->ajax()) {
             return response()->json([
                 'success' => true,
                 'message' => 'Tạo mã voucher thành công!',
-                'voucher' => [
-                    'id' => $voucher->id,
-                    'code' => $voucher->code,
-                    'student_name' => $voucher->student_name,
-                    'phone' => $voucher->phone,
-                    'dob' => $voucher->dob ? $voucher->dob->format('d/m/Y') : '',
-                    'status' => $voucher->status,
-                    'status_text' => $voucher->statusText(),
-                    'image_url' => $voucher->imageUrl(),
-                ],
+                'voucher' => $voucherService->toPayload($voucher),
             ]);
         }
 
