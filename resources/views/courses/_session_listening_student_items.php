@@ -39,7 +39,7 @@ require_once __DIR__ . '/_session_quiz_title_helpers.php';
         $itemOptions          = is_array($listeningQuestion['options'] ?? null) ? array_values($listeningQuestion['options']) : [];
         $itemTrueFalseItems   = is_array($listeningQuestion['true_false_items'] ?? null) ? $listeningQuestion['true_false_items'] : [];
         $itemMultiChoiceItems = is_array($listeningQuestion['multi_choice_items'] ?? null) ? $listeningQuestion['multi_choice_items'] : [];
-        $itemWordLinkPairs    = $questionPairModel->normalizeWordLinkPairRows(is_array($listeningQuestion['word_link_pairs'] ?? null) ? $listeningQuestion['word_link_pairs'] : []);
+        $itemWordLinkPairs    = $questionPairModel->decodePlayableWordLinkPairsFromRows(is_array($listeningQuestion['word_link_pairs'] ?? null) ? $listeningQuestion['word_link_pairs'] : []);
         $itemFillBlanks       = $questionPairModel->normalizeFillBlanksData(is_array($listeningQuestion['fill_blanks'] ?? null) ? $listeningQuestion['fill_blanks'] : []);
         $itemFillBlanksLineGroups = $questionPairModel->parseFillBlanksLineGroups((string) ($itemFillBlanks['template'] ?? ''));
         $itemUid              = (string) $questionId . '-' . (string) $itemIndex;

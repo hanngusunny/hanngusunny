@@ -192,7 +192,20 @@
     const params = new URLSearchParams();
     if (breakoutIndex > 0) params.set("breakout", String(breakoutIndex));
     params.set("client", jitsiClientId);
-    const res = await fetch(cfg.tokenUrl + "?" + params.toString(), { credentials: "same-origin" });
+    const res = await fetch(cfg.tokenUrl + "?" + params.toString(), {
+      credentials: "same-origin",
+      headers: {
+        "Accept": "application/json",
+        "X-Requested-With": "XMLHttpRequest",
+      },
+    });
+    if (res.redirected || res.status === 401 || res.status === 419) {
+      setTimeout(() => window.location.reload(), 1200);
+      return { ok: false, message: "Phiên đăng nhập hết hạn. Đang tải lại..." };
+    }
+    if (!res.ok) {
+      return { ok: false, message: "Không lấy được token phòng video." };
+    }
     return res.json();
   };
 
@@ -288,6 +301,7 @@
     }
 
     jitsiApi.addListener("videoConferenceJoined", () => {
+      const wasRemount = remountAttempts > 0;
       ignoreClose = false;
       remountAttempts = 0;
       window.pwaLoading?.hide();
@@ -301,7 +315,9 @@
       } catch (e) {
         /* ignore */
       }
-      if (preferStableMobileVideo) {
+      if (wasRemount) {
+        showToast("Đã kết nối lại phòng học. Nếu không nghe thấy tiếng, hãy kiểm tra micro hoặc chạm vào màn hình.");
+      } else if (preferStableMobileVideo) {
         showToast("Nếu hình đen: bấm Tile view hoặc bật Camera. Giữ app ở màn hình chính.");
       }
     });
@@ -378,7 +394,14 @@
 
   const ping = () => {
     if (!cfg.pingUrl || !window.classroomPostForm) return;
-    window.classroomPostForm(cfg.pingUrl, {});
+    Promise.resolve(window.classroomPostForm(cfg.pingUrl, {}))
+      .then((res) => {
+        if (res && (res.status === 401 || res.status === 419)) {
+          showToast("Phiên đăng nhập hết hạn. Đang tải lại...");
+          setTimeout(() => window.location.reload(), 1200);
+        }
+      })
+      .catch(() => {});
   };
 
   const lockLandscape = async () => {

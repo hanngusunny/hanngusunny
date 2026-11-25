@@ -1079,9 +1079,23 @@
       const res = await fetch(cfg.pingUrl, {
         method: "POST",
         credentials: "same-origin",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Accept": "application/json",
+          "X-Requested-With": "XMLHttpRequest",
+        },
         body: body.toString(),
       });
+      if (res.redirected || res.status === 401 || res.status === 419) {
+        if (pingTimer) {
+          clearInterval(pingTimer);
+          pingTimer = null;
+        }
+        showBreakToast("Phiên đăng nhập hết hạn. Đang tải lại trang...", "error");
+        setTimeout(() => window.location.reload(), 1500);
+        return;
+      }
+      if (!res.ok) return;
       const data = await res.json();
       if (window.syncClassroomCsrf) window.syncClassroomCsrf(data);
     } catch (e) {
@@ -1417,7 +1431,20 @@
       };
     }
 
-    const res = await fetch(jitsiTokenUrl(breakoutIndex), { credentials: "same-origin" });
+    const res = await fetch(jitsiTokenUrl(breakoutIndex), {
+      credentials: "same-origin",
+      headers: {
+        "Accept": "application/json",
+        "X-Requested-With": "XMLHttpRequest",
+      },
+    });
+    if (res.redirected || res.status === 401 || res.status === 419) {
+      setTimeout(() => window.location.reload(), 1500);
+      throw new Error("Phiên đăng nhập hết hạn. Đang tải lại trang...");
+    }
+    if (!res.ok) {
+      throw new Error("Không lấy được token phòng video.");
+    }
     const data = await res.json();
 
     if (!data.ok) {
@@ -1443,6 +1470,7 @@
     }
 
     jitsiApi.addListener("videoConferenceJoined", () => {
+      const wasRemount = jitsiRemountAttempts > 0;
       ignoreJitsiClose = false;
       jitsiRemountAttempts = 0;
       ensureJitsiIframePermissions();
@@ -1450,6 +1478,10 @@
         jitsiApi.executeCommand("displayName", displayName);
       } catch (e) {
         /* ignore */
+      }
+      if (wasRemount) {
+        unlockClassroomAudio();
+        showBreakToast("Đã kết nối lại phòng học. Nếu không nghe thấy tiếng, hãy kiểm tra micro hoặc chạm vào màn hình.", "info");
       }
       pingPresence();
       fetchParticipants();
