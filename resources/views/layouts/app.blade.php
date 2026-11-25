@@ -127,12 +127,6 @@
                 'label' => 'Bài kiểm tra',
             ];
             $nav[] = [
-                'id' => 'vouchers_check',
-                'href' => route('staff.vouchers.check'),
-                'icon' => 'fa-ticket',
-                'label' => 'Kiểm tra Voucher',
-            ];
-            $nav[] = [
                 'id' => 'rules',
                 'href' => route('school-rules.edit'),
                 'icon' => 'fa-book',

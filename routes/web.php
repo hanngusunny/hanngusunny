@@ -22,6 +22,7 @@ use App\Http\Controllers\DashboardGatewayController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OverviewController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PublicVoucherController;
 use App\Http\Controllers\Student\AssessmentHubController;
 use App\Http\Controllers\Student\AssessmentTakeController;
 use App\Http\Controllers\Student\CourseVideoLibraryController;
@@ -43,6 +44,11 @@ Route::middleware('guest')->group(function () {
     Route::get('/dang-nhap', [LoginController::class, 'show'])->name('login.alias');
     Route::post('/auth/login', [LoginController::class, 'login'])->name('login.attempt');
 });
+
+Route::get('/tao-voucher', [PublicVoucherController::class, 'create'])->name('public.vouchers.create');
+Route::post('/tao-voucher', [PublicVoucherController::class, 'store'])
+    ->middleware('throttle:20,1')
+    ->name('public.vouchers.store');
 
 Route::get('/app/manifest.json', [PwaController::class, 'manifest'])->name('pwa.manifest');
 Route::get('/app/sw.js', [PwaController::class, 'serviceWorker'])->name('pwa.sw');
@@ -208,12 +214,6 @@ Route::middleware('auth')->group(function () {
         Route::post('/ap-dung', [VoucherController::class, 'redeem'])->name('redeem');
         Route::post('/{voucher}/tao-lai-anh', [VoucherController::class, 'regenerate'])->name('regenerate');
         Route::post('/{voucher}/xoa', [VoucherController::class, 'destroy'])->name('destroy');
-    });
-
-    Route::middleware('staff')->prefix('kiem-tra-voucher')->name('staff.vouchers.')->group(function () {
-        Route::get('/', [VoucherController::class, 'checkPage'])->name('check');
-        Route::post('/check-ajax', [VoucherController::class, 'checkAjax'])->name('check.ajax');
-        Route::post('/ap-dung', [VoucherController::class, 'redeem'])->name('redeem');
     });
 
     Route::middleware('admin')->prefix('nguoi-dung')->name('admin.users.')->group(function () {

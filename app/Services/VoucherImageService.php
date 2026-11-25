@@ -62,9 +62,9 @@ class VoucherImageService
         $scaleX = $w / 1531.0;
         $scaleY = $h / 681.0;
 
-        // Fonts
-        $fontBold = File::exists($this->fontBold) ? $this->fontBold : (File::exists('C:/Windows/Fonts/arialbd.ttf') ? 'C:/Windows/Fonts/arialbd.ttf' : null);
-        $fontRegular = File::exists($this->fontRegular) ? $this->fontRegular : (File::exists('C:/Windows/Fonts/arial.ttf') ? 'C:/Windows/Fonts/arial.ttf' : $fontBold);
+        // Fonts (FreeType in PHP GD on Windows cannot open paths with non-ASCII chars, so verify readability)
+        $fontBold = $this->resolveReadableFont([$this->fontBold, 'C:/Windows/Fonts/arialbd.ttf']);
+        $fontRegular = $this->resolveReadableFont([$this->fontRegular, 'C:/Windows/Fonts/arial.ttf']) ?? $fontBold;
 
         // Colors
         $codeColor = imagecolorallocate($im, 242, 107, 33); // Sunny Orange #f26b21
@@ -153,5 +153,21 @@ class VoucherImageService
         $voucher->save();
 
         return $relativePath;
+    }
+
+    /**
+     * Return the first font path that FreeType/GD can actually open.
+     *
+     * @param  list<string>  $candidates
+     */
+    private function resolveReadableFont(array $candidates): ?string
+    {
+        foreach ($candidates as $path) {
+            if ($path !== '' && File::exists($path) && @imagettfbbox(12, 0, $path, 'A') !== false) {
+                return $path;
+            }
+        }
+
+        return null;
     }
 }
