@@ -982,22 +982,54 @@ public function decodeWordLinkPairs(array $row): array
 
 public function decodePlayableWordLinkPairs(array $row): array
     {
+        return $this->decodePlayableWordLinkPairsFromRows($this->decodeWordLinkPairs($row));
+    }
+
+public function decodePlayableWordLinkPairsFromRows(array $rows): array
+    {
         $pairs = array_values(array_filter(
-            $this->decodeWordLinkPairs($row),
+            $this->normalizeWordLinkPairRows($rows),
             static fn (array $pair): bool => ($pair['a_value'] ?? '') !== '' && ($pair['b_value'] ?? '') !== ''
         ));
 
         return array_map(function (array $pair): array {
             if (($pair['a_type'] ?? '') === 'image' && ($pair['a_value'] ?? '') !== '') {
-                $pair['a_value'] = $this->resolveWordLinkMediaUrl((string) $pair['a_value']);
+                $val = (string) $pair['a_value'];
+                if ($this->looksLikeImageReference($val)) {
+                    $pair['a_value'] = $this->resolveWordLinkMediaUrl($val);
+                } else {
+                    $pair['a_type'] = 'text';
+                }
             }
 
             if (($pair['b_type'] ?? '') === 'image' && ($pair['b_value'] ?? '') !== '') {
-                $pair['b_value'] = $this->resolveWordLinkMediaUrl((string) $pair['b_value']);
+                $val = (string) $pair['b_value'];
+                if ($this->looksLikeImageReference($val)) {
+                    $pair['b_value'] = $this->resolveWordLinkMediaUrl($val);
+                } else {
+                    $pair['b_type'] = 'text';
+                }
             }
 
             return $pair;
         }, $pairs);
+    }
+
+private function looksLikeImageReference(string $value): bool
+    {
+        $value = trim($value);
+
+        if ($value === '') {
+            return false;
+        }
+
+        if (stripos($value, 'data:image/') !== false || preg_match('#^(https?:)?//#i', $value) === 1) {
+            return true;
+        }
+
+        return str_contains($value, '/')
+            || str_contains($value, '\\')
+            || preg_match('/\.(png|jpe?g|gif|webp|svg|bmp|avif)(\?.*)?$/i', $value) === 1;
     }
 
 public function resolveWordLinkMediaUrl(string $value): string

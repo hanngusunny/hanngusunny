@@ -66,13 +66,24 @@
     return `<span class="session-word-link-item-body session-word-link-item-body--single session-word-link-item-body--text">${textHtml}</span>`;
   };
 
+  const looksLikeImageReference = (value) => {
+    const trimmed = String(value || "").trim();
+    if (trimmed === "") return false;
+    if (/^data:image\//i.test(trimmed) || /^(https?:)?\/\//i.test(trimmed)) return true;
+    return trimmed.includes("/") || trimmed.includes("\\") || /\.(png|jpe?g|gif|webp|svg|bmp|avif)(\?.*)?$/i.test(trimmed);
+  };
+
   const normalizePair = (pair) => {
     if (pair.a_type || pair.a_value !== undefined) {
+      const aVal = String(pair.a_value || "").trim();
+      const bVal = String(pair.b_value || "").trim();
+      const aType = pair.a_type === "text" ? "text" : (looksLikeImageReference(aVal) ? "image" : "text");
+      const bType = pair.b_type === "image" && looksLikeImageReference(bVal) ? "image" : "text";
       return {
-        a_type: pair.a_type === "text" ? "text" : "image",
-        a_value: String(pair.a_value || "").trim(),
-        b_type: pair.b_type === "image" ? "image" : "text",
-        b_value: String(pair.b_value || "").trim(),
+        a_type: aType,
+        a_value: aVal,
+        b_type: bType,
+        b_value: bVal,
       };
     }
 
