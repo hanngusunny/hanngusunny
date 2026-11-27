@@ -26,7 +26,9 @@ class EvaluationController extends Controller
             (int) $user->id,
             max(0, (int) $request->query('khoa', 0)),
             max(0, (int) $request->query('hoc-vien', 0)),
-            (string) ($request->query('tuan') ?: CourseMonthlyEvaluation::currentWeekKey())
+            (string) ($request->query('tuan') ?: CourseMonthlyEvaluation::currentWeekKey()),
+            (string) ($request->query('tab') ?: TeacherEvaluationService::TAB_ALL),
+            (string) ($request->query('q') ?: '')
         );
 
         if ($payload === null) {

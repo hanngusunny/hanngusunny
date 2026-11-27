@@ -15,6 +15,9 @@ class CourseMember extends Model
         'course_id',
         'user_id',
         'status',
+        'package_type',
+        'absence_adjustment',
+        'homework_adjustment',
         'joined_at',
         'left_at',
         'completed_at',
@@ -22,6 +25,8 @@ class CourseMember extends Model
     ];
 
     protected $casts = [
+        'absence_adjustment' => 'integer',
+        'homework_adjustment' => 'integer',
         'joined_at' => 'datetime',
         'left_at' => 'datetime',
         'completed_at' => 'datetime',

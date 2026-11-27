@@ -29,13 +29,6 @@ class AttendanceCheckService
             return $query->where('status', Course::STATUS_ACTIVE)->get();
         }
 
-        if ($viewer->isTeacher()) {
-            return $query
-                ->where('teacher_id', (int) $viewer->id)
-                ->where('status', Course::STATUS_ACTIVE)
-                ->get();
-        }
-
         return collect();
     }
 
@@ -51,10 +44,6 @@ class AttendanceCheckService
 
         if ($viewer->isAdmin()) {
             return $query->first();
-        }
-
-        if ($viewer->isTeacher()) {
-            return $query->where('teacher_id', (int) $viewer->id)->first();
         }
 
         return null;

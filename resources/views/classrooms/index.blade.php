@@ -3,7 +3,7 @@
 @section('title', 'Lớp học online')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('assets/css/classrooms-hub.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/classrooms-hub.css') }}?v=2">
 @endpush
 
 @if (! empty($canCreateRoom))
@@ -57,8 +57,13 @@
         <div class="op-panel-body">
             <div class="cr-hub-toolbar" aria-label="Bộ lọc phòng học">
                 <label class="cr-hub-search">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input id="classroomSearch" type="search" placeholder="Tìm phòng học, giáo viên...">
+                    <span class="cr-hub-search-ico" aria-hidden="true">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <circle cx="11.5" cy="11.5" r="8.5" stroke="currentColor" stroke-width="1.8"/>
+                            <path d="M21 21L18.2 18.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                        </svg>
+                    </span>
+                    <input id="classroomSearch" class="sn-search-input-bare" type="search" placeholder="Tìm phòng học, giáo viên..." autocomplete="off">
                 </label>
                 <div class="cr-hub-filters">
                     <button class="cr-filter is-on" type="button" data-filter="all">Tất cả</button>

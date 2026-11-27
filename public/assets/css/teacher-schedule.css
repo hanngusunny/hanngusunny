@@ -1,751 +1,1056 @@
-/* Lịch dạy giáo viên — /lich-day */
+/* ==========================================================================
+   SUNNY — Màn Lịch dạy Giáo viên chuẩn pixel Figma (#602:68769)
+   Scoped hoàn toàn dưới .sn-ts-page, không ảnh hưởng các màn khác
+   ========================================================================== */
 
-.ts-page {
-    display: grid;
-    gap: 16px;
+body.os-body .os-main .sn-ts-page {
+    font-family: "Nunito", "Noto Sans KR", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+    color: #313B47;
+    position: relative;
 }
 
-.ts-page-head {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 12px;
-}
-
-.ts-page-sub {
-    margin: 6px 0 0;
-    max-width: 720px;
-    font-size: 14px;
-    line-height: 1.55;
-    color: #64748b;
-}
-
-.ts-page .ts-side-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 16px;
-}
-
-@media (min-width: 960px) {
-    .ts-page .ts-side-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        align-items: start;
-    }
-}
-
-.ts-page .ts-side-date {
-    margin-left: auto;
-    font-size: 12px;
-    font-weight: 600;
-    color: #64748b;
-}
-
-.ts-page .ts-today-list,
-.ts-page .ts-reminder-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.ts-page .ts-today-card,
-.ts-page .ts-reminder-item {
-    display: grid;
-    grid-template-columns: 68px minmax(0, 1fr);
-    gap: 12px;
-    align-items: center;
-    padding: 12px;
-    border: 1px solid #e8edf3;
-    border-radius: 12px;
-    text-decoration: none;
-    color: inherit;
-    background: #fff;
-    transition: transform 0.16s ease, box-shadow 0.16s ease;
-}
-
-.ts-page .ts-reminder-item {
-    grid-template-columns: 36px minmax(0, 1fr) auto;
-}
-
-.ts-page .ts-today-card:hover,
-.ts-page .ts-reminder-item:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
-}
-
-.ts-page .ts-today-card.is-live {
-    border-color: #86efac;
-    background: linear-gradient(145deg, #ecfdf5 0%, #fff 72%);
-}
-
-.ts-page .ts-today-card.is-ended {
-    border-color: #e2e8f0;
-    background: #f8fafc;
-}
-
-.ts-page .ts-today-time {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 64px;
-    padding: 8px 6px;
-    border-radius: 12px;
-    border: 1px solid #e8edf3;
-    background: #fff;
-    text-align: center;
-}
-
-.ts-page .ts-today-card.is-live .ts-today-time {
-    border-color: #4ade80;
-    background: linear-gradient(180deg, #fff 0%, #d1fae5 100%);
-}
-
-.ts-page .ts-today-time b {
-    font-size: 15px;
-    color: #0f172a;
-}
-
-.ts-page .ts-today-time span {
-    margin-top: 4px;
-    font-size: 11px;
-    font-weight: 600;
-    color: #64748b;
-}
-
-.ts-page .ts-today-main,
-.ts-page .ts-reminder-copy {
-    min-width: 0;
-}
-
-.ts-page .ts-today-badges {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 6px;
-}
-
-.ts-page .ts-live-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 4px 10px;
-    border-radius: 999px;
-    font-size: 11px;
-    font-weight: 700;
-    color: #fff;
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-}
-
-.ts-page .ts-today-main strong,
-.ts-page .ts-reminder-copy strong {
-    display: block;
-    font-size: 14px;
-    font-weight: 700;
-    color: #0f172a;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.ts-page .ts-today-main small,
-.ts-page .ts-reminder-copy small {
-    display: block;
-    margin-top: 4px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #64748b;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.ts-page .ts-reminder-ico {
-    display: grid;
-    place-items: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-    flex-shrink: 0;
-}
-
-.ts-page .ts-reminder-ico.is-red { background: #fef2f2; color: #dc2626; }
-.ts-page .ts-reminder-ico.is-orange { background: #fff7ed; color: #ea580c; }
-.ts-page .ts-reminder-ico.is-blue { background: #eff6ff; color: #2563eb; }
-
-.ts-page .student-schedule-layout,
-.ts-page .student-schedule-layout--full {
-    display: block;
-    width: 100%;
-}
-
-.ts-page .student-schedule-main,
-.ts-page .student-schedule-app,
-.ts-page .calendar-shell,
-.ts-page .student-schedule-body {
-    width: 100%;
-    max-width: 100%;
+body.os-body .os-main .sn-ts-page * {
+    font-family: inherit;
     box-sizing: border-box;
 }
 
-.ts-page .calendar-shell {
-    background: #fff;
-    border: 1px solid #ececec;
-    border-radius: 12px;
-    box-shadow: 0 1px 0 #f4f4f4;
-    padding: 18px;
-    overflow: auto;
+/* Khôi phục font-weight 700 thắng .os-main.is-pad :where(h1..strong){font-weight:500} */
+body.os-body .os-main .sn-ts-page :where(h1, h2, h3, h4, strong, b) {
+    font-weight: 700;
 }
 
-.ts-page .calendar-toolbar {
+/* ---------- Khung thẻ trắng chính (#602:68773) ---------- */
+body.os-body .os-main .sn-ts-surface {
+    background: #FFFFFF;
+    border: 1px solid #E4E8ED;
+    border-radius: 20px;
+    box-shadow: 0px 4px 0px 0px #E4E8ED;
+    padding: 32px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+}
+
+/* ---------- Tiêu đề trang (#602:68774) ---------- */
+body.os-body .os-main .sn-ts-header {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+body.os-body .os-main .sn-ts-title {
+    margin: 0;
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 700;
+    color: #313B47;
+}
+
+body.os-body .os-main .sn-ts-subtitle {
+    margin: 0;
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: 700;
+    color: #6B7785;
+}
+
+/* ---------- Thanh công cụ lịch (#602:68777) ---------- */
+body.os-body .os-main .sn-ts-toolbar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 14px;
-    min-width: 0;
+    gap: 16px;
     flex-wrap: wrap;
 }
 
-.ts-page .segmented {
-    display: flex;
-    border: 1px solid #dce1ea;
-    border-radius: 10px;
-    overflow: hidden;
-    flex: 0 0 auto;
+/* Segmented Tabs Pill (#602:68778 / #549:2516) */
+body.os-body .os-main .sn-ts-views {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px;
+    border-radius: 999px;
+    background: #F4F5F7;
+    flex-shrink: 0;
 }
 
-.ts-page .segmented button {
-    height: 38px;
+body.os-body .os-main .sn-ts-view-btn {
+    height: 36px;
+    padding: 0 18px;
     border: 0;
-    background: #fff;
-    padding: 0 20px;
-    font-weight: 600;
-    color: #374151;
+    border-radius: 999px;
+    background: transparent;
+    color: #313B47;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 700;
     cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.15s ease, color 0.15s ease;
 }
 
-.ts-page .segmented button.active {
-    background: #fff4ea;
-    color: #f26b21;
-    box-shadow: inset 0 0 0 1px #f26b21;
+body.os-body .os-main .sn-ts-view-btn:hover:not(.is-active) {
+    background: rgba(49, 59, 71, 0.06);
 }
 
-.ts-page .student-schedule-nav {
-    display: flex;
+body.os-body .os-main .sn-ts-view-btn.is-active {
+    background: #0D99FF;
+    color: #FFFFFF;
+}
+
+/* Điều hướng ngày (#602:68779) */
+body.os-body .os-main .sn-ts-nav {
+    display: inline-flex;
     align-items: center;
     gap: 8px;
-    flex-wrap: wrap;
+    min-width: 0;
 }
 
-.ts-page .student-schedule-label {
-    margin: 0 10px;
-    min-width: 160px;
-    text-align: center;
-    font-size: 14px;
-    color: #111827;
-}
-
-.ts-page .btn {
-    border: 0;
-    background: #fff;
-    border-radius: 10px;
-    height: 38px;
-    padding: 0 14px;
+body.os-body .os-main .sn-ts-nav-btn {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 12px;
+    border: 1px solid #E4E8ED;
+    background: #FFFFFF;
+    color: #313B47;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    font-weight: 600;
     cursor: pointer;
-    transition: 0.18s ease;
+    flex-shrink: 0;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+body.os-body .os-main .sn-ts-nav-btn:hover {
+    background: #F8FAFC;
+    border-color: #CBD5E1;
+    color: #0D99FF;
+}
+
+body.os-body .os-main .sn-ts-date-label {
+    min-width: 200px;
+    height: 40px;
+    padding: 0 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 700;
+    color: #313B47;
     white-space: nowrap;
 }
 
-.ts-page .btn-outline {
-    border: 1px solid #dce1ea;
-    color: #374151;
-    background: #fff;
+/* Nút Hôm nay 3D (#602:68786 / #34:1712) */
+body.os-body .os-main .sn-ts-today-btn {
+    height: 48px;
+    padding: 12px 24px;
+    border-radius: 12px;
+    border: 1px solid #E4E8ED;
+    border-bottom-width: 0;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 0px 0px #E4E8ED;
+    color: #0D99FF;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.15s ease, transform 0.12s ease, box-shadow 0.12s ease;
 }
 
-.ts-page .btn-outline:hover {
-    background: #f8fafc;
+body.os-body .os-main .sn-ts-today-btn:hover {
+    background: #F8FBFF;
 }
 
-.ts-page .student-schedule-body {
-    min-height: 420px;
+body.os-body .os-main .sn-ts-today-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0px 2px 0px 0px #E4E8ED;
 }
 
-.ts-page .muted {
-    color: #6b7280;
+/* ---------- Chip lọc khóa học (#602:68787 / #549:2765) ---------- */
+body.os-body .os-main .sn-ts-chips {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
-.ts-page .pill {
+body.os-body .os-main .sn-ts-chip {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    border-radius: 8px;
-    padding: 4px 9px;
-    font-size: 11px;
-    font-weight: 600;
+    gap: 6px;
+    padding: 5px 10px;
+    border-radius: 14px;
+    border: 1px solid #E4E8ED;
+    background: #FFFFFF;
+    color: #6B7785;
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
 
-.ts-page .pill.green { background: #dcfce7; color: #16a34a; }
-.ts-page .pill.orange { background: #ffedd5; color: #ea580c; }
-.ts-page .pill.blue { background: #dbeafe; color: #2563eb; }
-.ts-page .pill.purple { background: #ede9fe; color: #7c3aed; }
-.ts-page .pill.red { background: #fee2e2; color: #dc2626; }
-.ts-page .pill.gray { background: #f1f5f9; color: #475569; }
-
-.ts-page .time-range b {
-    display: block;
-    color: #111827;
-    font-size: 15px;
+body.os-body .os-main .sn-ts-chip:hover {
+    filter: brightness(0.98);
 }
 
-.ts-page .time-range small {
-    display: block;
-    color: #64748b;
-    font-size: 12px;
-    margin-top: 2px;
+body.os-body .os-main .sn-ts-chip-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    flex-shrink: 0;
+    background: transparent;
+    border: 1.5px solid currentColor;
 }
 
-/* Month */
-.ts-page .month-grid {
-    display: grid;
-    grid-template-columns: repeat(7, minmax(0, 1fr));
-    border: 1px solid #e8ecf2;
-    border-radius: 12px;
+/* Selected=Off: chấm rỗng theo màu khóa */
+body.os-body .os-main .sn-ts-chip--all .sn-ts-chip-dot { border-color: #313B47; }
+body.os-body .os-main .sn-ts-chip--orange .sn-ts-chip-dot { border-color: #FF7614; }
+body.os-body .os-main .sn-ts-chip--blue .sn-ts-chip-dot { border-color: #0D99FF; }
+body.os-body .os-main .sn-ts-chip--purple .sn-ts-chip-dot { border-color: #7C5CDB; }
+body.os-body .os-main .sn-ts-chip--green .sn-ts-chip-dot { border-color: #1AB36B; }
+body.os-body .os-main .sn-ts-chip--pink .sn-ts-chip-dot { border-color: #E54D95; }
+body.os-body .os-main .sn-ts-chip--teal .sn-ts-chip-dot { border-color: #0EA5A4; }
+
+/* Selected=On: nền pastel, viền 1.5px, chấm đặc */
+body.os-body .os-main .sn-ts-chip--all.is-selected {
+    background: #ECEFF3;
+    border: 1.5px solid #313B47;
+    color: #313B47;
+}
+body.os-body .os-main .sn-ts-chip--all.is-selected .sn-ts-chip-dot {
+    background: #313B47;
+    border-color: #313B47;
+}
+
+body.os-body .os-main .sn-ts-chip--orange.is-selected {
+    background: #FFF1E5;
+    border: 1.5px solid #FF7614;
+    color: #A84A00;
+}
+body.os-body .os-main .sn-ts-chip--orange.is-selected .sn-ts-chip-dot {
+    background: #FF7614;
+    border-color: #FF7614;
+}
+
+body.os-body .os-main .sn-ts-chip--blue.is-selected {
+    background: #E8F4FF;
+    border: 1.5px solid #0D99FF;
+    color: #0364C6;
+}
+body.os-body .os-main .sn-ts-chip--blue.is-selected .sn-ts-chip-dot {
+    background: #0D99FF;
+    border-color: #0D99FF;
+}
+
+body.os-body .os-main .sn-ts-chip--purple.is-selected {
+    background: #F0ECFB;
+    border: 1.5px solid #7C5CDB;
+    color: #5B3FB4;
+}
+body.os-body .os-main .sn-ts-chip--purple.is-selected .sn-ts-chip-dot {
+    background: #7C5CDB;
+    border-color: #7C5CDB;
+}
+
+body.os-body .os-main .sn-ts-chip--green.is-selected {
+    background: #E6F6EC;
+    border: 1.5px solid #1AB36B;
+    color: #1A7F42;
+}
+body.os-body .os-main .sn-ts-chip--green.is-selected .sn-ts-chip-dot {
+    background: #1AB36B;
+    border-color: #1AB36B;
+}
+
+body.os-body .os-main .sn-ts-chip--pink.is-selected {
+    background: #FCEEF5;
+    border: 1.5px solid #E54D95;
+    color: #9E225D;
+}
+body.os-body .os-main .sn-ts-chip--pink.is-selected .sn-ts-chip-dot {
+    background: #E54D95;
+    border-color: #E54D95;
+}
+
+body.os-body .os-main .sn-ts-chip--teal.is-selected {
+    background: #E6F7F7;
+    border: 1.5px solid #0EA5A4;
+    color: #0E6868;
+}
+body.os-body .os-main .sn-ts-chip--teal.is-selected .sn-ts-chip-dot {
+    background: #0EA5A4;
+    border-color: #0EA5A4;
+}
+
+/* ---------- Khung lịch chính (#602:68793) ---------- */
+body.os-body .os-main .sn-ts-calendar-wrap {
+    border: 1px solid #E4E8ED;
+    border-radius: 16px;
+    background: #FFFFFF;
     overflow: hidden;
-    background: #fff;
+    min-width: 0;
+}
+
+body.os-body .os-main .sn-ts-calendar-body {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* ---------- Timeline (Chế độ Ngày & Tuần) ---------- */
+body.os-body .os-main .sn-ts-timeline {
     width: 100%;
     min-width: 0;
 }
 
-.ts-page .month-head,
-.ts-page .month-cell {
-    border-right: 1px solid #e8ecf2;
-    border-bottom: 1px solid #e8ecf2;
-    min-width: 0;
+body.os-body .os-main .sn-ts-timeline--week {
+    min-width: 780px;
 }
 
-.ts-page .month-head:nth-child(7n),
-.ts-page .month-cell:nth-child(7n) {
+body.os-body .os-main .sn-ts-timeline-head {
+    display: grid;
+    background: #F8FAFC;
+    border-bottom: 1px solid #EEF0F3;
+}
+
+body.os-body .os-main .sn-ts-timeline--day .sn-ts-timeline-head,
+body.os-body .os-main .sn-ts-timeline--day .sn-ts-timeline-grid {
+    grid-template-columns: 56px minmax(0, 1fr);
+}
+
+body.os-body .os-main .sn-ts-timeline--week .sn-ts-timeline-head,
+body.os-body .os-main .sn-ts-timeline--week .sn-ts-timeline-grid {
+    grid-template-columns: 56px repeat(7, minmax(0, 1fr));
+}
+
+body.os-body .os-main .sn-ts-axis-corner {
+    height: 56px;
+    border-right: 1px solid #EEF0F3;
+}
+
+body.os-body .os-main .sn-ts-day-col-head {
+    height: 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    border-right: 1px solid #EEF0F3;
+}
+
+body.os-body .os-main .sn-ts-day-col-head:last-child {
     border-right: 0;
 }
 
-.ts-page .month-head {
-    background: #fbfcfe;
-    text-align: center;
-    padding: 12px 8px;
-    font-weight: 600;
-    color: #111827;
-    min-height: 46px;
+body.os-body .os-main .sn-ts-day-col-head.is-clickable {
+    cursor: pointer;
+    border: 0;
+    border-right: 1px solid #EEF0F3;
+    background: transparent;
+    padding: 0;
+    transition: background-color 0.14s ease;
 }
 
-.ts-page .month-cell {
-    min-height: 108px;
-    vertical-align: top;
-    background: #fff;
+body.os-body .os-main .sn-ts-day-col-head.is-clickable:last-child {
+    border-right: 0;
 }
 
-.ts-page .month-cell.other-month {
-    background: #fafbfc;
+body.os-body .os-main .sn-ts-day-col-head.is-clickable:hover {
+    background: #F1F5F9;
 }
 
-.ts-page .month-cell.other-month .month-day-num {
-    color: #94a3b8;
+body.os-body .os-main .sn-ts-day-weekday {
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 700;
+    color: #6B7785;
 }
 
-.ts-page .month-cell.today {
-    background: #fff7f3;
+body.os-body .os-main .sn-ts-day-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 700;
+    color: #313B47;
 }
 
-.ts-page .month-cell.today .month-day-num {
-    color: #f4511e;
+body.os-body .os-main .sn-ts-day-num.is-today {
+    background: #FF7614;
+    color: #FFFFFF;
 }
 
-.ts-page .month-day-num {
-    display: block;
-    padding: 8px 10px 4px;
-    font-weight: 600;
-    color: #111827;
-    font-size: 13px;
+/* Lưới giờ (#602:68800) */
+body.os-body .os-main .sn-ts-timeline-grid {
+    display: grid;
+    position: relative;
 }
 
-.ts-page .month-events {
-    padding: 0 6px 8px;
+body.os-body .os-main .sn-ts-hour-axis {
+    position: relative;
+    border-right: 1px solid #EEF0F3;
+    background: #FFFFFF;
+    user-select: none;
+}
+
+body.os-body .os-main .sn-ts-hour-label {
+    position: absolute;
+    left: 8px;
+    font-size: 11px;
+    line-height: 15px;
+    font-weight: 700;
+    color: #98A2B3;
+    pointer-events: none;
+}
+
+body.os-body .os-main .sn-ts-day-col {
+    position: relative;
+    border-right: 1px solid #EEF0F3;
+    background: #FFFFFF;
+    overflow: visible;
+}
+
+body.os-body .os-main .sn-ts-day-col:last-child {
+    border-right: 0;
+}
+
+body.os-body .os-main .sn-ts-day-col.is-today {
+    background: #FFF7F0;
+}
+
+body.os-body .os-main .sn-ts-hour-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #EEF0F3;
+    pointer-events: none;
+}
+
+/* Vạch giờ hiện tại (#602:68838 & #602:68839) */
+body.os-body .os-main .sn-ts-now-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #FF5436;
+    z-index: 6;
+    pointer-events: none;
+}
+
+body.os-body .os-main .sn-ts-now-dot {
+    position: absolute;
+    left: -5px;
+    top: -4px;
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: #FF5436;
+}
+
+/* ---------- Khối sự kiện trên lưới giờ (#549:2734) ---------- */
+body.os-body .os-main .sn-ts-event {
+    position: absolute;
+    z-index: 3;
+    display: flex;
+    align-items: stretch;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: left;
+    cursor: pointer;
+    transition: box-shadow 0.14s ease, filter 0.14s ease, transform 0.14s ease;
+}
+
+body.os-body .os-main .sn-ts-event:hover {
+    z-index: 5;
+    box-shadow: 0px 4px 14px rgba(49, 59, 71, 0.14);
+}
+
+body.os-body .os-main .sn-ts-event.is-active {
+    z-index: 7;
+    box-shadow: 0px 6px 18px rgba(49, 59, 71, 0.2);
+}
+
+body.os-body .os-main .sn-ts-event-bar {
+    width: 4px;
+    flex-shrink: 0;
+}
+
+body.os-body .os-main .sn-ts-event-body {
+    flex: 1;
+    min-width: 0;
+    padding: 6px 8px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
-}
-
-.ts-page .month-events .event {
-    height: auto;
-    min-height: 0;
-    padding: 5px 7px;
-    font-size: 10px;
-    line-height: 1.35;
+    gap: 2px;
     overflow: hidden;
 }
 
-.ts-page .month-events .event b {
-    font-size: 10.5px;
-    margin-bottom: 2px;
+body.os-body .os-main .sn-ts-event.is-short .sn-ts-event-body {
+    padding: 4px 8px;
+    gap: 1px;
 }
 
-.ts-page .month-events .event small {
+body.os-body .os-main .sn-ts-event-row1 {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+}
+
+body.os-body .os-main .sn-ts-event-title {
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+body.os-body .os-main .sn-ts-live-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 1px 5px;
+    border-radius: 6px;
+    background: #FF5436;
+    color: #FFFFFF;
+    font-size: 9px;
+    line-height: 12px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+}
+
+body.os-body .os-main .sn-ts-event-course {
+    font-size: 11px;
+    line-height: 15px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+body.os-body .os-main .sn-ts-event-time,
+body.os-body .os-main .sn-ts-event-status {
+    font-size: 11px;
+    line-height: 15px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Màu sự kiện: Upcoming & Live */
+body.os-body .os-main .sn-ts-event--orange {
+    background: #FFF1E5;
+    color: #A84A00;
+}
+body.os-body .os-main .sn-ts-event--orange .sn-ts-event-bar { background: #FF7614; }
+body.os-body .os-main .sn-ts-event--orange.is-live { border: 1.5px solid #FF7614; }
+
+body.os-body .os-main .sn-ts-event--blue {
+    background: #E8F4FF;
+    color: #0364C6;
+}
+body.os-body .os-main .sn-ts-event--blue .sn-ts-event-bar { background: #0D99FF; }
+body.os-body .os-main .sn-ts-event--blue.is-live { border: 1.5px solid #0D99FF; }
+
+body.os-body .os-main .sn-ts-event--purple {
+    background: #F0ECFB;
+    color: #5B3FB4;
+}
+body.os-body .os-main .sn-ts-event--purple .sn-ts-event-bar { background: #7C5CDB; }
+body.os-body .os-main .sn-ts-event--purple.is-live { border: 1.5px solid #7C5CDB; }
+
+body.os-body .os-main .sn-ts-event--green {
+    background: #E6F6EC;
+    color: #1A7F42;
+}
+body.os-body .os-main .sn-ts-event--green .sn-ts-event-bar { background: #1AB36B; }
+body.os-body .os-main .sn-ts-event--green.is-live { border: 1.5px solid #1AB36B; }
+
+body.os-body .os-main .sn-ts-event--pink {
+    background: #FCEEF5;
+    color: #9E225D;
+}
+body.os-body .os-main .sn-ts-event--pink .sn-ts-event-bar { background: #E54D95; }
+body.os-body .os-main .sn-ts-event--pink.is-live { border: 1.5px solid #E54D95; }
+
+body.os-body .os-main .sn-ts-event--teal {
+    background: #E6F7F7;
+    color: #0E6868;
+}
+body.os-body .os-main .sn-ts-event--teal .sn-ts-event-bar { background: #0EA5A4; }
+body.os-body .os-main .sn-ts-event--teal.is-live { border: 1.5px solid #0EA5A4; }
+
+/* Trạng thái Đã kết thúc (State=Done #549:2677 / #549:2726) */
+body.os-body .os-main .sn-ts-event.is-done {
+    background: #F4F5F7;
+    border: 0;
+    color: #6B7785;
+}
+
+body.os-body .os-main .sn-ts-event.is-done .sn-ts-event-time,
+body.os-body .os-main .sn-ts-event.is-done .sn-ts-event-status {
+    color: #98A2B3;
+}
+
+body.os-body .os-main .sn-ts-event--orange.is-done .sn-ts-event-bar { background: rgba(255, 118, 20, 0.5); }
+body.os-body .os-main .sn-ts-event--blue.is-done .sn-ts-event-bar { background: rgba(13, 153, 255, 0.5); }
+body.os-body .os-main .sn-ts-event--purple.is-done .sn-ts-event-bar { background: rgba(124, 92, 219, 0.5); }
+body.os-body .os-main .sn-ts-event--green.is-done .sn-ts-event-bar { background: rgba(26, 179, 107, 0.5); }
+body.os-body .os-main .sn-ts-event--pink.is-done .sn-ts-event-bar { background: rgba(229, 77, 149, 0.5); }
+body.os-body .os-main .sn-ts-event--teal.is-done .sn-ts-event-bar { background: rgba(14, 165, 164, 0.5); }
+
+/* Thông báo ngày trống gọn nhẹ trên lưới Ngày */
+body.os-body .os-main .sn-ts-empty-day-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 10px 16px;
+    background: #F8FAFC;
+    border-top: 1px solid #EEF0F3;
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: 600;
+    color: #6B7785;
+}
+
+body.os-body .os-main .sn-ts-empty-day-jump {
+    border: 0;
+    background: transparent;
+    padding: 0;
+    color: #0D99FF;
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+body.os-body .os-main .sn-ts-empty-day-jump:hover {
+    text-decoration: underline;
+}
+
+/* ---------- Chế độ Tháng ---------- */
+body.os-body .os-main .sn-ts-month-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    width: 100%;
+    min-width: 720px;
+}
+
+body.os-body .os-main .sn-ts-month-head {
+    padding: 12px 8px;
+    text-align: center;
+    background: #F8FAFC;
+    border-right: 1px solid #EEF0F3;
+    border-bottom: 1px solid #EEF0F3;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 700;
+    color: #6B7785;
+}
+
+body.os-body .os-main .sn-ts-month-head:nth-child(7n) {
+    border-right: 0;
+}
+
+body.os-body .os-main .sn-ts-month-cell {
+    min-height: 116px;
+    padding: 6px;
+    background: #FFFFFF;
+    border-right: 1px solid #EEF0F3;
+    border-bottom: 1px solid #EEF0F3;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+body.os-body .os-main .sn-ts-month-cell:nth-child(7n) {
+    border-right: 0;
+}
+
+body.os-body .os-main .sn-ts-month-cell.is-other {
+    background: #FAFBFD;
+}
+
+body.os-body .os-main .sn-ts-month-cell.is-today {
+    background: #FFF7F0;
+}
+
+body.os-body .os-main .sn-ts-month-day-btn {
+    align-self: flex-start;
+    width: 28px;
+    height: 28px;
+    border: 0;
+    border-radius: 14px;
+    background: transparent;
+    color: #313B47;
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.14s ease, color 0.14s ease;
+}
+
+body.os-body .os-main .sn-ts-month-day-btn:hover {
+    background: #EEF2F7;
+}
+
+body.os-body .os-main .sn-ts-month-cell.is-other .sn-ts-month-day-btn {
+    color: #98A2B3;
+}
+
+body.os-body .os-main .sn-ts-month-cell.is-today .sn-ts-month-day-btn {
+    background: #FF7614;
+    color: #FFFFFF;
+}
+
+body.os-body .os-main .sn-ts-month-events {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+/* Sự kiện Compact trong chế độ Tháng (#549:2538) */
+body.os-body .os-main .sn-ts-month-event {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: left;
+    cursor: pointer;
+    transition: box-shadow 0.14s ease, transform 0.14s ease;
+}
+
+body.os-body .os-main .sn-ts-month-event:hover {
+    box-shadow: 0px 3px 10px rgba(49, 59, 71, 0.14);
+}
+
+body.os-body .os-main .sn-ts-month-event .sn-ts-event-body {
+    padding: 5px 8px;
+    gap: 1px;
+}
+
+/* ---------- Popover chi tiết buổi dạy (#602:68840 / #549:2897) ---------- */
+body.os-body .os-main .sn-ts-popover-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(23, 28, 34, 0.28);
+    z-index: 88;
+}
+
+body.os-body .os-main .sn-ts-popover {
+    position: fixed;
+    z-index: 90;
+    width: 340px;
+    max-width: calc(100vw - 24px);
+    background: #FFFFFF;
+    border-radius: 16px;
+    box-shadow: 0px 8px 24px 0px rgba(48, 59, 71, 0.22);
+    border: 1px solid rgba(228, 232, 237, 0.8);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+body.os-body .os-main .sn-ts-popover[hidden],
+body.os-body .os-main .sn-ts-popover-backdrop[hidden] {
     display: none;
 }
 
-/* Week */
-.ts-page .week-grid {
-    min-width: 980px;
-    display: grid;
-    grid-template-columns: 70px repeat(7, 1fr);
-    grid-auto-rows: minmax(72px, auto);
-    border: 1px solid #e8ecf2;
-    border-radius: 12px;
-    overflow: hidden;
-    background: #fff;
-    width: 100%;
-}
-
-.ts-page .week-grid > div {
-    border-right: 1px solid #e8ecf2;
-    border-bottom: 1px solid #e8ecf2;
-    min-height: 46px;
-}
-
-.ts-page .week-grid > div:nth-child(8n) {
-    border-right: 0;
-}
-
-.ts-page .week-head {
-    display: grid;
-    place-items: center;
-    font-weight: 600;
-    color: #111827;
-    background: #fbfcfe;
-    min-height: 54px;
-    text-align: center;
-    padding: 6px 4px;
-}
-
-.ts-page .week-head.active {
-    color: #fff;
-    background: #f4511e;
-}
-
-.ts-page .hour-cell {
-    display: grid;
-    place-items: start center;
-    padding-top: 10px;
-    color: #334155;
-    font-weight: 600;
-    background: #fbfcfe;
-    min-height: 72px;
-}
-
-.ts-page .slot {
-    padding: 6px;
-    min-height: 72px;
-    overflow: hidden;
-}
-
-/* Events */
-.ts-page .event {
-    display: block;
-    height: auto;
-    min-height: 58px;
-    border: 1px solid #bfdbfe;
-    background: #eff6ff;
-    border-radius: 8px;
-    padding: 8px;
-    font-size: 11px;
-    color: #1e3a8a;
-    font-weight: 600;
-    text-decoration: none;
-    overflow: hidden;
-}
-
-.ts-page .event.green { border-color: #a7f3d0; background: #ecfdf5; color: #065f46; }
-.ts-page .event.orange { border-color: #fed7aa; background: #fff7ed; color: #9a3412; }
-.ts-page .event.purple { border-color: #ddd6fe; background: #f5f3ff; color: #6d28d9; }
-.ts-page .event.pink { border-color: #fbcfe8; background: #fdf2f8; color: #9d174d; }
-.ts-page .event.teal { border-color: #99f6e4; background: #f0fdfa; color: #0f766e; }
-.ts-page .event.blue { border-color: #bfdbfe; background: #eff6ff; color: #1e3a8a; }
-
-.ts-page .event b,
-.ts-page .event strong {
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 12px;
-    color: inherit;
-    margin-bottom: 3px;
-}
-
-.ts-page .event small {
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.ts-page .event-card {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    height: auto;
-    min-height: 0;
-    padding: 5px 7px;
-    border-radius: 8px;
-}
-
-.ts-page .event-card.event-live,
-.ts-page .event.event-live-phase {
-    border: 1px solid rgba(34, 197, 94, 0.45);
-    background: linear-gradient(180deg, rgba(220, 252, 231, 0.95) 0%, rgba(255, 255, 255, 0.98) 100%);
-    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.14);
-    color: #065f46;
-}
-
-.ts-page .event-link-main {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-}
-
-.ts-page .event-locked,
-.ts-page .event.event-locked {
-    cursor: not-allowed;
-    opacity: 0.72;
-    background: #f1f5f9 !important;
-    border: 1px dashed #cbd5e1 !important;
-    box-shadow: none !important;
-    text-decoration: none;
-    pointer-events: none;
-}
-
-.ts-page .event-locked-label {
-    display: block;
-    margin-top: 3px;
-    font-size: 9px;
-    font-weight: 700;
-    color: #94a3b8;
-    font-style: normal;
-}
-
-.ts-page .event-live-badge {
-    display: inline-block;
-    margin-bottom: 3px;
-    padding: 1px 5px;
-    border-radius: 4px;
-    font-size: 8px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    color: #fff;
-    background: #ef4444;
-    line-height: 1.4;
-}
-
-.ts-page .event-assessment-badge {
-    display: inline-block;
-    margin-bottom: 3px;
-    padding: 1px 5px;
-    border-radius: 4px;
-    font-size: 8px;
-    font-weight: 700;
-    color: #fff;
-    background: #7c3aed;
-    line-height: 1.4;
-}
-
-.ts-page .event-join-form {
-    margin: 0;
-}
-
-.ts-page .event-join-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    width: 100%;
-    margin: 0;
-    padding: 4px 6px;
-    border: 0;
-    border-radius: 6px;
-    font-size: 9px;
-    font-weight: 700;
-    line-height: 1.2;
-    color: #fff;
-    background: linear-gradient(135deg, #ff6a2a, #f04412);
-    box-shadow: 0 4px 10px rgba(244, 81, 30, 0.28);
-    cursor: pointer;
-    text-decoration: none;
-}
-
-.ts-page .month-events .event-link,
-.ts-page .week-grid .event-link {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-    cursor: pointer;
-}
-
-.ts-page .month-events .event-link.event-ended,
-.ts-page .week-grid .event-link.event-ended {
-    border-color: #374151;
-    background: #1f2937;
-    color: #f9fafb;
-}
-
-.ts-page .event-ended-label {
-    display: block;
-    margin-top: 4px;
-    font-style: normal;
-    font-size: 9px;
-    font-weight: 600;
-    opacity: 0.88;
-}
-
-.ts-page .event-link:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 14px rgba(15, 23, 42, 0.12);
-}
-
-.ts-page .week-grid .event-card.event-live {
-    min-height: 58px;
-}
-
-/* Day */
-.ts-page .day-schedule {
-    border: 1px solid #e8ecf2;
-    border-radius: 12px;
-    background: #fff;
-    overflow: hidden;
-}
-
-.ts-page .day-schedule.is-today {
-    box-shadow: inset 0 0 0 1px rgba(244, 81, 30, 0.25);
-}
-
-.ts-page .day-schedule-head {
+body.os-body .os-main .sn-ts-pop-head {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    padding: 16px 18px;
-    border-bottom: 1px solid #edf0f5;
-    background: #fbfcfe;
+    gap: 10px;
 }
 
-.ts-page .day-schedule-empty {
-    padding: 28px 18px;
+body.os-body .os-main .sn-ts-pop-course {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 700;
+    min-width: 0;
+    max-width: calc(100% - 38px);
 }
 
-.ts-page .day-schedule-list {
+body.os-body .os-main .sn-ts-pop-course-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+body.os-body .os-main .sn-ts-pop-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    flex-shrink: 0;
+}
+
+body.os-body .os-main .sn-ts-pop-course--orange { background: #FFF1E5; color: #A84A00; }
+body.os-body .os-main .sn-ts-pop-course--orange .sn-ts-pop-dot { background: #FF7614; }
+
+body.os-body .os-main .sn-ts-pop-course--blue { background: #E8F4FF; color: #0364C6; }
+body.os-body .os-main .sn-ts-pop-course--blue .sn-ts-pop-dot { background: #0D99FF; }
+
+body.os-body .os-main .sn-ts-pop-course--purple { background: #F0ECFB; color: #5B3FB4; }
+body.os-body .os-main .sn-ts-pop-course--purple .sn-ts-pop-dot { background: #7C5CDB; }
+
+body.os-body .os-main .sn-ts-pop-course--green { background: #E6F6EC; color: #1A7F42; }
+body.os-body .os-main .sn-ts-pop-course--green .sn-ts-pop-dot { background: #1AB36B; }
+
+body.os-body .os-main .sn-ts-pop-course--pink { background: #FCEEF5; color: #9E225D; }
+body.os-body .os-main .sn-ts-pop-course--pink .sn-ts-pop-dot { background: #E54D95; }
+
+body.os-body .os-main .sn-ts-pop-course--teal { background: #E6F7F7; color: #0E6868; }
+body.os-body .os-main .sn-ts-pop-course--teal .sn-ts-pop-dot { background: #0EA5A4; }
+
+body.os-body .os-main .sn-ts-pop-close {
+    width: 28px;
+    height: 28px;
+    border-radius: 14px;
+    border: 0;
+    background: #F4F5F7;
+    color: #6B7785;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background-color 0.14s ease, color 0.14s ease;
+}
+
+body.os-body .os-main .sn-ts-pop-close:hover {
+    background: #E4E8ED;
+    color: #313B47;
+}
+
+body.os-body .os-main .sn-ts-pop-title {
+    margin: 0;
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 700;
+    color: #313B47;
+    word-break: break-word;
+}
+
+body.os-body .os-main .sn-ts-pop-meta {
     display: flex;
     flex-direction: column;
+    gap: 8px;
 }
 
-.ts-page .day-schedule-item {
+body.os-body .os-main .sn-ts-pop-meta-row {
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 14px 18px;
-    border-bottom: 1px solid #edf0f5;
+    gap: 8px;
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: 500;
+    color: #313B47;
 }
 
-.ts-page .day-schedule-item.is-live {
-    background: linear-gradient(90deg, rgba(220, 252, 231, 0.45) 0%, #fff 100%);
+body.os-body .os-main .sn-ts-pop-meta-row svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    color: #6B7785;
 }
 
-.ts-page .day-schedule-item.is-locked {
-    opacity: 0.85;
-    background: #f8fafc;
-}
-
-.ts-page .day-schedule-item .day-schedule-item-link {
+/* Status chip trong Popover (#556:14894 / #556:2599) */
+body.os-body .os-main .sn-ts-pop-status-row {
     display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    flex: 1;
-    min-width: 0;
+    align-items: center;
+}
+
+body.os-body .os-main .sn-ts-pop-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 9999px;
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: 700;
+}
+
+body.os-body .os-main .sn-ts-pop-status svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+body.os-body .os-main .sn-ts-pop-status--done {
+    background: #E8FBF2;
+    color: #10B266;
+}
+
+body.os-body .os-main .sn-ts-pop-status--live {
+    background: #FCE9E9;
+    border: 2px solid #E01F1F;
+    color: #E01F1F;
+    padding: 4px 12px 4px 8px;
+}
+
+body.os-body .os-main .sn-ts-pop-status--ready {
+    background: #E8FBF2;
+    border: 2px solid #10B266;
+    color: #10B266;
+    padding: 4px 12px 4px 8px;
+}
+
+body.os-body .os-main .sn-ts-pop-status--upcoming {
+    background: #FFFAF0;
+    border: 2px solid #FCB102;
+    color: #B26A00;
+    padding: 4px 12px 4px 8px;
+}
+
+/* CTA button trong Popover (#556:2663) */
+body.os-body .os-main .sn-ts-pop-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+body.os-body .os-main .sn-ts-pop-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 48px;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
     text-decoration: none;
-    color: inherit;
-    cursor: pointer;
-}
-
-.ts-page .day-schedule-item-link--locked {
-    cursor: not-allowed;
-    pointer-events: none;
-}
-
-.ts-page .day-schedule-item:last-child {
-    border-bottom: 0;
-}
-
-.ts-page .day-schedule-item-main {
-    min-width: 0;
-    flex: 1;
-}
-
-.ts-page .day-schedule-item-main strong {
-    display: block;
-    color: #111827;
-}
-
-.ts-page .day-schedule-item-main small {
-    display: block;
-    margin-top: 4px;
-    color: #6b7280;
-}
-
-.ts-page .day-schedule-item-main .pill {
-    margin-top: 8px;
-}
-
-.ts-page .day-schedule-item .event-join-btn {
-    width: auto;
-    min-height: 40px;
-    padding: 8px 14px;
-    border-radius: 10px;
-    font-size: 13px;
     white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.15s ease, transform 0.12s ease, box-shadow 0.12s ease;
 }
 
-@media (max-width: 768px) {
-    .ts-page .calendar-toolbar {
-        align-items: flex-start;
+body.os-body .os-main .sn-ts-pop-cta--primary {
+    background: #FF7614;
+    border: 0;
+    box-shadow: 0px 4px 0px 0px #E95308;
+    color: #FFFFFF;
+}
+
+body.os-body .os-main .sn-ts-pop-cta--primary:hover {
+    background: #FF8B38;
+    color: #FFFFFF;
+}
+
+body.os-body .os-main .sn-ts-pop-cta--primary:active {
+    transform: translateY(2px);
+    box-shadow: 0px 2px 0px 0px #E95308;
+}
+
+body.os-body .os-main .sn-ts-pop-cta--tertiary {
+    background: #FFFFFF;
+    border: 1px solid #E4E8ED;
+    border-bottom-width: 0;
+    box-shadow: 0px 4px 0px 0px #E4E8ED;
+    color: #0D99FF;
+}
+
+body.os-body .os-main .sn-ts-pop-cta--tertiary:hover {
+    background: #F8FBFF;
+    color: #0364C6;
+}
+
+body.os-body .os-main .sn-ts-pop-cta--tertiary:active {
+    transform: translateY(2px);
+    box-shadow: 0px 2px 0px 0px #E4E8ED;
+}
+
+body.os-body .os-main .sn-ts-pop-foot {
+    margin: 0;
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: 400;
+    color: #6B7785;
+}
+
+/* ---------- Responsive Tablet & Mobile ---------- */
+@media (max-width: 900px) {
+    body.os-body .os-main .sn-ts-surface {
+        padding: 20px 16px 16px;
+        border-radius: 16px;
     }
 
-    .ts-page .segmented {
+    body.os-body .os-main .sn-ts-toolbar {
+        gap: 12px;
+    }
+
+    body.os-body .os-main .sn-ts-date-label {
+        min-width: 170px;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 640px) {
+    body.os-body .os-main .sn-ts-views {
         width: 100%;
     }
 
-    .ts-page .segmented button {
+    body.os-body .os-main .sn-ts-view-btn {
         flex: 1;
+        padding: 0 12px;
     }
 
-    .ts-page .student-schedule-nav {
-        width: 100%;
+    body.os-body .os-main .sn-ts-nav {
+        flex: 1;
         justify-content: space-between;
     }
 
-    .ts-page .student-schedule-label {
-        flex: 1 1 100%;
-        order: -1;
-        margin: 0 0 8px;
+    body.os-body .os-main .sn-ts-date-label {
+        min-width: 0;
+        flex: 1;
+        font-size: 14px;
     }
 
-    .ts-page .day-schedule-item.is-live {
-        flex-direction: column;
-        align-items: stretch;
+    body.os-body .os-main .sn-ts-today-btn {
+        height: 40px;
+        padding: 8px 16px;
+        font-size: 14px;
     }
 
-    .ts-page .week-grid {
-        min-width: 940px;
+    body.os-body .os-main .sn-ts-popover {
+        left: 50% !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%);
+        width: calc(100vw - 24px);
+        max-width: 360px;
     }
 }

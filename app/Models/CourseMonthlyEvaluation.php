@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Support\HtmlContent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Schema;
 
 class CourseMonthlyEvaluation extends Model
 {
@@ -17,7 +18,24 @@ class CourseMonthlyEvaluation extends Model
         'score_progress',
         'score_participation',
         'comment',
+        'is_draft',
     ];
+
+    protected $casts = [
+        'is_draft' => 'boolean',
+    ];
+
+    private static ?bool $hasDraftColumn = null;
+
+    public static function supportsDraftColumn(): bool
+    {
+        if (self::$hasDraftColumn === null) {
+            self::$hasDraftColumn = Schema::hasTable('course_monthly_evaluations')
+                && Schema::hasColumn('course_monthly_evaluations', 'is_draft');
+        }
+
+        return self::$hasDraftColumn;
+    }
 
     public function course(): BelongsTo
     {
@@ -276,7 +294,12 @@ class CourseMonthlyEvaluation extends Model
         return HtmlContent::render($this->comment);
     }
 
-    public function isFilled(): bool
+    public function isDraft(): bool
+    {
+        return self::supportsDraftColumn() && (bool) ($this->is_draft ?? false);
+    }
+
+    public function hasAnyContent(): bool
     {
         if ($this->hasComment()) {
             return true;
@@ -289,6 +312,15 @@ class CourseMonthlyEvaluation extends Model
         }
 
         return false;
+    }
+
+    public function isFilled(): bool
+    {
+        if ($this->isDraft()) {
+            return false;
+        }
+
+        return $this->hasAnyContent();
     }
 
     /**
@@ -365,8 +397,14 @@ class CourseMonthlyEvaluation extends Model
     /**
      * @param  array<string, mixed>  $data
      */
-    public static function upsertEvaluation(int $courseId, int $userId, int $teacherId, string $period, array $data): self
-    {
+    public static function upsertEvaluation(
+        int $courseId,
+        int $userId,
+        int $teacherId,
+        string $period,
+        array $data,
+        bool $isDraft = false
+    ): self {
         $period = self::normalizePeriod($period);
 
         $row = static::query()->firstOrNew([
@@ -380,6 +418,11 @@ class CourseMonthlyEvaluation extends Model
         $row->score_progress = self::normalizeScore($data['score_progress'] ?? null);
         $row->score_participation = self::normalizeScore($data['score_participation'] ?? null);
         $row->comment = HtmlContent::sanitize((string) ($data['comment'] ?? ''));
+
+        if (self::supportsDraftColumn()) {
+            $row->is_draft = $isDraft;
+        }
+
         $row->save();
 
         return $row;

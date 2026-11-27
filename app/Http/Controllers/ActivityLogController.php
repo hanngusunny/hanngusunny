@@ -16,17 +16,20 @@ class ActivityLogController extends Controller
     ) {
     }
 
-    public function index(Request $request): View
+    public function index(Request $request): View|RedirectResponse
     {
         $viewer = $request->user();
-        $isAdmin = $viewer?->isAdmin() === true;
+
+        if ($viewer === null || ! $viewer->isAdmin()) {
+            return redirect()->route('dashboard');
+        }
+
         $role = trim((string) $request->query('role', UserRole::STUDENT));
         $from = $this->dateQuery($request, 'from', now()->subDays(30)->toDateString());
         $to = $this->dateQuery($request, 'to', now()->toDateString());
+        $roles = $this->activity->roleOptions();
 
-        if (! $isAdmin) {
-            $role = UserRole::STUDENT;
-        } elseif (! isset($this->activity->roleOptions(true)[$role])) {
+        if (! isset($roles[$role])) {
             $role = UserRole::STUDENT;
         }
 
@@ -35,8 +38,7 @@ class ActivityLogController extends Controller
         return view('activity_logs.index', [
             'summaries' => $summaries,
             'filters' => compact('role', 'from', 'to'),
-            'roles' => $this->activity->roleOptions($isAdmin),
-            'isAdmin' => $isAdmin,
+            'roles' => $roles,
             'activity' => $this->activity,
         ]);
     }

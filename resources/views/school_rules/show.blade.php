@@ -81,7 +81,7 @@
                             </svg>
                         </div>
                         <h2 class="sn-rules-empty-title">Chưa có nội quy</h2>
-                        <p class="sn-rules-empty-desc">Giáo viên hoặc quản trị viên chưa cập nhật nội dung nội quy.</p>
+                        <p class="sn-rules-empty-desc">Quản trị viên chưa cập nhật nội dung nội quy.</p>
                     </div>
                 @endif
             </article>

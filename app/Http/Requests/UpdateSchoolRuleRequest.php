@@ -9,7 +9,7 @@ class UpdateSchoolRuleRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()?->isStaff() === true;
+        return $this->user()?->isAdmin() === true;
     }
 
     public function rules(): array

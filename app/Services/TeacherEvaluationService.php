@@ -11,11 +11,23 @@ use Illuminate\Support\Facades\Schema;
 
 class TeacherEvaluationService
 {
+    public const TAB_ALL = 'all';
+
+    public const TAB_IN_PROGRESS = 'in-progress';
+
+    public const TAB_DONE = 'done';
+
     /**
      * @return array<string, mixed>|null
      */
-    public function build(int $teacherId, int $courseId, int $userId, string $evalWeek): ?array
-    {
+    public function build(
+        int $teacherId,
+        int $courseId,
+        int $userId,
+        string $evalWeek,
+        string $activeTab = self::TAB_ALL,
+        string $search = '',
+    ): ?array {
         if ($teacherId <= 0 || ! $this->tablesReady()) {
             return null;
         }
@@ -26,7 +38,10 @@ class TeacherEvaluationService
             return null;
         }
 
-        if ($courseId <= 0 || ! $courses->contains('id', $courseId)) {
+        $requestedCourseId = $courseId;
+        $isCourseSelected = $requestedCourseId > 0 && $courses->contains('id', $requestedCourseId);
+
+        if (! $isCourseSelected) {
             $courseId = (int) $courses->first()?->id;
         }
 
@@ -37,6 +52,8 @@ class TeacherEvaluationService
         }
 
         $evalWeek = CourseMonthlyEvaluation::normalizePeriod($evalWeek);
+        $activeTab = $this->normalizeTab($activeTab);
+        $search = trim($search);
         $weekOptions = CourseMonthlyEvaluation::weekOptions(20);
         $members = CourseMember::activeMembersForCourse($courseId);
         $evalMap = CourseMonthlyEvaluation::mapForCoursePeriod($courseId, $evalWeek);
@@ -73,8 +90,12 @@ class TeacherEvaluationService
 
         foreach ($courses as $row) {
             $id = (int) $row->id;
-            $courseMembers = CourseMember::activeMembersForCourse($id);
-            $courseEvalMap = CourseMonthlyEvaluation::mapForCoursePeriod($id, $evalWeek);
+            $courseMembers = $id === $courseId
+                ? $members
+                : CourseMember::activeMembersForCourse($id);
+            $courseEvalMap = $id === $courseId
+                ? $evalMap
+                : CourseMonthlyEvaluation::mapForCoursePeriod($id, $evalWeek);
             $done = 0;
 
             foreach ($courseMembers as $courseMember) {
@@ -86,17 +107,49 @@ class TeacherEvaluationService
                 }
             }
 
+            $memberTotal = $courseMembers->count();
+            $isCompleted = $memberTotal > 0 && $done >= $memberTotal;
+            $progressPct = $memberTotal > 0 ? min(100, (int) round(($done / $memberTotal) * 100)) : 0;
+
             $courseSummaries[] = [
                 'course' => $row,
-                'member_count' => $courseMembers->count(),
+                'member_count' => $memberTotal,
                 'evaluated' => $done,
-                'session_count' => CourseSession::scheduledForWeek($id, $evalWeek)->count(),
+                'progress_pct' => $progressPct,
+                'is_completed' => $isCompleted,
+                'status' => $isCompleted ? self::TAB_DONE : self::TAB_IN_PROGRESS,
+                'session_count' => $id === $courseId
+                    ? $weekSessionCount
+                    : CourseSession::scheduledForWeek($id, $evalWeek)->count(),
             ];
         }
+
+        $needle = mb_strtolower($search, 'UTF-8');
+        $filteredCourseSummaries = array_values(array_filter(
+            $courseSummaries,
+            static function (array $summary) use ($activeTab, $needle): bool {
+                if ($activeTab !== self::TAB_ALL && ($summary['status'] ?? '') !== $activeTab) {
+                    return false;
+                }
+
+                if ($needle !== '') {
+                    $title = mb_strtolower((string) ($summary['course']?->title ?? ''), 'UTF-8');
+                    if (! str_contains($title, $needle)) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        ));
 
         return [
             'courses' => $courses,
             'courseSummaries' => $courseSummaries,
+            'filteredCourseSummaries' => $filteredCourseSummaries,
+            'isCourseSelected' => $isCourseSelected,
+            'activeTab' => $activeTab,
+            'search' => $search,
             'course' => $course,
             'courseId' => $courseId,
             'members' => $members,
@@ -115,13 +168,33 @@ class TeacherEvaluationService
         ];
     }
 
-    public function pageUrl(int $courseId, int $userId, string $evalWeek): string
+    public function normalizeTab(string $tab): string
     {
-        return route('teacher.evaluations', array_filter([
+        return match ($tab) {
+            self::TAB_IN_PROGRESS, self::TAB_DONE => $tab,
+            default => self::TAB_ALL,
+        };
+    }
+
+    /**
+     * @param  array<string, mixed>  $extra
+     */
+    public function pageUrl(int $courseId, int $userId, string $evalWeek, array $extra = []): string
+    {
+        $params = array_merge([
             'khoa' => $courseId > 0 ? $courseId : null,
             'hoc-vien' => $userId > 0 ? $userId : null,
             'tuan' => $evalWeek !== '' ? $evalWeek : null,
-        ], static fn ($value) => $value !== null && $value !== ''));
+        ], $extra);
+
+        if (($params['tab'] ?? '') === self::TAB_ALL) {
+            unset($params['tab']);
+        }
+
+        return route('teacher.evaluations', array_filter(
+            $params,
+            static fn ($value) => $value !== null && $value !== ''
+        ));
     }
 
     private function tablesReady(): bool

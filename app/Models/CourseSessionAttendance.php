@@ -4,20 +4,106 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Schema;
 
 class CourseSessionAttendance extends Model
 {
+    public const STATUS_PRESENT = 'present';
+
+    public const STATUS_LATE = 'late';
+
+    public const STATUS_ABSENT = 'absent';
+
     protected $table = 'course_session_attendance';
 
     protected $fillable = [
         'session_id',
         'user_id',
         'joined_at',
+        'attendance_status',
     ];
 
     protected $casts = [
         'joined_at' => 'datetime',
     ];
+
+    private static ?bool $hasStatusColumn = null;
+
+    public static function supportsStatusColumn(): bool
+    {
+        if (self::$hasStatusColumn === null) {
+            self::$hasStatusColumn = Schema::hasTable('course_session_attendance')
+                && Schema::hasColumn('course_session_attendance', 'attendance_status');
+        }
+
+        return self::$hasStatusColumn;
+    }
+
+    public static function normalizeStatus(string $status): string
+    {
+        return match (strtolower(trim($status))) {
+            self::STATUS_LATE => self::STATUS_LATE,
+            self::STATUS_ABSENT => self::STATUS_ABSENT,
+            default => self::STATUS_PRESENT,
+        };
+    }
+
+    public static function setStatus(int $sessionId, int $userId, string $status, ?string $joinedAt = null): string
+    {
+        $normalized = self::normalizeStatus($status);
+
+        if ($normalized === self::STATUS_ABSENT) {
+            self::clearAttendance($sessionId, $userId);
+
+            return self::STATUS_ABSENT;
+        }
+
+        $payload = [
+            'joined_at' => $joinedAt ?: now()->format('Y-m-d H:i:s'),
+        ];
+
+        if (self::supportsStatusColumn()) {
+            $payload['attendance_status'] = $normalized;
+        }
+
+        static::query()->updateOrCreate(
+            ['session_id' => $sessionId, 'user_id' => $userId],
+            $payload
+        );
+
+        return $normalized;
+    }
+
+    /**
+     * @param  list<int>  $sessionIds
+     * @return array<int, array<int, string>> [user_id => [session_id => 'present'|'late']]
+     */
+    public static function statusMapForSessions(array $sessionIds, ?int $userId = null): array
+    {
+        $sessionIds = array_values(array_filter(array_map('intval', $sessionIds), static fn (int $id): bool => $id > 0));
+
+        if ($sessionIds === []) {
+            return [];
+        }
+
+        $hasStatus = self::supportsStatusColumn();
+        $cols = $hasStatus ? ['session_id', 'user_id', 'attendance_status'] : ['session_id', 'user_id'];
+
+        $query = static::query()->whereIn('session_id', $sessionIds);
+        if ($userId !== null && $userId > 0) {
+            $query->where('user_id', $userId);
+        }
+
+        $map = [];
+        foreach ($query->get($cols) as $row) {
+            $uid = (int) $row->user_id;
+            $sid = (int) $row->session_id;
+            $st = $hasStatus ? strtolower(trim((string) ($row->attendance_status ?? self::STATUS_PRESENT))) : self::STATUS_PRESENT;
+            $map[$uid][$sid] = $st === self::STATUS_LATE ? self::STATUS_LATE : self::STATUS_PRESENT;
+        }
+
+        return $map;
+    }
 
     public function session(): BelongsTo
     {

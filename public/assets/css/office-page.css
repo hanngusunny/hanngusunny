@@ -296,8 +296,8 @@ body.os-body {
 .op-field,
 body.os-body .os-main .input,
 body.os-body .os-main input:not([type]),
-body.os-body .os-main input[type="search"],
-body.os-body .os-main input[type="text"],
+body.os-body .os-main input[type="search"]:not(.sn-search-input-bare),
+body.os-body .os-main input[type="text"]:not(.sn-search-input-bare),
 body.os-body .os-main input[type="email"],
 body.os-body .os-main input[type="tel"],
 body.os-body .os-main input[type="password"],
@@ -312,8 +312,8 @@ body.os-body .os-main select,
 body.os-body .os-main textarea,
 body.os-body #drawer .input,
 body.os-body #drawer input:not([type]),
-body.os-body #drawer input[type="search"],
-body.os-body #drawer input[type="text"],
+body.os-body #drawer input[type="search"]:not(.sn-search-input-bare),
+body.os-body #drawer input[type="text"]:not(.sn-search-input-bare),
 body.os-body #drawer input[type="email"],
 body.os-body #drawer input[type="tel"],
 body.os-body #drawer input[type="password"],
@@ -364,21 +364,21 @@ body.os-body #drawer select {
     cursor: pointer;
 }
 
-body.os-body .os-main input::placeholder,
+body.os-body .os-main input:not(.sn-search-input-bare)::placeholder,
 body.os-body .os-main textarea::placeholder,
-body.os-body #drawer input::placeholder,
+body.os-body #drawer input:not(.sn-search-input-bare)::placeholder,
 body.os-body #drawer textarea::placeholder {
     color: #b3a89d;
     font-weight: 450;
 }
 
-body.os-body .os-main :is(input, select, textarea):not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="file"]):hover,
-body.os-body #drawer :is(input, select, textarea):not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="file"]):hover {
+body.os-body .os-main :is(input, select, textarea):not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="file"]):not(.sn-search-input-bare):hover,
+body.os-body #drawer :is(input, select, textarea):not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="file"]):not(.sn-search-input-bare):hover {
     border-color: #e0c8b2 !important;
 }
 
-body.os-body .os-main :is(input, select, textarea):not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="file"]):focus,
-body.os-body #drawer :is(input, select, textarea):not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="file"]):focus {
+body.os-body .os-main :is(input, select, textarea):not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="file"]):not(.sn-search-input-bare):focus,
+body.os-body #drawer :is(input, select, textarea):not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="file"]):not(.sn-search-input-bare):focus {
     border-color: #f26b21 !important;
     background-color: #fff !important;
     box-shadow:
@@ -394,8 +394,8 @@ body.os-body #drawer select:focus {
     background-size: 12px 8px, 100% 100% !important;
 }
 
-body.os-body .os-main :is(input, select, textarea):not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="file"]):disabled,
-body.os-body #drawer :is(input, select, textarea):not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="file"]):disabled {
+body.os-body .os-main :is(input, select, textarea):not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="file"]):not(.sn-search-input-bare):disabled,
+body.os-body #drawer :is(input, select, textarea):not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="file"]):not(.sn-search-input-bare):disabled {
     background-color: #f7f3ef !important;
     color: #7a736c;
     box-shadow: none;
@@ -410,8 +410,8 @@ body.os-body #drawer select:disabled {
     background-size: 12px 8px, 100% 100% !important;
 }
 
-body.os-body .os-main input:-webkit-autofill,
-body.os-body #drawer input:-webkit-autofill {
+body.os-body .os-main input:not(.sn-search-input-bare):-webkit-autofill,
+body.os-body #drawer input:not(.sn-search-input-bare):-webkit-autofill {
     -webkit-box-shadow: 0 0 0 1000px #fffdfb inset !important;
     -webkit-text-fill-color: #1f1c18;
 }

@@ -3,9 +3,7 @@
 @section('title', 'Kiểm tra & Áp dụng Voucher')
 
 @section('subnav')
-    @if (auth()->user()?->isAdmin())
-        <a href="{{ route('admin.vouchers.index') }}" class="os-tab"><i class="fa-solid fa-ticket"></i> Danh sách & Tạo Voucher</a>
-    @endif
+    <a href="{{ route('admin.vouchers.index') }}" class="os-tab"><i class="fa-solid fa-ticket"></i> Danh sách & Tạo Voucher</a>
     <a href="{{ route('admin.vouchers.check') }}" class="os-tab is-on"><i class="fa-solid fa-qrcode"></i> Kiểm tra & Áp dụng mã</a>
 @endsection
 
@@ -24,11 +22,9 @@
             Nhập mã voucher học viên để xác thực thông tin (Họ tên, SĐT, Ngày sinh) và khóa mã khi áp dụng.
         </x-slot:lead>
         <x-slot:aside>
-            @if (auth()->user()?->isAdmin())
-                <a href="{{ route('admin.vouchers.index') }}" class="op-btn flex items-center gap-2">
-                    <i class="fa-solid fa-arrow-left"></i> Về danh sách voucher
-                </a>
-            @endif
+            <a href="{{ route('admin.vouchers.index') }}" class="op-btn flex items-center gap-2">
+                <i class="fa-solid fa-arrow-left"></i> Về danh sách voucher
+            </a>
         </x-slot:aside>
     </x-page-title>
 

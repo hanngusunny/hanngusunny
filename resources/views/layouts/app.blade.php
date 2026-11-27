@@ -27,7 +27,7 @@
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/office-shell.css') }}?v=5">
-    <link rel="stylesheet" href="{{ asset('assets/css/office-page.css') }}?v=6">
+    <link rel="stylesheet" href="{{ asset('assets/css/office-page.css') }}?v=7">
     <link rel="stylesheet" href="{{ asset('assets/css/notifications.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/sunny-ds.css') }}?v=1">
@@ -104,18 +104,19 @@
         }
         if ($authUser?->isTeacher()) {
             $nav[] = [
+                'id' => 'courses',
+                'href' => route('teacher.course.index'),
+                'icon' => 'fa-chalkboard',
+                'svg' => 'course',
+                'label' => 'Quản lý khóa học',
+                'label_html' => 'Quản lý<br>khóa học',
+            ];
+            $nav[] = [
                 'id' => 'schedule',
                 'href' => route('teacher.schedule'),
                 'icon' => 'fa-calendar-days',
                 'svg' => 'schedule',
                 'label' => 'Lịch dạy',
-            ];
-            $nav[] = [
-                'id' => 'evaluations',
-                'href' => route('teacher.evaluations'),
-                'icon' => 'fa-star-half-stroke',
-                'svg' => 'teacher_eval',
-                'label' => 'Đánh giá',
             ];
             $nav[] = [
                 'id' => 'grading',
@@ -125,31 +126,11 @@
                 'label' => 'Chấm điểm',
             ];
             $nav[] = [
-                'id' => 'assessments',
-                'href' => route('student.assessments'),
-                'icon' => 'fa-list-check',
-                'svg' => 'exam',
-                'label' => 'Bài kiểm tra',
-            ];
-            $nav[] = [
-                'id' => 'vouchers_check',
-                'href' => route('staff.vouchers.check'),
-                'icon' => 'fa-ticket',
-                'label' => 'Kiểm tra Voucher',
-            ];
-            $nav[] = [
-                'id' => 'rules',
-                'href' => route('school-rules.edit'),
-                'icon' => 'fa-book',
-                'svg' => 'rules',
-                'label' => 'Nội quy',
-            ];
-            $nav[] = [
-                'id' => 'activity',
-                'href' => route('activity-logs.index'),
-                'icon' => 'fa-clock-rotate-left',
-                'svg' => 'activity',
-                'label' => 'Lịch sử hoạt động',
+                'id' => 'evaluations',
+                'href' => route('teacher.evaluations'),
+                'icon' => 'fa-star-half-stroke',
+                'svg' => 'teacher_eval',
+                'label' => 'Đánh giá',
             ];
         }
         if ($authUser?->isAdmin()) {

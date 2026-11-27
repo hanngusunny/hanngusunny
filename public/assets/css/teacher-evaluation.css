@@ -328,3 +328,519 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* ==========================================================================
+   SUNNY — Màn Đánh giá Giáo viên chuẩn pixel Figma (#681:61594)
+   Scoped dưới .sn-te-page, giữ nguyên style form đánh giá chi tiết ở trên
+   ========================================================================== */
+
+body.os-body .os-main .sn-te-page {
+    font-family: "Nunito", "Noto Sans KR", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+    color: #313B47;
+    display: block;
+}
+
+body.os-body .os-main .sn-te-page * {
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+body.os-body .os-main .sn-te-page :where(h1, h2, h3, h4, strong, b) {
+    font-weight: 700;
+}
+
+/* Khung thẻ trắng nổi chính (#681:61598) */
+body.os-body .os-main .sn-te-surface {
+    background: #FFFFFF;
+    border: 1px solid #E4E8ED;
+    border-radius: 20px;
+    box-shadow: 0px 4px 0px 0px #E4E8ED;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+}
+
+/* ---------- Hàng 1: Tab pill căn giữa (#681:61599 / #681:61600) ---------- */
+body.os-body .os-main .sn-te-tabs-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body.os-body .os-main .sn-te-tabs {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px;
+    border-radius: 999px;
+    background: #F4F5F7;
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+body.os-body .os-main .sn-te-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+body.os-body .os-main .sn-te-tab {
+    height: 36px;
+    padding: 0 16px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 700;
+    color: #313B47;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+body.os-body .os-main .sn-te-tab:hover:not(.is-active) {
+    background: rgba(49, 59, 71, 0.06);
+}
+
+body.os-body .os-main .sn-te-tab.is-active {
+    background: #0D99FF;
+    color: #FFFFFF;
+}
+
+/* ---------- Hàng 2: Thanh tìm kiếm khóa học (#681:61602) ---------- */
+body.os-body .os-main .sn-te-search-form {
+    height: 48px;
+    padding: 0 16px;
+    border-radius: 9999px;
+    background: #FAFAFA;
+    border: 2px solid #E4E8ED;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: border-color 0.16s ease, background-color 0.16s ease;
+}
+
+body.os-body .os-main .sn-te-search-form:focus-within {
+    border-color: #0D99FF;
+    background: #EFF5FD;
+}
+
+body.os-body .os-main .sn-te-search-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #313B47;
+    flex-shrink: 0;
+    transition: color 0.16s ease;
+}
+
+body.os-body .os-main .sn-te-search-form:focus-within .sn-te-search-icon {
+    color: #0D99FF;
+}
+
+body.os-body .os-main .sn-te-search-input {
+    flex: 1;
+    min-width: 0;
+    min-height: 0 !important;
+    height: 100%;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    font-family: "Nunito", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+    color: #313B47;
+    outline: none !important;
+}
+
+body.os-body .os-main .sn-te-search-input:hover,
+body.os-body .os-main .sn-te-search-input:focus {
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+body.os-body .os-main .sn-te-search-input::placeholder {
+    color: #63758D;
+    font-weight: 500;
+}
+
+body.os-body .os-main .sn-te-search-input::-webkit-search-cancel-button,
+body.os-body .os-main .sn-te-search-input::-webkit-search-decoration {
+    -webkit-appearance: none;
+    appearance: none;
+    display: none;
+}
+
+body.os-body .os-main .sn-te-search-clear {
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 0;
+    border-radius: 9999px;
+    background: transparent;
+    color: #313B47;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    flex-shrink: 0;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+body.os-body .os-main .sn-te-search-clear:hover {
+    background: rgba(13, 153, 255, 0.12);
+    color: #0D99FF;
+}
+
+/* ---------- Hàng 3: Khung lưới 2 cột thẻ khóa học (#681:61603) ---------- */
+body.os-body .os-main .sn-te-grid-shell {
+    background: #F4F5F7;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+body.os-body .os-main .sn-te-course-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 20px;
+}
+
+/* Thẻ khóa học (#673:63434 & #673:63433) */
+body.os-body .os-main .sn-te-card {
+    background: #FFFFFF;
+    border-radius: 20px;
+    box-shadow: 0px 4px 0px 0px #E4E8ED;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+    transition: transform 0.14s ease, box-shadow 0.14s ease;
+}
+
+body.os-body .os-main .sn-te-card[hidden] {
+    display: none;
+}
+
+body.os-body .os-main .sn-te-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 6px 0px 0px #DCE2EA;
+}
+
+body.os-body .os-main .sn-te-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+body.os-body .os-main .sn-te-card-title {
+    margin: 0;
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 700;
+    color: #171C22;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Badges (#673:63394 & #673:63407) */
+body.os-body .os-main .sn-te-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    font-weight: 700;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+body.os-body .os-main .sn-te-badge--progress {
+    padding: 4px 12px;
+    background: #FCF0E6;
+    color: #F26500;
+    font-size: 14px;
+    line-height: 21px;
+}
+
+body.os-body .os-main .sn-te-badge--done {
+    padding: 2px 10px;
+    background: #FFF7F0;
+    color: #FF7614;
+    font-size: 12px;
+    line-height: 18px;
+}
+
+/* Khối tiến độ bên trong thẻ (#673:63395) */
+body.os-body .os-main .sn-te-progress-box {
+    background: #FFFFFF;
+    border: 1px solid #E4E8ED;
+    border-radius: 12px;
+    box-shadow: 0px 4px 0px 0px #E4E8ED;
+    padding: 8px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+body.os-body .os-main .sn-te-member-count {
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: 500;
+    color: #6B7785;
+}
+
+body.os-body .os-main .sn-te-progress-row {
+    padding-top: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+body.os-body .os-main .sn-te-progress-ratio {
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: 700;
+    color: #313B47;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+body.os-body .os-main .sn-te-progress-track {
+    flex: 1;
+    height: 8px;
+    border-radius: 4px;
+    background: #E4E8EE;
+    overflow: hidden;
+}
+
+body.os-body .os-main .sn-te-progress-fill {
+    display: block;
+    height: 100%;
+    border-radius: 4px;
+    background: #0D99FF;
+    transition: width 0.25s ease;
+}
+
+body.os-body .os-main .sn-te-progress-fill.is-done {
+    background: #10B266;
+}
+
+/* Chân thẻ & nút 3D trắng (#34:1712) */
+body.os-body .os-main .sn-te-card-foot {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: auto;
+}
+
+body.os-body .os-main .sn-te-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 48px;
+    padding: 12px 24px;
+    border-radius: 12px;
+    border: 1px solid #E4E8ED;
+    border-bottom-width: 0;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 0px 0px #E4E8ED;
+    color: #0D99FF;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.15s ease, color 0.15s ease, transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+body.os-body .os-main .sn-te-cta:hover {
+    background: #F8FBFF;
+    color: #0364C6;
+}
+
+body.os-body .os-main .sn-te-cta:active {
+    transform: translateY(2px);
+    box-shadow: 0px 2px 0px 0px #E4E8ED;
+}
+
+body.os-body .os-main .sn-te-cta svg {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+/* Empty state */
+body.os-body .os-main .sn-te-empty {
+    background: #FFFFFF;
+    border: 1px solid #EEF0F3;
+    border-radius: 16px;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+}
+
+body.os-body .os-main .sn-te-empty[hidden] {
+    display: none;
+}
+
+body.os-body .os-main .sn-te-empty-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background: #EFF5FD;
+    color: #0D99FF;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4px;
+}
+
+body.os-body .os-main .sn-te-empty-title {
+    font-size: 16px;
+    line-height: 22px;
+    color: #313B47;
+}
+
+body.os-body .os-main .sn-te-empty-desc {
+    margin: 0;
+    max-width: 420px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #6B7785;
+}
+
+body.os-body .os-main .sn-te-empty-reset {
+    margin-top: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    padding: 0 18px;
+    border-radius: 12px;
+    background: #0D99FF;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+body.os-body .os-main .sn-te-empty-reset:hover {
+    background: #0364C6;
+}
+
+/* ---------- Chế độ 2: Đánh giá chi tiết học viên trong khóa ---------- */
+body.os-body .os-main .sn-te-detail-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+body.os-body .os-main .sn-te-back-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 42px;
+    padding: 0 16px;
+    border-radius: 12px;
+    border: 1px solid #E4E8ED;
+    border-bottom-width: 0;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 0px 0px #E4E8ED;
+    color: #0D99FF;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 0.14s ease, color 0.14s ease;
+}
+
+body.os-body .os-main .sn-te-back-btn:hover {
+    background: #F8FBFF;
+    color: #0364C6;
+}
+
+body.os-body .os-main .sn-te-detail-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+body.os-body .os-main .sn-te-detail-course {
+    font-size: 16px;
+    line-height: 22px;
+    color: #171C22;
+}
+
+body.os-body .os-main .sn-te-detail-week {
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #F4F5F7;
+    color: #6B7785;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 700;
+}
+
+body.os-body .os-main .sn-te-detail-ratio {
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #EFF5FD;
+    color: #0D99FF;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 700;
+}
+
+body.os-body .os-main .sn-te-detail-workspace {
+    display: grid;
+    grid-template-columns: minmax(280px, 340px) minmax(0, 1fr);
+    gap: 16px;
+    align-items: start;
+}
+
+/* ---------- Responsive Tablet & Mobile ---------- */
+@media (max-width: 960px) {
+    body.os-body .os-main .sn-te-course-grid {
+        grid-template-columns: 1fr;
+    }
+
+    body.os-body .os-main .sn-te-detail-workspace {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    body.os-body .os-main .sn-te-surface {
+        padding: 16px 14px;
+        border-radius: 16px;
+    }
+
+    body.os-body .os-main .sn-te-grid-shell {
+        padding: 12px;
+        border-radius: 16px;
+    }
+
+    body.os-body .os-main .sn-te-card {
+        padding: 16px;
+        border-radius: 16px;
+    }
+}

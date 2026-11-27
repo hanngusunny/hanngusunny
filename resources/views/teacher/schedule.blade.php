@@ -2,161 +2,118 @@
 
 @php
     $payload = is_array($payload ?? null) ? $payload : [];
+    $courses = is_array($payload['courses'] ?? null) ? $payload['courses'] : [];
     $sessions = is_array($payload['sessions'] ?? null) ? $payload['sessions'] : [];
-    $stats = is_array($payload['stats'] ?? null) ? $payload['stats'] : [];
-    $todaySessions = is_array($payload['todaySessions'] ?? null) ? $payload['todaySessions'] : [];
-    $reminders = is_array($payload['reminders'] ?? null) ? $payload['reminders'] : [];
-    $todayCount = (int) ($stats['today'] ?? 0);
-    $liveCount = (int) ($stats['live'] ?? 0);
-    $monthCount = (int) ($stats['month'] ?? 0);
-    $sessionCount = count($sessions);
-    $weekdays = ['Chủ nhật', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7'];
-    $todayDateLabel = ($weekdays[(int) date('w')] ?? '').', '.date('d/m/Y');
 
-    $sessionsJson = json_encode($sessions, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
+    $jsonFlags = JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP;
+    $sessionsJson = json_encode($sessions, $jsonFlags);
     if ($sessionsJson === false) {
         $sessionsJson = '[]';
     }
-
-    if ($sessionCount === 0) {
-        $pageSubtitle = 'Chưa có buổi dạy được lên lịch trên các khóa bạn phụ trách.';
-    } elseif ($todayCount > 0) {
-        $pageSubtitle = 'Hôm nay bạn có '.$todayCount.' buổi dạy'.($liveCount > 0 ? ', '.$liveCount.' buổi đang diễn ra' : '').'.';
-    } else {
-        $pageSubtitle = 'Xem lịch buổi dạy theo ngày, tuần và tháng. Tháng này có '.$monthCount.' buổi đã lên lịch.';
+    $coursesJson = json_encode($courses, $jsonFlags);
+    if ($coursesJson === false) {
+        $coursesJson = '[]';
     }
 @endphp
 
 @section('title', 'Lịch dạy')
 
-@push('styles')
-    <link rel="stylesheet" href="{{ asset('assets/css/teacher-schedule.css') }}">
+@push('styles-late')
+    <link rel="stylesheet" href="{{ asset('assets/css/teacher-schedule.css') }}?v=2">
 @endpush
 
 @section('content')
-<div class="op-stack ts-page">
-    <x-page-title kicker="Giáo viên" icon="fa-calendar-days" title="Lịch dạy" :lead="$pageSubtitle" />
+<div class="sn-ts-page">
+    <section
+        id="teacherScheduleApp"
+        class="sn-ts-surface"
+        data-sessions="{{ $sessionsJson }}"
+        data-courses="{{ $coursesJson }}"
+        data-today="{{ date('Y-m-d') }}"
+        data-default-view="day"
+        data-empty-day="Không có buổi dạy nào trong ngày này."
+    >
+        {{-- Tiêu đề trang (#602:68774) --}}
+        <header class="sn-ts-header">
+            <h1 class="sn-ts-title">Lịch dạy</h1>
+            <p class="sn-ts-subtitle">Tất cả buổi dạy của các khóa bạn phụ trách</p>
+        </header>
 
-    <div class="op-stat-grid is-3">
-        <article class="op-stat">
-            <span class="op-stat-top">
-                <span class="op-stat-ico is-amber"><i class="fa-solid fa-calendar-day"></i></span>
-                <p>Hôm nay<small>Buổi dạy trong ngày</small></p>
-            </span>
-            <strong>{{ $todayCount }}</strong>
-        </article>
-        <article class="op-stat">
-            <span class="op-stat-top">
-                <span class="op-stat-ico is-rose"><i class="fa-solid fa-tower-broadcast"></i></span>
-                <p>Đang dạy<small>Buổi đang diễn ra</small></p>
-            </span>
-            <strong>{{ $liveCount }}</strong>
-        </article>
-        <article class="op-stat">
-            <span class="op-stat-top">
-                <span class="op-stat-ico is-blue"><i class="fa-solid fa-calendar-days"></i></span>
-                <p>Tháng này<small>Buổi đã lên lịch</small></p>
-            </span>
-            <strong>{{ $monthCount }}</strong>
-        </article>
-    </div>
-
-    @if ($todaySessions !== [] || $reminders !== [])
-        <div class="ts-side-grid">
-            @if ($todaySessions !== [])
-                <section class="op-panel ts-today-panel">
-                    <div class="op-panel-head is-static">
-                        <span class="op-panel-ico"><i class="fa-solid fa-sun"></i></span>
-                        <span class="op-panel-title">Buổi dạy hôm nay</span>
-                        <span class="ts-side-date">{{ $todayDateLabel }}</span>
-                    </div>
-                    <div class="op-panel-body ts-today-list">
-                        @foreach ($todaySessions as $item)
-                            @php
-                                $phase = (string) ($item['phase'] ?? 'upcoming');
-                                $pill = $phase === 'live' ? 'red' : ($phase === 'ended' || $phase === 'cancelled' ? 'gray' : 'purple');
-                            @endphp
-                            <a class="ts-today-card{{ $phase === 'live' ? ' is-live' : '' }}{{ $phase === 'ended' ? ' is-ended' : '' }}" href="{{ $item['url'] ?? route('dashboard') }}">
-                                <div class="ts-today-time">
-                                    <b>{{ $item['start_time'] ?? '' }}</b>
-                                    @if (($item['end_time'] ?? '') !== '')
-                                        <span>{{ $item['end_time'] }}</span>
-                                    @endif
-                                </div>
-                                <div class="ts-today-main">
-                                    <div class="ts-today-badges">
-                                        @if ($phase === 'live')
-                                            <span class="ts-live-badge">LIVE</span>
-                                        @endif
-                                        <span class="pill {{ $pill }}">{{ $item['phase_label'] ?? $phase }}</span>
-                                    </div>
-                                    <strong>{{ $item['title'] ?? 'Buổi học' }}</strong>
-                                    @if (($item['course_title'] ?? '') !== '')
-                                        <small>{{ $item['course_title'] }}</small>
-                                    @endif
-                                </div>
-                            </a>
-                        @endforeach
-                    </div>
-                </section>
-            @endif
-
-            @if ($reminders !== [])
-                <section class="op-panel ts-reminder-panel">
-                    <div class="op-panel-head is-static">
-                        <span class="op-panel-ico"><i class="fa-solid fa-bell"></i></span>
-                        <span class="op-panel-title">Nhắc lịch 48 giờ</span>
-                    </div>
-                    <div class="op-panel-body ts-reminder-list">
-                        @foreach ($reminders as $item)
-                            <a class="ts-reminder-item" href="{{ $item['url'] ?? route('dashboard') }}">
-                                <span class="ts-reminder-ico is-{{ $item['reminder_icon'] ?? 'blue' }}">
-                                    <i class="fa-solid {{ $item['reminder_icon_fa'] ?? 'fa-circle-info' }}"></i>
-                                </span>
-                                <span class="ts-reminder-copy">
-                                    <strong>{{ $item['title'] ?? 'Buổi học' }}</strong>
-                                    <small>{{ $item['time_label'] ?? '' }}@if (($item['course_title'] ?? '') !== '') · {{ $item['course_title'] }}@endif</small>
-                                </span>
-                                <span class="pill {{ $item['reminder_pill'] ?? 'orange' }}">{{ $item['reminder_hint'] ?? 'Sắp tới' }}</span>
-                            </a>
-                        @endforeach
-                    </div>
-                </section>
-            @endif
-        </div>
-    @endif
-
-    <div class="student-schedule-layout student-schedule-layout--full">
-        <div class="student-schedule-main">
-            <div
-                id="studentScheduleApp"
-                class="student-schedule-app"
-                data-sessions="{{ $sessionsJson }}"
-                data-session-url-base="{{ url('/dashboard') }}"
-                data-empty-day="Không có buổi dạy trong ngày này."
-            >
-                <div class="calendar-shell">
-                    <div class="calendar-toolbar">
-                        <div class="segmented student-schedule-views" role="tablist" aria-label="Chế độ xem lịch">
-                            <button type="button" data-view="day" role="tab" aria-selected="false">Ngày</button>
-                            <button type="button" data-view="week" role="tab" aria-selected="false">Tuần</button>
-                            <button type="button" data-view="month" class="active" role="tab" aria-selected="true">Tháng</button>
-                        </div>
-                        <div class="student-schedule-nav">
-                            <button type="button" class="btn btn-outline student-schedule-prev" aria-label="Lùi">‹</button>
-                            <strong class="student-schedule-label" aria-live="polite"></strong>
-                            <button type="button" class="btn btn-outline student-schedule-next" aria-label="Tiến">›</button>
-                            <button type="button" class="btn btn-outline student-schedule-today">Hôm nay</button>
-                        </div>
-                    </div>
-                    <div class="student-schedule-body" aria-live="polite"></div>
-                </div>
+        {{-- Thanh công cụ lịch (#602:68777) --}}
+        <div class="sn-ts-toolbar">
+            <div class="sn-ts-views" role="tablist" aria-label="Chế độ xem lịch">
+                <button type="button" class="sn-ts-view-btn is-active" data-view="day" role="tab" aria-selected="true">Ngày</button>
+                <button type="button" class="sn-ts-view-btn" data-view="week" role="tab" aria-selected="false">Tuần</button>
+                <button type="button" class="sn-ts-view-btn" data-view="month" role="tab" aria-selected="false">Tháng</button>
             </div>
+
+            <div class="sn-ts-nav">
+                <button type="button" class="sn-ts-nav-btn sn-ts-prev" aria-label="Lùi thời gian">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                        <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <strong class="sn-ts-date-label" aria-live="polite"></strong>
+                <button type="button" class="sn-ts-nav-btn sn-ts-next" aria-label="Tiến thời gian">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                        <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+
+            <button type="button" class="sn-ts-today-btn">Hôm nay</button>
         </div>
-    </div>
+
+        {{-- Chú giải & bộ lọc khóa học (#602:68787 / #549:2765) --}}
+        <div class="sn-ts-chips" role="group" aria-label="Lọc lịch dạy theo khóa học">
+            <button
+                type="button"
+                class="sn-ts-chip sn-ts-chip--all is-selected"
+                data-course-filter="all"
+                aria-pressed="true"
+            >
+                <span class="sn-ts-chip-dot" aria-hidden="true"></span>
+                <span>Tất cả khóa học</span>
+            </button>
+
+            @foreach ($courses as $course)
+                @php
+                    $cId = (int) ($course['id'] ?? 0);
+                    $cColor = (string) ($course['color'] ?? 'orange');
+                    $cTitle = (string) ($course['title'] ?? 'Khóa học');
+                @endphp
+                <button
+                    type="button"
+                    class="sn-ts-chip sn-ts-chip--{{ $cColor }} is-selected"
+                    data-course-filter="{{ $cId }}"
+                    aria-pressed="true"
+                    title="{{ $cTitle }}"
+                >
+                    <span class="sn-ts-chip-dot" aria-hidden="true"></span>
+                    <span>{{ $cTitle }}</span>
+                </button>
+            @endforeach
+        </div>
+
+        {{-- Khung lịch chính (#602:68793) --}}
+        <div class="sn-ts-calendar-wrap">
+            <div class="sn-ts-calendar-body" aria-live="polite"></div>
+        </div>
+    </section>
+
+    {{-- Backdrop mobile & Popover chi tiết buổi dạy (#602:68840 / #549:2897) --}}
+    <div class="sn-ts-popover-backdrop" id="teacherScheduleBackdrop" hidden></div>
+    <aside
+        class="sn-ts-popover"
+        id="teacherSchedulePopover"
+        role="dialog"
+        aria-modal="false"
+        aria-label="Chi tiết buổi dạy"
+        hidden
+    ></aside>
 </div>
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('assets/js/teacher-schedule.js') }}"></script>
+    <script src="{{ asset('assets/js/teacher-schedule.js') }}?v=2"></script>
 @endpush

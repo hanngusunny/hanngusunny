@@ -47,6 +47,6 @@ class SchoolRuleService
 
     public function canEdit(?User $user): bool
     {
-        return $user?->isStaff() === true;
+        return $user?->isAdmin() === true;
     }
 }

@@ -463,12 +463,8 @@ class UserActivityService
     /**
      * @return array<string, string>
      */
-    public function roleOptions(bool $isAdmin): array
+    public function roleOptions(bool $isAdmin = true): array
     {
-        if (! $isAdmin) {
-            return [UserRole::STUDENT => UserRole::label(UserRole::STUDENT)];
-        }
-
         return [
             UserRole::STUDENT => UserRole::label(UserRole::STUDENT),
             UserRole::TEACHER => UserRole::label(UserRole::TEACHER),
@@ -478,11 +474,7 @@ class UserActivityService
 
     public function canViewUser(User $viewer, User $subject): bool
     {
-        if ($viewer->isAdmin()) {
-            return true;
-        }
-
-        return $viewer->isTeacher() && $subject->role === UserRole::STUDENT;
+        return $viewer->isAdmin();
     }
 
     public function ensureLoginSession(int $userId, Request $request): int

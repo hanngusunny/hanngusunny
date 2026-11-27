@@ -25,10 +25,6 @@ class TeacherCommentsService
             return $query->get();
         }
 
-        if ($viewer->isTeacher()) {
-            return $query->where('teacher_id', (int) $viewer->id)->get();
-        }
-
         return collect();
     }
 
@@ -50,12 +46,7 @@ class TeacherCommentsService
             ->orderByDesc('updated_at')
             ->orderByDesc('id');
 
-        if ($viewer->isTeacher() && ! $viewer->isAdmin()) {
-            $query->where(function ($inner) use ($viewer) {
-                $inner->where('teacher_id', (int) $viewer->id)
-                    ->orWhereHas('course', static fn ($course) => $course->where('teacher_id', (int) $viewer->id));
-            });
-        } elseif (! $viewer->isAdmin() && ! $viewer->isTeacher()) {
+        if (! $viewer->isAdmin()) {
             $query->whereRaw('1 = 0');
         }
 
@@ -101,12 +92,7 @@ class TeacherCommentsService
             ->whereNotNull('comment')
             ->where('comment', '!=', '');
 
-        if ($viewer->isTeacher() && ! $viewer->isAdmin()) {
-            $base->where(function ($inner) use ($viewer) {
-                $inner->where('teacher_id', (int) $viewer->id)
-                    ->orWhereHas('course', static fn ($course) => $course->where('teacher_id', (int) $viewer->id));
-            });
-        } elseif (! $viewer->isAdmin() && ! $viewer->isTeacher()) {
+        if (! $viewer->isAdmin()) {
             return ['total' => 0, 'courses' => 0, 'students' => 0, 'this_week' => 0];
         }
 
@@ -125,6 +111,10 @@ class TeacherCommentsService
      */
     public function studentsForFilter(User $viewer, int $courseId = 0): Collection
     {
+        if (! $viewer->isAdmin()) {
+            return collect();
+        }
+
         $query = User::query()
             ->select('users.id', 'users.full_name', 'users.username', 'users.phone')
             ->join('course_members', 'course_members.user_id', '=', 'users.id')
@@ -134,12 +124,6 @@ class TeacherCommentsService
             ->orderBy('users.full_name')
             ->orderBy('users.id')
             ->distinct();
-
-        if ($viewer->isTeacher() && ! $viewer->isAdmin()) {
-            $query->where('courses.teacher_id', (int) $viewer->id);
-        } elseif (! $viewer->isAdmin() && ! $viewer->isTeacher()) {
-            return collect();
-        }
 
         if ($courseId > 0) {
             $query->where('courses.id', $courseId);

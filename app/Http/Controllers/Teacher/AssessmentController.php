@@ -12,6 +12,7 @@ use App\Services\AssessmentSubmissionService;
 use App\Services\StudentAssessmentService;
 use App\Services\TeacherAssessmentGradeService;
 use App\Services\TeacherAssessmentGradingService;
+use App\Services\TeacherGradingService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -48,7 +49,8 @@ class AssessmentController extends Controller
     public function grade(
         Request $request,
         TeacherAssessmentGradingService $hub,
-        TeacherAssessmentGradeService $grader
+        TeacherAssessmentGradeService $grader,
+        TeacherGradingService $teacherGrading
     ): JsonResponse|RedirectResponse {
         $teacher = $request->user();
 
@@ -60,13 +62,10 @@ class AssessmentController extends Controller
         $assessmentId = (int) $request->input('assessment_id', 0);
         $userId = (int) $request->input('user_id', 0);
         $questionId = (int) $request->input('question_id', 0);
-        $redirectUrl = $hub->withQuestionAnchor(
-            $hub->pageUrl($courseId, $assessmentId, $userId),
-            $questionId
-        );
+        $redirectUrl = $this->unifiedRedirectUrl($teacherGrading, $courseId, $assessmentId, $userId, $questionId);
 
         if (! $grader->canManageCourse((int) $teacher->id, $courseId)) {
-            return redirect()->route('student.assessments')->with('error', 'Không có quyền truy cập.');
+            return redirect()->route('teacher.grading')->with('error', 'Không có quyền truy cập.');
         }
 
         $outcome = $grader->gradePostedAnswer(
@@ -89,10 +88,10 @@ class AssessmentController extends Controller
 
     public function publish(
         Request $request,
-        TeacherAssessmentGradingService $hub,
         TeacherAssessmentGradeService $grader,
         AssessmentSubmissionService $scoring,
-        StudentAssessmentService $assessments
+        StudentAssessmentService $assessments,
+        TeacherGradingService $teacherGrading
     ): RedirectResponse {
         $teacher = $request->user();
 
@@ -103,10 +102,10 @@ class AssessmentController extends Controller
         $courseId = (int) $request->input('course_id', 0);
         $assessmentId = (int) $request->input('assessment_id', 0);
         $userId = (int) $request->input('user_id', 0);
-        $redirectUrl = $hub->pageUrl($courseId, $assessmentId, $userId);
+        $redirectUrl = $this->unifiedRedirectUrl($teacherGrading, $courseId, $assessmentId, $userId);
 
         if (! $grader->canManageCourse((int) $teacher->id, $courseId)) {
-            return redirect()->route('student.assessments')->with('error', 'Không có quyền truy cập.');
+            return redirect()->route('teacher.grading')->with('error', 'Không có quyền truy cập.');
         }
 
         if (! CourseMember::isMemberOf($courseId, $userId)) {
@@ -119,7 +118,8 @@ class AssessmentController extends Controller
             ->first();
 
         if ($assessment === null) {
-            return redirect()->to($hub->pageUrl($courseId))->with('error', 'Bài kiểm tra không tồn tại.');
+            return redirect()->to($teacherGrading->pageUrl($courseId, TeacherGradingService::TAB_ASSESSMENT))
+                ->with('error', 'Bài thi không tồn tại.');
         }
 
         if (! CourseAssessmentAnswer::hasSubmitted($assessmentId, $userId)) {
@@ -133,39 +133,39 @@ class AssessmentController extends Controller
         if ($pending > 0) {
             return redirect()->to($redirectUrl)->with(
                 'error',
-                'Còn '.$pending.' câu chưa chấm điểm. Vui lòng chấm hết trước khi công bố.'
+                'Còn '.$pending.' câu chưa chấm điểm. Vui lòng chấm hết trước khi gửi kết quả.'
             );
         }
 
         if (! Schema::hasTable('course_assessment_submissions')) {
-            return redirect()->to($redirectUrl)->with('error', 'Chưa cấu hình bảng kết quả bài kiểm tra.');
+            return redirect()->to($redirectUrl)->with('error', 'Chưa cấu hình bảng kết quả bài thi.');
         }
 
         CourseAssessmentSubmission::markGraded($assessmentId, $userId, (int) $teacher->id);
 
-        return redirect()->to($redirectUrl)->with('success', 'Đã công bố kết quả cho học viên.');
+        return redirect()->to($redirectUrl)->with('success', 'Đã gửi kết quả cho học viên.');
     }
 
     public function grantRetake(
         Request $request,
-        TeacherAssessmentGradingService $hub,
-        TeacherAssessmentGradeService $grader
+        TeacherAssessmentGradeService $grader,
+        TeacherGradingService $teacherGrading
     ): RedirectResponse {
-        return $this->handleRetake($request, $hub, $grader, true);
+        return $this->handleRetake($request, $grader, $teacherGrading, true);
     }
 
     public function revokeRetake(
         Request $request,
-        TeacherAssessmentGradingService $hub,
-        TeacherAssessmentGradeService $grader
+        TeacherAssessmentGradeService $grader,
+        TeacherGradingService $teacherGrading
     ): RedirectResponse {
-        return $this->handleRetake($request, $hub, $grader, false);
+        return $this->handleRetake($request, $grader, $teacherGrading, false);
     }
 
     private function handleRetake(
         Request $request,
-        TeacherAssessmentGradingService $hub,
         TeacherAssessmentGradeService $grader,
+        TeacherGradingService $teacherGrading,
         bool $grant
     ): RedirectResponse {
         $teacher = $request->user();
@@ -177,10 +177,10 @@ class AssessmentController extends Controller
         $courseId = (int) $request->input('course_id', 0);
         $assessmentId = (int) $request->input('assessment_id', 0);
         $userId = (int) $request->input('user_id', 0);
-        $redirectUrl = $hub->pageUrl($courseId, $assessmentId, $userId);
+        $redirectUrl = $this->unifiedRedirectUrl($teacherGrading, $courseId, $assessmentId, $userId);
 
         if (! $grader->canManageCourse((int) $teacher->id, $courseId)) {
-            return redirect()->route('student.assessments')->with('error', 'Không có quyền truy cập.');
+            return redirect()->route('teacher.grading')->with('error', 'Không có quyền truy cập.');
         }
 
         if ($grant) {
@@ -191,7 +191,7 @@ class AssessmentController extends Controller
             CourseAssessmentRetake::grant($assessmentId, $userId, (int) $teacher->id);
             $grader->prepareRetakeDrafts($assessmentId, $userId);
             CourseAssessmentSubmission::markSubmitted($assessmentId, $userId);
-            $message = 'Đã cho phép học viên làm lại bài kiểm tra.';
+            $message = 'Đã cho phép học viên làm lại bài thi.';
         } else {
             CourseAssessmentRetake::revoke($assessmentId, $userId);
             $message = 'Đã hủy quyền làm lại.';
@@ -223,5 +223,18 @@ class AssessmentController extends Controller
             'ok' => true,
             'revision' => $hub->liveRevision($courseId, $assessmentId, $studentId),
         ]);
+    }
+
+    private function unifiedRedirectUrl(
+        TeacherGradingService $teacherGrading,
+        int $courseId,
+        int $assessmentId,
+        int $userId,
+        int $questionId = 0
+    ): string {
+        $key = ($assessmentId > 0 && $userId > 0) ? 'ass-'.$assessmentId.'-'.$userId : '';
+        $extra = $questionId > 0 ? ['cau' => $questionId] : [];
+
+        return $teacherGrading->pageUrl($courseId, TeacherGradingService::TAB_ASSESSMENT, $key, $extra);
     }
 }

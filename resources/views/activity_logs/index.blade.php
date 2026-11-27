@@ -4,7 +4,6 @@
     $summaries = $summaries ?? [];
     $filters = $filters ?? ['role' => 'student', 'from' => '', 'to' => ''];
     $roles = $roles ?? [];
-    $isAdmin = (bool) ($isAdmin ?? false);
     $activity = $activity ?? app(\App\Services\UserActivityService::class);
     $totalDays = array_sum(array_map(static fn ($row) => (int) ($row['active_days'] ?? 0), $summaries));
     $totalViews = array_sum(array_map(static fn ($row) => (int) ($row['total_page_views'] ?? 0), $summaries));
@@ -40,13 +39,11 @@
             <span class="op-panel-title">Bộ lọc</span>
             <div class="op-panel-tools">
                 <form class="al-filter" method="get" action="{{ route('activity-logs.index') }}">
-                    @if ($isAdmin)
-                        <select name="role" class="px-3 py-2 text-sm">
-                            @foreach ($roles as $key => $label)
-                                <option value="{{ $key }}" @selected(($filters['role'] ?? '') === $key)>{{ $label }}</option>
-                            @endforeach
-                        </select>
-                    @endif
+                    <select name="role" class="px-3 py-2 text-sm">
+                        @foreach ($roles as $key => $label)
+                            <option value="{{ $key }}" @selected(($filters['role'] ?? '') === $key)>{{ $label }}</option>
+                        @endforeach
+                    </select>
                     <input type="date" name="from" value="{{ $filters['from'] ?? '' }}" class="px-3 py-2 text-sm">
                     <input type="date" name="to" value="{{ $filters['to'] ?? '' }}" class="px-3 py-2 text-sm">
                     <x-button type="submit" icon="fa-solid fa-magnifying-glass">Lọc dữ liệu</x-button>

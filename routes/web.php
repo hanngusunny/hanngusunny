@@ -92,7 +92,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/thong-bao/da-doc-tat-ca', [NotificationController::class, 'markAllRead'])->name('notifications.read-all');
     Route::get('/activity/pulse', ActivityPulseController::class)->name('activity.pulse');
     Route::get('/noi-quy', [SchoolRuleController::class, 'index'])->name('school-rules.show');
-    Route::middleware('staff')->group(function () {
+    Route::middleware('admin')->group(function () {
         Route::get('/noi-quy/sua', [SchoolRuleController::class, 'edit'])->name('school-rules.edit');
         Route::post('/noi-quy/luu', [SchoolRuleController::class, 'update'])->name('school-rules.update');
         Route::get('/noi-quy/xem-truoc', [SchoolRuleController::class, 'preview'])->name('school-rules.preview');
@@ -151,10 +151,14 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware('teacher')->prefix('giao-vien/khoa-hoc')->name('teacher.course.')->group(function () {
-        Route::get('/{id}', [TeacherCourseManageController::class, 'show'])->name('show');
-        Route::get('/{id}/buoi/{sessionId}/hoc-vien/{userId}', [TeacherCourseManageController::class, 'student'])->name('student');
-        Route::post('/{id}/buoi/{sessionId}/hoc-vien/{userId}/diem-danh', [TeacherCourseManageController::class, 'updateAttendance'])->name('attendance');
-        Route::post('/{id}/buoi/{sessionId}/hoc-vien/{userId}/cham-tu-luan', [TeacherCourseManageController::class, 'saveEssay'])->name('essay');
+        Route::get('/', [TeacherCourseManageController::class, 'index'])->name('index');
+        Route::get('/{id}', [TeacherCourseManageController::class, 'show'])->whereNumber('id')->name('show');
+        Route::get('/{id}/hoc-vien/{userId}/ho-so', [TeacherCourseManageController::class, 'studentDrawer'])->whereNumber(['id', 'userId'])->name('student.drawer');
+        Route::post('/{id}/hoc-vien/{userId}/cam-ket', [TeacherCourseManageController::class, 'adjustCommitment'])->whereNumber(['id', 'userId'])->name('student.commitment');
+        Route::post('/{id}/hoc-vien/{userId}/danh-gia', [TeacherCourseManageController::class, 'saveWeeklyEvaluation'])->whereNumber(['id', 'userId'])->name('student.evaluation');
+        Route::get('/{id}/buoi/{sessionId}/hoc-vien/{userId}', [TeacherCourseManageController::class, 'student'])->whereNumber(['id', 'sessionId', 'userId'])->name('student');
+        Route::post('/{id}/buoi/{sessionId}/hoc-vien/{userId}/diem-danh', [TeacherCourseManageController::class, 'updateAttendance'])->whereNumber(['id', 'sessionId', 'userId'])->name('attendance');
+        Route::post('/{id}/buoi/{sessionId}/hoc-vien/{userId}/cham-tu-luan', [TeacherCourseManageController::class, 'saveEssay'])->whereNumber(['id', 'sessionId', 'userId'])->name('essay');
     });
 
     Route::middleware('learner')->prefix('khoa-hoc-cua-toi')->group(function () {
@@ -206,12 +210,6 @@ Route::middleware('auth')->group(function () {
         Route::post('/ap-dung', [VoucherController::class, 'redeem'])->name('redeem');
         Route::post('/{voucher}/tao-lai-anh', [VoucherController::class, 'regenerate'])->name('regenerate');
         Route::post('/{voucher}/xoa', [VoucherController::class, 'destroy'])->name('destroy');
-    });
-
-    Route::middleware('staff')->prefix('kiem-tra-voucher')->name('staff.vouchers.')->group(function () {
-        Route::get('/', [VoucherController::class, 'checkPage'])->name('check');
-        Route::post('/check-ajax', [VoucherController::class, 'checkAjax'])->name('check.ajax');
-        Route::post('/ap-dung', [VoucherController::class, 'redeem'])->name('redeem');
     });
 
     Route::middleware('admin')->prefix('nguoi-dung')->name('admin.users.')->group(function () {

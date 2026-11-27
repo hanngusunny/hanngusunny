@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Teacher\AssessmentController as TeacherAssessmentController;
 use App\Services\StudentCoursePageService;
-use App\Services\TeacherAssessmentGradingService;
+use App\Services\TeacherGradingService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -15,13 +14,22 @@ class AssessmentHubController extends Controller
     public function __invoke(
         Request $request,
         StudentCoursePageService $pages,
-        TeacherAssessmentController $teacherAssessments,
-        TeacherAssessmentGradingService $teacherHub
+        TeacherGradingService $teacherGrading
     ): View|RedirectResponse {
         $user = $request->user();
 
         if ($user?->isTeacher()) {
-            return $teacherAssessments->index($request, $teacherHub);
+            // Màn Bài kiểm tra của giáo viên đã gộp vào màn Chấm điểm thống nhất (/giao-vien/cham-diem)
+            $courseId = max(0, (int) $request->query('khoa', 0));
+            $assessmentId = max(0, (int) $request->query('bai', 0));
+            $studentId = max(0, (int) $request->query('hoc-vien', 0));
+            $submissionKey = ($assessmentId > 0 && $studentId > 0)
+                ? 'ass-'.$assessmentId.'-'.$studentId
+                : '';
+
+            return redirect()->to(
+                $teacherGrading->pageUrl($courseId, TeacherGradingService::TAB_ASSESSMENT, $submissionKey)
+            );
         }
 
         if (! $user?->isLearner()) {

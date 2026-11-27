@@ -20,7 +20,7 @@ class TeacherCommentsController extends Controller
     {
         $viewer = $request->user();
 
-        if ($viewer === null || (! $viewer->isAdmin() && ! $viewer->isTeacher())) {
+        if ($viewer === null || ! $viewer->isAdmin()) {
             return redirect()->route('dashboard');
         }
 

@@ -53,30 +53,76 @@
 }
 
 .cr-hub-search {
-    flex: 1 1 220px;
+    flex: 1 1 240px;
     display: flex;
     align-items: center;
     gap: 8px;
     min-width: 0;
-    padding: 0 12px;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    background: #f8fafc;
-    color: #94a3b8;
+    height: 48px;
+    padding: 0 16px;
+    border: 2px solid #e4e8ed;
+    border-radius: 9999px;
+    background: #fafafa;
+    color: #313b47;
+    transition: border-color 0.16s ease, background-color 0.16s ease;
 }
 
+.cr-hub-search:focus-within {
+    border-color: #0d99ff;
+    background: #eff5fd;
+}
+
+.cr-hub-search-ico {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #313b47;
+    flex-shrink: 0;
+    transition: color 0.16s ease;
+}
+
+.cr-hub-search:focus-within .cr-hub-search-ico {
+    color: #0d99ff;
+}
+
+body.os-body .os-main .cr-hub-search input,
 .cr-hub-search input {
     flex: 1;
     min-width: 0;
-    border: 0;
-    background: transparent;
-    padding: 9px 0;
-    font-size: 14px;
-    color: #0f172a;
+    min-height: 0 !important;
+    height: 100%;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    font-family: "Nunito", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+    color: #313b47;
+    outline: none !important;
 }
 
+body.os-body .os-main .cr-hub-search input:hover,
+body.os-body .os-main .cr-hub-search input:focus,
 .cr-hub-search input:focus {
-    outline: none;
+    outline: none !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.cr-hub-search input::placeholder {
+    color: #63758d;
+    font-weight: 500;
+}
+
+.cr-hub-search input::-webkit-search-cancel-button,
+.cr-hub-search input::-webkit-search-decoration {
+    -webkit-appearance: none;
+    appearance: none;
+    display: none;
 }
 
 .cr-hub-filters {

@@ -19,7 +19,7 @@ class AttendanceCheckController extends Controller
     {
         $viewer = $request->user();
 
-        if ($viewer === null || (! $viewer->isAdmin() && ! $viewer->isTeacher())) {
+        if ($viewer === null || ! $viewer->isAdmin()) {
             return redirect()->route('dashboard');
         }
 
@@ -33,7 +33,7 @@ class AttendanceCheckController extends Controller
     {
         $viewer = $request->user();
 
-        if ($viewer === null || (! $viewer->isAdmin() && ! $viewer->isTeacher())) {
+        if ($viewer === null || ! $viewer->isAdmin()) {
             return redirect()->route('dashboard');
         }
 
@@ -60,7 +60,7 @@ class AttendanceCheckController extends Controller
     {
         $viewer = $request->user();
 
-        if ($viewer === null || (! $viewer->isAdmin() && ! $viewer->isTeacher())) {
+        if ($viewer === null || ! $viewer->isAdmin()) {
             return $this->toggleResponse($request, false, 'Không có quyền.', 403);
         }
 
@@ -86,7 +86,7 @@ class AttendanceCheckController extends Controller
     {
         $viewer = $request->user();
 
-        if ($viewer === null || (! $viewer->isAdmin() && ! $viewer->isTeacher())) {
+        if ($viewer === null || ! $viewer->isAdmin()) {
             return redirect()->route('dashboard');
         }
 

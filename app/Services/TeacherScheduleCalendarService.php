@@ -4,16 +4,28 @@ namespace App\Services;
 
 use App\Models\Course;
 use App\Models\CourseSession;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
 
 class TeacherScheduleCalendarService
 {
-    /** @var list<string> */
-    private const EVENT_COLORS = ['green', 'blue', 'orange', 'purple', 'pink', 'teal'];
+    /**
+     * Bảng màu cố định cho từng khóa học theo Figma (#549:2765 & #549:2734).
+     *
+     * @var list<string>
+     */
+    private const COURSE_COLORS = ['orange', 'blue', 'purple', 'green', 'pink', 'teal'];
+
+    public function __construct(
+        private OnlineRoomService $rooms,
+        private ClassroomService $classroom,
+    ) {
+    }
 
     /**
      * @return array{
      *   ready: bool,
+     *   courses: list<array<string, mixed>>,
      *   sessions: list<array<string, mixed>>,
      *   stats: array<string, int>,
      *   todaySessions: list<array<string, mixed>>,
@@ -27,20 +39,128 @@ class TeacherScheduleCalendarService
         }
 
         $phaseLabels = CourseSession::phaseLabels();
-        $rawSessions = CourseSession::query()
-            ->whereHas('course', function ($query) use ($teacherId) {
-                $query->where('teacher_id', $teacherId)
-                    ->where('status', Course::STATUS_ACTIVE);
-            })
-            ->where('status', '!=', 'cancelled')
-            ->whereNotNull('session_date')
-            ->whereNotNull('start_time')
-            ->with(['course:id,title,teacher_id,status'])
-            ->orderBy('session_date')
-            ->orderBy('start_time')
-            ->orderBy('sort_order')
-            ->orderBy('id')
+
+        $courses = Course::activeForTeacher($teacherId);
+        $courses->load([
+            'room',
+            'program.levels' => static fn ($q) => $q->orderBy('sort_order')->orderBy('id'),
+        ]);
+        $courses->loadCount([
+            'activeMembers as member_count',
+        ]);
+
+        if ($courses->isEmpty()) {
+            return $this->emptyPayload(true);
+        }
+
+        $courseIds = $courses->pluck('id')->map(static fn ($id): int => (int) $id)->all();
+        $courseById = $courses->keyBy('id');
+
+        // Tải toàn bộ buổi không bị hủy theo đúng thứ tự chương trình để tính số thứ tự buổi (Buổi N) chuẩn xác
+        $allCourseSessions = CourseSession::query()
+            ->whereIn('course_sessions.course_id', $courseIds)
+            ->where('course_sessions.status', '!=', 'cancelled')
+            ->with(['programSession.level'])
+            ->inProgramOrder()
             ->get();
+
+        foreach ($allCourseSessions as $session) {
+            $course = $courseById->get((int) $session->course_id);
+            if ($course !== null) {
+                $session->setRelation('course', $course);
+            }
+        }
+
+        /** @var Collection<int, Collection<int, CourseSession>> $sessionsByCourse */
+        $sessionsByCourse = $allCourseSessions->groupBy('course_id');
+
+        $courseMetaById = [];
+        $coursesPayload = [];
+        $sessionOrdinals = [];
+        $timedSessions = [];
+
+        foreach ($courses->values() as $courseIdx => $course) {
+            $courseId = (int) $course->id;
+            $color = self::COURSE_COLORS[$courseIdx % count(self::COURSE_COLORS)];
+            $memberCount = (int) ($course->member_count ?? 0);
+
+            /** @var Collection<int, CourseSession> $courseSessions */
+            $courseSessions = $sessionsByCourse->get($courseId, collect());
+            $courseLevelTitle = '';
+            $hasLiveSession = false;
+
+            foreach ($courseSessions->values() as $idx => $session) {
+                $ordinal = $idx + 1;
+                $sessionOrdinals[(int) $session->id] = $ordinal;
+
+                if ($courseLevelTitle === '') {
+                    $phase = $session->livePhase();
+                    if ($phase === 'live' || $phase === 'upcoming') {
+                        $courseLevelTitle = trim((string) ($session->programSession?->level?->title ?? ''));
+                    }
+                }
+
+                if ($session->isTimed()) {
+                    if ($session->livePhase() === 'live') {
+                        $hasLiveSession = true;
+                    }
+                    $timedSessions[] = $session;
+                }
+            }
+
+            if ($courseLevelTitle === '') {
+                $courseLevelTitle = trim((string) ($course->program?->levels?->first()?->title ?? ''));
+            }
+
+            $roomLobbyUrl = null;
+            $room = $course->room;
+            if ($room === null && $hasLiveSession) {
+                try {
+                    $room = $this->rooms->ensure($course);
+                    if ($room !== null) {
+                        $course->setRelation('room', $room);
+                    }
+                } catch (\Throwable $e) {
+                    report($e);
+                }
+            }
+            if ($room !== null) {
+                $roomLobbyUrl = $this->classroom->lobbyUrl((int) $room->id);
+            }
+
+            $meta = [
+                'id' => $courseId,
+                'title' => (string) $course->title,
+                'level_title' => $courseLevelTitle,
+                'member_count' => $memberCount,
+                'color' => $color,
+                'room_lobby_url' => $roomLobbyUrl,
+            ];
+
+            $courseMetaById[$courseId] = $meta;
+            $coursesPayload[] = [
+                'id' => $courseId,
+                'title' => $meta['title'],
+                'level_title' => $meta['level_title'],
+                'member_count' => $meta['member_count'],
+                'color' => $color,
+            ];
+        }
+
+        // Sắp xếp toàn bộ buổi đã lên lịch theo thời gian tăng dần
+        usort($timedSessions, static function (CourseSession $a, CourseSession $b): int {
+            $cmp = strcmp($a->dateForInput(), $b->dateForInput());
+            if ($cmp !== 0) {
+                return $cmp;
+            }
+            $cmp = strcmp($a->timeForInput($a->start_time), $b->timeForInput($b->start_time));
+            if ($cmp !== 0) {
+                return $cmp;
+            }
+            $cmp = ((int) $a->sort_order) <=> ((int) $b->sort_order);
+
+            return $cmp !== 0 ? $cmp : ((int) $a->id <=> (int) $b->id);
+        });
 
         $sessions = [];
         $today = date('Y-m-d');
@@ -54,15 +174,20 @@ class TeacherScheduleCalendarService
         $reminders = [];
         $now = time();
         $reminderBefore = $now + (48 * 3600);
-        $eventIndex = 0;
 
-        foreach ($rawSessions as $session) {
-            if (! $session->isTimed()) {
-                continue;
-            }
+        foreach ($timedSessions as $session) {
+            $courseId = (int) $session->course_id;
+            $courseMeta = $courseMetaById[$courseId] ?? [
+                'id' => $courseId,
+                'title' => (string) ($session->course?->title ?? ''),
+                'level_title' => '',
+                'member_count' => 0,
+                'color' => 'orange',
+                'room_lobby_url' => null,
+            ];
+            $ordinal = $sessionOrdinals[(int) $session->id] ?? 1;
 
-            $formatted = $this->formatSession($session, $eventIndex, $phaseLabels);
-            $eventIndex++;
+            $formatted = $this->formatSession($session, $ordinal, $courseMeta, $phaseLabels, $now);
             $sessions[] = $formatted;
 
             $sessionDate = $session->dateForInput();
@@ -113,6 +238,7 @@ class TeacherScheduleCalendarService
 
         return [
             'ready' => true,
+            'courses' => $coursesPayload,
             'sessions' => $sessions,
             'stats' => $stats,
             'todaySessions' => $todaySessions,
@@ -121,36 +247,96 @@ class TeacherScheduleCalendarService
     }
 
     /**
+     * @param  array<string, mixed>  $courseMeta
      * @param  array<string, string>  $phaseLabels
      * @return array<string, mixed>
      */
-    private function formatSession(CourseSession $session, int $index, array $phaseLabels): array
-    {
+    private function formatSession(
+        CourseSession $session,
+        int $ordinal,
+        array $courseMeta,
+        array $phaseLabels,
+        int $now
+    ): array {
         $courseId = (int) ($session->course_id ?? 0);
         $sessionId = (int) ($session->id ?? 0);
         $startTime = $session->timeForInput($session->start_time);
         $endTime = $session->timeForInput($session->end_time);
         $date = $session->dateForInput();
         $phase = $session->livePhase();
+        $display = $session->studentDisplay();
+        $window = $session->window();
+
+        $rawTitle = trim((string) ($session->title ?: 'Buổi học'));
+        $sessionNumber = $ordinal;
+        $shortTitle = 'Buổi '.$ordinal;
+        $lessonTitle = $rawTitle;
+
+        if (preg_match('/^(Buổi\s+(\d+))\s*(?:[:\-·–]\s*(.*))?$/iu', $rawTitle, $matches) === 1) {
+            $sessionNumber = (int) $matches[2];
+            $shortTitle = 'Buổi '.$sessionNumber;
+            $lessonTitle = trim((string) ($matches[3] ?? ''));
+        } elseif (preg_match('/^(Buổi\s+bù)\s*(?:[:\-·–]\s*(.*))?$/iu', $rawTitle, $matches) === 1) {
+            $shortTitle = 'Buổi bù';
+            $lessonTitle = trim((string) ($matches[2] ?? ''));
+        }
+
+        $levelTitle = trim((string) ($session->programSession?->level?->title ?? ''));
+        if ($levelTitle === '') {
+            $levelTitle = (string) ($courseMeta['level_title'] ?? '');
+        }
+
+        $isOngoing = $phase === 'live' && $now >= $window['start'] && $now <= $window['end'];
+        $startsInMinutes = null;
+        if ($phase === 'live' && $now < $window['start']) {
+            $startsInMinutes = max(1, (int) ceil(($window['start'] - $now) / 60));
+        }
+
+        $durationLabel = (string) ($display['durationLabel'] ?? '');
+        if ($durationLabel === '' && $window['start'] < PHP_INT_MAX && $window['end'] > $window['start']) {
+            $minsTotal = (int) round(($window['end'] - $window['start']) / 60);
+            $hours = intdiv($minsTotal, 60);
+            $mins = $minsTotal % 60;
+            $durationLabel = $minsTotal >= 60
+                ? ($mins > 0 ? "{$hours} giờ {$mins} phút" : "{$hours} giờ")
+                : "{$minsTotal} phút";
+        }
+
+        $effectiveEndTime = $endTime !== '' ? $endTime : date('H:i', (int) $window['end']);
+        $color = (string) ($courseMeta['color'] ?? 'orange');
+        $roomLobbyUrl = $courseMeta['room_lobby_url'] ?? null;
+        $isJoinable = $session->isJoinable() && is_string($roomLobbyUrl) && $roomLobbyUrl !== '';
 
         return [
             'event_type' => 'session',
             'url' => $this->sessionUrl($courseId, $sessionId),
             'id' => $sessionId,
+            'course_id' => $courseId,
             'public_code' => (string) ($session->public_code ?? ''),
-            'title' => (string) ($session->title ?: 'Buổi học'),
+            'title' => $rawTitle,
+            'short_title' => $shortTitle,
+            'lesson_title' => $lessonTitle,
+            'session_number' => $sessionNumber,
             'description' => (string) ($session->description ?? ''),
             'date' => $date,
             'start_time' => $startTime,
-            'end_time' => $endTime,
-            'time_label' => $endTime !== '' ? $startTime.' – '.$endTime : $startTime,
+            'end_time' => $effectiveEndTime,
+            'time_label' => $effectiveEndTime !== '' ? $startTime.' – '.$effectiveEndTime : $startTime,
+            'duration_label' => $durationLabel,
+            'countdown_label' => (string) ($display['countdownLabel'] ?? ''),
             'start_at' => $date.'T'.($startTime !== '' ? $startTime : '00:00'),
             'phase' => $phase,
             'phase_label' => $phaseLabels[$phase] ?? $phase,
-            'is_joinable' => false,
+            'is_ongoing' => $isOngoing,
+            'starts_in_minutes' => $startsInMinutes,
+            'is_joinable' => $isJoinable,
             'is_viewable' => true,
-            'course_title' => (string) ($session->course?->title ?? ''),
-            'color' => self::EVENT_COLORS[$index % count(self::EVENT_COLORS)],
+            'room_lobby_url' => $roomLobbyUrl,
+            'course_title' => (string) ($courseMeta['title'] ?? ''),
+            'level_title' => $levelTitle,
+            'member_count' => (int) ($courseMeta['member_count'] ?? 0),
+            'course_color' => $color,
+            'color' => $color,
         ];
     }
 
@@ -189,6 +375,7 @@ class TeacherScheduleCalendarService
     /**
      * @return array{
      *   ready: bool,
+     *   courses: list<array<string, mixed>>,
      *   sessions: list<array<string, mixed>>,
      *   stats: array<string, int>,
      *   todaySessions: list<array<string, mixed>>,
@@ -199,6 +386,7 @@ class TeacherScheduleCalendarService
     {
         return [
             'ready' => $ready,
+            'courses' => [],
             'sessions' => [],
             'stats' => ['today' => 0, 'live' => 0, 'month' => 0],
             'todaySessions' => [],

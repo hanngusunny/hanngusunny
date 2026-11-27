@@ -1,0 +1,531 @@
+/* ==========================================================================
+   SUNNY — Màn Tổng quan Giáo viên chuẩn pixel Figma (#602:61018)
+   Scoped riêng cho .sn-td-page, không ảnh hưởng các màn khác
+   ========================================================================== */
+
+body.os-body .os-main .sn-td-page {
+    font-family: "Nunito", "Noto Sans KR", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+    color: #313B47;
+}
+
+body.os-body .os-main .sn-td-page * {
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+/* Khôi phục font-weight 700 thắng .os-main.is-pad :where(h1..strong){font-weight:500} */
+body.os-body .os-main .sn-td-page :where(h1, h2, h3, h4, strong, b) {
+    font-weight: 700;
+}
+
+/* Khung nội dung trắng chính (#602:61022) */
+body.os-body .os-main .sn-td-surface {
+    background: #FFFFFF;
+    border: 1px solid #E4E8ED;
+    border-radius: 20px;
+    box-shadow: 0px 4px 0px 0px #E4E8ED;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Section container (#602:61023 & #602:61040) */
+body.os-body .os-main .sn-td-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+}
+
+body.os-body .os-main .sn-td-section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+body.os-body .os-main .sn-td-section-title {
+    margin: 0;
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 700;
+    color: #313B47;
+}
+
+/* Secondary text link button (#602:61026 & #602:61043) */
+body.os-body .os-main .sn-td-text-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    color: #0D99FF;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+body.os-body .os-main .sn-td-text-link:hover {
+    background: #EFF5FD;
+    color: #0364C6;
+}
+
+body.os-body .os-main .sn-td-text-link svg {
+    display: block;
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+}
+
+/* ---------- Khối 1: Buổi dạy sắp tới (#602:61027) ---------- */
+body.os-body .os-main .sn-td-session-card {
+    background: #F4F5F7;
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+body.os-body .os-main .sn-td-session-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+body.os-body .os-main .sn-td-session-titles {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    min-width: 0;
+    flex: 1;
+}
+
+body.os-body .os-main .sn-td-level-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    background: #EFF5FD;
+    color: #0D99FF;
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+body.os-body .os-main .sn-td-session-heading {
+    margin: 0;
+    font-size: 24px;
+    line-height: 36px;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+    color: #171C22;
+}
+
+body.os-body .os-main .sn-td-session-subtitle {
+    margin: 0;
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: 500;
+    color: #313B47;
+}
+
+/* Status badge (#602:61033 & #78:4654) */
+body.os-body .os-main .sn-td-status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 4px 12px 4px 8px;
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: 700;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+body.os-body .os-main .sn-td-status-badge svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+body.os-body .os-main .sn-td-status-badge--ready {
+    background: #E8FBF2;
+    border-color: #10B266;
+    color: #10B266;
+}
+
+body.os-body .os-main .sn-td-status-badge--live {
+    background: #FCE9E9;
+    border-color: #E01F1F;
+    color: #E01F1F;
+}
+
+body.os-body .os-main .sn-td-status-badge--upcoming {
+    background: #FEFCE7;
+    border-color: #FCB102;
+    color: #D98200;
+}
+
+/* 2 Stat Cards Row (#602:61034) */
+body.os-body .os-main .sn-td-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+body.os-body .os-main .sn-td-stat-card {
+    background: #FFFFFF;
+    border-radius: 20px;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+}
+
+body.os-body .os-main .sn-td-stat-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
+    color: #313B47;
+}
+
+body.os-body .os-main .sn-td-stat-ico {
+    width: 32px;
+    height: 32px;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+body.os-body .os-main .sn-td-stat-ico svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+}
+
+body.os-body .os-main .sn-td-stat-ico--orange {
+    background: #FCF0E6;
+}
+
+body.os-body .os-main .sn-td-stat-ico--green {
+    background: #E8FBF2;
+}
+
+body.os-body .os-main .sn-td-stat-value {
+    display: block;
+    font-size: 24px;
+    line-height: 36px;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+    color: #171C22;
+}
+
+body.os-body .os-main .sn-td-stat-value--blue {
+    color: #0D62E7;
+}
+
+body.os-body .os-main .sn-td-stat-sub {
+    margin: 0;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+    color: #313B47;
+}
+
+body.os-body .os-main .sn-td-stat-link {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+body.os-body .os-main .sn-td-stat-link:hover {
+    color: #0D99FF;
+    text-decoration: underline;
+}
+
+/* Session Footer Action Row (#602:61037) */
+body.os-body .os-main .sn-td-session-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+body.os-body .os-main .sn-td-session-note {
+    margin: 0;
+    font-size: 13px;
+    line-height: 20px;
+    font-weight: 400;
+    color: #6B7785;
+}
+
+/* 3D Sunny CTA Buttons (#602:61039 & #575:48670) */
+body.os-body .os-main .sn-td-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 48px;
+    padding: 12px 24px;
+    border-radius: 12px;
+    border: 0;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
+    color: #FFFFFF;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.15s ease, transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+body.os-body .os-main .sn-td-cta svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+body.os-body .os-main .sn-td-cta--primary {
+    background: #FF7614;
+    box-shadow: 0px 4px 0px 0px #E95308;
+}
+
+body.os-body .os-main .sn-td-cta--primary:hover {
+    background: #FF8B38;
+    color: #FFFFFF;
+}
+
+body.os-body .os-main .sn-td-cta--primary:active {
+    transform: translateY(3px);
+    box-shadow: 0px 1px 0px 0px #E95308;
+}
+
+body.os-body .os-main .sn-td-cta--secondary {
+    background: #0D99FF;
+    box-shadow: 0px 4px 0px 0px #088AE9;
+}
+
+body.os-body .os-main .sn-td-cta--secondary:hover {
+    background: #33AAFF;
+    color: #FFFFFF;
+}
+
+body.os-body .os-main .sn-td-cta--secondary:active {
+    transform: translateY(3px);
+    box-shadow: 0px 1px 0px 0px #088AE9;
+}
+
+body.os-body .os-main .sn-td-cta--full {
+    width: 100%;
+}
+
+/* ---------- Khối 2: Quản lý khóa học (#602:61040) ---------- */
+body.os-body .os-main .sn-td-courses-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+body.os-body .os-main .sn-td-course-card {
+    background: #FFFFFF;
+    border: 1px solid #F2F2F2;
+    border-radius: 16px;
+    box-shadow: 0px 4px 0px 0px #E4E8ED;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 12px;
+    min-width: 0;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+body.os-body .os-main .sn-td-course-card:hover {
+    border-color: #E4E8ED;
+    transform: translateY(-2px);
+}
+
+body.os-body .os-main .sn-td-course-body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+body.os-body .os-main .sn-td-course-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+body.os-body .os-main .sn-td-course-id {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    min-width: 0;
+    flex: 1;
+}
+
+body.os-body .os-main .sn-td-course-ico {
+    width: 44px;
+    height: 44px;
+    border-radius: 9999px;
+    background: #FFF7F0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+body.os-body .os-main .sn-td-course-ico svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+}
+
+body.os-body .os-main .sn-td-course-title {
+    margin: 0;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
+    color: #313B47;
+    word-break: break-word;
+}
+
+body.os-body .os-main .sn-td-course-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    background: #EFF5FD;
+    color: #0D99FF;
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: 700;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+body.os-body .os-main .sn-td-course-status.is-muted {
+    background: #F4F5F7;
+    color: #63758D;
+}
+
+body.os-body .os-main .sn-td-course-meta {
+    margin: 0;
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: 500;
+    color: #6B7785;
+}
+
+/* Empty State Box */
+body.os-body .os-main .sn-td-empty-box {
+    background: #F4F5F7;
+    border-radius: 20px;
+    padding: 36px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 8px;
+}
+
+body.os-body .os-main .sn-td-empty-ico {
+    width: 48px;
+    height: 48px;
+    border-radius: 9999px;
+    background: #FFF7F0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4px;
+}
+
+body.os-body .os-main .sn-td-empty-title {
+    margin: 0;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
+    color: #171C22;
+}
+
+body.os-body .os-main .sn-td-empty-desc {
+    margin: 0;
+    max-width: 420px;
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: 500;
+    color: #6B7785;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+    body.os-body .os-main .sn-td-courses-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 720px) {
+    body.os-body .os-main .sn-td-surface {
+        padding: 16px;
+        border-radius: 16px;
+    }
+
+    body.os-body .os-main .sn-td-session-card {
+        padding: 16px;
+        border-radius: 16px;
+    }
+
+    body.os-body .os-main .sn-td-session-heading {
+        font-size: 20px;
+        line-height: 28px;
+    }
+
+    body.os-body .os-main .sn-td-session-subtitle {
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    body.os-body .os-main .sn-td-stat-grid,
+    body.os-body .os-main .sn-td-courses-grid {
+        grid-template-columns: 1fr;
+    }
+
+    body.os-body .os-main .sn-td-session-foot {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    body.os-body .os-main .sn-td-session-foot .sn-td-cta {
+        width: 100%;
+    }
+}

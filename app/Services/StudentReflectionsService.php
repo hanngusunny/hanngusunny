@@ -26,10 +26,6 @@ class StudentReflectionsService
             return $query->get();
         }
 
-        if ($viewer->isTeacher()) {
-            return $query->where('teacher_id', (int) $viewer->id)->get();
-        }
-
         return collect();
     }
 
@@ -57,9 +53,7 @@ class StudentReflectionsService
             ->orderByDesc('updated_at')
             ->orderByDesc('id');
 
-        if ($viewer->isTeacher() && ! $viewer->isAdmin()) {
-            $query->whereHas('session.course', static fn ($course) => $course->where('teacher_id', (int) $viewer->id));
-        } elseif (! $viewer->isAdmin() && ! $viewer->isTeacher()) {
+        if (! $viewer->isAdmin()) {
             $query->whereRaw('1 = 0');
         }
 
@@ -119,9 +113,7 @@ class StudentReflectionsService
                 $session->where('status', '!=', 'cancelled');
             });
 
-        if ($viewer->isTeacher() && ! $viewer->isAdmin()) {
-            $base->whereHas('session.course', static fn ($course) => $course->where('teacher_id', (int) $viewer->id));
-        } elseif (! $viewer->isAdmin() && ! $viewer->isTeacher()) {
+        if (! $viewer->isAdmin()) {
             return ['total' => 0, 'courses' => 0, 'students' => 0, 'this_week' => 0];
         }
 
@@ -152,6 +144,10 @@ class StudentReflectionsService
      */
     public function studentsForFilter(User $viewer, int $courseId = 0): Collection
     {
+        if (! $viewer->isAdmin()) {
+            return collect();
+        }
+
         $query = User::query()
             ->select('users.id', 'users.full_name', 'users.username', 'users.phone')
             ->join('course_members', 'course_members.user_id', '=', 'users.id')
@@ -161,12 +157,6 @@ class StudentReflectionsService
             ->orderBy('users.full_name')
             ->orderBy('users.id')
             ->distinct();
-
-        if ($viewer->isTeacher() && ! $viewer->isAdmin()) {
-            $query->where('courses.teacher_id', (int) $viewer->id);
-        } elseif (! $viewer->isAdmin() && ! $viewer->isTeacher()) {
-            return collect();
-        }
 
         if ($courseId > 0) {
             $query->where('courses.id', $courseId);
