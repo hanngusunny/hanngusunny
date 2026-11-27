@@ -18,12 +18,11 @@
 @endphp
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('assets/css/student-progress.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/student-evaluation.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/student-evaluation.css') }}?v=2">
 @endpush
 
 @section('content')
-<main class="pwa-home pwa-page pwa-eval lp-page se-page">
+<main class="pwa-home pwa-page pwa-eval se-page">
     @include('pwa.partials.header')
 
     @if (session('error'))

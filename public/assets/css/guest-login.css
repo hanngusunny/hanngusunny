@@ -26,13 +26,14 @@ body.ga-body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 56px 40px;
+    padding: 56px;
     box-sizing: border-box;
 }
 
+/* Figma #317:13203: 1280px - 56*2 = 1168px (643px left + 32px gap + 493px right) */
 .sn-login-container {
     width: 100%;
-    max-width: 1280px;
+    max-width: 1168px;
     min-height: 720px;
     display: grid;
     grid-template-columns: minmax(0, 1fr) 493px;
@@ -46,8 +47,10 @@ body.ga-body {
 .sn-login-hero {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 61px;
     padding: 40px 0 0;
+    min-width: 0;
     min-height: 100%;
     box-sizing: border-box;
 }
@@ -80,26 +83,23 @@ body.ga-body {
     color: #FF7614;
 }
 
-/* Mascot Stage with White Inset Podium & Speech Bubble (#223:10972) */
+/* Mascot Stage with White Inset Podium & Speech Bubble (#223:10972: 643x512) */
 .sn-mascot-stage {
     position: relative;
     width: 643px;
     max-width: 100%;
     height: 512px;
-    margin: auto auto 0;
+    margin: 0;
     flex-shrink: 0;
 }
 
-/* White Elliptical Podium (#223:10979)
-   Location: x=0 (or centered), y=395; width=619px, height=77px
-   Inset shadow: inset 0px 6px 0px 0px rgba(0, 0, 0, 0.25) */
+/* White Elliptical Podium (#223:10979: x=0, y=395, 619x77) */
 .sn-mascot-podium {
     position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
     top: 395px;
     width: 619px;
-    max-width: 98%;
+    max-width: 96.3%;
     height: 77px;
     background: #FFFFFF;
     border-radius: 50%;
@@ -107,24 +107,21 @@ body.ga-body {
     z-index: 1;
 }
 
-/* Mascot Anh Cam Image (#398:24751)
-   Location: x=0 (centered), y=162; width=619px, height=325px */
+/* Mascot Anh Cam PNG (#398:24751: x=0, y=162, 619x325) */
 .sn-mascot-img {
     position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
     top: 162px;
     width: 619px;
-    max-width: 98%;
+    max-width: 96.3%;
     height: 325px;
     object-fit: contain;
     z-index: 2;
     pointer-events: none;
+    user-select: none;
 }
 
-/* Speech Bubble (#375:14718)
-   Location: x=193, y=82; width=234px; padding=10px
-   Border-radius: 20px 20px 20px 0px; 3D Blue shadow: 0px 4px 0px 0px #088AE9 */
+/* Speech Bubble (#375:14718: x=193, y=82, width=234px, tilted ~-7deg) */
 .sn-speech-bubble {
     position: absolute;
     top: 82px;
@@ -132,37 +129,33 @@ body.ga-body {
     width: 235px;
     background: #FFFFFF;
     border-radius: 20px 20px 20px 0px;
-    box-shadow: 0px 4px 0px 0px rgba(8, 138, 233, 1);
+    box-shadow: 0px 4px 0px 0px #088AE9;
     padding: 10px 12px;
     box-sizing: border-box;
     z-index: 3;
-    animation: floatBubble 3.5s ease-in-out infinite;
+    transform: rotate(-7deg);
+    transform-origin: bottom left;
 }
 
 .sn-speech-bubble-text {
     font-size: 18px;
     font-weight: 700;
-    line-height: 1.25em;
+    line-height: 1.25;
     color: #0D99FF;
     margin: 0;
     text-align: left;
 }
 
-@keyframes floatBubble {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-6px); }
-}
-
 /* ==========================================================================
    Right Login Card (#222:9579)
-   Width: 493px, padding: 40px, borderRadius: 20px, shadow: 0px 4px 0px #E4E8ED
+   Width: 493px, min-height: 720px, padding: 40px, radius: 20px
    ========================================================================== */
 .sn-login-card {
     width: 493px;
     min-height: 720px;
     background: #FFFFFF;
     border-radius: 20px;
-    box-shadow: 0px 4px 0px 0px rgba(228, 232, 237, 1);
+    box-shadow: 0px 4px 0px 0px #E4E8ED;
     padding: 40px;
     box-sizing: border-box;
     display: flex;
@@ -186,16 +179,12 @@ body.ga-body {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0px 4px 0px 0px #E95308;
-    transition: transform 0.2s ease;
-}
-
-.sn-logo-box:hover {
-    transform: scale(1.03);
+    box-shadow: none;
 }
 
 .sn-logo-box img,
 .sn-logo-box svg {
+    display: block;
     width: 54px;
     height: 50px;
     object-fit: contain;
@@ -205,17 +194,22 @@ body.ga-body {
     font-size: 12px;
     font-weight: 700;
     line-height: 18px;
-    letter-spacing: 0.06em;
+    letter-spacing: 0;
     color: #171C22;
     margin: 0;
+    text-align: center;
     text-transform: uppercase;
 }
 
-/* Card Body: Heading, Fields, Button (#188:5863) */
+/* Card Body: Heading + Alerts + Form (#188:5863 & #188:5859) */
 .sn-login-card-body {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 16px;
+}
+
+.sn-login-card-body .ga-alert {
+    margin: 0;
 }
 
 /* H2 Heading (#188:5751) */
@@ -228,23 +222,32 @@ body.ga-body {
     margin: 0;
 }
 
-/* Form Fields (#188:5754 & #188:5837) */
+/* Form: 24px gap between inputs+options block and Submit button (#188:5863) */
 .sn-login-form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 24px;
 }
 
+/* Inputs + Options container (#188:5837: gap 16px) */
+.sn-login-form-main {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Phone + Password fields (#188:5754: gap 12px) */
 .sn-login-fields {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
+/* Single Text Field (#188:5697 / #188:5724: gap 8px) */
 .sn-login-field {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 8px;
 }
 
 .sn-login-label {
@@ -266,24 +269,36 @@ body.ga-body {
     height: 48px;
     gap: 8px;
     box-sizing: border-box;
-    transition: all 0.2s ease;
+    transition: background-color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.sn-login-input-wrap:hover {
+    border-color: #CCD4DC;
 }
 
 .sn-login-input-wrap:focus-within {
     background: #FFFFFF;
     border-color: #FF7614;
-    box-shadow: 0 0 0 3px rgba(255, 118, 20, 0.12);
+    box-shadow: 0 0 0 3px rgba(255, 118, 20, 0.14);
 }
 
 .sn-login-field-icon {
     width: 24px;
     height: 24px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    color: #8092A8;
-    transition: color 0.2s ease;
+    color: #63758D;
+    transition: color 0.16s ease;
+}
+
+.sn-login-field-icon--phone {
+    color: #171C22;
+}
+
+.sn-login-field-icon--lock {
+    color: #63758D;
 }
 
 .sn-login-field-icon svg {
@@ -318,7 +333,12 @@ body.ga-body {
     font-weight: 400;
 }
 
-/* Fix browser autofill background */
+.sn-login-input[type="password"]::placeholder {
+    letter-spacing: 0.16em;
+    color: #8092A8;
+}
+
+/* Browser autofill override */
 .sn-login-input:-webkit-autofill,
 .sn-login-input:-webkit-autofill:hover,
 .sn-login-input:-webkit-autofill:focus {
@@ -342,11 +362,11 @@ input[type="password"]::-ms-clear {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 16px;
+    gap: 12px;
 }
 
 .sn-login-check {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 8px;
     cursor: pointer;
@@ -358,19 +378,46 @@ input[type="password"]::-ms-clear {
 }
 
 .sn-login-check input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    margin: 0;
     width: 20px;
     height: 20px;
-    border-radius: 6px;
-    accent-color: #FF7614;
+    flex-shrink: 0;
+    border-radius: 5px;
+    border: 1.5px solid #63758D;
+    background-color: #FFFFFF;
+    display: inline-grid;
+    place-content: center;
     cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.sn-login-check input[type="checkbox"]:hover {
+    border-color: #FF7614;
+}
+
+.sn-login-check input[type="checkbox"]:checked {
+    border-color: #FF7614;
+    background-color: #FF7614;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M3.5 8.2L6.5 11.2L12.5 5' stroke='%23FFFFFF' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 14px 14px;
+}
+
+.sn-login-check input[type="checkbox"]:focus-visible {
+    outline: 2px solid #0D99FF;
+    outline-offset: 2px;
 }
 
 .sn-login-forgot {
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 700;
     line-height: 24px;
     color: #0D99FF;
     text-decoration: none;
+    white-space: nowrap;
     transition: color 0.15s ease;
 }
 
@@ -397,7 +444,7 @@ input[type="password"]::-ms-clear {
     align-items: center !important;
     justify-content: center !important;
     cursor: pointer !important;
-    box-shadow: 0px 4px 0px 0px rgba(233, 83, 8, 1) !important;
+    box-shadow: 0px 4px 0px 0px #E95308 !important;
     box-sizing: border-box !important;
     transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease !important;
 }
@@ -409,10 +456,8 @@ input[type="password"]::-ms-clear {
 
 .sn-login-submit-btn:active,
 .sn-login-form .sn-btn:active {
-    transform: translateY(2px) !important;
-    box-shadow: 0px 2px 0px 0px rgba(233, 83, 8, 1) !important;
-}
-    box-shadow: 0px 1px 0px 0px rgba(233, 83, 8, 1);
+    transform: translateY(3px) !important;
+    box-shadow: 0px 1px 0px 0px #E95308 !important;
 }
 
 /* Card Bottom Footer (#188:5862) */
@@ -420,6 +465,7 @@ input[type="password"]::-ms-clear {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
     gap: 12px;
     font-size: 16px;
     line-height: 24px;
@@ -427,7 +473,7 @@ input[type="password"]::-ms-clear {
 }
 
 .sn-login-app-link {
-    font-weight: 600;
+    font-weight: 700;
     color: #0D99FF;
     text-decoration: none;
     transition: color 0.15s ease;
@@ -446,26 +492,43 @@ input[type="password"]::-ms-clear {
 /* ==========================================================================
    Responsive Adaptations
    ========================================================================== */
-@media (max-width: 1140px) {
+@media (max-width: 1240px) and (min-width: 1081px) {
+    .sn-login-page {
+        padding: 40px 28px;
+    }
+
+    .sn-login-container {
+        grid-template-columns: minmax(0, 1fr) 460px;
+        gap: 24px;
+    }
+
+    .sn-login-card {
+        width: 460px;
+    }
+
+    .sn-speech-bubble {
+        left: 165px;
+    }
+}
+
+@media (max-width: 1080px) {
+    .sn-login-page {
+        padding: 36px 24px;
+    }
+
     .sn-login-container {
         grid-template-columns: 1fr;
         justify-items: center;
-        gap: 40px;
+        min-height: auto;
+        gap: 32px;
     }
 
     .sn-login-hero {
         align-items: center;
         text-align: center;
         padding-top: 0;
-    }
-
-    .sn-speech-bubble {
-        position: relative;
-        top: 0;
-        left: 0;
-        margin-bottom: 12px;
-        width: auto;
-        max-width: 380px;
+        gap: 28px;
+        width: 100%;
     }
 
     .sn-mascot-stage {
@@ -474,30 +537,39 @@ input[type="password"]::-ms-clear {
         flex-direction: column;
         align-items: center;
         width: 100%;
+        max-width: 540px;
     }
 
-    .sn-mascot-podium {
+    .sn-speech-bubble {
         position: relative;
         top: 0;
         left: 0;
-        transform: none;
-        width: 100%;
-        max-width: 500px;
-        height: 60px;
-        order: 3;
-        margin-top: -30px;
+        margin-bottom: 14px;
+        width: auto;
+        max-width: 340px;
+        transform: rotate(-3deg);
     }
 
     .sn-mascot-img {
         position: relative;
         top: 0;
         left: 0;
-        transform: none;
         width: 100%;
         max-width: 500px;
         height: auto;
         order: 2;
         z-index: 2;
+    }
+
+    .sn-mascot-podium {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100%;
+        max-width: 500px;
+        height: 56px;
+        order: 3;
+        margin-top: -28px;
     }
 
     .sn-login-card {
@@ -515,10 +587,12 @@ input[type="password"]::-ms-clear {
 
     .sn-login-title {
         font-size: 28px;
+        line-height: 32px;
     }
 
     .sn-login-lead {
-        font-size: 17px;
+        font-size: 16px;
+        line-height: 24px;
     }
 
     .sn-speech-bubble-text {
@@ -529,13 +603,10 @@ input[type="password"]::-ms-clear {
         padding: 28px 20px;
     }
 
-    .sn-login-options {
-        font-size: 14px;
-    }
-
     .sn-login-check,
     .sn-login-forgot,
     .sn-login-card-foot {
         font-size: 14px;
+        line-height: 20px;
     }
 }

@@ -12,8 +12,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400..900;1,400..900&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/guest-auth.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/guest-login.css') }}?v=5">
     <link rel="stylesheet" href="{{ asset('assets/css/sunny-ds.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('assets/css/guest-login.css') }}?v=6">
     <style>
         :root { --app-font: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
         html, body, button, input, select, textarea { font-family: var(--app-font); }

@@ -37,10 +37,6 @@ class StudentCoursePageService
             ));
         }
 
-        if ($this->nav->isProgressTab($tabParam)) {
-            return redirect()->to($this->nav->progressUrl());
-        }
-
         if ($this->nav->isVideoLibraryTab($tabParam)) {
             return redirect()->to($this->nav->videoLibraryUrl());
         }

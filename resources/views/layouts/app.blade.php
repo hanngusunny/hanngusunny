@@ -26,7 +26,7 @@
         tailwind.config = { theme: { extend: { fontFamily: { sans: ['"Inter Tight"', 'ui-sans-serif', 'system-ui', 'sans-serif'] } } } };
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="{{ asset('assets/css/office-shell.css') }}?v=3">
+    <link rel="stylesheet" href="{{ asset('assets/css/office-shell.css') }}?v=5">
     <link rel="stylesheet" href="{{ asset('assets/css/office-page.css') }}?v=6">
     <link rel="stylesheet" href="{{ asset('assets/css/notifications.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
@@ -57,11 +57,11 @@
         $authUser = auth()->user();
         $active = $active ?? 'home';
         $nav = [
-            ['id' => 'home', 'href' => $authUser?->homePath() ?? route('dashboard'), 'icon' => 'fa-house', 'label' => 'Tổng quan'],
+            ['id' => 'home', 'href' => $authUser?->homePath() ?? route('dashboard'), 'icon' => 'fa-house', 'svg' => 'home', 'label' => 'Tổng quan'],
         ];
         if ($authUser?->isGuest()) {
             $nav = [
-                ['id' => 'home', 'href' => $authUser->homePath(), 'icon' => 'fa-video', 'label' => 'Phòng chờ'],
+                ['id' => 'home', 'href' => $authUser->homePath(), 'icon' => 'fa-video', 'svg' => 'classroom', 'label' => 'Phòng chờ'],
             ];
         } elseif ($authUser?->isLearner()) {
             $studentNav = app(\App\Services\StudentCourseNavService::class);
@@ -69,36 +69,36 @@
                 'id' => 'course',
                 'href' => $studentNav->dashboardUrlForStudent((int) $authUser->id),
                 'icon' => 'fa-chalkboard',
+                'svg' => 'course',
                 'label' => 'Khóa học',
             ];
             $nav[] = [
                 'id' => 'assessments',
                 'href' => $studentNav->assessmentsUrlForStudent((int) $authUser->id),
                 'icon' => 'fa-list-check',
+                'svg' => 'exam',
                 'label' => 'Bài thi',
-            ];
-            $nav[] = [
-                'id' => 'progress',
-                'href' => $studentNav->progressUrl(),
-                'icon' => 'fa-chart-line',
-                'label' => 'Tiến độ học tập',
             ];
             $nav[] = [
                 'id' => 'evaluations',
                 'href' => $studentNav->evaluationsUrl(),
                 'icon' => 'fa-star-half-stroke',
+                'svg' => 'eval',
                 'label' => 'Nhận xét & Kết quả',
+                'label_html' => 'Nhận xét<br>&amp; Kết quả',
             ];
             $nav[] = [
                 'id' => 'videos',
                 'href' => $studentNav->videoLibraryUrl(),
                 'icon' => 'fa-circle-play',
+                'svg' => 'video',
                 'label' => 'Thư viện video',
             ];
             $nav[] = [
                 'id' => 'rules',
                 'href' => route('school-rules.show'),
                 'icon' => 'fa-book',
+                'svg' => 'rules',
                 'label' => 'Nội quy',
             ];
         }
@@ -107,24 +107,28 @@
                 'id' => 'schedule',
                 'href' => route('teacher.schedule'),
                 'icon' => 'fa-calendar-days',
+                'svg' => 'schedule',
                 'label' => 'Lịch dạy',
             ];
             $nav[] = [
                 'id' => 'evaluations',
                 'href' => route('teacher.evaluations'),
                 'icon' => 'fa-star-half-stroke',
+                'svg' => 'teacher_eval',
                 'label' => 'Đánh giá',
             ];
             $nav[] = [
                 'id' => 'grading',
                 'href' => route('teacher.grading'),
                 'icon' => 'fa-pen-to-square',
+                'svg' => 'grading',
                 'label' => 'Chấm điểm',
             ];
             $nav[] = [
                 'id' => 'assessments',
                 'href' => route('student.assessments'),
                 'icon' => 'fa-list-check',
+                'svg' => 'exam',
                 'label' => 'Bài kiểm tra',
             ];
             $nav[] = [
@@ -137,23 +141,25 @@
                 'id' => 'rules',
                 'href' => route('school-rules.edit'),
                 'icon' => 'fa-book',
+                'svg' => 'rules',
                 'label' => 'Nội quy',
             ];
             $nav[] = [
                 'id' => 'activity',
                 'href' => route('activity-logs.index'),
                 'icon' => 'fa-clock-rotate-left',
+                'svg' => 'activity',
                 'label' => 'Lịch sử hoạt động',
             ];
         }
         if ($authUser?->isAdmin()) {
-            $nav[] = ['id' => 'programs', 'href' => route('admin.programs.index'), 'icon' => 'fa-graduation-cap', 'label' => 'Chương trình'];
-            $nav[] = ['id' => 'courses', 'href' => route('admin.courses.index'), 'icon' => 'fa-chalkboard', 'label' => 'Khóa học'];
-            $nav[] = ['id' => 'members', 'href' => route('admin.users.index'), 'icon' => 'fa-users', 'label' => 'Thành viên'];
+            $nav[] = ['id' => 'programs', 'href' => route('admin.programs.index'), 'icon' => 'fa-graduation-cap', 'svg' => 'programs', 'label' => 'Chương trình'];
+            $nav[] = ['id' => 'courses', 'href' => route('admin.courses.index'), 'icon' => 'fa-chalkboard', 'svg' => 'admin_courses', 'label' => 'Khóa học'];
+            $nav[] = ['id' => 'members', 'href' => route('admin.users.index'), 'icon' => 'fa-users', 'svg' => 'members', 'label' => 'Thành viên'];
             $nav[] = ['id' => 'vouchers', 'href' => route('admin.vouchers.index'), 'icon' => 'fa-ticket', 'label' => 'Voucher'];
-            $nav[] = ['id' => 'activity', 'href' => route('activity-logs.index'), 'icon' => 'fa-clock-rotate-left', 'label' => 'Lịch sử hoạt động'];
-            $nav[] = ['id' => 'rules', 'href' => route('school-rules.edit'), 'icon' => 'fa-book', 'label' => 'Nội quy'];
-            $nav[] = ['id' => 'classroom', 'href' => route('classroom.index'), 'icon' => 'fa-video', 'label' => 'Lớp học online'];
+            $nav[] = ['id' => 'activity', 'href' => route('activity-logs.index'), 'icon' => 'fa-clock-rotate-left', 'svg' => 'activity', 'label' => 'Lịch sử hoạt động'];
+            $nav[] = ['id' => 'rules', 'href' => route('school-rules.edit'), 'icon' => 'fa-book', 'svg' => 'rules', 'label' => 'Nội quy'];
+            $nav[] = ['id' => 'classroom', 'href' => route('classroom.index'), 'icon' => 'fa-video', 'svg' => 'classroom', 'label' => 'Lớp học online'];
             $nav[] = ['id' => 'classrooms', 'href' => route('admin.classrooms.index'), 'icon' => 'fa-gear', 'label' => 'Phòng học Zoom'];
             $nav[] = ['id' => 'database', 'href' => route('admin.database.index'), 'icon' => 'fa-database', 'label' => 'Cập nhật CSDL'];
         }
@@ -161,13 +167,20 @@
 
     <aside class="os-sidebar" aria-label="Menu chính">
         <a class="os-brand" href="{{ $authUser?->homePath() ?? route('dashboard') }}" title="{{ config('app.name') }}">
-            <img src="{{ asset('assets/images/logo.png') }}" alt="SUNNY" class="h-9 w-9 shrink-0 rounded-lg object-cover">
+            <span class="os-brand-mark" aria-hidden="true">
+                <img src="{{ asset('assets/images/sunny-logo-icon.svg') }}" alt="" width="36" height="34">
+            </span>
+            <span class="os-brand-name">HÀN NGỮ<br>SUNNY</span>
         </a>
+        <span class="os-side-divider" aria-hidden="true"></span>
         <nav class="os-side-nav">
             @foreach ($nav as $item)
-                <a href="{{ $item['href'] }}" class="os-side-item{{ $item['id'] === $active ? ' is-on' : '' }}" title="{{ $item['label'] }}">
-                    <span class="os-side-ico"><i class="fa-solid {{ $item['icon'] }}"></i></span>
-                    <span class="os-side-label">{{ $item['label'] }}</span>
+                @php $isOn = $item['id'] === $active; @endphp
+                <a href="{{ $item['href'] }}" class="os-side-item{{ $isOn ? ' is-on' : '' }}" title="{{ $item['label'] }}"@if ($isOn) aria-current="page" @endif>
+                    <span class="os-side-ico" aria-hidden="true">
+                        @include('partials.sidebar-icon', ['name' => $item['svg'] ?? null, 'fa' => $item['icon'] ?? null, 'active' => $isOn])
+                    </span>
+                    <span class="os-side-label">@if (! empty($item['label_html'])){!! $item['label_html'] !!}@else{{ $item['label'] }}@endif</span>
                 </a>
             @endforeach
         </nav>

@@ -74,16 +74,6 @@ class StudentCourseNavService
         return $this->assessmentsPageUrl($this->resolveActiveLevelId($userId));
     }
 
-    public function progressUrl(): string
-    {
-        return route('student.progress');
-    }
-
-    public function isProgressTab(mixed $tab): bool
-    {
-        return in_array($tab, ['tien-do-hoc-tap', 'tien-do', 'progress'], true);
-    }
-
     public function videoLibraryUrl(): string
     {
         return route('student.video-library');

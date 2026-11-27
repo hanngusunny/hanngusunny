@@ -1,15 +1,15 @@
 html { color-scheme: light; }
 
 :root {
-    --os-accent: #f26b21;
-    --os-accent-soft: #fff3ea;
-    --os-ink: #2b2a33;
-    --os-muted: #8a8796;
-    --os-line: #ececef;
-    --os-side: #fffaf6;
-    --os-bg: #f4f6f8;
-    --os-side-w: 104px;
-    --os-top-h: 62px;
+    --os-accent: #FF7614;
+    --os-accent-soft: #FFF7F0;
+    --os-ink: #171C22;
+    --os-muted: #62758D;
+    --os-line: #E4E8ED;
+    --os-side: #FFFFFF;
+    --os-bg: #EFF5FD;
+    --os-side-w: 124px;
+    --os-top-h: 70px;
 }
 
 .os-body {
@@ -21,46 +21,100 @@ html { color-scheme: light; }
     font-family: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
 }
 
+/* Floating Sunny Sidebar — Figma #710:76990 (#375:16464) & #46:924 */
 .os-sidebar {
-    position: sticky;
-    top: 0;
+    position: relative;
     z-index: 40;
+    align-self: flex-start;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    gap: 24px;
     width: var(--os-side-w);
     min-width: var(--os-side-w);
-    height: 100vh;
-    background:
-        linear-gradient(180deg, #fff 0%, #fffaf6 28%, #fff7f0 100%);
-    box-shadow: 6px 0 24px -18px rgba(80, 48, 16, 0.35);
-    border-right: 1px solid #f0e6dc;
+    margin: 20px 4px 20px 16px;
+    padding: 20px;
+    box-sizing: border-box;
+    background: var(--os-side);
+    border: 0;
+    border-radius: 20px;
+    box-shadow: 0px 4px 0px 0px #E4E8ED;
+    font-family: "Nunito", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+}
+
+@media (min-width: 901px) and (min-height: 890px) {
+    .os-sidebar {
+        position: sticky;
+        top: 20px;
+    }
 }
 
 .os-brand {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: var(--os-top-h);
-    margin: 0 12px;
-    border-bottom: 1px solid #f3e8dc;
+    gap: 8px;
+    width: 100%;
+    flex-shrink: 0;
     text-decoration: none;
 }
 
-.os-brand img {
-    width: 40px;
-    height: 40px;
-    border-radius: 12px;
-    object-fit: cover;
-    box-shadow: 0 6px 14px -8px rgba(242, 107, 33, 0.7), 0 0 0 3px #fff5ec;
+.os-brand-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 51px;
+    height: 51px;
+    border-radius: 12.75px;
+    background: #FF7614;
+    flex-shrink: 0;
+    transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.os-brand:hover .os-brand-mark {
+    background: #FF8B38;
+    transform: translateY(-1px);
+}
+
+.os-brand-mark img {
+    display: block;
+    width: 36px;
+    height: 34px;
+    object-fit: contain;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.os-brand-name {
+    display: block;
+    width: 100%;
+    font-family: "Nunito", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 18px;
+    letter-spacing: 0;
+    text-align: center;
+    color: #171C22;
+}
+
+.os-side-divider {
+    display: block;
+    width: 100%;
+    height: 2px;
+    flex-shrink: 0;
+    border-radius: 999px;
+    background: #CCD4DC;
 }
 
 .os-side-nav {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    padding: 14px 10px 18px;
-    overflow-y: auto;
-    flex: 1;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    padding: 0;
+    overflow: visible;
 }
 
 .os-side-item {
@@ -69,87 +123,84 @@ html { color-scheme: light; }
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    min-height: 68px;
-    padding: 8px 6px 9px;
-    border-radius: 14px;
-    color: #6f6a64;
+    gap: 4px;
+    width: 84px;
+    min-height: 80px;
+    padding: 8px 6px;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    border-radius: 20px;
+    background: transparent;
+    color: #62758D;
     text-decoration: none;
     text-align: center;
-    transition: background .16s ease, color .16s ease, box-shadow .16s ease;
+    transition: background-color 0.16s ease, color 0.16s ease;
 }
 
 .os-side-ico {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 34px;
-    height: 34px;
-    border-radius: 11px;
-    background: #fff;
-    box-shadow: 0 1px 0 #efe8e1, 0 6px 12px -10px rgba(60, 40, 20, 0.45);
-    color: #8a8178;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    color: inherit;
+}
+
+.os-side-ico svg {
+    display: block;
+    width: 24px;
+    height: 24px;
 }
 
 .os-side-ico i {
-    font-size: 14px;
+    font-size: 20px;
     line-height: 1;
 }
 
 .os-side-label {
+    display: block;
     max-width: 100%;
-    font-size: 12.5px !important;
-    font-weight: 650;
-    line-height: 1.25 !important;
-    letter-spacing: -0.01em;
-    color: #111;
-}
-
-.os-side-item:hover .os-side-label,
-.os-side-item.is-on .os-side-label {
-    color: #111;
+    font-family: "Nunito", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+    font-size: 12px !important;
+    font-weight: 700;
+    line-height: 18px !important;
+    letter-spacing: 0;
+    color: inherit;
+    word-break: break-word;
 }
 
 .os-side-item:hover {
-    background: #fff;
-    color: var(--os-ink);
-    box-shadow: 0 8px 18px -14px rgba(80, 48, 16, 0.4);
-}
-
-.os-side-item:hover .os-side-ico {
-    color: var(--os-accent);
-    box-shadow: 0 0 0 1px #ffe3cf, 0 8px 14px -10px rgba(242, 107, 33, 0.45);
-}
-
-.os-side-item.is-on {
     background: var(--os-accent-soft);
     color: var(--os-accent);
-    box-shadow: inset 0 0 0 1px #ffd7b8;
 }
 
-.os-side-item.is-on::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 16px;
-    bottom: 16px;
-    width: 3px;
-    border-radius: 0 3px 3px 0;
-    background: var(--os-accent);
+.os-side-item:focus-visible {
+    outline: 2px solid #0D99FF;
+    outline-offset: 2px;
 }
 
-.os-side-item.is-on .os-side-ico {
+.os-side-item.is-on,
+.os-side-item.is-on:hover {
     background: var(--os-accent);
-    color: #fff;
-    box-shadow: 0 8px 16px -8px rgba(242, 107, 33, 0.8);
+    color: #FFFFFF;
 }
 
 .os-wrap {
     display: flex;
     flex-direction: column;
+    gap: 20px;
     min-width: 0;
     flex: 1;
     min-height: 100vh;
+    padding: 20px 16px;
+    box-sizing: border-box;
+}
+
+body.is-exam-focus .os-wrap,
+body:has(.sn-exam-focus-mode) .os-wrap {
+    padding: 0;
+    gap: 0;
 }
 
 .os-top {
@@ -495,9 +546,10 @@ html { color-scheme: light; }
     flex-wrap: wrap;
     gap: 22px;
     min-height: 44px;
-    padding: 0 12px;
+    padding: 0 20px;
     background: #fff;
-    border-bottom: 1px solid var(--os-line);
+    border: 1px solid var(--os-line);
+    border-radius: 16px;
     overflow: visible;
 }
 
@@ -612,7 +664,7 @@ html { color-scheme: light; }
 .os-main.is-pad {
     width: 100%;
     margin: 0;
-    padding: 10px 12px 16px;
+    padding: 0;
 }
 
 .os-all-links {
@@ -695,43 +747,68 @@ html { color-scheme: light; }
         left: 0;
         right: 0;
         z-index: 60;
+        align-self: stretch;
         width: 100%;
         min-width: 0;
         height: auto;
+        max-height: none;
+        margin: 0;
+        padding: 6px 8px;
+        gap: 0;
         flex-direction: row;
-        border-right: 0;
-        border-top: 1px solid var(--os-line);
-        background: #fff;
+        border: 0;
+        border-top: 1px solid #E4E8ED;
+        border-radius: 16px 16px 0 0;
+        background: #FFFFFF;
+        box-shadow: 0 -4px 16px rgba(23, 28, 34, 0.08);
     }
 
-    .os-brand {
+    .os-brand,
+    .os-side-divider {
         display: none;
     }
 
     .os-side-nav {
         flex-direction: row;
+        align-items: stretch;
+        justify-content: flex-start;
         overflow-x: auto;
-        padding: 6px 8px;
-        gap: 4px;
+        overflow-y: hidden;
+        padding: 0;
+        gap: 6px;
     }
 
     .os-side-item {
+        width: auto;
         min-width: 72px;
         min-height: 58px;
-        padding: 5px 4px 7px;
-    }
-
-    .os-side-item.is-on::before {
-        display: none;
+        padding: 6px 8px;
+        border-radius: 14px;
+        gap: 3px;
     }
 
     .os-side-ico {
-        width: 32px;
-        height: 32px;
+        width: 22px;
+        height: 22px;
+    }
+
+    .os-side-ico svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    .os-side-ico i {
+        font-size: 18px;
+    }
+
+    .os-side-label {
+        font-size: 11px !important;
+        line-height: 15px !important;
     }
 
     .os-wrap {
-        padding-bottom: 72px;
+        padding: 12px 12px 84px;
+        gap: 14px;
     }
 
     .os-top {

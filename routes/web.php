@@ -25,7 +25,6 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Student\AssessmentHubController;
 use App\Http\Controllers\Student\AssessmentTakeController;
 use App\Http\Controllers\Student\CourseVideoLibraryController;
-use App\Http\Controllers\Student\LearningProgressController;
 use App\Http\Controllers\Student\EvaluationController as StudentEvaluationController;
 use App\Http\Controllers\OnlineClassroomController;
 use App\Http\Controllers\Pwa\PwaController;
@@ -108,7 +107,6 @@ Route::middleware('auth')->group(function () {
     });
     Route::get('/bai-kiem-tra', AssessmentHubController::class)->name('student.assessments');
     Route::get('/bai-kiem-tra/trang-thai', [TeacherAssessmentController::class, 'live'])->middleware('teacher')->name('teacher.assessments.live');
-    Route::get('/tien-do-hoc-tap', LearningProgressController::class)->name('student.progress');
     Route::get('/thu-vien-video-khoa-hoc', CourseVideoLibraryController::class)->name('student.video-library');
     Route::get('/danh-gia-hoc-vien', StudentEvaluationController::class)->name('student.evaluations');
     Route::get('/lich-day', ScheduleController::class)->middleware('teacher')->name('teacher.schedule');
