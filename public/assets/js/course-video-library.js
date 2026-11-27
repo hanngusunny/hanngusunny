@@ -8,10 +8,17 @@
   const iframe = root.querySelector("[data-cvl-iframe]");
   const videoEl = root.querySelector("[data-cvl-video]");
   const titleEl = root.querySelector("[data-cvl-title]");
-  const sessionEl = root.querySelector("[data-cvl-session]");
-  const detailEl = root.querySelector("[data-cvl-detail]");
+  const counterEl = root.querySelector("[data-cvl-counter]");
+  const statusEl = root.querySelector("[data-cvl-status]");
+  const prevBtn = root.querySelector("[data-cvl-prev]");
+  const playlistContainer = root.querySelector("[data-cvl-playlist]");
   const playerMedia = root.querySelector(".cvl-player-frame");
-  const playlistItems = root.querySelectorAll("[data-cvl-play]");
+  const playlistItems = Array.from(root.querySelectorAll("[data-cvl-play]"));
+
+  let activePos = Math.max(
+    0,
+    playlistItems.findIndex((item) => item.classList.contains("is-active"))
+  );
 
   const getFullscreenElement = () =>
     document.fullscreenElement || document.webkitFullscreenElement || null;
@@ -41,23 +48,55 @@
     return Promise.reject(new Error("Fullscreen unsupported"));
   };
 
-  const updateButton = (button, isActive) => {
-    const icon = button.querySelector("i");
+  const updateFullscreenButton = (button, isActive) => {
+    const labelEl = button.querySelector("[data-cvl-full-label]");
 
-    button.setAttribute("aria-label", isActive ? "Thu nhỏ video" : "Xem full màn hình");
-    button.setAttribute("title", isActive ? "Thu nhỏ" : "Xem full màn hình");
+    button.setAttribute("aria-label", isActive ? "Thu nhỏ video" : "Xem toàn màn hình");
+    button.setAttribute("title", isActive ? "Thu nhỏ" : "Xem toàn màn hình");
 
-    if (icon) {
-      icon.className = isActive ? "fa-solid fa-compress" : "fa-solid fa-expand";
+    if (labelEl) {
+      labelEl.textContent = isActive ? "Thu nhỏ" : "Toàn màn hình";
     }
   };
 
+  const syncPrevButton = () => {
+    if (!prevBtn) {
+      return;
+    }
+
+    prevBtn.disabled = activePos <= 0;
+  };
+
+  const scrollCardIntoPlaylist = (card, behavior) => {
+    if (!playlistContainer || !card) {
+      return;
+    }
+
+    const containerRect = playlistContainer.getBoundingClientRect();
+    const cardRect = card.getBoundingClientRect();
+    const offsetTop = cardRect.top - containerRect.top + playlistContainer.scrollTop;
+    const targetTop = Math.max(
+      0,
+      offsetTop - (playlistContainer.clientHeight - cardRect.height) / 2
+    );
+
+    playlistContainer.scrollTo({
+      top: targetTop,
+      behavior: behavior || "smooth",
+    });
+  };
+
   const setActiveItem = (button) => {
-    playlistItems.forEach((item) => {
+    playlistItems.forEach((item, idx) => {
       const active = item === button;
       item.classList.toggle("is-active", active);
       item.setAttribute("aria-current", active ? "true" : "false");
+      if (active) {
+        activePos = idx;
+      }
     });
+
+    syncPrevButton();
   };
 
   const showIframe = (src, title) => {
@@ -98,11 +137,12 @@
     }
   };
 
-  const applyVideo = (button) => {
+  const applyVideo = (button, scrollBehavior) => {
     const embedSrc = button.getAttribute("data-embed-src") || "";
     const title = button.getAttribute("data-title") || "Video";
-    const detailUrl = button.getAttribute("data-detail-url") || "";
-    const sessionLabel = button.getAttribute("data-session-label") || "";
+    const counter = button.getAttribute("data-counter") || "";
+    const status = button.getAttribute("data-status") || "done";
+    const statusLabel = button.getAttribute("data-status-label") || "";
     const playerType = button.getAttribute("data-player-type") || "drive";
 
     if (!embedSrc) {
@@ -119,35 +159,32 @@
       titleEl.textContent = title;
     }
 
-    if (sessionEl) {
-      if (sessionLabel) {
-        sessionEl.textContent = sessionLabel;
-        sessionEl.hidden = false;
-      } else {
-        sessionEl.textContent = "";
-        sessionEl.hidden = true;
-      }
+    if (counterEl && counter) {
+      counterEl.textContent = counter;
     }
 
-    if (detailEl) {
-      if (detailUrl) {
-        detailEl.setAttribute("href", detailUrl);
-        detailEl.hidden = false;
-      } else {
-        detailEl.setAttribute("href", "#");
-        detailEl.hidden = true;
-      }
+    if (statusEl && statusLabel) {
+      statusEl.textContent = statusLabel;
+      statusEl.className = "sn-video-status-text is-" + status;
     }
 
     setActiveItem(button);
-    button.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    scrollCardIntoPlaylist(button, scrollBehavior || "smooth");
   };
 
   playlistItems.forEach((button) => {
     button.addEventListener("click", () => {
-      applyVideo(button);
+      applyVideo(button, "smooth");
     });
   });
+
+  if (prevBtn) {
+    prevBtn.addEventListener("click", () => {
+      if (activePos > 0 && playlistItems[activePos - 1]) {
+        applyVideo(playlistItems[activePos - 1], "smooth");
+      }
+    });
+  }
 
   root.querySelectorAll(".cvl-playlist-thumb-img").forEach((img) => {
     img.addEventListener("error", () => {
@@ -170,11 +207,19 @@
     });
 
     const syncButton = () => {
-      updateButton(fullscreenBtn, getFullscreenElement() === playerMedia);
+      updateFullscreenButton(fullscreenBtn, getFullscreenElement() === playerMedia);
     };
 
     document.addEventListener("fullscreenchange", syncButton);
     document.addEventListener("webkitfullscreenchange", syncButton);
     syncButton();
+  }
+
+  syncPrevButton();
+
+  if (playlistItems[activePos]) {
+    requestAnimationFrame(() => {
+      scrollCardIntoPlaylist(playlistItems[activePos], "auto");
+    });
   }
 })();

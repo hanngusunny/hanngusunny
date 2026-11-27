@@ -5,7 +5,8 @@
       e.preventDefault();
       const id = btn.getAttribute("data-toggle-password");
       const input = id ? document.getElementById(id) : null;
-      const icon = btn.querySelector("i");
+      const hiddenIcon = btn.querySelector(".sn-eye-icon--hidden");
+      const visibleIcon = btn.querySelector(".sn-eye-icon--visible");
 
       if (!input) {
         return;
@@ -14,9 +15,11 @@
       const isPassword = input.type === "password";
       input.type = isPassword ? "text" : "password";
       btn.setAttribute("aria-label", isPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu");
+      btn.setAttribute("aria-pressed", isPassword ? "true" : "false");
 
-      if (icon) {
-        icon.className = isPassword ? "fa-solid fa-eye-slash" : "fa-solid fa-eye";
+      if (hiddenIcon && visibleIcon) {
+        hiddenIcon.hidden = isPassword;
+        visibleIcon.hidden = !isPassword;
       }
     });
   });

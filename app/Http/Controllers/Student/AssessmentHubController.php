@@ -38,6 +38,6 @@ class AssessmentHubController extends Controller
             return $result;
         }
 
-        return view('student.dashboard', $result);
+        return view('student.assessments-index', $result);
     }
 }

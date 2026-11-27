@@ -142,3 +142,366 @@
     border-radius: 8px;
     border-color: #d4d4d4;
 }
+
+/* ==========================================================================
+   SUNNY — Nội quy học viên chuẩn pixel Figma (#406:28898)
+   Scoped riêng cho .sn-rules-page, không ảnh hưởng trang chỉnh sửa .sr-page
+   ========================================================================== */
+
+body.os-body:has(.sn-rules-page) {
+    background: #EFF5FD !important;
+}
+
+body.os-body:has(.sn-rules-page) .os-wrap {
+    padding: 20px 16px;
+    gap: 20px;
+    background-color: #EFF5FD;
+}
+
+body.os-body:has(.sn-rules-page) .os-main.is-pad {
+    padding: 0;
+    max-width: 100%;
+}
+
+body.os-body .os-main .sn-rules-page {
+    font-family: "Nunito", "Noto Sans KR", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+    color: #313B47;
+}
+
+body.os-body .os-main .sn-rules-page * {
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+body.os-body .os-main .sn-rules-page :where(h1, h2, h3, h4, strong, b) {
+    font-weight: 700;
+}
+
+/* Khung nội dung trắng chính (#406:28916) */
+body.os-body .os-main .sn-rules-surface {
+    background: #FFFFFF;
+    border-radius: 20px;
+    border: 0;
+    box-shadow: 0 4px 0 0 #E4E8ED;
+    padding: 32px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Đầu trang nhận diện tài liệu (#406:28919) */
+body.os-body .os-main .sn-rules-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+body.os-body .os-main .sn-rules-head-main {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+    flex: 1;
+}
+
+body.os-body .os-main .sn-rules-icon-circle {
+    width: 56px;
+    height: 56px;
+    border-radius: 9999px;
+    background: #F4F5F7;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+body.os-body .os-main .sn-rules-head-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+body.os-body .os-main .sn-rules-title {
+    margin: 0;
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: 700;
+    color: #171C22;
+}
+
+body.os-body .os-main .sn-rules-sub {
+    margin: 0;
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: 400;
+    color: #63758D;
+}
+
+body.os-body .os-main .sn-rules-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    padding: 0 20px;
+    border-radius: 12px;
+    background: #FF7614;
+    border: 0;
+    box-shadow: 0 4px 0 0 #E95308;
+    color: #FFFFFF;
+    font-size: 15px;
+    line-height: 22px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: transform 0.12s ease, background-color 0.12s ease;
+}
+
+body.os-body .os-main .sn-rules-btn-primary:hover {
+    background: #FF8B38;
+    color: #FFFFFF;
+}
+
+body.os-body .os-main .sn-rules-btn-primary:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 0 #E95308;
+}
+
+/* Khu vực tài liệu 2 lớp (#406:28925 → #406:28926) */
+body.os-body .os-main .sn-rules-well {
+    background: #F4F5F7;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+body.os-body .os-main .sn-rules-doc {
+    background: #FFFFFF;
+    border-radius: 20px;
+    border: 0;
+    box-shadow: 0 4px 0 0 #E4E8ED;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Thanh thông tin cập nhật (#406:28927) */
+body.os-body .os-main .sn-rules-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 0 0 16px;
+    border-bottom: 1px solid #F2F2F2;
+}
+
+body.os-body .os-main .sn-rules-meta-text {
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: 400;
+    color: #63758D;
+}
+
+body.os-body .os-main .sn-rules-version-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 8px;
+    border-radius: 9999px;
+    background: #F4F5F7;
+    color: #63758D;
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+/* Văn bản nội quy (#406:28931) — đồng bộ Nunito, loại bỏ font Word cũ */
+body.os-body .os-main .sn-rules-rich {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+    color: #313B47;
+}
+
+body.os-body .os-main .sn-rules-rich * {
+    font-family: inherit !important;
+}
+
+body.os-body .os-main .sn-rules-rich span[style*="font-size"],
+body.os-body .os-main .sn-rules-rich p[style*="line-height"] {
+    font-size: inherit !important;
+    line-height: inherit !important;
+}
+
+body.os-body .os-main .sn-rules-rich h1,
+body.os-body .os-main .sn-rules-rich h2,
+body.os-body .os-main .sn-rules-rich h3 {
+    margin: 24px 0 12px;
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: 700;
+    color: #171C22;
+}
+
+body.os-body .os-main .sn-rules-rich h4,
+body.os-body .os-main .sn-rules-rich h5 {
+    margin: 16px 0 8px;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
+    color: #313B47;
+}
+
+body.os-body .os-main .sn-rules-rich > :first-child {
+    margin-top: 0;
+}
+
+body.os-body .os-main .sn-rules-rich > :last-child {
+    margin-bottom: 0;
+}
+
+body.os-body .os-main .sn-rules-rich p {
+    margin: 0 0 12px;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+    color: #313B47;
+}
+
+body.os-body .os-main .sn-rules-rich p.MsoNormal {
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: 700;
+    color: #171C22;
+    text-align: left !important;
+    margin-bottom: 16px;
+}
+
+body.os-body .os-main .sn-rules-rich strong,
+body.os-body .os-main .sn-rules-rich b {
+    font-weight: 700;
+    color: #171C22;
+}
+
+body.os-body .os-main .sn-rules-rich ul {
+    list-style: disc;
+    padding-left: 22px;
+    margin: 0 0 14px;
+}
+
+body.os-body .os-main .sn-rules-rich ol {
+    list-style: decimal;
+    padding-left: 22px;
+    margin: 0 0 14px;
+}
+
+body.os-body .os-main .sn-rules-rich ol:has(> li:only-child) {
+    margin: 22px 0 10px;
+}
+
+body.os-body .os-main .sn-rules-rich ol > li {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+    color: #313B47;
+    margin-bottom: 6px;
+}
+
+body.os-body .os-main .sn-rules-rich ol > li:last-child {
+    margin-bottom: 0;
+}
+
+body.os-body .os-main .sn-rules-rich ol > li:only-child {
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: 700;
+    color: #171C22;
+}
+
+body.os-body .os-main .sn-rules-rich ul > li {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+    color: #313B47;
+    margin-bottom: 6px;
+}
+
+body.os-body .os-main .sn-rules-rich ul > li:last-child {
+    margin-bottom: 0;
+}
+
+body.os-body .os-main .sn-rules-rich a {
+    color: #0D99FF;
+    text-decoration: underline;
+}
+
+body.os-body .os-main .sn-rules-rich img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin: 12px 0;
+}
+
+/* Trạng thái trống */
+body.os-body .os-main .sn-rules-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 12px;
+    padding: 48px 16px;
+}
+
+body.os-body .os-main .sn-rules-empty-title {
+    margin: 0;
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: 700;
+    color: #171C22;
+}
+
+body.os-body .os-main .sn-rules-empty-desc {
+    margin: 0;
+    max-width: 440px;
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: 500;
+    color: #63758D;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    body.os-body:has(.sn-rules-page) .os-wrap {
+        padding: 12px 12px 84px;
+        gap: 14px;
+    }
+}
+
+@media (max-width: 639.98px) {
+    body.os-body .os-main .sn-rules-surface {
+        padding: 20px 16px 16px;
+        border-radius: 16px;
+        gap: 16px;
+    }
+
+    body.os-body .os-main .sn-rules-well {
+        padding: 12px;
+        border-radius: 16px;
+    }
+
+    body.os-body .os-main .sn-rules-doc {
+        padding: 20px 16px;
+        border-radius: 16px;
+        gap: 16px;
+    }
+
+    body.os-body .os-main .sn-rules-icon-circle {
+        width: 48px;
+        height: 48px;
+    }
+}

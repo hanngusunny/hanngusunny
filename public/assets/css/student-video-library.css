@@ -1,396 +1,626 @@
-/* Student course video library — /thu-vien-video-khoa-hoc */
-.cvl-page {
-    display: grid;
-    gap: 16px;
+/* ==========================================================================
+   SUNNY — Thư viện video học viên chuẩn pixel Figma (#459:29030)
+   Scoped riêng cho /thu-vien-video-khoa-hoc, không ảnh hưởng trang khác
+   ========================================================================== */
+
+:root {
+  --sn-vl-font: "Nunito", "Noto Sans KR", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --sn-vl-canvas: #EFF5FD;
+  --sn-vl-surface: #FFFFFF;
+  --sn-vl-well: #F4F5F7;
+  --sn-vl-border: #E4E8ED;
+  --sn-vl-divider: #CCD4DC;
+  --sn-vl-title: #171C22;
+  --sn-vl-body: #313B47;
+  --sn-vl-sub: #63758D;
+  --sn-vl-muted: #8092A8;
+  --sn-vl-orange: #FF7614;
+  --sn-vl-orange-dark: #E95308;
+  --sn-vl-orange-soft: #FCF0E6;
+  --sn-vl-blue: #0D99FF;
+  --sn-vl-blue-soft: #EFF5FD;
+  --sn-vl-green: #10B266;
+  --sn-vl-green-soft: #E8FBF2;
 }
 
-.cvl-stage {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(280px, 320px);
-    align-items: stretch;
-    min-width: 0;
-    border: 1px solid #efe6dc;
-    border-radius: 16px;
-    background:
-        radial-gradient(900px 180px at 0% 0%, #fff3e8 0%, transparent 46%),
-        linear-gradient(180deg, #fff 0%, #fffaf6 100%);
-    overflow: hidden;
+/* Nền xanh nhạt & khung vỏ đồng bộ Top Bar (#459:29030) */
+body.os-body:has(.sn-video-page) {
+  background: var(--sn-vl-canvas) !important;
 }
 
-.cvl-theater {
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    background: #fff;
+body.os-body:has(.sn-video-page) .os-wrap {
+  padding: 20px 16px;
+  gap: 20px;
+  background-color: var(--sn-vl-canvas);
 }
 
-.cvl-player-frame {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
-    background: #1c1917;
+body.os-body:has(.sn-video-page) .os-main.is-pad {
+  padding: 0;
+  max-width: 100%;
 }
 
-.cvl-player-frame iframe,
-.cvl-player-frame video {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
-    background: #000;
+body.os-body .os-main .sn-video-page {
+  font-family: var(--sn-vl-font);
+  color: var(--sn-vl-body);
 }
 
-.cvl-player-frame video {
-    object-fit: contain;
+body.os-body .os-main .sn-video-page * {
+  font-family: inherit;
+  box-sizing: border-box;
 }
 
-.cvl-player-frame iframe[hidden],
-.cvl-player-frame video[hidden] {
-    display: none !important;
+/* Khôi phục font-weight 700 thắng .os-main.is-pad :where(h1..strong){font-weight:500} */
+body.os-body .os-main .sn-video-page :where(h1, h2, h3, h4, strong, b) {
+  font-weight: 700;
 }
 
-.cvl-player-frame:fullscreen,
-.cvl-player-frame:-webkit-full-screen {
-    width: 100%;
-    height: 100%;
-    aspect-ratio: auto;
-    background: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* Khung nội dung trắng chính (#445:22575) */
+body.os-body .os-main .sn-video-surface {
+  background: var(--sn-vl-surface);
+  border-radius: 20px;
+  border: 0;
+  box-shadow: 0 4px 0 0 var(--sn-vl-border);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.cvl-player-frame:fullscreen iframe,
-.cvl-player-frame:-webkit-full-screen iframe,
-.cvl-player-frame:fullscreen video,
-.cvl-player-frame:-webkit-full-screen video {
-    width: 100%;
-    height: 100%;
+body.os-body .os-main .sn-video-surface:has(.sn-video-empty) {
+  min-height: calc(100vh - 140px);
 }
 
-.cvl-now {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
+/* ==========================================================================
+   1. Đầu trang khóa học & Pill cấp độ (#445:22576 & #445:22580)
+   ========================================================================== */
+body.os-body .os-main .sn-video-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+body.os-body .os-main .sn-video-head-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+body.os-body .os-main .sn-video-course-title {
+  margin: 0;
+  font-size: 24px;
+  line-height: 36px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--sn-vl-body);
+}
+
+body.os-body .os-main .sn-video-course-sub {
+  margin: 0;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 400;
+  color: var(--sn-vl-sub);
+}
+
+body.os-body .os-main .sn-video-levels {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+body.os-body .os-main .sn-video-level-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  background: var(--sn-vl-well);
+  color: var(--sn-vl-sub);
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 0.14s ease, color 0.14s ease;
+}
+
+body.os-body .os-main a.sn-video-level-pill:hover:not(.is-active) {
+  background: var(--sn-vl-border);
+  color: var(--sn-vl-body);
+}
+
+body.os-body .os-main .sn-video-level-pill.is-active {
+  background: var(--sn-vl-blue-soft);
+  color: var(--sn-vl-blue);
+}
+
+/* ==========================================================================
+   2. Khối 2 cột Player & Playlist (#445:22581)
+   ========================================================================== */
+body.os-body .os-main .sn-video-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 365px;
+  gap: 16px;
+  align-items: start;
+  min-width: 0;
+}
+
+body.os-body .os-main .sn-video-theater {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+/* Khung Video Player 16:9 (#445:22583) */
+body.os-body .os-main .sn-video-player-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--sn-vl-title);
+}
+
+body.os-body .os-main .sn-video-player-frame iframe,
+body.os-body .os-main .sn-video-player-frame video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #000000;
+}
+
+body.os-body .os-main .sn-video-player-frame video {
+  object-fit: contain;
+}
+
+body.os-body .os-main .sn-video-player-frame iframe[hidden],
+body.os-body .os-main .sn-video-player-frame video[hidden] {
+  display: none !important;
+}
+
+body.os-body .os-main .sn-video-player-frame:fullscreen,
+body.os-body .os-main .sn-video-player-frame:-webkit-full-screen {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  border-radius: 0;
+  background: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Thanh điều khiển dưới video (#445:22598) */
+body.os-body .os-main .sn-video-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+}
+
+body.os-body .os-main .sn-video-now-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  flex: 1;
+}
+
+body.os-body .os-main .sn-video-meta-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+body.os-body .os-main .sn-video-count-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 9999px;
+  background: var(--sn-vl-well);
+  color: var(--sn-vl-sub);
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 400;
+}
+
+body.os-body .os-main .sn-video-status-text {
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 400;
+}
+
+body.os-body .os-main .sn-video-status-text.is-learning {
+  color: var(--sn-vl-blue);
+}
+
+body.os-body .os-main .sn-video-status-text.is-done {
+  color: var(--sn-vl-green);
+}
+
+body.os-body .os-main .sn-video-now-title {
+  margin: 0;
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 700;
+  color: var(--sn-vl-body);
+}
+
+body.os-body .os-main .sn-video-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+/* Nút trắng 3D ◀ (#445:22599) */
+body.os-body .os-main .sn-video-btn-prev {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  background: #FFFFFF;
+  border: 1px solid var(--sn-vl-border);
+  border-bottom-width: 0;
+  box-shadow: 0 4px 0 0 var(--sn-vl-border);
+  cursor: pointer;
+  transition: transform 0.12s ease, background-color 0.12s ease, opacity 0.12s ease;
+}
+
+body.os-body .os-main .sn-video-btn-prev:hover:not(:disabled) {
+  background: #F8FAFC;
+}
+
+body.os-body .os-main .sn-video-btn-prev:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 0 var(--sn-vl-border);
+}
+
+body.os-body .os-main .sn-video-btn-prev:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Nút cam 3D Toàn màn hình (#445:22600) */
+body.os-body .os-main .sn-video-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  background: var(--sn-vl-orange);
+  border: 0;
+  box-shadow: 0 4px 0 0 var(--sn-vl-orange-dark);
+  color: #FFFFFF;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform 0.12s ease, background-color 0.12s ease;
+}
+
+body.os-body .os-main .sn-video-btn-primary:hover {
+  background: #FF8B38;
+  color: #FFFFFF;
+}
+
+body.os-body .os-main .sn-video-btn-primary:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 0 var(--sn-vl-orange-dark);
+}
+
+/* ==========================================================================
+   3. Cột Playlist phải (#445:22601)
+   ========================================================================== */
+body.os-body .os-main .sn-video-playlist-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid var(--sn-vl-border);
+  border-radius: 16px;
+  background: #FFFFFF;
+  overflow: hidden;
+}
+
+body.os-body .os-main .sn-video-playlist-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px;
+  background: #FFFFFF;
+}
+
+body.os-body .os-main .sn-video-playlist-head h3 {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+  color: var(--sn-vl-title);
+}
+
+body.os-body .os-main .sn-video-total-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 9999px;
+  background: var(--sn-vl-well);
+  color: var(--sn-vl-sub);
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+body.os-body .os-main .sn-video-playlist-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 12px;
+  height: 568px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--sn-vl-well);
+}
+
+body.os-body .os-main .sn-video-playlist-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+body.os-body .os-main .sn-video-playlist-body::-webkit-scrollbar-track {
+  background: var(--sn-vl-well);
+}
+
+body.os-body .os-main .sn-video-playlist-body::-webkit-scrollbar-thumb {
+  background: var(--sn-vl-divider);
+  border-radius: 9999px;
+}
+
+body.os-body .os-main .sn-video-playlist-foot {
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 12px;
+  background: var(--sn-vl-well);
+  color: var(--sn-vl-sub);
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 400;
+}
+
+/* Từng thẻ Video List Item (#459:28700) */
+body.os-body .os-main .sn-video-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 88px;
+  padding: 10px;
+  border-radius: 12px;
+  background: #FFFFFF;
+  border: 0;
+  border-bottom: 1px solid var(--sn-vl-divider);
+  text-align: left;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.14s ease, border-color 0.14s ease, transform 0.12s ease;
+}
+
+body.os-body .os-main button.sn-video-item:hover:not(.is-active) {
+  background: #FAFCFF;
+}
+
+body.os-body .os-main .sn-video-item.is-active {
+  background: var(--sn-vl-orange-soft);
+  border: 2px solid var(--sn-vl-orange);
+}
+
+body.os-body .os-main .sn-video-item.is-locked {
+  cursor: not-allowed;
+}
+
+body.os-body .os-main .sn-video-item.is-locked .sn-video-item-thumb,
+body.os-body .os-main .sn-video-item.is-locked .sn-video-item-info {
+  opacity: 0.5;
+}
+
+body.os-body .os-main .sn-video-item-thumb {
+  position: relative;
+  width: 68px;
+  height: 60px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--sn-vl-title);
+  flex-shrink: 0;
+}
+
+body.os-body .os-main .sn-video-item-thumb--locked {
+  background: #E4E8ED;
+}
+
+body.os-body .os-main .sn-video-item.is-active .sn-video-item-thumb {
+  height: 48px;
+}
+
+body.os-body .os-main .cvl-playlist-thumb-img {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+body.os-body .os-main .cvl-playlist-thumb-img.is-broken {
+  display: none;
+}
+
+body.os-body .os-main .sn-video-item-fallback {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #313B47, #171C22);
+}
+
+body.os-body .os-main .sn-video-item-thumb--locked .sn-video-item-fallback {
+  background: #E4E8ED;
+}
+
+body.os-body .os-main .sn-video-item-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+body.os-body .os-main .sn-video-item-session {
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 400;
+  color: var(--sn-vl-sub);
+}
+
+body.os-body .os-main .sn-video-item-title {
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 700;
+  color: var(--sn-vl-title);
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  width: 100%;
+}
+
+/* Badge trạng thái học tập (#153:1925) */
+body.os-body .os-main .sn-video-item-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+body.os-body .os-main .sn-video-item-badge svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+body.os-body .os-main .sn-video-item-badge--done {
+  background: var(--sn-vl-green-soft);
+  color: var(--sn-vl-green);
+}
+
+body.os-body .os-main .sn-video-item-badge--learning {
+  background: var(--sn-vl-blue-soft);
+  color: var(--sn-vl-blue);
+}
+
+body.os-body .os-main .sn-video-item-badge--locked {
+  background: var(--sn-vl-well);
+  color: var(--sn-vl-muted);
+}
+
+/* ==========================================================================
+   4. Trạng thái trống chuẩn Sunny
+   ========================================================================== */
+body.os-body .os-main .sn-video-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 12px;
+  padding: 56px 20px;
+}
+
+body.os-body .os-main .sn-video-empty-ico {
+  margin-bottom: 4px;
+}
+
+body.os-body .os-main .sn-video-empty-title {
+  margin: 0;
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 700;
+  color: var(--sn-vl-title);
+}
+
+body.os-body .os-main .sn-video-empty-desc {
+  margin: 0 0 8px;
+  max-width: 480px;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 500;
+  color: var(--sn-vl-sub);
+}
+
+/* ==========================================================================
+   5. Responsive
+   ========================================================================== */
+@media (max-width: 1080px) {
+  body.os-body .os-main .sn-video-stage {
+    grid-template-columns: 1fr;
+  }
+
+  body.os-body .os-main .sn-video-playlist-body {
+    height: auto;
+    max-height: 440px;
+  }
+}
+
+@media (max-width: 900px) {
+  body.os-body:has(.sn-video-page) .os-wrap {
+    padding: 12px 12px 84px;
     gap: 14px;
-    flex-wrap: wrap;
-    padding: 16px 18px 18px;
-    border-top: 1px solid #f3ebe3;
+  }
 }
 
-.cvl-now-copy {
-    min-width: 0;
-    flex: 1 1 240px;
-}
-
-.cvl-now-kicker {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin: 0 0 8px;
-    color: #f26b21;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-}
-
-.cvl-now-session {
-    display: inline-flex;
-    align-self: flex-start;
-    margin: 0 0 8px;
-    padding: 3px 9px;
-    border-radius: 999px;
-    background: #fff4ea;
-    color: #c2410c;
-    font-size: 12px;
-    font-weight: 650;
-}
-
-.cvl-now-title {
-    margin: 0;
-    font-size: 18px;
-    line-height: 1.35;
-    color: #1f1c18;
-    font-weight: 650;
-}
-
-.cvl-now-actions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 8px;
-}
-
-.cvl-rail {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    height: 0;
-    min-height: 100%;
-    overflow: hidden;
-    border-left: 1px solid #efe6dc;
-    background: #fffaf6;
-}
-
-.cvl-rail-head {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 14px 14px 12px;
-    border-bottom: 1px solid #efe6dc;
-}
-
-.cvl-rail-ico {
-    display: inline-flex;
-    width: 32px;
-    height: 32px;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-    background: #fff4ea;
-    color: #f26b21;
-    flex-shrink: 0;
-}
-
-.cvl-rail-head strong,
-.cvl-rail-head small {
-    display: block;
-}
-
-.cvl-rail-head strong {
-    font-size: 14px;
-    font-weight: 650;
-    color: #1f1c18;
-}
-
-.cvl-rail-head small {
-    margin-top: 2px;
-    color: #7a736c;
-    font-size: 12px;
-}
-
-.cvl-rail-count {
-    margin-left: auto;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 28px;
-    padding: 2px 8px;
-    border-radius: 999px;
-    background: #fff;
-    border: 1px solid #efe6dc;
-    color: #c2410c;
-    font-size: 12px;
-    font-weight: 700;
-}
-
-.cvl-playlist {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    gap: 4px;
-    min-height: 0;
-    padding: 8px;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-}
-
-.cvl-item {
-    display: grid;
-    grid-template-columns: 112px minmax(0, 1fr);
-    gap: 10px;
-    width: 100%;
-    padding: 8px;
-    border: 1px solid transparent;
-    border-radius: 12px;
-    background: transparent;
-    text-align: left;
-    cursor: pointer;
-    transition: background 0.15s ease, border-color 0.15s ease;
-}
-
-.cvl-item:hover {
-    background: #fff;
-    border-color: #f2e4d6;
-}
-
-.cvl-item.is-active {
-    background: #fff;
-    border-color: #f2c7a4;
-    box-shadow: 0 0 0 3px #fff4ea;
-}
-
-.cvl-item-thumb {
-    position: relative;
-    aspect-ratio: 16 / 9;
-    border-radius: 8px;
-    overflow: hidden;
-    background: #1c1917;
-}
-
-.cvl-playlist-thumb-img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.cvl-playlist-thumb-img.is-broken {
-    display: none;
-}
-
-.cvl-item-fallback {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-size: 1.1rem;
-    background: linear-gradient(145deg, #3f3a34, #1c1917);
-}
-
-.cvl-playlist-thumb-img:not(.is-broken) + .cvl-item-fallback {
-    opacity: 0;
-}
-
-.cvl-playlist-thumb-img.is-broken + .cvl-item-fallback {
-    opacity: 1;
-}
-
-.cvl-item-index {
-    position: absolute;
-    left: 5px;
-    top: 5px;
-    min-width: 20px;
-    padding: 2px 5px;
-    border-radius: 6px;
-    background: rgba(28, 25, 23, 0.78);
-    color: #fff;
-    font-size: 11px;
-    font-weight: 700;
-    line-height: 1.2;
-}
-
-.cvl-item.is-active .cvl-item-index {
-    background: #f26b21;
-}
-
-.cvl-item-copy {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    min-width: 0;
-    padding-top: 1px;
-}
-
-.cvl-item-session {
-    font-size: 11px;
-    font-weight: 700;
-    color: #a16207;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-}
-
-.cvl-item-title {
-    font-size: 13px;
-    line-height: 1.4;
-    color: #1f1c18;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-.cvl-item.is-active .cvl-item-title {
-    color: #c2410c;
-}
-
-.cvl-item-live {
-    display: none;
-    align-items: center;
-    gap: 5px;
-    color: #f26b21;
-    font-size: 11px;
-    font-weight: 700;
-}
-
-.cvl-item.is-active .cvl-item-live {
-    display: inline-flex;
-}
-
-.cvl-item-live::before {
-    content: "";
-    width: 6px;
-    height: 6px;
-    border-radius: 999px;
-    background: #f26b21;
-}
-
-.cvl-empty {
-    display: grid;
-    place-items: center;
-    gap: 8px;
-    padding: 48px 22px;
-    text-align: center;
+@media (max-width: 639.98px) {
+  body.os-body .os-main .sn-video-surface {
+    padding: 16px;
     border-radius: 16px;
-    border: 1px solid #efe6dc;
-    background:
-        radial-gradient(700px 160px at 100% 0%, #fff3e8 0%, transparent 50%),
-        #fff;
-}
+  }
 
-.cvl-empty-ico {
-    display: inline-flex;
-    width: 48px;
-    height: 48px;
-    align-items: center;
-    justify-content: center;
-    border-radius: 12px;
-    background: #fff4ea;
-    color: #f26b21;
-    font-size: 18px;
-    margin-bottom: 4px;
-}
+  body.os-body .os-main .sn-video-course-title {
+    font-size: 20px;
+    line-height: 28px;
+  }
 
-.cvl-empty strong {
-    font-size: 16px;
-    color: #1f1c18;
-}
+  body.os-body .os-main .sn-video-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
 
-.cvl-empty p {
-    margin: 0 0 8px;
-    max-width: 42ch;
-    color: #7a736c;
-}
+  body.os-body .os-main .sn-video-actions {
+    width: 100%;
+  }
 
-@media (max-width: 991px) {
-    .cvl-stage {
-        grid-template-columns: 1fr;
-    }
-
-    .cvl-rail {
-        height: auto;
-        min-height: 0;
-        border-left: 0;
-        border-top: 1px solid #efe6dc;
-    }
-
-    .cvl-playlist {
-        max-height: 380px;
-    }
-}
-
-@media (max-width: 575px) {
-    .cvl-item {
-        grid-template-columns: 96px minmax(0, 1fr);
-    }
-
-    .cvl-now-title {
-        font-size: 16px;
-    }
+  body.os-body .os-main .sn-video-btn-primary {
+    flex: 1;
+  }
 }

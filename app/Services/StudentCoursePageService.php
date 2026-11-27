@@ -109,11 +109,14 @@ class StudentCoursePageService
             ));
         }
 
-        $workspace = $this->buildWorkspace($page, $requestedBuoi, StudentCourseNavService::TAB_ASSESSMENTS, $userId);
-        $workspace['assessments'] = $this->assessments->listForStudentCourse((int) $page['course']->id, $userId);
-        $workspace['assessmentPhaseLabels'] = \App\Models\CourseAssessment::studentPhaseLabels();
+        $this->nav->rememberActiveContext((int) $page['course']->id, $page['activeLevelId']);
 
-        return $workspace;
+        return [
+            'course' => $page['course'],
+            'activeLevelId' => $page['activeLevelId'],
+            'activeLevel' => $page['activeLevel'],
+            'assessments' => $this->assessments->listForStudentCourse((int) $page['course']->id, $userId),
+        ];
     }
 
     /**
@@ -181,8 +184,6 @@ class StudentCoursePageService
             'workspaceTab' => $panel['workspaceTab'],
             'contentTab' => $panel['contentTab'],
             'hasSessionKnowledgeReview' => $panel['hasSessionKnowledgeReview'],
-            'assessments' => [],
-            'assessmentPhaseLabels' => \App\Models\CourseAssessment::studentPhaseLabels(),
         ];
     }
 

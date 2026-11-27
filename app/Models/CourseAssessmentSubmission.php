@@ -171,16 +171,28 @@ class CourseAssessmentSubmission extends Model
 
         $ids = CourseAssessment::query()->where('course_id', $courseId)->pluck('id');
 
-        foreach ($ids as $assessmentId) {
-            $userIds = CourseAssessmentAnswer::query()
-                ->where('course_assessment_id', $assessmentId)
-                ->distinct()
-                ->pluck('user_id');
+        if ($ids->isEmpty()) {
+            return;
+        }
 
-            foreach ($userIds as $userId) {
-                if (! self::getForStudent((int) $assessmentId, (int) $userId)) {
-                    self::markSubmitted((int) $assessmentId, (int) $userId);
-                }
+        $answered = CourseAssessmentAnswer::query()
+            ->whereIn('course_assessment_id', $ids)
+            ->select('course_assessment_id', 'user_id')
+            ->distinct()
+            ->get();
+
+        if ($answered->isEmpty()) {
+            return;
+        }
+
+        $existing = static::query()
+            ->whereIn('course_assessment_id', $ids)
+            ->get(['course_assessment_id', 'user_id'])
+            ->mapWithKeys(fn ($row) => [$row->course_assessment_id.':'.$row->user_id => true]);
+
+        foreach ($answered as $row) {
+            if (! isset($existing[$row->course_assessment_id.':'.$row->user_id])) {
+                self::markSubmitted((int) $row->course_assessment_id, (int) $row->user_id);
             }
         }
     }

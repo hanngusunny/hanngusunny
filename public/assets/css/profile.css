@@ -554,8 +554,21 @@
     gap: 20px;
 }
 
-/* Input có icon bên trái & nút mắt toggle bên phải (Base Input Container Flexbox) */
-.sn-input-wrap {
+/* Input màn đổi mật khẩu chuẩn Figma Global / Forms / Text Field (#36:2851) */
+#passwordForm .sn-field-group {
+    gap: 8px;
+}
+
+body.os-body .os-main #passwordForm .sn-field-label {
+    font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0;
+    color: #8092A8;
+}
+
+#passwordForm .sn-input-wrap {
     position: relative;
     display: flex;
     align-items: center;
@@ -564,98 +577,143 @@
     background: #FAFAFA;
     border: 2px solid #E4E8ED;
     border-radius: 12px;
-    padding: 0 12px 0 16px;
-    gap: 10px;
+    padding: 12px 16px;
+    gap: 8px;
     box-sizing: border-box;
-    transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
 }
 
-.sn-input-wrap:focus-within {
-    border-color: #FF7614;
-    background: #FFFFFF;
-    box-shadow: 0 0 0 3px rgba(255, 118, 20, 0.12);
+#passwordForm .sn-input-wrap:focus-within {
+    border-color: #0D99FF;
+    background: #EFF5FD;
+    box-shadow: none;
 }
 
-.sn-input-wrap.is-invalid,
-.sn-input-wrap:has(.is-invalid) {
-    border-color: #E01F1F;
-    background: #FFF8F8;
+#passwordForm .sn-input-wrap.is-invalid,
+#passwordForm .sn-input-wrap:has(.is-invalid) {
+    border-color: #FA553C;
+    background: #FDF3F2;
+    box-shadow: none;
 }
 
-/* Icon khóa bên trái: flex item độc lập, tuyệt đối không bị input che và không đè lên chữ */
-.sn-input-icon-left {
+/* Icon khóa bên trái: reset position: absolute từ sunny-ds.css, chuẩn 24x24px Figma */
+#passwordForm .sn-input-icon-left {
+    position: static;
+    left: auto;
+    right: auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 20px;
-    height: 20px;
-    color: #8092A8;
-    font-size: 16px;
+    width: 24px;
+    height: 24px;
+    color: #313B47;
     flex-shrink: 0;
     pointer-events: none;
     transition: color 0.15s ease;
 }
 
-.sn-input-wrap:focus-within .sn-input-icon-left {
-    color: #FF7614;
+#passwordForm .sn-input-icon-left svg {
+    width: 24px;
+    height: 24px;
+    display: block;
 }
 
-/* Thẻ input nằm ở giữa: chiếm trọn không gian, hiển thị chữ thông thoáng 100% */
-.sn-input-control,
-.sn-field-input.sn-input-has-left-icon {
+#passwordForm .sn-input-wrap:focus-within .sn-input-icon-left {
+    color: #0D99FF;
+}
+
+#passwordForm .sn-input-wrap.is-invalid .sn-input-icon-left,
+#passwordForm .sn-input-wrap:has(.is-invalid) .sn-input-icon-left {
+    color: #FA553C;
+}
+
+/* Input bên trong: vượt specificity office-page.css (0,7,2) để loại bỏ khung/viền lồng nhau */
+body.os-body .os-main #passwordForm .sn-input-wrap input.sn-input-control,
+body.os-body .os-main #passwordForm .sn-input-wrap input.sn-input-control:hover,
+body.os-body .os-main #passwordForm .sn-input-wrap input.sn-input-control:focus,
+body.os-body .os-main #passwordForm .sn-input-wrap input.sn-input-control:disabled {
     flex: 1;
     min-width: 0;
-    height: 100%;
-    border: none !important;
+    width: 100%;
+    height: 24px;
+    min-height: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
     background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
     outline: none !important;
     box-shadow: none !important;
     padding: 0 !important;
+    margin: 0 !important;
+    font-family: 'Nunito', system-ui, -apple-system, sans-serif;
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
     color: #313B47;
-    font-family: inherit;
     box-sizing: border-box;
 }
 
-.sn-input-control::placeholder,
-.sn-field-input.sn-input-has-left-icon::placeholder {
+body.os-body .os-main #passwordForm .sn-input-wrap input.sn-input-control::placeholder {
     color: #8092A8;
     font-weight: 400;
+    opacity: 1;
 }
 
-/* Nút mắt toggle bên phải: flex item riêng biệt, không đè lên chữ */
-.sn-toggle-pw {
-    display: flex;
+body.os-body .os-main #passwordForm .sn-input-wrap input.sn-input-control:-webkit-autofill,
+body.os-body .os-main #passwordForm .sn-input-wrap input.sn-input-control:-webkit-autofill:hover,
+body.os-body .os-main #passwordForm .sn-input-wrap input.sn-input-control:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #FAFAFA inset !important;
+    -webkit-text-fill-color: #313B47 !important;
+    font-family: 'Nunito', system-ui, -apple-system, sans-serif !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+body.os-body .os-main #passwordForm .sn-input-wrap:focus-within input.sn-input-control:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #EFF5FD inset !important;
+}
+
+body.os-body .os-main #passwordForm .sn-input-wrap.is-invalid input.sn-input-control:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #FDF3F2 inset !important;
+}
+
+/* Nút mắt toggle bên phải: SVG linear 24x24px chuẩn Figma (#569:43994 / #756:93052) */
+#passwordForm .sn-toggle-pw {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
     background: transparent;
     border: none;
-    color: #8092A8;
+    color: #313B47;
     cursor: pointer;
-    font-size: 16px;
     padding: 0;
+    margin: 0;
     border-radius: 6px;
     flex-shrink: 0;
-    transition: color 0.15s ease, background-color 0.15s ease;
+    transition: color 0.15s ease;
 }
 
-.sn-toggle-pw:hover {
-    color: #313B47;
-    background: #F1F5F9;
+#passwordForm .sn-toggle-pw svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+}
+
+#passwordForm .sn-toggle-pw svg[hidden] {
+    display: none;
+}
+
+#passwordForm .sn-toggle-pw:hover {
+    color: #0D99FF;
+    background: transparent;
 }
 
 /* Ẩn con mắt native của Edge/IE để tránh bị icon mắt kép đè lên */
 input[type="password"]::-ms-reveal,
 input[type="password"]::-ms-clear {
     display: none;
-}
-
-.sn-toggle-pw:hover {
-    color: #313B47;
 }
 
 /* Cụm 4 tiêu chí yêu cầu mật khẩu (Figma Node #406:26819) */
@@ -696,20 +754,27 @@ input[type="password"]::-ms-clear {
 }
 
 .sn-field-error {
-    font-size: 13px;
-    font-weight: 500;
-    color: #E01F1F;
-    margin: 4px 0 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+    color: #FA553C;
+    margin: 0;
 }
 
 .sn-field-match {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
+    line-height: 21px;
     color: #33A957;
-    margin: 4px 0 0;
+    margin: 0;
     display: inline-flex;
     align-items: center;
     gap: 4px;
+}
+
+#passwordForm .sn-field-error[hidden],
+#passwordForm .sn-field-match[hidden] {
+    display: none;
 }
 
 /* Thao tác nút Hủy & Cập nhật mật khẩu căn phải */

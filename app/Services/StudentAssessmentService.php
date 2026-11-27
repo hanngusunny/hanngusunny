@@ -69,18 +69,23 @@ class StudentAssessmentService
             ->orderBy('id')
             ->get();
 
-        foreach ($assessments as $assessment) {
-            $questions = $this->readyQuestions((int) $assessment->id);
+        $counts = CourseAssessmentQuestion::query()
+            ->whereIn('course_assessment_id', $assessments->pluck('id'))
+            ->selectRaw('course_assessment_id, COUNT(*) AS aggregate')
+            ->groupBy('course_assessment_id')
+            ->pluck('aggregate', 'course_assessment_id');
 
-            if ($questions === []) {
+        foreach ($assessments as $assessment) {
+            $questionCount = (int) ($counts[$assessment->id] ?? 0);
+
+            if ($questionCount === 0) {
                 continue;
             }
 
-            $row = $this->enrichForStudent($assessment, $userId, $questions);
-            $row['display'] = $this->studentDisplay($row);
-            $row['can_open'] = $this->canStudentOpenPage($row);
+            $row = $this->enrichForStudent($assessment, $userId, null, $questionCount);
+            $row['display'] = $this->studentDisplay($row, $assessment);
+            $row['can_open'] = $this->canStudentOpenPage($row, $assessment);
             $row['take_url'] = route('student.assessment.show', $assessment->id);
-            $row['question_count'] = count($questions);
             $rows[] = $row;
         }
 
@@ -89,12 +94,18 @@ class StudentAssessmentService
 
     /**
      * @param  list<array<string, mixed>>|null  $questions
+     * @param  int|null  $questionCount  Số câu đã biết trước (bỏ qua việc đọc & chuẩn hoá câu hỏi).
      * @return array<string, mixed>
      */
-    public function enrichForStudent(CourseAssessment $assessment, int $userId, ?array $questions = null): array
+    public function enrichForStudent(CourseAssessment $assessment, int $userId, ?array $questions = null, ?int $questionCount = null): array
     {
         $assessmentId = (int) $assessment->id;
-        $questions ??= $this->readyQuestions($assessmentId);
+
+        if ($questionCount === null) {
+            $questions ??= $this->readyQuestions($assessmentId);
+            $questionCount = count($questions);
+        }
+
         $hasSubmitted = CourseAssessmentAnswer::hasSubmitted($assessmentId, $userId);
         $allowRetake = CourseAssessmentRetake::isAllowed($assessmentId, $userId);
         $isGraded = ! $hasSubmitted || CourseAssessmentSubmission::isGraded($assessmentId, $userId);
@@ -105,8 +116,8 @@ class StudentAssessmentService
         $row['is_graded'] = $isGraded;
         $row['results_visible'] = $hasSubmitted && $isGraded && ! $allowRetake;
         $row['phase'] = $assessment->studentPhase($hasSubmitted, $allowRetake);
-        $row['is_takeable'] = $this->isTakeable($assessment, $hasSubmitted, $allowRetake, $questions);
-        $row['question_count'] = count($questions);
+        $row['is_takeable'] = $this->isTakeableWith($assessment, $hasSubmitted, $allowRetake, $questionCount > 0);
+        $row['question_count'] = $questionCount;
 
         return $this->attempts->enrichAssessmentTimer($row, $userId, $hasSubmitted, $allowRetake);
     }
@@ -147,7 +158,12 @@ class StudentAssessmentService
      */
     public function isTakeable(CourseAssessment $assessment, bool $hasSubmitted, bool $allowRetake, array $questions): bool
     {
-        if ($questions === []) {
+        return $this->isTakeableWith($assessment, $hasSubmitted, $allowRetake, $questions !== []);
+    }
+
+    private function isTakeableWith(CourseAssessment $assessment, bool $hasSubmitted, bool $allowRetake, bool $hasQuestions): bool
+    {
+        if (! $hasQuestions) {
             return false;
         }
 
@@ -177,7 +193,7 @@ class StudentAssessmentService
     /**
      * @param  array<string, mixed>  $assessment
      */
-    public function canStudentOpenPage(array $assessment): bool
+    public function canStudentOpenPage(array $assessment, ?CourseAssessment $model = null): bool
     {
         if (($assessment['status'] ?? '') === 'cancelled') {
             return false;
@@ -193,7 +209,7 @@ class StudentAssessmentService
             return false;
         }
 
-        $model = CourseAssessment::query()->find((int) ($assessment['id'] ?? 0));
+        $model ??= CourseAssessment::query()->find((int) ($assessment['id'] ?? 0));
 
         return $model?->isScheduleOpen() ?? false;
     }
@@ -202,7 +218,7 @@ class StudentAssessmentService
      * @param  array<string, mixed>  $assessment
      * @return array<string, mixed>
      */
-    public function studentDisplay(array $assessment): array
+    public function studentDisplay(array $assessment, ?CourseAssessment $model = null): array
     {
         $phase = (string) ($assessment['phase'] ?? 'upcoming');
         $slots = is_array($assessment['slots'] ?? null) ? $assessment['slots'] : [];
@@ -222,7 +238,7 @@ class StudentAssessmentService
             'phase' => $phase,
             'hasSchedule' => $hasSchedule,
             'timeLabel' => $timeLabel,
-            'countdownLabel' => $this->countdownLabel($assessment, $hasSchedule),
+            'countdownLabel' => $this->countdownLabel($assessment, $hasSchedule, $model),
             'dateDay' => '',
             'dateMonth' => '',
             'weekdayFull' => '',
@@ -254,7 +270,7 @@ class StudentAssessmentService
     /**
      * @param  array<string, mixed>  $assessment
      */
-    private function countdownLabel(array $assessment, bool $hasSchedule): string
+    private function countdownLabel(array $assessment, bool $hasSchedule, ?CourseAssessment $model = null): string
     {
         if (($assessment['status'] ?? '') === 'cancelled') {
             return 'Đã hủy';
@@ -290,7 +306,7 @@ class StudentAssessmentService
             return 'Chưa lên lịch';
         }
 
-        $model = CourseAssessment::query()->find((int) ($assessment['id'] ?? 0));
+        $model ??= CourseAssessment::query()->find((int) ($assessment['id'] ?? 0));
         $window = $model?->window() ?? ['start' => 0];
         $diff = ($window['start'] ?? 0) - time();
 

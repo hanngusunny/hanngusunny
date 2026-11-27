@@ -456,6 +456,37 @@
     }
   });
 
+  window.snEvaluateQuizCompletion = (targetForm) => {
+    const scope = targetForm || form;
+    if (!scope) {
+      return [];
+    }
+
+    const items = [...scope.querySelectorAll(".session-quiz-item")];
+
+    return items.map((item, idx) => {
+      const no = Number(item.dataset.questionNo || idx + 1);
+      const children = [...item.querySelectorAll("[data-session-listening-student-item], [data-session-phat-am-student-item]")];
+      let incomplete = false;
+
+      if (children.length > 0) {
+        const wrap = item.querySelector("[data-session-phat-am-student]");
+        if (wrap && wrap.dataset.phatAmRequireRecording !== "0" && !wrapHasRecording(wrap)) {
+          incomplete = true;
+        } else {
+          incomplete = children.some((child) => isCompositeItemIncomplete(child));
+        }
+      } else {
+        incomplete = isQuizItemIncomplete(item);
+      }
+
+      return {
+        questionNo: no,
+        complete: !incomplete,
+      };
+    });
+  };
+
   form.addEventListener("submit", (event) => {
     if (typeof tinymce !== "undefined") {
       tinymce.triggerSave();
@@ -466,7 +497,40 @@
       return;
     }
 
+    if (form.dataset.snConfirmedSubmit === "1") {
+      form.dataset.snConfirmedSubmit = "";
+      clearUnansweredMarks();
+      return;
+    }
+
     const targets = collectIncompleteTargets();
+
+    // Hook tuỳ chọn cho Modal xác nhận chuẩn Figma trên màn Khóa học (giữ nguyên window.confirm cho PWA/màn khác)
+    if (form.hasAttribute("data-sn-figma-quiz-form") && typeof window.snCourseQuizSubmitHandler === "function") {
+      event.preventDefault();
+      releaseSubmitUi();
+
+      const handled = window.snCourseQuizSubmitHandler({
+        form,
+        targets,
+        incompleteCount: targets.length,
+        onConfirmSubmit: () => {
+          clearUnansweredMarks();
+          form.dataset.snConfirmedSubmit = "1";
+          form.submit();
+        },
+        onContinueIncomplete: () => {
+          if (targets.length > 0) {
+            markUnanswered(targets);
+            revealFirstUnanswered(targets[0]);
+          }
+        },
+      });
+
+      if (handled) {
+        return;
+      }
+    }
 
     if (targets.length === 0) {
       clearUnansweredMarks();

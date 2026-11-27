@@ -75,7 +75,7 @@
                 'id' => 'assessments',
                 'href' => $studentNav->assessmentsUrlForStudent((int) $authUser->id),
                 'icon' => 'fa-list-check',
-                'label' => 'Bài kiểm tra',
+                'label' => 'Bài thi',
             ];
             $nav[] = [
                 'id' => 'progress',
@@ -87,7 +87,7 @@
                 'id' => 'evaluations',
                 'href' => $studentNav->evaluationsUrl(),
                 'icon' => 'fa-star-half-stroke',
-                'label' => 'Đánh giá',
+                'label' => 'Nhận xét & Kết quả',
             ];
             $nav[] = [
                 'id' => 'videos',

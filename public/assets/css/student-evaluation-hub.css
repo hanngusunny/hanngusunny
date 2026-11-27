@@ -1,0 +1,1618 @@
+/* ==========================================================================
+   SUNNY — Nhận xét & Kết quả học viên chuẩn pixel Figma (#740:92372)
+   Scoped riêng cho web /danh-gia-hoc-vien, không ảnh hưởng PWA /app/nhan-xet
+   ========================================================================== */
+
+:root {
+  --sn-ev-font: "Nunito", "Noto Sans KR", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --sn-ev-canvas: #EFF5FD;
+  --sn-ev-surface: #FFFFFF;
+  --sn-ev-well: #F4F5F7;
+  --sn-ev-border: #E4E8ED;
+  --sn-ev-track: #CCD4DC;
+  --sn-ev-title: #171C22;
+  --sn-ev-body: #313B47;
+  --sn-ev-sub: #63758D;
+  --sn-ev-muted: #8092A8;
+  --sn-ev-blue: #0D99FF;
+  --sn-ev-blue-soft: #EFF5FD;
+  --sn-ev-blue-text: #0364C6;
+  --sn-ev-orange: #FF7614;
+  --sn-ev-orange-dark: #E95308;
+  --sn-ev-orange-text: #F26500;
+  --sn-ev-orange-soft: #FCF0E6;
+  --sn-ev-peach-bg: #FFF7F0;
+  --sn-ev-green: #10B266;
+  --sn-ev-green-dark: #1A7F42;
+  --sn-ev-green-soft: #E8FBF2;
+  --sn-ev-red: #EC0707;
+  --sn-ev-red-text: #E03A1F;
+  --sn-ev-red-soft: #FFF1EE;
+  --sn-ev-amber-soft: #FEF3C7;
+  --sn-ev-amber-text: #8A5A00;
+  --sn-ev-purple: #6258F1;
+  --sn-ev-purple-soft: #F2ECFF;
+}
+
+/* Nền xanh nhạt & khung vỏ chuẩn Figma (#479:43516) đồng bộ màn Tổng quan */
+body.os-body:has(.sn-eval-page) {
+  background: var(--sn-ev-canvas) !important;
+}
+
+body.os-body:has(.sn-eval-page) .os-wrap {
+  padding: 20px 16px;
+  gap: 20px;
+  background-color: var(--sn-ev-canvas);
+}
+
+body.os-body:has(.sn-eval-page) .os-main.is-pad {
+  padding: 0;
+  max-width: 100%;
+}
+
+body.os-body .os-main .sn-eval-page {
+  font-family: var(--sn-ev-font);
+  color: var(--sn-ev-body);
+}
+
+body.os-body .os-main .sn-eval-page * {
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+/* Khôi phục font-weight 700 thắng .os-main.is-pad :where(h1..strong){font-weight:500} */
+body.os-body .os-main .sn-eval-page :where(h1, h2, h3, h4, strong, b) {
+  font-weight: 700;
+}
+
+body.os-body .os-main .sn-eval-surface {
+  background: var(--sn-ev-surface);
+  border-radius: 20px;
+  border: 0;
+  box-shadow: 0 4px 0 0 var(--sn-ev-border);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+body.os-body .os-main .sn-eval-surface:has(.sn-eval-empty-state:not([hidden])) {
+  min-height: calc(100vh - 140px);
+}
+
+body.os-body .os-main .sn-eval-section-title {
+  margin: 0;
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 700;
+  color: var(--sn-ev-body);
+}
+
+body.os-body .os-main .sn-eval-sub-heading {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+  color: var(--sn-ev-body);
+}
+
+body.os-body .os-main .sn-eval-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 0 24px;
+  border-radius: 12px;
+  background: var(--sn-ev-orange);
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 4px 0 0 var(--sn-ev-orange-dark);
+  transition: transform 0.12s ease, background-color 0.12s ease;
+}
+
+body.os-body .os-main .sn-eval-btn-primary:hover {
+  background: #FF8B38;
+  color: #FFFFFF;
+}
+
+body.os-body .os-main .sn-eval-btn-primary:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 0 var(--sn-ev-orange-dark);
+}
+
+/* ==========================================================================
+   1. Thanh Pill Tabs 2 mục: Nhận xét | Kết quả (#710:72887)
+   ========================================================================== */
+body.os-body .os-main .sn-eval-tabs-bar {
+  display: flex;
+  justify-content: center;
+}
+
+body.os-body .os-main .sn-eval-tabs {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 9999px;
+  background: var(--sn-ev-well);
+}
+
+body.os-body .os-main .sn-eval-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  border-radius: 9999px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  color: var(--sn-ev-title);
+  text-decoration: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+body.os-body .os-main .sn-eval-tab:hover:not(.is-active) {
+  color: var(--sn-ev-blue);
+}
+
+body.os-body .os-main .sn-eval-tab.is-active {
+  background: var(--sn-ev-blue);
+  color: #FFFFFF;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   2. Tab Nhận xét: Bộ chọn tuần + Popover (#710:73075 & #714:27299)
+   ========================================================================== */
+body.os-body .os-main .sn-eval-weekly {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  flex: 1;
+}
+
+body.os-body .os-main .sn-eval-week-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+body.os-body .os-main .sn-eval-dropdown-wrap {
+  position: relative;
+}
+
+body.os-body .os-main .sn-eval-week-trigger {
+  width: 100%;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 20px;
+  border-radius: 9999px;
+  background: #FFFFFF;
+  border: 2px solid var(--sn-ev-border);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+body.os-body .os-main .sn-eval-week-trigger:hover {
+  border-color: #CBD5E1;
+}
+
+body.os-body .os-main .sn-eval-week-trigger.is-open {
+  background: var(--sn-ev-blue-soft);
+  border-color: var(--sn-ev-blue);
+}
+
+body.os-body .os-main .sn-eval-week-trigger-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 0;
+}
+
+body.os-body .os-main .sn-eval-week-trigger-label {
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 500;
+  color: #62758D;
+}
+
+body.os-body .os-main .sn-eval-week-trigger-value {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+  color: var(--sn-ev-body);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+body.os-body .os-main .sn-eval-week-chevron {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  transition: transform 0.18s ease;
+}
+
+body.os-body .os-main .sn-eval-week-trigger.is-open .sn-eval-week-chevron {
+  transform: rotate(180deg);
+}
+
+body.os-body .os-main .sn-eval-week-popover {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  z-index: 40;
+  width: min(460px, 100%);
+  background: #FFFFFF;
+  border: 1px solid var(--sn-ev-border);
+  border-radius: 20px;
+  box-shadow: 0 4px 0 0 var(--sn-ev-border), 0 14px 32px rgba(23, 28, 34, 0.12);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+body.os-body .os-main .sn-eval-week-popover[hidden] {
+  display: none !important;
+}
+
+body.os-body .os-main .sn-eval-week-popover-head {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+  color: var(--sn-ev-title);
+}
+
+body.os-body .os-main .sn-eval-week-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 336px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+body.os-body .os-main .sn-eval-week-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+body.os-body .os-main .sn-eval-week-list::-webkit-scrollbar-track {
+  background: var(--sn-ev-well);
+  border-radius: 9999px;
+}
+
+body.os-body .os-main .sn-eval-week-list::-webkit-scrollbar-thumb {
+  background: var(--sn-ev-border);
+  border-radius: 9999px;
+}
+
+body.os-body .os-main .sn-eval-week-option {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 16px;
+  border-radius: 14px;
+  border: 2px solid var(--sn-ev-border);
+  background: #FFFFFF;
+  text-decoration: none;
+  transition: border-color 0.12s ease, background-color 0.12s ease;
+}
+
+body.os-body .os-main .sn-eval-week-option:hover {
+  background: #F8FAFC;
+  border-color: #CBD5E1;
+}
+
+body.os-body .os-main .sn-eval-week-option.is-selected {
+  background: var(--sn-ev-blue-soft);
+  border: 2px solid var(--sn-ev-blue);
+}
+
+body.os-body .os-main .sn-eval-week-option-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: var(--sn-ev-sub);
+}
+
+body.os-body .os-main .sn-eval-week-dot {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  background: var(--sn-ev-green-soft);
+  color: var(--sn-ev-green-dark);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+body.os-body .os-main .sn-eval-week-option-label {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+  color: var(--sn-ev-title);
+}
+
+/* ==========================================================================
+   3. Card Nhận xét tuần (#479:41610)
+   ========================================================================== */
+body.os-body .os-main .sn-eval-card {
+  background: var(--sn-ev-well);
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+body.os-body .os-main .sn-eval-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+body.os-body .os-main .sn-eval-card-title {
+  margin: 0;
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 700;
+  color: var(--sn-ev-body);
+}
+
+body.os-body .os-main .sn-eval-badge-done {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px 4px 8px;
+  border-radius: 9999px;
+  background: var(--sn-ev-green-soft);
+  border: 2px solid var(--sn-ev-green);
+  color: var(--sn-ev-green);
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 700;
+}
+
+body.os-body .os-main .sn-eval-badge-done svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+body.os-body .os-main .sn-eval-summary-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+body.os-body .os-main .sn-eval-teacher-info {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+body.os-body .os-main .sn-eval-teacher-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 9999px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 0;
+  background: var(--sn-ev-orange-soft);
+  color: var(--sn-ev-orange-text);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+body.os-body .os-main .sn-eval-teacher-copy,
+body.os-body .os-main .sn-eval-date-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+body.os-body .os-main .sn-eval-date-info {
+  width: 260px;
+  flex-shrink: 0;
+}
+
+body.os-body .os-main .sn-eval-teacher-copy strong,
+body.os-body .os-main .sn-eval-date-info strong {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+  color: var(--sn-ev-body);
+}
+
+body.os-body .os-main .sn-eval-teacher-copy span,
+body.os-body .os-main .sn-eval-date-info span {
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 400;
+  color: var(--sn-ev-sub);
+}
+
+body.os-body .os-main .sn-eval-ring-box {
+  width: 140px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+body.os-body .os-main .sn-eval-ring {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body.os-body .os-main .sn-eval-ring-value {
+  position: absolute;
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--sn-ev-title);
+}
+
+body.os-body .os-main .sn-eval-ring-caption {
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 400;
+  color: var(--sn-ev-body);
+  text-align: center;
+}
+
+body.os-body .os-main .sn-eval-block {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+body.os-body .os-main .sn-eval-criteria-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+body.os-body .os-main .sn-eval-criterion-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  border: 0;
+  box-shadow: 0 4px 0 0 var(--sn-ev-border);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+body.os-body .os-main .sn-eval-criterion-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+body.os-body .os-main .sn-eval-criterion-ico {
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+body.os-body .os-main .sn-eval-criterion-ico svg {
+  width: 24px;
+  height: 24px;
+}
+
+body.os-body .os-main .sn-eval-criterion-ico--orange {
+  background: var(--sn-ev-orange-soft);
+  color: var(--sn-ev-orange);
+}
+
+body.os-body .os-main .sn-eval-criterion-ico--blue {
+  background: var(--sn-ev-blue-soft);
+  color: var(--sn-ev-blue);
+}
+
+body.os-body .os-main .sn-eval-criterion-ico--purple {
+  background: var(--sn-ev-purple-soft);
+  color: var(--sn-ev-purple);
+}
+
+body.os-body .os-main .sn-eval-criterion-copy {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+body.os-body .os-main .sn-eval-criterion-copy strong {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+  color: var(--sn-ev-body);
+}
+
+body.os-body .os-main .sn-eval-criterion-copy span {
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 400;
+  color: var(--sn-ev-sub);
+}
+
+body.os-body .os-main .sn-eval-criterion-score {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+  color: var(--sn-ev-title);
+  white-space: nowrap;
+}
+
+body.os-body .os-main .sn-eval-bar-track {
+  width: 100%;
+  height: 8px;
+  border-radius: 9999px;
+  background: var(--sn-ev-track);
+  overflow: hidden;
+}
+
+body.os-body .os-main .sn-eval-bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: 9999px;
+  background: var(--sn-ev-orange);
+}
+
+body.os-body .os-main .sn-eval-comment-box {
+  background: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid var(--sn-ev-border);
+  padding: 16px;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 400;
+  color: var(--sn-ev-body);
+}
+
+body.os-body .os-main .sn-eval-comment-box .container {
+  max-width: none !important;
+  width: auto !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+body.os-body .os-main .sn-eval-comment-box :where(h1, h2, h3, h4) {
+  margin: 8px 0 6px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+  color: var(--sn-ev-body);
+}
+
+body.os-body .os-main .sn-eval-comment-box :where(h1, h2, h3, h4):first-child {
+  margin-top: 0;
+}
+
+body.os-body .os-main .sn-eval-comment-box p {
+  margin: 0 0 8px;
+}
+
+body.os-body .os-main .sn-eval-comment-box p:last-child {
+  margin-bottom: 0;
+}
+
+/* Điểm danh tuần đồng bộ Sunny */
+body.os-body .os-main .sn-eval-attendance-card {
+  background: var(--sn-ev-well);
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+body.os-body .os-main .sn-eval-attendance-count {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--sn-ev-sub);
+}
+
+body.os-body .os-main .sn-eval-attendance-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+body.os-body .os-main .sn-eval-attendance-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 16px;
+  background: #FFFFFF;
+  border: 0;
+  box-shadow: 0 4px 0 0 var(--sn-ev-border);
+}
+
+body.os-body .os-main .sn-eval-attendance-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+body.os-body .os-main .sn-eval-attendance-copy strong {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--sn-ev-title);
+}
+
+body.os-body .os-main .sn-eval-attendance-copy span {
+  font-size: 13px;
+  color: var(--sn-ev-sub);
+}
+
+body.os-body .os-main .sn-eval-attendance-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+body.os-body .os-main .sn-eval-attendance-pill--present {
+  background: var(--sn-ev-green-soft);
+  color: var(--sn-ev-green-dark);
+}
+
+body.os-body .os-main .sn-eval-attendance-pill--absent {
+  background: var(--sn-ev-red-soft);
+  color: var(--sn-ev-red-text);
+}
+
+body.os-body .os-main .sn-eval-attendance-pill--upcoming {
+  background: var(--sn-ev-amber-soft);
+  color: var(--sn-ev-amber-text);
+}
+
+/* ==========================================================================
+   4. Trạng thái trống (#479:41505 & #717:25834)
+   ========================================================================== */
+body.os-body .os-main .sn-eval-empty-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 12px;
+  padding: 64px 20px;
+}
+
+body.os-body .os-main .sn-eval-empty-state[hidden] {
+  display: none !important;
+}
+
+body.os-body .os-main .sn-eval-empty-ico {
+  margin-bottom: 4px;
+}
+
+body.os-body .os-main .sn-eval-empty-title {
+  margin: 0;
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 700;
+  color: var(--sn-ev-title);
+}
+
+body.os-body .os-main .sn-eval-empty-desc {
+  margin: 0;
+  max-width: 520px;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 500;
+  color: var(--sn-ev-sub);
+}
+
+/* ==========================================================================
+   5. Tab Kết quả · Danh sách (#710:76989 & #717:25669)
+   ========================================================================== */
+body.os-body .os-main .sn-res-list-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  flex: 1;
+}
+
+body.os-body .os-main .sn-res-list-head {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+body.os-body .os-main .sn-res-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+body.os-body .os-main .sn-res-filter-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  border: 2px solid var(--sn-ev-border);
+  background: #FFFFFF;
+  color: var(--sn-ev-body);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.14s ease, border-color 0.14s ease, color 0.14s ease;
+}
+
+body.os-body .os-main .sn-res-filter-pill:hover:not(.is-active) {
+  border-color: #CBD5E1;
+  background: #F8FAFC;
+}
+
+body.os-body .os-main .sn-res-filter-pill.is-active {
+  background: var(--sn-ev-blue);
+  border-color: var(--sn-ev-blue);
+  color: #FFFFFF;
+}
+
+body.os-body .os-main .sn-res-well {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 20px;
+  background: var(--sn-ev-well);
+}
+
+body.os-body .os-main .sn-res-well[hidden] {
+  display: none !important;
+}
+
+body.os-body .os-main .sn-res-row {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) auto 120px 20px;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 16px;
+  background: #FFFFFF;
+  border: 0;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.12s ease, box-shadow 0.15s ease;
+}
+
+body.os-body .os-main .sn-res-row[hidden] {
+  display: none !important;
+}
+
+body.os-body .os-main .sn-res-row:hover {
+  box-shadow: 0 0 0 2px #BAE6FD;
+}
+
+body.os-body .os-main .sn-res-row-ico {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+body.os-body .os-main .sn-res-row-ico svg {
+  width: 24px;
+  height: 24px;
+}
+
+body.os-body .os-main .sn-res-row-ico--blue {
+  background: #EFF5FD;
+  color: #0D99FF;
+}
+
+body.os-body .os-main .sn-res-row-ico--orange {
+  background: #FFF7F0;
+  color: #FF7614;
+}
+
+body.os-body .os-main .sn-res-row-ico--purple {
+  background: #F0ECFB;
+  color: #7C5CDB;
+}
+
+body.os-body .os-main .sn-res-row-main {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+body.os-body .os-main .sn-res-row-title-line {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+body.os-body .os-main .sn-res-row-title {
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 700;
+  color: var(--sn-ev-body);
+}
+
+body.os-body .os-main .sn-res-new-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 12px;
+  background: var(--sn-ev-red-soft);
+  color: var(--sn-ev-red);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+}
+
+body.os-body .os-main .sn-res-row-sub {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  color: var(--sn-ev-sub);
+}
+
+body.os-body .os-main .sn-res-row-status {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  text-align: right;
+}
+
+body.os-body .os-main .sn-res-status-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+body.os-body .os-main .sn-res-status-pill--graded {
+  background: #E8F7EC;
+  color: #10B266;
+}
+
+body.os-body .os-main .sn-res-status-pill--pending {
+  background: #FFF4D6;
+  color: #FEB50F;
+}
+
+body.os-body .os-main .sn-res-status-sub {
+  font-size: 12px;
+  line-height: 17px;
+  font-weight: 400;
+  color: var(--sn-ev-sub);
+}
+
+body.os-body .os-main .sn-res-row-score {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 120px;
+  height: 32px;
+}
+
+body.os-body .os-main .sn-res-row-score strong {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 700;
+  color: var(--sn-ev-body);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+body.os-body .os-main .sn-res-row-score strong.is-pending {
+  color: #B1BDCA;
+}
+
+body.os-body .os-main .sn-res-row-chev {
+  width: 20px;
+  height: 20px;
+  display: block;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   6. Chi tiết kết quả (#719:26030, #719:26243, #719:26596, #719:26850)
+   ========================================================================== */
+body.os-body .os-main .sn-res-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+body.os-body .os-main .sn-res-detail-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+body.os-body .os-main .sn-res-back-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 24px;
+  background: var(--sn-ev-well);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: background-color 0.14s ease;
+}
+
+body.os-body .os-main .sn-res-back-circle:hover {
+  background: var(--sn-ev-border);
+}
+
+body.os-body .os-main .sn-res-detail-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+body.os-body .os-main .sn-res-detail-title {
+  margin: 0;
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 700;
+  color: var(--sn-ev-title);
+}
+
+body.os-body .os-main .sn-res-detail-sub {
+  margin: 0;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 400;
+  color: var(--sn-ev-sub);
+}
+
+body.os-body .os-main .sn-res-summary-grid {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 16px;
+}
+
+body.os-body .os-main .sn-res-score-card {
+  background: var(--sn-ev-peach-bg);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+
+body.os-body .os-main .sn-res-score-label {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+  color: var(--sn-ev-sub);
+}
+
+body.os-body .os-main .sn-res-score-val {
+  font-size: 36px;
+  line-height: 44px;
+  font-weight: 700;
+  color: var(--sn-ev-orange);
+  font-variant-numeric: tabular-nums;
+}
+
+body.os-body .os-main .sn-res-score-val.is-pending {
+  color: #B1BDCA;
+}
+
+body.os-body .os-main .sn-res-score-sub {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 600;
+  color: var(--sn-ev-sub);
+}
+
+body.os-body .os-main .sn-res-teacher-card {
+  background: #FFFFFF;
+  border: 1px solid var(--sn-ev-border);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+body.os-body .os-main .sn-res-teacher-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+body.os-body .os-main .sn-res-teacher-head strong {
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: 700;
+  color: var(--sn-ev-title);
+}
+
+body.os-body .os-main .sn-res-teacher-badge {
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  background: #FFF1E5;
+  color: #F26500;
+  font-size: 14px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+body.os-body .os-main .sn-res-teacher-badge--sm {
+  width: 28px;
+  height: 28px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+body.os-body .os-main .sn-res-teacher-note {
+  margin: 0;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 500;
+  color: var(--sn-ev-title);
+}
+
+body.os-body .os-main .sn-res-teacher-note.is-pending {
+  color: var(--sn-ev-sub);
+}
+
+/* Dãy số câu hỏi nhảy nhanh (#841:20925) */
+body.os-body .os-main .sn-res-jump-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px 16px;
+  border-radius: 16px;
+  background: #FFFFFF;
+}
+
+body.os-body .os-main .sn-res-jump-label {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 700;
+  color: var(--sn-ev-sub);
+}
+
+body.os-body .os-main .sn-res-jump-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+body.os-body .os-main .sn-res-jump-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 1.5px solid var(--sn-ev-border);
+  background: var(--sn-ev-well);
+  color: var(--sn-ev-sub);
+  padding: 0;
+  transition: transform 0.1s ease;
+}
+
+body.os-body .os-main .sn-res-jump-btn:hover {
+  transform: translateY(-1px);
+}
+
+body.os-body .os-main .sn-res-jump-btn--correct {
+  background: #E6F6EC;
+  border-color: #10B266;
+  color: #1A7F42;
+}
+
+body.os-body .os-main .sn-res-jump-btn--wrong {
+  background: #FFF1EE;
+  border-color: #FF5436;
+  color: #E03A1F;
+}
+
+body.os-body .os-main .sn-res-jump-btn--partial {
+  background: #FFF8E6;
+  border-color: #FCB102;
+  color: #8A5A00;
+}
+
+body.os-body .os-main .sn-res-jump-btn--unanswered {
+  background: var(--sn-ev-well);
+  border-color: #CBD5E1;
+  color: var(--sn-ev-muted);
+}
+
+/* Thẻ từng câu hỏi đã chấm (#841:20937) */
+body.os-body .os-main .sn-res-q-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+body.os-body .os-main .sn-res-q-card {
+  background: #FFFFFF;
+  border: 1px solid var(--sn-ev-border);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  scroll-margin-top: 24px;
+}
+
+body.os-body .os-main .sn-res-q-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+body.os-body .os-main .sn-res-q-head-left {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Nhãn Câu N bo góc 8px đúng Figma (#841:20987) */
+body.os-body .os-main .sn-res-q-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  border-radius: 8px;
+  background: #EFF5FD;
+  color: #0364C6;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+}
+
+body.os-body .os-main .sn-res-q-type-bold {
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: 700;
+  color: var(--sn-ev-title);
+}
+
+body.os-body .os-main .sn-res-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+}
+
+body.os-body .os-main .sn-res-chip--green {
+  background: #E8F7EC;
+  color: #10B266;
+}
+
+body.os-body .os-main .sn-res-chip--red {
+  background: #FFF1EE;
+  color: #EC0707;
+}
+
+body.os-body .os-main .sn-res-chip--amber {
+  background: #FFF4D6;
+  color: #FEB50F;
+}
+
+body.os-body .os-main .sn-res-chip--muted {
+  background: #ECEFF3;
+  color: #8092A8;
+}
+
+body.os-body .os-main .sn-res-q-pts {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+  color: var(--sn-ev-title);
+  white-space: nowrap;
+}
+
+body.os-body .os-main .sn-res-q-pts.is-zero {
+  color: #E03A1F;
+}
+
+body.os-body .os-main .sn-res-q-prompt {
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: 500;
+  color: var(--sn-ev-title);
+}
+
+body.os-body .os-main .sn-res-q-prompt p:first-child {
+  margin-top: 0;
+}
+
+body.os-body .os-main .sn-res-q-prompt p:last-child {
+  margin-bottom: 0;
+}
+
+body.os-body .os-main .sn-res-answer-line {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+body.os-body .os-main .sn-res-ans-prefix,
+body.os-body .os-main .sn-res-ans-muted,
+body.os-body .os-main .sn-res-ans-sep {
+  color: var(--sn-ev-sub);
+  font-weight: 500;
+}
+
+body.os-body .os-main .sn-res-ans-val {
+  font-weight: 700;
+}
+
+body.os-body .os-main .sn-res-ans-val--correct {
+  color: #1A7F42;
+}
+
+body.os-body .os-main .sn-res-ans-val--wrong {
+  color: #E03A1F;
+}
+
+body.os-body .os-main .sn-res-ans-val--partial {
+  color: #8A5A00;
+}
+
+/* Hộp Bài làm của em (#841:20978) */
+body.os-body .os-main .sn-res-essay-box {
+  background: #F8FAFC;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+body.os-body .os-main .sn-res-essay-label {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+  color: var(--sn-ev-sub);
+}
+
+body.os-body .os-main .sn-res-essay-content {
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: 500;
+  color: var(--sn-ev-title);
+}
+
+body.os-body .os-main .sn-res-essay-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-top: 6px;
+}
+
+body.os-body .os-main .sn-res-essay-empty {
+  margin: 0;
+  font-size: 14px;
+  color: var(--sn-ev-muted);
+}
+
+/* Trình phát bản ghi âm chuẩn Figma (#841:20995) */
+body.os-body .os-main .sn-res-audio-player {
+  display: flex;
+  align-items: center;
+  min-height: 72px;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 14px;
+  background: var(--sn-ev-well);
+  border: 0;
+}
+
+body.os-body .os-main .sn-res-audio-play {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  border: 0;
+  background: var(--sn-ev-orange);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: filter 0.12s ease;
+}
+
+body.os-body .os-main .sn-res-audio-play:hover {
+  filter: brightness(1.06);
+}
+
+body.os-body .os-main .sn-res-audio-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+body.os-body .os-main .sn-res-audio-title {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 700;
+  color: var(--sn-ev-body);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+body.os-body .os-main .sn-res-audio-track {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: #E4E8EE;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+body.os-body .os-main .sn-res-audio-fill {
+  display: block;
+  height: 100%;
+  border-radius: 3px;
+  background: var(--sn-ev-orange);
+}
+
+body.os-body .os-main .sn-res-audio-time {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 700;
+  color: #6B7785;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Thanh nhận xét giáo viên theo từng câu (#841:20981) */
+body.os-body .os-main .sn-res-q-comment {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 12px;
+  background: #EFF5FD;
+}
+
+body.os-body .os-main .sn-res-q-comment-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  flex: 1;
+}
+
+body.os-body .os-main .sn-res-q-comment-body p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 500;
+  color: var(--sn-ev-title);
+}
+
+body.os-body .os-main .sn-res-teacher-audio {
+  max-width: 320px;
+  height: 36px;
+}
+
+/* Trạng thái Chờ giáo viên chấm (#719:26850) */
+body.os-body .os-main .sn-res-pending-box {
+  background: #FFFFFF;
+  border: 1px solid var(--sn-ev-border);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+body.os-body .os-main .sn-res-pending-heading {
+  margin: 0;
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: 700;
+  color: var(--sn-ev-title);
+}
+
+body.os-body .os-main .sn-res-pending-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+body.os-body .os-main .sn-res-pending-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #F8FAFC;
+}
+
+body.os-body .os-main .sn-res-pending-left,
+body.os-body .os-main .sn-res-pending-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+body.os-body .os-main .sn-res-q-num-inline {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 700;
+  color: #0364C6;
+}
+
+body.os-body .os-main .sn-res-q-type {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: var(--sn-ev-body);
+}
+
+body.os-body .os-main .sn-res-pending-pts {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+  color: #B1BDCA;
+  min-width: 52px;
+  text-align: right;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 991.98px) {
+  body.os-body .os-main .sn-eval-summary-row {
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  body.os-body .os-main .sn-eval-teacher-info {
+    flex: 1 1 220px;
+  }
+
+  body.os-body .os-main .sn-eval-date-info {
+    width: auto;
+    flex: 1 1 100%;
+    order: 3;
+  }
+
+  body.os-body .os-main .sn-eval-ring-box {
+    width: auto;
+  }
+
+  body.os-body .os-main .sn-eval-criteria-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body.os-body .os-main .sn-res-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body.os-body .os-main .sn-res-row {
+    grid-template-columns: 48px minmax(0, 1fr) 20px;
+  }
+
+  body.os-body .os-main .sn-res-row-status {
+    grid-column: 1 / -1;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  body.os-body .os-main .sn-res-row-score {
+    grid-column: 1 / 3;
+    width: auto;
+    height: auto;
+    justify-content: flex-start;
+    padding-top: 8px;
+    border-top: 1px solid var(--sn-ev-well);
+  }
+
+  body.os-body .os-main .sn-res-row-chev {
+    grid-column: 3;
+    justify-self: end;
+    align-self: center;
+  }
+}
+
+@media (max-width: 900px) {
+  body.os-body:has(.sn-eval-page) .os-wrap {
+    padding: 12px 12px 84px;
+    gap: 14px;
+  }
+}
+
+@media (max-width: 639.98px) {
+  body.os-body .os-main .sn-eval-surface {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  body.os-body .os-main .sn-eval-card {
+    padding: 16px;
+  }
+
+  body.os-body .os-main .sn-eval-attendance-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

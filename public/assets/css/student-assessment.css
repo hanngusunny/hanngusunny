@@ -1,0 +1,1588 @@
+/* ==========================================================================
+   SUNNY — Màn Bài Thi Học Viên chuẩn pixel Figma (#740:92376)
+   Scoped riêng cho student/assessments-index & student/assessment-show
+   ========================================================================== */
+
+:root {
+  --sn-ex-font: "Nunito", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --sn-ex-canvas: #EFF5FD;
+  --sn-ex-surface: #FFFFFF;
+  --sn-ex-well: #F4F5F7;
+  --sn-ex-border: #E4E8ED;
+  --sn-ex-title: #171C22;
+  --sn-ex-body: #313B47;
+  --sn-ex-subtitle: #63758D;
+  --sn-ex-muted: #8092A8;
+  --sn-ex-orange: #FF7614;
+  --sn-ex-orange-dark: #E95308;
+  --sn-ex-orange-text: #F26500;
+  --sn-ex-orange-soft: #FCF0E6;
+  --sn-ex-peach: #FFD2B1;
+  --sn-ex-peach-shadow: #FFC3A5;
+  --sn-ex-blue: #0D99FF;
+  --sn-ex-blue-dark: #088AE9;
+  --sn-ex-blue-soft: #EFF5FD;
+  --sn-ex-green: #10B266;
+  --sn-ex-green-dark: #18794E;
+  --sn-ex-green-soft: #E8FBF2;
+  --sn-ex-green-pill: #E9F7F0;
+  --sn-ex-red: #E01F1F;
+  --sn-ex-red-shadow: #F2371B;
+  --sn-ex-purple-soft: #F2ECFF;
+  --sn-ex-purple: #6D4AFF;
+}
+
+/* Nền xanh nhạt chuẩn Figma cho toàn bộ trang Bài thi */
+body.os-body:has(.sn-exam-page),
+body.os-body:has(.sn-exam-focus-mode) {
+  background: var(--sn-ex-canvas) !important;
+}
+
+body.os-body .os-main .sn-exam-page,
+body.os-body .os-main .sn-exam-focus-mode {
+  font-family: var(--sn-ex-font);
+  color: var(--sn-ex-body);
+}
+
+body.os-body .os-main .sn-exam-page *,
+body.os-body .os-main .sn-exam-focus-mode * {
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+/* Khôi phục font-weight 700 thắng .os-main.is-pad :where(h1..strong){font-weight:500} */
+body.os-body .os-main .sn-exam-page :where(h1, h2, h3, h4, strong, b),
+body.os-body .os-main .sn-exam-focus-mode :where(h1, h2, h3, h4, strong, b) {
+  font-weight: 700;
+}
+
+/* ---------- Surface card chuẩn Figma (white button shadow) ---------- */
+body.os-body .os-main .sn-exam-surface {
+  background: var(--sn-ex-surface);
+  border-radius: 20px;
+  border: 0;
+  box-shadow: 0 4px 0 0 var(--sn-ex-border);
+  padding: 20px;
+}
+
+body.os-body .os-main .sn-exam-heading {
+  margin: 0;
+  font-size: 24px;
+  line-height: 36px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--sn-ex-body);
+}
+
+/* ---------- Flash banner ---------- */
+body.os-body .os-main .sn-exam-flash {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+}
+
+body.os-body .os-main .sn-exam-flash--error {
+  background: #FFF1F2;
+  border: 1px solid #FECDD3;
+  color: #BE123C;
+}
+
+body.os-body .os-main .sn-exam-flash--info {
+  background: var(--sn-ex-blue-soft);
+  border: 1px solid #BFDBFE;
+  color: #0369A1;
+}
+
+/* ---------- 3D Buttons chuẩn Figma ---------- */
+body.os-body .os-main .sn-exam-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  border: 0;
+  white-space: nowrap;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+}
+
+body.os-body .os-main .sn-exam-btn--full {
+  width: 100%;
+}
+
+body.os-body .os-main .sn-exam-btn--primary {
+  background: var(--sn-ex-orange);
+  color: #FFFFFF;
+  box-shadow: 0 4px 0 0 var(--sn-ex-orange-dark);
+}
+
+body.os-body .os-main .sn-exam-btn--primary:hover {
+  background: #FF8B38;
+  color: #FFFFFF;
+}
+
+body.os-body .os-main .sn-exam-btn--primary:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 0 var(--sn-ex-orange-dark);
+}
+
+body.os-body .os-main .sn-exam-btn--white {
+  background: #FFFFFF;
+  color: var(--sn-ex-body);
+  border: 1px solid var(--sn-ex-border);
+  border-bottom-width: 0;
+  box-shadow: 0 4px 0 0 var(--sn-ex-border);
+}
+
+body.os-body .os-main .sn-exam-btn--white:hover {
+  background: #F8FAFC;
+  color: var(--sn-ex-title);
+}
+
+body.os-body .os-main .sn-exam-btn--white:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 0 var(--sn-ex-border);
+}
+
+body.os-body .os-main .sn-exam-btn--peach-disabled {
+  background: var(--sn-ex-peach);
+  color: #FFFFFF;
+  box-shadow: 0 4px 0 0 var(--sn-ex-peach-shadow);
+  cursor: not-allowed;
+}
+
+body.os-body .os-main .sn-exam-btn--muted-disabled {
+  background: #E4E8ED;
+  color: #8092A8;
+  box-shadow: 0 4px 0 0 #CBD5E1;
+  cursor: not-allowed;
+}
+
+body.os-body .os-main .sn-exam-back-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: #FFFFFF;
+  border: 1px solid var(--sn-ex-border);
+  border-bottom-width: 0;
+  box-shadow: 0 4px 0 0 var(--sn-ex-border);
+  color: var(--sn-ex-body);
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: transform 0.12s ease, background-color 0.12s ease;
+}
+
+body.os-body .os-main .sn-exam-back-btn:hover {
+  background: #F8FAFC;
+}
+
+body.os-body .os-main .sn-exam-back-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 0 var(--sn-ex-border);
+}
+
+/* ==========================================================================
+   1. Màn Bài thi · Danh sách (#709:69580)
+   ========================================================================== */
+body.os-body .os-main .sn-exam-list-surface {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: calc(100vh - 136px);
+}
+
+body.os-body .os-main .sn-exam-list-head {
+  display: flex;
+  align-items: center;
+}
+
+body.os-body .os-main .sn-exam-list-well {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 16px;
+  border-radius: 16px;
+  background: var(--sn-ex-well);
+  flex: 1;
+}
+
+body.os-body .os-main .sn-exam-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px;
+  border-radius: 12px;
+  background: #FFFFFF;
+  border: 0;
+}
+
+body.os-body .os-main .sn-exam-card-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+  flex: 1;
+}
+
+body.os-body .os-main .sn-exam-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 700;
+}
+
+body.os-body .os-main .sn-exam-status--open {
+  background: var(--sn-ex-green-soft);
+  color: var(--sn-ex-green);
+}
+
+body.os-body .os-main .sn-exam-status--upcoming {
+  background: var(--sn-ex-well);
+  color: var(--sn-ex-muted);
+}
+
+body.os-body .os-main .sn-exam-status--retake {
+  background: var(--sn-ex-orange-soft);
+  color: var(--sn-ex-orange-text);
+}
+
+body.os-body .os-main .sn-exam-status--pending {
+  background: var(--sn-ex-purple-soft);
+  color: var(--sn-ex-purple);
+}
+
+body.os-body .os-main .sn-exam-status--graded {
+  background: var(--sn-ex-blue-soft);
+  color: var(--sn-ex-blue);
+}
+
+body.os-body .os-main .sn-exam-status--closed {
+  background: var(--sn-ex-well);
+  color: var(--sn-ex-subtitle);
+}
+
+body.os-body .os-main .sn-exam-card-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+body.os-body .os-main .sn-exam-card-title {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+  color: var(--sn-ex-body);
+}
+
+body.os-body .os-main .sn-exam-card-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+body.os-body .os-main .sn-exam-card-title a:hover {
+  color: var(--sn-ex-orange);
+}
+
+body.os-body .os-main .sn-exam-card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+body.os-body .os-main .sn-exam-meta-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  color: var(--sn-ex-subtitle);
+}
+
+body.os-body .os-main .sn-exam-meta-ico {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--sn-ex-subtitle);
+}
+
+body.os-body .os-main .sn-exam-meta-ico--green {
+  color: var(--sn-ex-green);
+}
+
+body.os-body .os-main .sn-exam-meta-ico--blue {
+  color: var(--sn-ex-blue);
+}
+
+body.os-body .os-main .sn-exam-meta-ico--purple {
+  color: var(--sn-ex-purple);
+}
+
+body.os-body .os-main .sn-exam-card-cta {
+  flex-shrink: 0;
+}
+
+body.os-body .os-main .sn-exam-card-cta .sn-exam-btn {
+  min-width: 112px;
+}
+
+body.os-body .os-main .sn-exam-empty-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 12px;
+  padding: 56px 24px;
+  border-radius: 16px;
+  background: #FFFFFF;
+}
+
+body.os-body .os-main .sn-exam-empty-card img {
+  width: 148px;
+  height: 148px;
+  object-fit: contain;
+}
+
+body.os-body .os-main .sn-exam-empty-title {
+  margin: 0;
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 700;
+  color: var(--sn-ex-title);
+}
+
+body.os-body .os-main .sn-exam-empty-desc {
+  margin: 0;
+  max-width: 420px;
+  font-size: 15px;
+  line-height: 23px;
+  font-weight: 500;
+  color: var(--sn-ex-subtitle);
+}
+
+/* ==========================================================================
+   2. Màn Phòng Chờ (#708:58741) & Modal Xác Nhận Bắt Đầu (#710:72346)
+   ========================================================================== */
+body.os-body .os-main .sn-exam-waiting-surface {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: calc(100vh - 136px);
+}
+
+body.os-body .os-main .sn-exam-waiting-top {
+  display: flex;
+  align-items: center;
+}
+
+body.os-body .os-main .sn-exam-waiting-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+body.os-body .os-main .sn-exam-waiting-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+body.os-body .os-main .sn-exam-pills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+body.os-body .os-main .sn-exam-pills--center {
+  justify-content: center;
+}
+
+body.os-body .os-main .sn-exam-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 700;
+}
+
+body.os-body .os-main .sn-exam-pill--blue {
+  background: var(--sn-ex-blue-soft);
+  color: var(--sn-ex-blue);
+}
+
+body.os-body .os-main .sn-exam-pill--green {
+  background: var(--sn-ex-green-pill);
+  color: var(--sn-ex-green-dark);
+}
+
+body.os-body .os-main .sn-exam-pill--orange {
+  background: var(--sn-ex-orange-soft);
+  color: var(--sn-ex-orange-text);
+}
+
+body.os-body .os-main .sn-exam-pill--muted {
+  background: var(--sn-ex-well);
+  color: var(--sn-ex-subtitle);
+}
+
+body.os-body .os-main .sn-exam-waiting-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 522px) minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+body.os-body .os-main .sn-exam-rule-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px;
+  border-radius: 16px;
+  background: var(--sn-ex-well);
+}
+
+body.os-body .os-main .sn-exam-float-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 14px;
+  border-radius: 100px;
+  background: #FFFFFF;
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 700;
+}
+
+body.os-body .os-main .sn-exam-float-pill--blue {
+  color: var(--sn-ex-blue);
+  box-shadow: 0 4px 0 0 var(--sn-ex-blue-dark);
+}
+
+body.os-body .os-main .sn-exam-float-pill--red {
+  color: var(--sn-ex-red);
+  box-shadow: 0 4px 0 0 var(--sn-ex-red-shadow);
+}
+
+body.os-body .os-main .sn-exam-rule-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+body.os-body .os-main .sn-exam-rule-list li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  color: var(--sn-ex-body);
+}
+
+body.os-body .os-main .sn-exam-rule-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--sn-ex-orange);
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 24px;
+}
+
+body.os-body .os-main .sn-exam-guide-box {
+  width: 100%;
+  margin-top: 4px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #FFFFFF;
+  border: 1px solid var(--sn-ex-border);
+}
+
+body.os-body .os-main .sn-exam-guide-box summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--sn-ex-blue);
+}
+
+body.os-body .os-main .sn-exam-guide-content {
+  margin-top: 10px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--sn-ex-body);
+}
+
+body.os-body .os-main .sn-exam-notice-text {
+  margin: 0;
+  font-size: 18px;
+  line-height: 27px;
+  font-weight: 500;
+  color: var(--sn-ex-body);
+}
+
+body.os-body .os-main .sn-exam-waiting-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 4px;
+}
+
+/* ==========================================================================
+   3. Màn Làm Bài Tập Trung (#708:58850, #708:58863, #468:39410)
+   ========================================================================== */
+body.is-exam-focus,
+body:has(.sn-exam-focus-mode) {
+  background: var(--sn-ex-canvas) !important;
+}
+
+body.is-exam-focus .os-sidebar,
+body.is-exam-focus .os-top,
+body.is-exam-focus .os-sub,
+body:has(.sn-exam-focus-mode) .os-sidebar,
+body:has(.sn-exam-focus-mode) .os-top,
+body:has(.sn-exam-focus-mode) .os-sub {
+  display: none !important;
+}
+
+body.is-exam-focus .os-wrap,
+body:has(.sn-exam-focus-mode) .os-wrap {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  width: 100% !important;
+  max-width: none !important;
+}
+
+body.is-exam-focus .os-main,
+body.is-exam-focus .os-main.is-pad,
+body:has(.sn-exam-focus-mode) .os-main,
+body:has(.sn-exam-focus-mode) .os-main.is-pad {
+  padding: 20px 16px !important;
+  max-width: 1312px !important;
+  margin: 0 auto !important;
+  width: 100% !important;
+}
+
+body.os-body .os-main .sn-exam-focus-surface {
+  background: #FFFFFF;
+  border-radius: 20px;
+  border: 0;
+  box-shadow: 0 4px 0 0 var(--sn-ex-border);
+  padding: 16px 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-height: calc(100vh - 40px);
+}
+
+body.os-body .os-main .sn-exam-focus-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+body.os-body .os-main .sn-exam-focus-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+body.os-body .os-main .sn-exam-focus-title {
+  margin: 0;
+  font-size: 24px;
+  line-height: 36px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--sn-ex-title);
+}
+
+body.os-body .os-main .sn-exam-focus-sub {
+  margin: 0;
+  font-size: 18px;
+  line-height: 27px;
+  font-weight: 500;
+  color: var(--sn-ex-body);
+}
+
+body.os-body .os-main .sn-exam-take-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+body.os-body .os-main .sn-exam-take-main {
+  flex: 1 1 0%;
+  min-width: 0;
+}
+
+/* ==========================================================================
+   3.1. Skin Figma cho toàn bộ câu hỏi trong Màn Bài Thi
+   (Thắng hoàn toàn session-quiz.css & student-quiz-office.css)
+   ========================================================================== */
+body.os-body .os-main .sn-exam-focus-mode .sw-quiz-sunny .session-quiz-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 24px !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+body.os-body .os-main .sn-exam-focus-mode .sw-quiz-sunny fieldset.session-quiz-item,
+body.os-body .os-main .sn-exam-focus-mode .sw-quiz-sunny .session-quiz-item {
+  background: #FFFFFF !important;
+  border: 1px solid var(--sn-ex-border) !important;
+  border-radius: 16px !important;
+  padding: 20px !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  scroll-margin-top: 24px;
+}
+
+body.os-body .os-main .sn-exam-focus-mode .sw-quiz-sunny .session-quiz-item.is-unanswered {
+  border: 2px solid var(--sn-ex-red-shadow) !important;
+  background: #FDF3F2 !important;
+  box-shadow: 0 0 0 3px rgba(242, 55, 27, 0.1) !important;
+}
+
+body.os-body .os-main .sn-exam-focus-mode .sw-quiz-sunny .session-quiz-item.sn-exam-q-hidden {
+  display: none !important;
+}
+
+body.os-body .os-main .sn-exam-focus-mode .sw-quiz-sunny .session-quiz-legend {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  gap: 10px 12px !important;
+  margin-bottom: 16px !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+
+body.os-body .os-main .sn-exam-focus-mode .sw-quiz-sunny .session-quiz-item-title {
+  font-family: var(--sn-ex-font) !important;
+  font-size: 16px !important;
+  line-height: 24px !important;
+  font-weight: 700 !important;
+  color: var(--sn-ex-title) !important;
+}
+
+body.os-body .os-main .sn-exam-focus-mode .sw-quiz-sunny .session-quiz-legend-rich {
+  font-size: 15px !important;
+  line-height: 23px !important;
+  font-weight: 500 !important;
+  color: var(--sn-ex-body) !important;
+  margin-top: 6px !important;
+}
+
+body.os-body .os-main .sn-exam-focus-mode .sw-quiz-sunny .session-quiz-points-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 3px 10px !important;
+  border-radius: 9999px !important;
+  background: var(--sn-ex-blue-soft) !important;
+  color: var(--sn-ex-blue) !important;
+  border: 0 !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+}
+
+/* Đáp án A/B/C/D chuẩn Figma 3D surface (#I468:39415;236:17556) */
+body.os-body .os-main .sn-exam-focus-mode .sw-quiz-sunny .session-quiz-options {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+}
+
+body.os-body .os-main .sn-exam-focus-mode .sw-quiz-sunny label.session-quiz-option {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  padding: 12px 14px !important;
+  background: #FFFFFF !important;
+  border: 2px solid var(--sn-ex-border) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 3px 0 0 var(--sn-ex-border) !important;
+  cursor: pointer !important;
+  transition: border-color 0.14s ease, background-color 0.14s ease, box-shadow 0.14s ease, transform 0.12s ease !important;
+}
+
+body.os-body .os-main .sn-exam-focus-mode .sw-quiz-sunny label.session-quiz-option:hover {
+  border-color: #CBD5E1 !important;
+  background: #FAFBFD !important;
+}
+
+body.os-body .os-main .sn-exam-focus-mode .sw-quiz-sunny label.session-quiz-option:has(input:checked) {
+  background: var(--sn-ex-blue-soft) !important;
+  border-color: var(--sn-ex-blue) !important;
+  box-shadow: 0 3px 0 0 var(--sn-ex-blue-dark) !important;
+}
+
+body.os-body .os-main .sn-exam-focus-mode .sw-quiz-sunny label.session-quiz-option input[type="radio"],
+body.os-body .os-main .sn-exam-focus-mode .sw-quiz-sunny label.session-quiz-option input[type="checkbox"] {
+  position: absolute !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+body.os-body .os-main .sn-exam-focus-mode .sw-quiz-sunny .session-quiz-option-key {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 8px !important;
+  background: var(--sn-ex-well) !important;
+  color: var(--sn-ex-body) !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+}
+
+body.os-body .os-main .sn-exam-focus-mode .sw-quiz-sunny label.session-quiz-option:has(input:checked) .session-quiz-option-key {
+  background: var(--sn-ex-blue) !important;
+  color: #FFFFFF !important;
+}
+
+body.os-body .os-main .sn-exam-focus-mode .sw-quiz-sunny .session-quiz-option-text {
+  font-size: 15px !important;
+  line-height: 22px !important;
+  font-weight: 600 !important;
+  color: var(--sn-ex-title) !important;
+}
+
+/* Dịch từ & Input câu hỏi chuẩn Figma (#935:24699) */
+body.os-body .os-main .sn-exam-focus-mode .sw-quiz-sunny .session-word-translate-item {
+  background: #FFFFFF !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--sn-ex-well) !important;
+  border-radius: 0 !important;
+  padding: 12px 4px !important;
+  box-shadow: none !important;
+}
+
+body.os-body .os-main .sn-exam-focus-mode .sw-quiz-sunny .session-word-translate-input,
+body.os-body .os-main .sn-exam-focus-mode .sw-quiz-sunny .session-fill-blank-input {
+  background: #FFFFFF !important;
+  border: 2px solid var(--sn-ex-border) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 0 0 var(--sn-ex-border) !important;
+  padding: 10px 14px !important;
+  font-family: var(--sn-ex-font) !important;
+  font-size: 15px !important;
+  color: var(--sn-ex-title) !important;
+}
+
+body.os-body .os-main .sn-exam-focus-mode .sw-quiz-sunny .session-word-translate-input:focus,
+body.os-body .os-main .sn-exam-focus-mode .sw-quiz-sunny .session-fill-blank-input:focus {
+  border-color: var(--sn-ex-blue) !important;
+  box-shadow: 0 2px 0 0 var(--sn-ex-blue-dark) !important;
+  outline: none !important;
+}
+
+/* Sắp xếp câu, Phân loại từ, Nối từ, Lật thẻ chuẩn Figma */
+body.os-body .os-main .sn-exam-focus-mode .sw-quiz-sunny .session-word-order-sentence {
+  border: 1.5px dashed #B8C4D4 !important;
+  border-radius: 14px !important;
+  background: #FFFFFF !important;
+  min-height: 82px !important;
+  padding: 14px !important;
+}
+
+body.os-body .os-main .sn-exam-focus-mode .sw-quiz-sunny .session-category-sort-column {
+  background: var(--sn-ex-blue-soft) !important;
+  border: 0 !important;
+  border-radius: 16px !important;
+  padding: 16px !important;
+}
+
+body.os-body .os-main .sn-exam-focus-mode .sw-quiz-sunny .session-category-sort-column-title {
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 6px 14px !important;
+  border-radius: 9999px !important;
+  background: #FFFFFF !important;
+  color: var(--sn-ex-title) !important;
+  box-shadow: 0 3px 0 0 var(--sn-ex-blue-dark) !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  margin-bottom: 12px !important;
+}
+
+body.os-body .os-main .sn-exam-focus-mode .sw-quiz-sunny :is(.session-word-order-reset, .session-category-sort-reset, .session-word-link-reset, .session-memory-reset, .session-image-label-drop-reset) {
+  background: var(--sn-ex-blue) !important;
+  color: #FFFFFF !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  box-shadow: 0 3px 0 0 var(--sn-ex-blue-dark) !important;
+  font-weight: 700 !important;
+  padding: 8px 16px !important;
+}
+
+body.os-body .os-main .sn-exam-focus-mode .sw-quiz-sunny .session-listening-audio-bar {
+  background: var(--sn-ex-well) !important;
+  border: 0 !important;
+  border-radius: 16px !important;
+  padding: 16px !important;
+}
+
+body.os-body .os-main .sn-exam-focus-mode .sw-quiz-sunny .session-listening-bar-play {
+  background: var(--sn-ex-orange) !important;
+  color: #FFFFFF !important;
+  border: 0 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 0 0 var(--sn-ex-orange-dark) !important;
+}
+
+/* Chân trang: phân trang ở giữa + nút Nộp bài bên phải (#708:58876 & #708:58878) */
+body.os-body .os-main .sn-exam-take-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 28px;
+  padding-top: 0;
+  border-top: 0;
+}
+
+body.os-body .os-main .sn-exam-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  flex: 1;
+}
+
+body.os-body .os-main .sn-exam-page-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 38px;
+  height: 38px;
+  padding: 0 10px;
+  border-radius: 12px;
+  background: #FFFFFF;
+  border: 1px solid var(--sn-ex-border);
+  color: var(--sn-ex-body);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+}
+
+body.os-body .os-main .sn-exam-page-btn:hover:not(:disabled):not(.is-active) {
+  background: var(--sn-ex-blue-soft);
+  border-color: #BAE6FD;
+  color: var(--sn-ex-blue);
+}
+
+body.os-body .os-main .sn-exam-page-btn.is-active {
+  background: var(--sn-ex-blue);
+  border-color: var(--sn-ex-blue);
+  color: #FFFFFF;
+}
+
+body.os-body .os-main .sn-exam-page-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+body.os-body .os-main .sn-exam-page-ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 38px;
+  border-radius: 12px;
+  background: #FFFFFF;
+  border: 1px solid var(--sn-ex-border);
+  color: var(--sn-ex-subtitle);
+  font-size: 14px;
+  font-weight: 700;
+  user-select: none;
+}
+
+body.os-body .os-main .sn-exam-footer-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-left: auto;
+}
+
+/* Cột phải sticky: Câu trả lời + Tiến độ + Thời gian còn lại (#708:58874) */
+body.os-body .os-main .sn-exam-take-aside {
+  width: 232px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 20px;
+}
+
+body.os-body .os-main .sn-exam-palette-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 20px;
+  background: var(--sn-ex-well);
+}
+
+body.os-body .os-main .sn-exam-palette-head {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+body.os-body .os-main .sn-exam-palette-title {
+  margin: 0;
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 700;
+  color: var(--sn-ex-body);
+}
+
+body.os-body .os-main .sn-exam-palette-sub {
+  margin: 0;
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 500;
+  color: var(--sn-ex-subtitle);
+}
+
+body.os-body .os-main .sn-exam-palette-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 32px);
+  justify-content: space-between;
+  gap: 10px 8px;
+}
+
+body.os-body .os-main .sn-exam-q-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 9999px;
+  background: #E4E8ED;
+  border: 2px solid transparent;
+  color: #62758D;
+  font-size: 14px;
+  line-height: 1;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+}
+
+body.os-body .os-main .sn-exam-q-num:hover {
+  border-color: var(--sn-ex-blue);
+  color: var(--sn-ex-blue);
+}
+
+body.os-body .os-main .sn-exam-q-num.is-done {
+  background: var(--sn-ex-blue);
+  border-color: var(--sn-ex-blue);
+  color: #FFFFFF;
+}
+
+body.os-body .os-main .sn-exam-q-num.is-current {
+  background: #FFFFFF;
+  border: 2px solid var(--sn-ex-orange);
+  color: var(--sn-ex-orange);
+}
+
+body.os-body .os-main .sn-exam-q-num.is-done.is-current {
+  background: var(--sn-ex-blue);
+  border: 2px solid var(--sn-ex-orange);
+  color: #FFFFFF;
+  box-shadow: 0 0 0 2px rgba(255, 118, 20, 0.22);
+}
+
+body.os-body .os-main .sn-exam-progress-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+body.os-body .os-main .sn-exam-progress-label {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+  color: var(--sn-ex-body);
+}
+
+body.os-body .os-main .sn-exam-progress-track {
+  width: 100%;
+  height: 8px;
+  border-radius: 9999px;
+  background: var(--sn-ex-border);
+  overflow: hidden;
+}
+
+body.os-body .os-main .sn-exam-progress-fill {
+  height: 100%;
+  border-radius: 9999px;
+  background: var(--sn-ex-blue);
+  transition: width 0.22s ease;
+}
+
+body.os-body .os-main .sn-exam-timer-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: #FFFFFF;
+  border: 2px solid var(--sn-ex-orange);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+body.os-body .os-main .sn-exam-timer-card.is-warning {
+  background: #FFF7ED;
+  border-color: var(--sn-ex-orange-dark);
+}
+
+body.os-body .os-main .sn-exam-timer-card.is-critical,
+body.os-body .os-main .sn-exam-timer-card.is-expired {
+  background: #FEF2F2;
+  border-color: var(--sn-ex-red);
+}
+
+body.os-body .os-main .sn-exam-timer-ico {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+body.os-body .os-main .sn-exam-timer-copy {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+body.os-body .os-main .sn-exam-timer-title {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+  color: var(--sn-ex-title);
+}
+
+body.os-body .os-main .sn-exam-timer-value {
+  font-size: 15px;
+  line-height: 21px;
+  font-weight: 600;
+  color: var(--sn-ex-body);
+  font-variant-numeric: tabular-nums;
+}
+
+body.os-body .os-main .sn-exam-timer-card.is-critical .sn-exam-timer-value,
+body.os-body .os-main .sn-exam-timer-card.is-expired .sn-exam-timer-value {
+  color: var(--sn-ex-red);
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   4. Modals chuẩn Figma (#710:72346, #468:39488, #468:39470, #468:39427)
+   ========================================================================== */
+body.os-body .os-main .sn-exam-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1050;
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+body.os-body .os-main .sn-exam-modal-backdrop[hidden] {
+  display: none !important;
+}
+
+body.os-body .os-main .sn-exam-modal-dialog {
+  width: min(343px, 92vw);
+  background: #FFFFFF;
+  border: 1px solid var(--sn-ex-border);
+  border-radius: 20px;
+  box-shadow: 0 4px 0 0 var(--sn-ex-border), 0 20px 44px rgba(15, 23, 42, 0.22);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+body.os-body .os-main .sn-exam-modal-dialog--start {
+  width: min(440px, 92vw);
+}
+
+body.os-body .os-main .sn-exam-modal-head-start {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+body.os-body .os-main .sn-exam-modal-copy {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+}
+
+body.os-body .os-main .sn-exam-modal-title {
+  margin: 0;
+  font-size: 24px;
+  line-height: 36px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #000000;
+  text-align: center;
+}
+
+body.os-body .os-main .sn-exam-modal-title.is-danger {
+  color: var(--sn-ex-red);
+}
+
+body.os-body .os-main .sn-exam-modal-desc {
+  margin: 0;
+  max-width: 280px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  color: var(--sn-ex-subtitle);
+}
+
+body.os-body .os-main .sn-exam-modal-bullets {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  color: var(--sn-ex-body);
+}
+
+body.os-body .os-main .sn-exam-modal-mascot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body.os-body .os-main .sn-exam-modal-mascot img {
+  width: 160px;
+  height: 160px;
+  object-fit: contain;
+}
+
+body.os-body .os-main .sn-exam-modal-mascot.is-wide img {
+  width: 276px;
+  height: 184px;
+}
+
+body.os-body .os-main .sn-exam-modal-actions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+body.os-body .os-main .sn-exam-modal-actions[hidden] {
+  display: none !important;
+}
+
+body.os-body .os-main .sn-exam-btn-ico {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ==========================================================================
+   5. Overlay Đang Nộp Bài (#709:63580)
+   ========================================================================== */
+body.os-body .os-main .sn-exam-submitting-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  background: var(--sn-ex-canvas);
+  padding: 20px 16px;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+
+body.os-body .os-main .sn-exam-submitting-overlay[hidden] {
+  display: none !important;
+}
+
+body.os-body .os-main .sn-exam-submitting-card {
+  width: 100%;
+  max-width: 1280px;
+  background: #FFFFFF;
+  border-radius: 20px;
+  border: 0;
+  box-shadow: 0 4px 0 0 var(--sn-ex-border);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+body.os-body .os-main .sn-exam-submitting-head {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+body.os-body .os-main .sn-exam-submitting-sub {
+  margin: 0;
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--sn-ex-subtitle);
+}
+
+body.os-body .os-main .sn-exam-submitting-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+body.os-body .os-main .sn-exam-submitting-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: var(--sn-ex-well);
+  color: var(--sn-ex-subtitle);
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 500;
+}
+
+body.os-body .os-main .sn-exam-submitting-clock {
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 700;
+  color: var(--sn-ex-subtitle);
+  font-variant-numeric: tabular-nums;
+}
+
+body.os-body .os-main .sn-exam-submitting-center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 16px;
+  padding: 40px 16px;
+}
+
+body.os-body .os-main .sn-exam-loader-badge {
+  width: 80px;
+  height: 80px;
+  border-radius: 9999px;
+  background: var(--sn-ex-orange-soft);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sn-exam-spinner {
+  animation: snExamSpin 1s linear infinite;
+}
+
+@keyframes snExamSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+body.os-body .os-main .sn-exam-submitting-title {
+  margin: 0;
+  font-size: 24px;
+  line-height: 36px;
+  font-weight: 700;
+  color: var(--sn-ex-body);
+}
+
+body.os-body .os-main .sn-exam-submitting-desc {
+  margin: 0;
+  max-width: 348px;
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--sn-ex-subtitle);
+}
+
+/* ==========================================================================
+   6. Màn Hoàn Thành Chờ Chấm (#710:72370), Kết Quả & Trạng Thái Phụ
+   ========================================================================== */
+body.os-body .os-main .sn-exam-done-surface {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 20px;
+  padding: 60px 20px 36px;
+  min-height: calc(100vh - 136px);
+}
+
+body.os-body .os-main .sn-exam-done-mascot img {
+  width: min(288px, 72vw);
+  height: auto;
+  object-fit: contain;
+}
+
+body.os-body .os-main .sn-exam-done-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+body.os-body .os-main .sn-exam-done-title {
+  margin: 0;
+  font-size: 24px;
+  line-height: 36px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--sn-ex-body);
+}
+
+body.os-body .os-main .sn-exam-done-title--danger {
+  color: var(--sn-ex-red);
+}
+
+body.os-body .os-main .sn-exam-done-desc {
+  margin: 0;
+  max-width: 376px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  color: var(--sn-ex-body);
+}
+
+body.os-body .os-main .sn-exam-done-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: var(--sn-ex-purple-soft);
+  color: var(--sn-ex-body);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+body.os-body .os-main .sn-exam-done-meta {
+  margin: 4px 0 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--sn-ex-subtitle);
+}
+
+body.os-body .os-main .sn-exam-done-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+body.os-body .os-main .sn-exam-done-secondary-link {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--sn-ex-subtitle);
+  text-decoration: none;
+}
+
+body.os-body .os-main .sn-exam-done-secondary-link:hover {
+  color: var(--sn-ex-orange);
+  text-decoration: underline;
+}
+
+/* Màn kết quả đã chấm */
+body.os-body .os-main .sn-exam-result-surface {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+body.os-body .os-main .sn-exam-result-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--sn-ex-well);
+}
+
+body.os-body .os-main .sn-exam-result-head-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  min-width: 0;
+  flex: 1;
+}
+
+body.os-body .os-main .sn-exam-result-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+body.os-body .os-main .sn-exam-score-chip {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 112px;
+  padding: 10px 18px;
+  border-radius: 16px;
+  background: var(--sn-ex-orange-soft);
+  border: 1.5px solid #FED7AA;
+}
+
+body.os-body .os-main .sn-exam-score-chip strong {
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: 800;
+  color: var(--sn-ex-orange-text);
+}
+
+body.os-body .os-main .sn-exam-score-chip span {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 700;
+  color: var(--sn-ex-subtitle);
+}
+
+body.os-body .os-main .sn-exam-result-body .session-quiz-scoreboard {
+  border-radius: 16px !important;
+  border: 1px solid var(--sn-ex-border) !important;
+  background: var(--sn-ex-well) !important;
+}
+
+/* Màn trạng thái phụ */
+body.os-body .os-main .sn-exam-state-surface {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: calc(100vh - 136px);
+}
+
+body.os-body .os-main .sn-exam-state-center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 14px;
+  padding: 32px 16px;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 991.98px) {
+  body.os-body .os-main .sn-exam-waiting-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body.os-body .os-main .sn-exam-take-layout {
+    flex-direction: column;
+  }
+
+  body.os-body .os-main .sn-exam-take-aside {
+    width: 100%;
+    position: static;
+    order: -1;
+  }
+
+  body.os-body .os-main .sn-exam-palette-grid {
+    grid-template-columns: repeat(auto-fill, 32px);
+    justify-content: flex-start;
+  }
+
+  body.os-body .os-main .sn-exam-focus-mode .sw-quiz-sunny .session-quiz-options {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 639.98px) {
+  body.os-body .os-main .sn-exam-surface,
+  body.os-body .os-main .sn-exam-focus-surface {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  body.os-body .os-main .sn-exam-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  body.os-body .os-main .sn-exam-card-cta .sn-exam-btn,
+  body.os-body .os-main .sn-exam-waiting-footer .sn-exam-btn {
+    width: 100%;
+  }
+
+  body.os-body .os-main .sn-exam-take-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  body.os-body .os-main .sn-exam-footer-actions {
+    margin-left: 0;
+  }
+
+  body.os-body .os-main .sn-exam-footer-actions .sn-exam-btn {
+    width: 100%;
+  }
+}

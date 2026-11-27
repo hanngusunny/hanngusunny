@@ -18,6 +18,15 @@ class CourseVideoLibraryController extends Controller
             return redirect()->route('dashboard');
         }
 
-        return view('student.video-library', $library->buildForStudent((int) $user->id));
+        $requestedLevelId = max(0, (int) $request->query('trinh-do', 0));
+
+        return view(
+            'student.video-library',
+            $library->buildForStudent(
+                (int) $user->id,
+                null,
+                $requestedLevelId > 0 ? $requestedLevelId : null
+            )
+        );
     }
 }
